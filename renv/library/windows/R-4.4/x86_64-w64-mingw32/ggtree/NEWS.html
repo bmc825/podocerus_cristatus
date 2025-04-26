@@ -1,0 +1,1444 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ggtree 3.13.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/ggtree/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/ggtree/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ggtree 3.13.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggtree 3.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-13-1">ggtree 3.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-12-0">ggtree 3.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-11-2">ggtree 3.11.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-11-1">ggtree 3.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-10-0">ggtree 3.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-9-1">ggtree 3.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-8-0">ggtree 3.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-7-2">ggtree 3.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-7-1">ggtree 3.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-6-0">ggtree 3.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-3">ggtree 3.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-2">ggtree 3.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-1">ggtree 3.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-4-0">ggtree 3.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-3">ggtree 3.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-2">ggtree 3.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-1">ggtree 3.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-2-0">ggtree 3.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-6">ggtree 3.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-5">ggtree 3.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-4">ggtree 3.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-3">ggtree 3.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-2">ggtree 3.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-1">ggtree 3.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-0-0">ggtree 3.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-3">ggtree 2.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-2">ggtree 2.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-1">ggtree 2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-4-0">ggtree 2.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-7">ggtree 2.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-6">ggtree 2.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-5">ggtree 2.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-4">ggtree 2.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-3">ggtree 2.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-2">ggtree 2.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-1">ggtree 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-2-0">ggtree 2.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-6">ggtree 2.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-5">ggtree 2.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-4">ggtree 2.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-3">ggtree 2.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-2">ggtree 2.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-1">ggtree 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-0-0">ggtree 2.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-99-1">ggtree 1.99.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-99-0">ggtree 1.99.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-5">ggtree 1.17.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-4">ggtree 1.17.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-3">ggtree 1.17.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-2">ggtree 1.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-1">ggtree 1.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-16-0">ggtree 1.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-6">ggtree 1.15.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-5">ggtree 1.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-4">ggtree 1.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-3">ggtree 1.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-2">ggtree 1.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-1">ggtree 1.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-14-0">ggtree 1.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-6">ggtree 1.13.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-5">ggtree 1.13.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-3">ggtree 1.13.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-2">ggtree 1.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-1">ggtree 1.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-12-0">ggtree 1.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-6">ggtree 1.11.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-5">ggtree 1.11.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-4">ggtree 1.11.4</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!--
+
+# TODO LIST
+
+
++ TreeAndLeaf layout: <https://www.bioconductor.org/packages/TreeAndLeaf>
++ `phylogeography`
+  - <https://stackoverflow.com/questions/68668788/phylogeography-how-to-combine-phylogenetic-tree-and-geographic-map-and-create>
++ visualize support values obtained from different methods
+  - <https://github.com/YuLab-SMU/ggtree/issues/451>
++ `height` parameter to `collapse()`
+  - <https://github.com/YuLab-SMU/ggtree/issues/409#issuecomment-944034311>
++ rewrite `revts` to `scale_revts`
++ `inset` and relative functions support circular layout
++ tanglegram support
+  - <https://yulab-smu.top/treedata-book/chapter2.html#ggtree-fortify>
+  - <https://www.rdocumentation.org/packages/phytools/versions/0.7-70/topics/cophylo> 
++ `fortify` method for `phyloseq` object should return a tidy data.frame
+  - maybe we can defined another object (inherited from treedata?) and provide converter for `phyloseq`
++ The `daylight` algorithm is quite slow compare to `ggraph` and needs to  be optimized
+  - <https://github.com/thomasp85/ggraph/commit/14de66f1225336179b4598cb42a4beda95682211>
+
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-13-2">
+<h1>ggtree 3.13.2<a class="headerlink" href="#ggtree-3-13-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>mv <code class="docutils literal notranslate"><span class="pre">td_filter()</span></code>, <code class="docutils literal notranslate"><span class="pre">td_unnest()</span></code> and <code class="docutils literal notranslate"><span class="pre">td_mutate()</span></code> to ‘ggfun’ package (2024-10-24, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-13-1">
+<h1>ggtree 3.13.1<a class="headerlink" href="#ggtree-3-13-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>layout argument can be a function to re-calculate the coord of nodes (2024-07-27, Sat, #622)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout.params</span> <span class="pre">=</span> <span class="pre">list(as.graph=TRUE)</span></code> (by default) for converting the tree to a graph tree (igraph object), so that graph layout can be directly applied to visualize a tree</p></li>
+<li><p>otherwise, the function can assume the input tree as a <code class="docutils literal notranslate"><span class="pre">phylo</span></code> or <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object</p></li>
+</ul>
+</li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">yulab.utils::yulab_msg()</span></code> for startup message (2024-07-26, Fri)</p></li>
+<li><p>mv <code class="docutils literal notranslate"><span class="pre">%&lt;+%</span></code> operator to ‘ggfun’ (2024-05-28, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-12-0">
+<h1>ggtree 3.12.0<a class="headerlink" href="#ggtree-3-12-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_19 (2024-05-14, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-11-2">
+<h1>ggtree 3.11.2<a class="headerlink" href="#ggtree-3-11-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>expose ‘position’  parameter for <code class="docutils literal notranslate"><span class="pre">geom_range()</span></code> (2024-04-07, Sun, #611)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-11-1">
+<h1>ggtree 3.11.1<a class="headerlink" href="#ggtree-3-11-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>copy <code class="docutils literal notranslate"><span class="pre">rect_to_poly()</span></code> from ggplot2 to make it compatible with ggplot2 3.5.0 (2024-02-13, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-10-0">
+<h1>ggtree 3.10.0<a class="headerlink" href="#ggtree-3-10-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_18 (2023-10-25, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-9-1">
+<h1>ggtree 3.9.1<a class="headerlink" href="#ggtree-3-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">rlang::check_installed()</span></code> to check whether the suggested pkg is installed (2023-08-11, Fri, #580)</p></li>
+<li><p>allows using <code class="docutils literal notranslate"><span class="pre">linewidth</span></code> parameter (synonyms for <code class="docutils literal notranslate"><span class="pre">size</span></code>) in <code class="docutils literal notranslate"><span class="pre">ggtree()</span></code> (2023-07-15, Sat, #574)</p></li>
+<li><p>bug fixed in setting <code class="docutils literal notranslate"><span class="pre">branch.length</span> <span class="pre">=</span> <span class="pre">&quot;none&quot;</span></code> to plot ‘hclust’ object (2023-07-15, Sat, #574)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-8-0">
+<h1>ggtree 3.8.0<a class="headerlink" href="#ggtree-3-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_17 (2023-05-03, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-7-2">
+<h1>ggtree 3.7.2<a class="headerlink" href="#ggtree-3-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ggtree()</span></code> supports ‘dendro’ object (<code class="docutils literal notranslate"><span class="pre">ggdendro::dendro_data()</span></code> output) (2023-03-02, Thu)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">theme_dendrogram()</span></code> to use <code class="docutils literal notranslate"><span class="pre">ggfun::theme_noxaxis()</span></code> (2022-11-21, Mon)</p></li>
+<li><p>using <code class="docutils literal notranslate"><span class="pre">cli::cli_alert_warning()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">warning_wrap</span></code> (2022-11-10, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-7-1">
+<h1>ggtree 3.7.1<a class="headerlink" href="#ggtree-3-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>compatible with ggplot2 v=3.4.0 (2022-11-07, Mon)</p></li>
+<li><p>allows setting <code class="docutils literal notranslate"><span class="pre">options(clade_align</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> to align <code class="docutils literal notranslate"><span class="pre">geom_hilight()</span></code> layer and allows setting <code class="docutils literal notranslate"><span class="pre">options(clade_width_extend</span> <span class="pre">=</span> <span class="pre">0.35)</span></code> to set the amount the width extension (in y-axis) of <code class="docutils literal notranslate"><span class="pre">geom_hilight()</span></code>. These two features is designed for <code class="docutils literal notranslate"><span class="pre">ggtreeDendro::geom_rect_subtree()</span></code> layer (2022-11-06, Sun)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-6-0">
+<h1>ggtree 3.6.0<a class="headerlink" href="#ggtree-3-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_16 (2022-11-02, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-5-3">
+<h1>ggtree 3.5.3<a class="headerlink" href="#ggtree-3-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add new citation (the iMeta 2022 paper) (2022-09-26, Mon)</p></li>
+<li><p>move <code class="docutils literal notranslate"><span class="pre">scale_color_subtree()</span></code> to the ‘ggtreeDendro’ package (2022-09-23, Fri)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">fortify</span></code> method for <code class="docutils literal notranslate"><span class="pre">pvclust</span></code> object (2022-08-15, Mon)</p></li>
+<li><p>add citation of the tree data book (2022-08-13, Sat)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-5-2">
+<h1>ggtree 3.5.2<a class="headerlink" href="#ggtree-3-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_color_subtree()</span></code> now supports passing a numeric value and internally it will call <code class="docutils literal notranslate"><span class="pre">cutree(tree,</span> <span class="pre">k)</span></code> (2022-08-11, Thu)</p></li>
+<li><p>support ‘linkage’ class defined in the ‘mdendro’ package (2022-08-11, Thu)</p></li>
+<li><p>clone the plot environment before assigning layout (2022-07-19, Tue, #516)</p></li>
+<li><p>bug fixed in ‘equal_angle’ layout (2022-07-08, Fri, #514)</p></li>
+<li><p>optimize <code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> to better compatible with dendrogram layout (2022-06-23, Thu, #508)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-5-1">
+<h1>ggtree 3.5.1<a class="headerlink" href="#ggtree-3-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo.hclust2</span></code> to correct edge length as displayed in <code class="docutils literal notranslate"><span class="pre">stats:::plot.hclust</span></code> (2022-06-21, Tue)</p></li>
+<li><p>add outline to nodepies (2022-06-20, Mon, #506)</p></li>
+<li><p>new ‘slanted’ layout for <code class="docutils literal notranslate"><span class="pre">branch.length</span> <span class="pre">=</span> <span class="pre">'none'</span></code> (2022-04-29, Fri, #497)</p>
+<ul>
+<li><p>only works for Cartesian coordination, that means it will not work for <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">=</span> <span class="pre">'radial'</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-4-0">
+<h1>ggtree 3.4.0<a class="headerlink" href="#ggtree-3-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.15 release (2022-04-28, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-3-3">
+<h1>ggtree 3.3.3<a class="headerlink" href="#ggtree-3-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_striplab()</span></code> that supports <code class="docutils literal notranslate"><span class="pre">aes()</span></code> mapping (2022-04-22, Fri, #493)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to.bottom</span></code> parameter introduced in <code class="docutils literal notranslate"><span class="pre">geom_hilight()</span></code> to allow the highlight layer was added into the lowest layer stack (2022-04-22, Fri, #492)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-3-2">
+<h1>ggtree 3.3.2<a class="headerlink" href="#ggtree-3-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>mv <code class="docutils literal notranslate"><span class="pre">identify()</span></code> method to ‘ggfun’ (2022-04-01, Fri)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">identify.gg()</span></code> to support ‘ggplot’ object and <code class="docutils literal notranslate"><span class="pre">+xlim()</span></code></p></li>
+<li><p>update man files (2022-03-23, Wed, #489)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-3-1">
+<h1>ggtree 3.3.1<a class="headerlink" href="#ggtree-3-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>use graph layouts to visualize tree (2021-12-10, Fri, #460, #461)</p>
+<ul>
+<li><p>igraph layout</p></li>
+<li><p>graphlayouts: <a class="reference external" href="https://cran.r-project.org/web/packages/graphlayouts/index.html">https://cran.r-project.org/web/packages/graphlayouts/index.html</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_color_subtree</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_colour_subtree</span></code> to color subtree via taxa group information (e.g., cutree, or kmeans) (2021-12-01, Wed)</p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">na.value</span> <span class="pre">=</span> <span class="pre">'white'</span></code> in <code class="docutils literal notranslate"><span class="pre">msaplot()</span></code> (2021-10-29, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-2-0">
+<h1>ggtree 3.2.0<a class="headerlink" href="#ggtree-3-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.14 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-6">
+<h1>ggtree 3.1.6<a class="headerlink" href="#ggtree-3-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_cladelab</span></code> now supports extend parameter as in <code class="docutils literal notranslate"><span class="pre">geom_cladelabel</span></code> (2021-10-14, Thu, &#64;xiangpin, #446)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> supports fill linear gradient colour and round rect background (2021-10-11, Mon; &#64;xiangpin, #449, #444)</p></li>
+<li><p>work with negative edge lengths (<code class="docutils literal notranslate"><span class="pre">hclust</span></code> may generate negative tree heights) (2021-09-29, Wed; &#64;xiangpin, #441, #445)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-5">
+<h1>ggtree 3.1.5<a class="headerlink" href="#ggtree-3-1-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ggdensitree</span></code> with <code class="docutils literal notranslate"><span class="pre">align.tips=TRUE</span></code> sets max x to 0 (2021-09-26, Sun; &#64;brj1, #437, #439)</p></li>
+<li><p>custom column headers for <code class="docutils literal notranslate"><span class="pre">gheatmap</span></code> (2021-09-15, Wed, &#64;matt-sd-watson, #434)</p></li>
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">nudge_x</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_segment2</span></code> (2021-09-03, Fri; &#64;xiangpin, #433)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-4">
+<h1>ggtree 3.1.4<a class="headerlink" href="#ggtree-3-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>introduce <code class="docutils literal notranslate"><span class="pre">align</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> (2021-08-30, Mon; &#64;xiangpin, #431)</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">data</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_facet</span></code> now accepts function as input (2021-08-22, Sun; &#64;xiangpin, #430)</p></li>
+<li><p>import <code class="docutils literal notranslate"><span class="pre">ggfun</span></code> and <code class="docutils literal notranslate"><span class="pre">yulab.utils</span></code> (2021-08-20, Fri)</p></li>
+<li><p>allow using <code class="docutils literal notranslate"><span class="pre">options(layout.radial.linetype)</span></code> to set linetype of radial layout (either ‘strainght’ or ‘curved’) (2021-08-13, Fri; &#64;xiangpin, #427)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-3">
+<h1>ggtree 3.1.3<a class="headerlink" href="#ggtree-3-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> argument in <code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> argument in <code class="docutils literal notranslate"><span class="pre">geom_tree</span></code> (2021-08-10, Tue; #426, &#64;xiangpin)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_cladelab</span></code> supports function as input data (2021-07-28, Wed; #421, &#64;xiangpin)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">td_mutate</span></code> for mutating tree data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> supports fontface aesthetic (2021-07-06, Tue; &#64;xiangpin)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-2">
+<h1>ggtree 3.1.2<a class="headerlink" href="#ggtree-3-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>calculate branch mid point for unrooted layout tree (2021-06-11, Fri)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">branch.y</span></code> and <code class="docutils literal notranslate"><span class="pre">branch.x</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_range</span></code> supports aes mapping (2021-06-04, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-1-1">
+<h1>ggtree 3.1.1<a class="headerlink" href="#ggtree-3-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">geom_range</span></code> (2021-06-01, Tue)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/410">YuLab-SMU/ggtree#410</a></p></li>
+</ul>
+</li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">geom_nodelab</span></code> has a <code class="docutils literal notranslate"><span class="pre">node=&quot;internal&quot;</span></code> parameter. (2021-05-31, Mon)</p>
+<ul>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">=</span> <span class="pre">&quot;external&quot;</span></code>, it equivalent to `geom_tiplab</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">=</span> <span class="pre">&quot;all&quot;</span></code>, it equivalent to <code class="docutils literal notranslate"><span class="pre">list(geom_tiplab(),</span> <span class="pre">geom_nodelab())</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-3-0-0">
+<h1>ggtree 3.0.0<a class="headerlink" href="#ggtree-3-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.13 relese</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-5-3">
+<h1>ggtree 2.5.3<a class="headerlink" href="#ggtree-2-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>optimize text angle in <code class="docutils literal notranslate"><span class="pre">geom_cladelab</span></code> (2021-05-10, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/396">YuLab-SMU/ggtree#396</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-5-2">
+<h1>ggtree 2.5.2<a class="headerlink" href="#ggtree-2-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>extend ‘continuous’ parameter to support 4 possible values, i.e., ‘none’ to disable continuous transition,  ‘color’ (or ‘colour’) to enable continuous color transition, ‘size’ to enable continuous size (branch thickness) transition and ‘all’ to enable continuous color and size transition (2021-04-07, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/385">YuLab-SMU/ggtree#385</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/387">YuLab-SMU/ggtree#387</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extendto</span></code> argument for <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> now compatible with ‘inward_circular’ and ‘dendrogram’ layouts (2021-02-25, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/379">YuLab-SMU/ggtree#379</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-5-1">
+<h1>ggtree 2.5.1<a class="headerlink" href="#ggtree-2-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update man file of <code class="docutils literal notranslate"><span class="pre">geom_rootpoint</span></code> (2021-01-08, Fri)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code> and <code class="docutils literal notranslate"><span class="pre">offset.label</span></code> introduced in <code class="docutils literal notranslate"><span class="pre">geom_treescale</span></code> layer (2020-12-23, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/360">YuLab-SMU/ggtree#360</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_rootedge</span></code> supports reversed x (2020-12-17, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/358">YuLab-SMU/ggtree#358</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_nodelab()</span></code> now supports circular layout (2020-11-26, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/352">YuLab-SMU/ggtree#352</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/353">YuLab-SMU/ggtree#353</a></p></li>
+</ul>
+</li>
+<li><p>branch size can be grandualy changed (2020-10-29, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/349">YuLab-SMU/ggtree#349</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-4-0">
+<h1>ggtree 2.4.0<a class="headerlink" href="#ggtree-2-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.12 release (2020-10-28, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-7">
+<h1>ggtree 2.3.7<a class="headerlink" href="#ggtree-2-3-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">label_pad()</span></code> function to add padding characters to taxa labels (2020-10-09, Fri)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/g/bioc-ggtree/c/INJ0Nfkq3b0/m/lXefnfV5AQAJ">https://groups.google.com/g/bioc-ggtree/c/INJ0Nfkq3b0/m/lXefnfV5AQAJ</a></p></li>
+</ul>
+</li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">family</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">geom_tiplab()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-6">
+<h1>ggtree 2.3.6<a class="headerlink" href="#ggtree-2-3-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new layouts, <code class="docutils literal notranslate"><span class="pre">roundrect</span></code> and <code class="docutils literal notranslate"><span class="pre">ellipse</span></code></p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/344">YuLab-SMU/ggtree#344</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/346">YuLab-SMU/ggtree#346</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fortify()</span></code> method for <code class="docutils literal notranslate"><span class="pre">treedataList</span></code> object (2020-09-20, Sun)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vexpand()</span></code> and <code class="docutils literal notranslate"><span class="pre">ggexpand()</span></code> to expand plot limit by ratio of plot range (2020-09-18, Fri)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_cladelab()</span></code>, an updated version of <code class="docutils literal notranslate"><span class="pre">geom_cladelabel</span></code> that supports aes mapping (2020-09-17, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/342">YuLab-SMU/ggtree#342</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-5">
+<h1>ggtree 2.3.5<a class="headerlink" href="#ggtree-2-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">td_unnest()</span></code> which return a function to flatten ggtree plot data (2020-09-14, Mon)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.top/treedata-book/chapter12.html#td_unnest">https://yulab-smu.top/treedata-book/chapter12.html#td_unnest</a></p></li>
+</ul>
+</li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> to support <code class="docutils literal notranslate"><span class="pre">geom_hilight(data</span> <span class="pre">=</span> <span class="pre">mydata,</span> <span class="pre">node</span> <span class="pre">=</span> <span class="pre">selected_node)</span></code> (2020-09-03, Thu)</p></li>
+<li><p>Defunct <code class="docutils literal notranslate"><span class="pre">geom_nodelab2()</span></code> (2020-09-02, Wed)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_tiplab()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_nodelab()</span></code> support <code class="docutils literal notranslate"><span class="pre">geom</span> <span class="pre">=</span> <span class="pre">&quot;shadowtext&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">td_filter()</span></code> which return a function to subset ggtree plot data in geom layers (2020-08-29, Sat)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.top/treedata-book/chapter12.html#td_filter">https://yulab-smu.top/treedata-book/chapter12.html#td_filter</a></p></li>
+</ul>
+</li>
+<li><p>update man files of <code class="docutils literal notranslate"><span class="pre">geom_rootedge</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_point2</span></code></p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> to support <code class="docutils literal notranslate"><span class="pre">geom_hilight(data</span> <span class="pre">=</span> <span class="pre">tbl_tree,</span> <span class="pre">node</span> <span class="pre">=</span> <span class="pre">selected_node)</span></code>. (2020-09-03, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-4">
+<h1>ggtree 2.3.4<a class="headerlink" href="#ggtree-2-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">zoomClade</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_zoom_clade</span></code> to zoom in selected clade (2020-08-04, Tue)</p>
+<ul>
+<li><p>these two functions are wrapper function of <code class="docutils literal notranslate"><span class="pre">ggforce::facet_zoom</span></code></p></li>
+</ul>
+</li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">facet_labeller</span></code> according to the change of <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> (2020-07-28, Tue)</p></li>
+<li><p>defunct <code class="docutils literal notranslate"><span class="pre">set_hilight_legend</span></code> as now <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> supports aesthetic mapping and can generate legend automotically</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">annotation_image</span></code>, <code class="docutils literal notranslate"><span class="pre">phylopic</span></code> and <code class="docutils literal notranslate"><span class="pre">subview</span></code> as they were defunct for quite a long time. Users should refer to the <code class="docutils literal notranslate"><span class="pre">ggimage</span></code> package if they want to annotate tree with image or subplots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_ylab</span></code> parameter added in <code class="docutils literal notranslate"><span class="pre">geom_tiplab()</span></code>, which supports displaying tip labels as y-axis label and only works for rectangular and dendrogram layouts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hexpand</span></code> to expand x limits by ratio of x range and supports both direction (1 for rhs and -1 for lhs) (2020-07-27, Mon)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-3">
+<h1>ggtree 2.3.3<a class="headerlink" href="#ggtree-2-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">type</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code>, default is <code class="docutils literal notranslate"><span class="pre">auto</span></code>, optional <code class="docutils literal notranslate"><span class="pre">rect</span></code>
+to <code class="docutils literal notranslate"><span class="pre">rectangular</span></code> layer, <code class="docutils literal notranslate"><span class="pre">encircle</span></code> to <code class="docutils literal notranslate"><span class="pre">encircle</span></code> layer and comment original
+<code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code>, and support <code class="docutils literal notranslate"><span class="pre">subset</span></code> in aesthetic. (2020-07-23, Thu)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> to support aesthetic mapping (2020-07-22, Wed)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_taxalink</span></code> to support aesthetic mapping (2020-07-20, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_inward_circular</span></code> for <code class="docutils literal notranslate"><span class="pre">layout_circular()</span> <span class="pre">+</span> <span class="pre">scale_x_reverse()</span></code> (2020-07-16, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-2">
+<h1>ggtree 2.3.2<a class="headerlink" href="#ggtree-2-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_taxalink</span></code> to support circular layout tree (2020-07-13, Mon).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-3-1">
+<h1>ggtree 2.3.1<a class="headerlink" href="#ggtree-2-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fortify</span></code> method for <code class="docutils literal notranslate"><span class="pre">pvclust</span></code> object (2020-06-21, Mon)</p></li>
+<li><p>add dot parameters for color or size of <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> and more detail messages of
+warnings for <code class="docutils literal notranslate"><span class="pre">extendto</span></code>. (2020-06-16, Tue)</p></li>
+<li><p>modified the angle of clade labels. Added horizontal parameter to control
+whether set clade labels to horizontal. When the parameter was set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>,
+it will be useful for the layouts in <code class="docutils literal notranslate"><span class="pre">coord_polar</span></code>, such as <code class="docutils literal notranslate"><span class="pre">circular</span></code>, <code class="docutils literal notranslate"><span class="pre">fan</span></code>,
+<code class="docutils literal notranslate"><span class="pre">radial</span></code>. To better view the clade labels, their angles has been adjusted. (2020-06-15, Mon)</p></li>
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">getYcoord_scale_category</span></code> (2020-05-13, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-2-0">
+<h1>ggtree 2.2.0<a class="headerlink" href="#ggtree-2-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.11 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-6">
+<h1>ggtree 2.1.6<a class="headerlink" href="#ggtree-2-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">geom_tiplab()</span></code> works with unrooted layouts (<code class="docutils literal notranslate"><span class="pre">ape</span></code>, <code class="docutils literal notranslate"><span class="pre">equal_angle</span></code> and <code class="docutils literal notranslate"><span class="pre">daylight</span></code>) (2020-04-23, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/292">YuLab-SMU/ggtree#292</a></p></li>
+</ul>
+</li>
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">layoutEqualAngle</span></code> (2020-04-09, Thu)</p>
+<ul>
+<li><p>in tibble v=3.0.0, df<span class="math notranslate nohighlight">\(x = NA will store df\)</span>x as lgl variable and assign numeric value to df<span class="math notranslate nohighlight">\(x will throw error. Now change to df\)</span>x = 0 in <code class="docutils literal notranslate"><span class="pre">layoutEqualAngle</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-5">
+<h1>ggtree 2.1.5<a class="headerlink" href="#ggtree-2-1-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of calculating inset width and height</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/289">YuLab-SMU/ggtree#289</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-4">
+<h1>ggtree 2.1.4<a class="headerlink" href="#ggtree-2-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>import <code class="docutils literal notranslate"><span class="pre">aplot::xrange</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-3">
+<h1>ggtree 2.1.3<a class="headerlink" href="#ggtree-2-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>move <code class="docutils literal notranslate"><span class="pre">xlim2</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim2</span></code> to aplot package (2020-03-30, Mon)</p>
+<ul>
+<li><p><a class="reference external" href="https://cran.r-project.org/package=aplot">https://cran.r-project.org/package=aplot</a></p></li>
+</ul>
+</li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">mutate_</span></code> as it was deprecated in dplyr (2020-03-25, Wed)</p></li>
+<li><p>fixed mutate bug caused by new version of dplyr and tidytree in daylight layout (2020-03-16, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/282">YuLab-SMU/ggtree#282</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-2">
+<h1>ggtree 2.1.2<a class="headerlink" href="#ggtree-2-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">expand_scale</span></code> was deprecated in ggplot2 v=3.3.0, import <code class="docutils literal notranslate"><span class="pre">expansion</span></code> instead (2020-03-12, Thu)</p></li>
+<li><p>bug fixed of determined layout for <code class="docutils literal notranslate"><span class="pre">ggplot(tree)</span> <span class="pre">+</span> <span class="pre">geom_tiplab()</span></code> (2020-01-26, Sun)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/272">YuLab-SMU/ggtree#272</a></p></li>
+</ul>
+</li>
+<li><p>set unrooted layout to use <code class="docutils literal notranslate"><span class="pre">coord_fixed</span></code> by default (2020-01-25, Sat)</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">=</span> <span class="pre">&quot;ape&quot;</span></code>, use ape unrooted layout</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/273">YuLab-SMU/ggtree#273</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-1-1">
+<h1>ggtree 2.1.1<a class="headerlink" href="#ggtree-2-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>export <code class="docutils literal notranslate"><span class="pre">geom_highlight</span></code> as an alias of <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> (2020-01-08, Wed)</p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">clip=&quot;off&quot;</span></code> for all layouts (2019-12-06, Fri)</p></li>
+<li><p>not passing <code class="docutils literal notranslate"><span class="pre">fontface</span></code> if <code class="docutils literal notranslate"><span class="pre">geom</span></code> is <code class="docutils literal notranslate"><span class="pre">image</span></code> or <code class="docutils literal notranslate"><span class="pre">phylopic</span></code> in <code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_nodelab</span></code> (2019-11-29, Fri)</p></li>
+<li><p>import and re-export <code class="docutils literal notranslate"><span class="pre">guide_legend</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_colour_manual</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_color_manual</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_fill_manual</span></code> and <code class="docutils literal notranslate"><span class="pre">margin</span></code> from <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offspring</span></code> method for <code class="docutils literal notranslate"><span class="pre">ggtree</span></code> object (2019-11-21, Thu)</p></li>
+<li><p>fixed <code class="docutils literal notranslate"><span class="pre">revts</span></code> to work with <code class="docutils literal notranslate"><span class="pre">collapse</span></code> (2019-11-18, Mon)</p></li>
+<li><p>convert roxygen documents using markdown (2019-11-01, Fri)</p></li>
+<li><p>extend <code class="docutils literal notranslate"><span class="pre">xlim2</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim2</span></code> to support discrete scale.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xlim2</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim2</span></code> to uniformize axis limits of ggplot objects (2019-10-31, Thu)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter7.html#composite_plot">https://yulab-smu.github.io/treedata-book/chapter7.html#composite_plot</a></p></li>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/docs/chapter10.html#axis_align">https://yulab-smu.github.io/treedata-book/docs/chapter10.html#axis_align</a></p></li>
+</ul>
+</li>
+<li><p>fixed <code class="docutils literal notranslate"><span class="pre">fontface</span></code> warning message when <code class="docutils literal notranslate"><span class="pre">align=TRUE</span></code> in <code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> (2019-10-30, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/issues/260">YuLab-SMU/ggtree#260</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-2-0-0">
+<h1>ggtree 2.0.0<a class="headerlink" href="#ggtree-2-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.10 release (2019-10-30, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-99-1">
+<h1>ggtree 1.99.1<a class="headerlink" href="#ggtree-1-99-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> for <code class="docutils literal notranslate"><span class="pre">tree$edge.length</span> <span class="pre">=</span> <span class="pre">NULL</span></code> (2019-10-16, Wed)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msg/bioc-ggtree/GULj-eoAluI/Llpm-HbfCwAJ">https://groups.google.com/d/msg/bioc-ggtree/GULj-eoAluI/Llpm-HbfCwAJ</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fortify</span></code> method for igraph (only work with tree graph) (2019-09-28, Sat)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ggdensitree</span></code> (2019-09-11, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/253">YuLab-SMU/ggtree#253</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/ggtree/pull/255">YuLab-SMU/ggtree#255</a></p></li>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter4.html#visualize-a-list-of-trees">https://yulab-smu.github.io/treedata-book/chapter4.html#visualize-a-list-of-trees</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-99-0">
+<h1>ggtree 1.99.0<a class="headerlink" href="#ggtree-1-99-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>prepare for ggtree v=2.0.0</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-17-5">
+<h1>ggtree 1.17.5<a class="headerlink" href="#ggtree-1-17-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fortify</span></code> methods for hierarchical clustering objects, including <code class="docutils literal notranslate"><span class="pre">agnes</span></code>, <code class="docutils literal notranslate"><span class="pre">diana</span></code> and <code class="docutils literal notranslate"><span class="pre">twins</span></code> (2019-08-30, Fri)</p></li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">geom_hilight</span></code> supports <code class="docutils literal notranslate"><span class="pre">unrooted</span></code> and <code class="docutils literal notranslate"><span class="pre">daylight</span></code> layouts (2019-08-28, Wed)</p>
+<ul>
+<li><p>by calling <code class="docutils literal notranslate"><span class="pre">geom_hilight_encircle</span></code></p></li>
+</ul>
+</li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">geom_motif</span></code> according to the change of <code class="docutils literal notranslate"><span class="pre">gggenes</span></code> and allow labeling genes (2019-08-27, Tue)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter11.html#genome-locus">https://yulab-smu.github.io/treedata-book/chapter11.html#genome-locus</a></p></li>
+</ul>
+</li>
+<li><p>re-implement <code class="docutils literal notranslate"><span class="pre">geom_strip</span></code> with more robust support of labelling strip, either input taxa using name or id.</p></li>
+<li><p>support <code class="docutils literal notranslate"><span class="pre">phylog</span></code> defined in ade4 package (2019-08-14, Wed)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter9.html#phylog">https://yulab-smu.github.io/treedata-book/chapter9.html#phylog</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-17-4">
+<h1>ggtree 1.17.4<a class="headerlink" href="#ggtree-1-17-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>now <code class="docutils literal notranslate"><span class="pre">geom_cladelabel</span></code> supports <code class="docutils literal notranslate"><span class="pre">unrooted</span></code> and <code class="docutils literal notranslate"><span class="pre">daylight</span></code> layouts (2019-08-14, Wed)</p>
+<ul>
+<li><p>by integrating <code class="docutils literal notranslate"><span class="pre">geom_cladelabel2</span></code></p></li>
+</ul>
+</li>
+<li><p>defined <code class="docutils literal notranslate"><span class="pre">nodelab</span></code> method for ggtree to convert node number to label (2019-08-09, Fir)</p></li>
+<li><p>redefined <code class="docutils literal notranslate"><span class="pre">nodeid</span></code> as S3 generic in <code class="docutils literal notranslate"><span class="pre">tidytree</span></code> v=0.2.6</p>
+<ul>
+<li><p>change the original function as a method for ggtree</p></li>
+<li><p>move the <code class="docutils literal notranslate"><span class="pre">nodeid</span></code> function for tree object to treeio</p></li>
+</ul>
+</li>
+<li><p>defunct <code class="docutils literal notranslate"><span class="pre">gzoom</span></code> function</p></li>
+<li><p>introduce <code class="docutils literal notranslate"><span class="pre">rootnode</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_tree</span></code> with default = TRUE and behave as previous version (2019-08-08, Thu)</p>
+<ul>
+<li><p>the invisible root to itself line segment have advantage for the number of line segments is consistent with the number of nodes.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">rootnode</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>, there will be no line segment of root to itself.</p></li>
+</ul>
+</li>
+<li><p>extend <code class="docutils literal notranslate"><span class="pre">gheatmap</span></code> to support collapsed node (2019-08-06, Tue)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/243">GuangchuangYu/ggtree#243</a></p></li>
+</ul>
+</li>
+<li><p>support <code class="docutils literal notranslate"><span class="pre">hclust</span></code> and <code class="docutils literal notranslate"><span class="pre">dendrogram</span></code> (2019-07-31, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-17-3">
+<h1>ggtree 1.17.3<a class="headerlink" href="#ggtree-1-17-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>remove re-export treeio parser function, user now need to load treeio explictly (2019-07-24, Wed)</p></li>
+<li><p>export <code class="docutils literal notranslate"><span class="pre">layout_circular</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_fan</span></code> and <code class="docutils literal notranslate"><span class="pre">layout_rectangular</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_dendrogram</span></code> and <code class="docutils literal notranslate"><span class="pre">theme_dendrogram</span></code></p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter10.html#dendrogram">https://yulab-smu.github.io/treedata-book/chapter10.html#dendrogram</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_x_range</span></code> for adding second x-axis for <code class="docutils literal notranslate"><span class="pre">geom_range</span></code> (2019-07-23, Tue)</p></li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">branch.length</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">center</span></code> for <code class="docutils literal notranslate"><span class="pre">geom_range</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-17-2">
+<h1>ggtree 1.17.2<a class="headerlink" href="#ggtree-1-17-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>extend <code class="docutils literal notranslate"><span class="pre">expand</span></code> according to the change of <code class="docutils literal notranslate"><span class="pre">collapse</span></code> (2019-07-11, Thu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">collapse</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_tiplab</span></code> now works with ‘circular’ and ‘fan’ layouts (2019-07-05, Fri)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_inset</span></code> for adding subplots to specific nodes (see also the <code class="docutils literal notranslate"><span class="pre">inset</span></code> function introduced in v=1.3.8)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-17-1">
+<h1>ggtree 1.17.1<a class="headerlink" href="#ggtree-1-17-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_data</span></code> to extract data used in <code class="docutils literal notranslate"><span class="pre">facet_plot</span></code> or <code class="docutils literal notranslate"><span class="pre">geom_facet</span></code> (2019-07-02, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">continuous</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_tree</span></code> to to continuous color edge from parent to child (2019-09-25, Tue)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter4.html#color-tree">https://yulab-smu.github.io/treedata-book/chapter4.html#color-tree</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">root.position</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">fortify</span></code> and <code class="docutils literal notranslate"><span class="pre">ggtree</span></code> (2019-05-27, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_facet</span></code>, a geom layer version of <code class="docutils literal notranslate"><span class="pre">facet_plot</span></code> (2019-05-23, Thu)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">scale_x_ggtree</span></code>, now we can use <code class="docutils literal notranslate"><span class="pre">gheatmap()</span> <span class="pre">+</span> <span class="pre">scale_x_ggtree()</span></code> (2019-05-22, Wed)</p></li>
+<li><p>extend <code class="docutils literal notranslate"><span class="pre">xlim_expand</span></code> to work with <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> (2019-05-20, Tue)</p>
+<ul>
+<li><p><a class="reference external" href="https://yulab-smu.github.io/treedata-book/chapter9.html#xlim_expand">https://yulab-smu.github.io/treedata-book/chapter9.html#xlim_expand</a></p></li>
+</ul>
+</li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">legend_title</span></code> variable in <code class="docutils literal notranslate"><span class="pre">gheatmap</span></code> (2019-05-16, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-16-0">
+<h1>ggtree 1.16.0<a class="headerlink" href="#ggtree-1-16-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.9 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-6">
+<h1>ggtree 1.15.6<a class="headerlink" href="#ggtree-1-15-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>compatible with range is NULL in <code class="docutils literal notranslate"><span class="pre">geom_range</span></code> (2019-04-27, Sat)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msg/bioc-ggtree/yNzjtioVVGU/MCh3MPl_CwAJ">https://groups.google.com/d/msg/bioc-ggtree/yNzjtioVVGU/MCh3MPl_CwAJ</a></p></li>
+</ul>
+</li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">getChild</span></code>, <code class="docutils literal notranslate"><span class="pre">getChild.df</span></code>, <code class="docutils literal notranslate"><span class="pre">getParent</span></code>, <code class="docutils literal notranslate"><span class="pre">getParent.df</span></code>, <code class="docutils literal notranslate"><span class="pre">getSibling</span></code>, <code class="docutils literal notranslate"><span class="pre">getAncestor</span></code> and <code class="docutils literal notranslate"><span class="pre">getAncestor.df</span></code>,
+instead use <code class="docutils literal notranslate"><span class="pre">child</span></code>, <code class="docutils literal notranslate"><span class="pre">parent</span></code>, <code class="docutils literal notranslate"><span class="pre">sibling</span></code> and <code class="docutils literal notranslate"><span class="pre">ancestor</span></code> methods implemented in <code class="docutils literal notranslate"><span class="pre">tidytree</span></code> and <code class="docutils literal notranslate"><span class="pre">treeio</span></code> (2019-01-30, Wed)</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">get.offspring.df</span></code> and <code class="docutils literal notranslate"><span class="pre">get.offspring.tip</span></code> and instead use <code class="docutils literal notranslate"><span class="pre">tidytree::offspring</span></code> (2019-01-28, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_widths</span></code> function to set relative widths of facet panels (2019-01-28, Mon)</p>
+<ul>
+<li><p>the output is <code class="docutils literal notranslate"><span class="pre">ggplotify::as.ggplot(grid_object)</span></code>, so it is not the original <code class="docutils literal notranslate"><span class="pre">ggtree</span></code> object.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-5">
+<h1>ggtree 1.15.5<a class="headerlink" href="#ggtree-1-15-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">theme_tree2</span></code> (2019-01-14, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/218">GuangchuangYu/ggtree#218</a></p></li>
+</ul>
+</li>
+<li><p>mv <code class="docutils literal notranslate"><span class="pre">rescale_tree</span></code> to <code class="docutils literal notranslate"><span class="pre">treeio</span></code> (2019-01-11, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-4">
+<h1>ggtree 1.15.4<a class="headerlink" href="#ggtree-1-15-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>reimplement <code class="docutils literal notranslate"><span class="pre">MRCA</span></code> as a method inherited from <code class="docutils literal notranslate"><span class="pre">tidytree</span></code> (2019-01-10, Thu)</p></li>
+<li><p>mv vignettes to <a class="reference external" href="https://yulab-smu.github.io/treedata-book/">treedata-book</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-3">
+<h1>ggtree 1.15.3<a class="headerlink" href="#ggtree-1-15-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>move <code class="docutils literal notranslate"><span class="pre">reroot</span></code> method to <code class="docutils literal notranslate"><span class="pre">treeio</span></code> package and rename to <code class="docutils literal notranslate"><span class="pre">root</span></code> (2018-12-28, Fri)</p></li>
+<li><p>bug fixed for setting <code class="docutils literal notranslate"><span class="pre">branch.length=&quot;none&quot;</span></code> in unrooted layouts (2018-12-26, Wed)</p>
+<ul>
+<li><p>bug introduced in <a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/201">GuangchuangYu/ggtree#201</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-2">
+<h1>ggtree 1.15.2<a class="headerlink" href="#ggtree-1-15-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>compatible with <code class="docutils literal notranslate"><span class="pre">tibble</span></code> v=2.0.0 (2018-11-29, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-15-1">
+<h1>ggtree 1.15.1<a class="headerlink" href="#ggtree-1-15-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>now <code class="docutils literal notranslate"><span class="pre">revts</span></code> also reverse the <code class="docutils literal notranslate"><span class="pre">branch</span></code> column (2018-11-11, Sun)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msgid/bioc-ggtree/50765a34-53e5-44d2-bb8f-6d20a11fa890%40googlegroups.com">https://groups.google.com/d/msgid/bioc-ggtree/50765a34-53e5-44d2-bb8f-6d20a11fa890%40googlegroups.com</a></p></li>
+</ul>
+</li>
+<li><p>better msg when taxa name not consistent in sequence and tree files with <code class="docutils literal notranslate"><span class="pre">msaplot</span></code>. (2018-11-07, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/172#issuecomment-436585370">GuangchuangYu/ggtree#172</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-14-0">
+<h1>ggtree 1.14.0<a class="headerlink" href="#ggtree-1-14-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.8 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-13-6">
+<h1>ggtree 1.13.6<a class="headerlink" href="#ggtree-1-13-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>set <code class="docutils literal notranslate"><span class="pre">scale_y_continuous(expand</span> <span class="pre">=</span> <span class="pre">c(0,</span> <span class="pre">0))</span></code> for <code class="docutils literal notranslate"><span class="pre">gheatmap</span></code> when <code class="docutils literal notranslate"><span class="pre">colnames</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> (2018-10-17, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/204">GuangchuangYu/ggtree#204</a></p></li>
+</ul>
+</li>
+<li><p>made data usable with treedata in ‘equal_angle’ and ‘daylight’ layouts (2018-10-11, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/201">GuangchuangYu/ggtree#201</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-13-5">
+<h1>ggtree 1.13.5<a class="headerlink" href="#ggtree-1-13-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>enable additional parameters passed to <code class="docutils literal notranslate"><span class="pre">geom_rootedge</span></code> (2018-09-13, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/195">GuangchuangYu/ggtree#195</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_labeller</span></code> to label panels of <code class="docutils literal notranslate"><span class="pre">facet_plot</span></code> output (2018-09-10, Mon)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/forum/?utm_medium=email&amp;amp;utm_source=footer#!msg/bioc-ggtree/nAl3bNswxQM/crBwKtS3BAAJ">https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/bioc-ggtree/nAl3bNswxQM/crBwKtS3BAAJ</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-13-3">
+<h1>ggtree 1.13.3<a class="headerlink" href="#ggtree-1-13-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">viewClade</span></code> according to the change of <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> (2018-08-07, Tue)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/188">GuangchuangYu/ggtree#188</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-13-2">
+<h1>ggtree 1.13.2<a class="headerlink" href="#ggtree-1-13-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>xmax_adjust  in <code class="docutils literal notranslate"><span class="pre">viewClade</span></code> (2018-07-21, Sat)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/187">GuangchuangYu/ggtree#187</a></p></li>
+</ul>
+</li>
+<li><p>update rd of <code class="docutils literal notranslate"><span class="pre">facet_plot</span></code> by adding description and example (2018-07-19, Thu)</p></li>
+<li><p>order by y in <code class="docutils literal notranslate"><span class="pre">facet_plot</span></code> (2018-07-09, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extend</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">geom_cladelabel</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_strip</span></code> supports specifying
+extension of both sides (2018-07-06, Fri)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_nodelab2</span></code> for circular layout (2018-07-03, Tue)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msgid/bioc-ggtree/cbe5e1e3-99c4-481d-8523-d5b50cf0460b%40googlegroups.com">https://groups.google.com/d/msgid/bioc-ggtree/cbe5e1e3-99c4-481d-8523-d5b50cf0460b%40googlegroups.com</a></p></li>
+</ul>
+</li>
+<li><p>re-export <code class="docutils literal notranslate"><span class="pre">ggplot2::fortify</span></code></p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msgid/bioc-ggtree/bf7a9b3c-9a8f-4d8d-a782-1b467fba38bc%40googlegroups.com">https://groups.google.com/d/msgid/bioc-ggtree/bf7a9b3c-9a8f-4d8d-a782-1b467fba38bc%40googlegroups.com</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-13-1">
+<h1>ggtree 1.13.1<a class="headerlink" href="#ggtree-1-13-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_nodepoint</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">geom_tippoint</span></code> now compatible with <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> v 2.2.1 &amp;
+3.0.0 (2018-06-26, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_rootedge</span></code> (2018-06-13, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/183">GuangchuangYu/ggtree#183</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clade_name</span></code> parameter added in <code class="docutils literal notranslate"><span class="pre">collapse</span></code> (2018-05-28, Mon)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/forum/?utm_medium=email&amp;amp;utm_source=footer#!msg/bioc-ggtree/0H1PCJPlI1Q/DeZf9EVhBQAJ">https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/bioc-ggtree/0H1PCJPlI1Q/DeZf9EVhBQAJ</a></p></li>
+</ul>
+</li>
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">gheatmap</span></code> for rowname subsetting is partial match in R
+(2018-05-23, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/182">GuangchuangYu/ggtree#182</a></p></li>
+</ul>
+</li>
+<li><p>compatible with ggplot2 2.2.1.9000 for <code class="docutils literal notranslate"><span class="pre">geom_text2(parse=&quot;emoji&quot;)</span></code></p></li>
+<li><p>typo on vignettes (2018-05-08, Tue)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/178">GuangchuangYu/ggtree#178</a>, thanks <a class="reference external" href="https://github.com/abichat">&#64;abichat</a></p></li>
+</ul>
+</li>
+<li><p>compatible with ggplot2 2.2.1.9000 (2018-05-02, Wed)</p>
+<ul>
+<li><p>incorporate newly introduce parameter <code class="docutils literal notranslate"><span class="pre">linejoin</span></code> and <code class="docutils literal notranslate"><span class="pre">arrow.fill</span></code> in <code class="docutils literal notranslate"><span class="pre">geom_segment</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-12-0">
+<h1>ggtree 1.12.0<a class="headerlink" href="#ggtree-1-12-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.7 release (2018-05-01, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-11-6">
+<h1>ggtree 1.11.6<a class="headerlink" href="#ggtree-1-11-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>reexport <code class="docutils literal notranslate"><span class="pre">treeio::read.iqtree</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">treeio::read.astral</span></code>(2018-04-17, Tue)</p></li>
+<li><p>now geom_treescale will plot the text that can <strong>always</strong> be separated from
+the bar (2018-03-07, Wed)</p></li>
+<li><p>optimize daylight layout</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/165">GuangchuangYu/ggtree#165</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/pull/169">GuangchuangYu/ggtree#169</a></p></li>
+</ul>
+</li>
+<li><p>geom_tiplab2 works with mapping = aes(subset) defined by users  (2018-02-24, Sta)</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msgid/bioc-ggtree/72e18c5b-0ce5-4c25-80fa-3e2dabda8f72%40googlegroups.com">https://groups.google.com/d/msgid/bioc-ggtree/72e18c5b-0ce5-4c25-80fa-3e2dabda8f72%40googlegroups.com</a></p></li>
+</ul>
+</li>
+<li><p>fixed overlapping branch after <code class="docutils literal notranslate"><span class="pre">flip</span></code></p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/ggtree/issues/167">GuangchuangYu/ggtree#167</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-11-5">
+<h1>ggtree 1.11.5<a class="headerlink" href="#ggtree-1-11-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support passing <code class="docutils literal notranslate"><span class="pre">aes(subset)</span></code> in geom_tippoint (2018-01-30, Tue)</p></li>
+<li><p>support passing <code class="docutils literal notranslate"><span class="pre">aes(subset)</span></code> in geom_nodepoint (2018-01-26, Fri)</p></li>
+<li><p>fine tune y position after flip; flip compatible with collapse</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/d/msgid/bioc-ggtree/1d06342c-9645-4f71-9e66-7d7a7099bf0b%40googlegroups.com?utm_medium=email&amp;amp;utm_source=footer">https://groups.google.com/d/msgid/bioc-ggtree/1d06342c-9645-4f71-9e66-7d7a7099bf0b%40googlegroups.com?utm_medium=email&amp;utm_source=footer</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggtree-1-11-4">
+<h1>ggtree 1.11.4<a class="headerlink" href="#ggtree-1-11-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>re-implement collapse as collapse.ggtree method by importing dplyr::collapse
+generic to prevent function name collision (2018-01-03, Wed)</p></li>
+<li><p>update treeVisualization vignette, with more layout examples added (2017-12-22, Fri)</p></li>
+<li><p>update vignette (2017-12-21, Thu)</p>
+<ul>
+<li><p>remove ggtreeUtilities.Rmd</p></li>
+<li><p>merge treeAnnotation and advanceTreeAnnotation</p></li>
+</ul>
+</li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\ggtree"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggtree 3.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-13-1">ggtree 3.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-12-0">ggtree 3.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-11-2">ggtree 3.11.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-11-1">ggtree 3.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-10-0">ggtree 3.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-9-1">ggtree 3.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-8-0">ggtree 3.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-7-2">ggtree 3.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-7-1">ggtree 3.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-6-0">ggtree 3.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-3">ggtree 3.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-2">ggtree 3.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-5-1">ggtree 3.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-4-0">ggtree 3.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-3">ggtree 3.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-2">ggtree 3.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-3-1">ggtree 3.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-2-0">ggtree 3.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-6">ggtree 3.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-5">ggtree 3.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-4">ggtree 3.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-3">ggtree 3.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-2">ggtree 3.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-1-1">ggtree 3.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-3-0-0">ggtree 3.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-3">ggtree 2.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-2">ggtree 2.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-5-1">ggtree 2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-4-0">ggtree 2.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-7">ggtree 2.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-6">ggtree 2.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-5">ggtree 2.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-4">ggtree 2.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-3">ggtree 2.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-2">ggtree 2.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-3-1">ggtree 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-2-0">ggtree 2.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-6">ggtree 2.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-5">ggtree 2.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-4">ggtree 2.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-3">ggtree 2.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-2">ggtree 2.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-1-1">ggtree 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-2-0-0">ggtree 2.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-99-1">ggtree 1.99.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-99-0">ggtree 1.99.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-5">ggtree 1.17.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-4">ggtree 1.17.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-3">ggtree 1.17.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-2">ggtree 1.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-17-1">ggtree 1.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-16-0">ggtree 1.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-6">ggtree 1.15.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-5">ggtree 1.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-4">ggtree 1.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-3">ggtree 1.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-2">ggtree 1.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-15-1">ggtree 1.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-14-0">ggtree 1.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-6">ggtree 1.13.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-5">ggtree 1.13.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-3">ggtree 1.13.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-2">ggtree 1.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-13-1">ggtree 1.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-12-0">ggtree 1.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-6">ggtree 1.11.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-5">ggtree 1.11.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggtree-1-11-4">ggtree 1.11.4</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

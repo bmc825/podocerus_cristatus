@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Feature Comparison ‘parallelly’ vs ‘parallel’ &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/parallelly/doc/parallelly-01-intro';</script>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/parallelly/doc/parallelly-01-intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Feature Comparison ‘parallelly’ vs ‘parallel’</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Feature Comparison ‘parallelly’ vs ‘parallel’</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-with-the-parallel-package">Compatibility with the parallel package</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#availablecores-vs-parallel-detectcores">availableCores() vs parallel::detectCores()</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-compatibility-with-the-future-package">Backward compatibility with the future package</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!--
+%\VignetteIndexEntry{An Introduction to 'parallelly'}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{Rprofile}
+%\VignetteKeyword{Renviron}
+%\VignetteEngine{parallelly::selfonly}
+-->
+<!-- DO NOT EDIT THIS FILE! Edit 'OVERVIEW.md' instead and then rebuild this file with 'make vigs' -->
+<p>The <strong>parallelly</strong> package provides functions that enhance the <strong>parallel</strong> packages.  For example, <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> gives the number of CPU cores available to your R process as given by R options and environment variables, including those set by job schedulers on high-performance compute (HPC) clusters.  If R runs under ‘cgroups’ or in a Linux container, then their settings are acknowledges too.  If nothing else is set, then it will fall back to <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span></code>.  Another example is <code class="docutils literal notranslate"><span class="pre">makeClusterPSOCK()</span></code>, which is backward compatible with <code class="docutils literal notranslate"><span class="pre">parallel::makePSOCKcluster()</span></code> while doing a better job in setting up remote cluster workers without having to know your local public IP address and configuring the firewall to do port-forwarding to your local computer.  The functions and features added to this package are written to be backward compatible with the <strong>parallel</strong> package, such that they may be incorporated there later.  The <strong>parallelly</strong> package comes with an open invitation for the R Core Team to adopt all or parts of its code into the <strong>parallel</strong> package.</p>
+<section id="feature-comparison-parallelly-vs-parallel">
+<h1>Feature Comparison ‘parallelly’ vs ‘parallel’<a class="headerlink" href="#feature-comparison-parallelly-vs-parallel" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head text-center"><p>parallelly</p></th>
+<th class="head text-center"><p>parallel</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>remote clusters without knowing local public IP</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>remote clusters without firewall configuration</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>remote username in ~/.ssh/config</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>R (&gt;= 4.1.0) with <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">=</span> <span class="pre">NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>set workers’ library package path on startup</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>set workers’ environment variables on startup</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>custom workers startup code</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>fallback to RStudio’s SSH and PuTTY’s plink</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>faster, parallel setup of local workers (R &gt;= 4.0.0)</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>✓</p></td>
+</tr>
+<tr class="row-even"><td><p>faster, little-endian protocol by default</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>faster, low-latency socket connections by default</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>validation of cluster at setup</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>✓</p></td>
+</tr>
+<tr class="row-odd"><td><p>attempt to launch failed workers multiple times</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>collect worker details at cluster setup</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>termination of workers if cluster setup fails</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>R (&gt;= 4.0.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>shutdown of cluster by garbage collector</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>combining multiple, existing clusters</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>more informative printing of cluster objects</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>check if local and remote workers are alive</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>restart local and remote workers</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>defaults via options &amp; environment variables</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>respecting CPU resources allocated by cgroups, Linux containers, and HPC schedulers</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>early error if requesting more workers than possible</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>informative error messages</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="compatibility-with-the-parallel-package">
+<h1>Compatibility with the parallel package<a class="headerlink" href="#compatibility-with-the-parallel-package" title="Link to this heading">#</a></h1>
+<p>Any cluster created by the <strong>parallelly</strong> package is fully compatible with the clusters created by the <strong>parallel</strong> package and can be used by all of <strong>parallel</strong>’s functions for cluster processing, e.g. <code class="docutils literal notranslate"><span class="pre">parallel::clusterEvalQ()</span></code> and <code class="docutils literal notranslate"><span class="pre">parallel::parLapply()</span></code>.  The <code class="docutils literal notranslate"><span class="pre">parallelly::makeClusterPSOCK()</span></code> function can be used as a stand-in replacement of the <code class="docutils literal notranslate"><span class="pre">parallel::makePSOCKcluster()</span></code>, or equivalently, <code class="docutils literal notranslate"><span class="pre">parallel::makeCluster(...,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;PSOCK&quot;)</span></code>.</p>
+<p>Most of <strong>parallelly</strong> functions apply also to clusters created by the <strong>parallel</strong> package.  For example,</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">parallel</span><span class="o">::</span><span class="nf">makeCluster</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+<span class="n">cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">parallelly</span><span class="o">::</span><span class="nf">autoStopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>makes the cluster created by <strong>parallel</strong> to shut down automatically when R’s garbage collector removes the cluster object.  This lowers the risk for leaving stray R worker processes running in the background by mistake.  Another way to achieve the above in a single call is to use:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">parallelly</span><span class="o">::</span><span class="nf">makeClusterPSOCK</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">autoStop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="availablecores-vs-parallel-detectcores">
+<h2>availableCores() vs parallel::detectCores()<a class="headerlink" href="#availablecores-vs-parallel-detectcores" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> function is designed as a better, safer alternative to <code class="docutils literal notranslate"><span class="pre">detectCores()</span></code> of the <strong>parallel</strong> package.  It is designed to be a worry-free solution for developers and end-users to query the number of available cores - a solution that plays nice on multi-tenant systems, in Linux containers, on high-performance compute (HPC) cluster, on CRAN and Bioconductor check servers, and elsewhere.</p>
+<p>Did you know that <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span></code> might return NA on some systems, or that <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span> <span class="pre">-</span> <span class="pre">1</span></code> might return 0 on some systems, e.g. old hardware and virtual machines?  Because of this, you have to use <code class="docutils literal notranslate"><span class="pre">max(1,</span> <span class="pre">parallel::detectCores()</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">na.rm</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> to get it correct.  In contrast, <code class="docutils literal notranslate"><span class="pre">parallelly::availableCores()</span></code> is guaranteed to return a positive integer, and you can use <code class="docutils literal notranslate"><span class="pre">parallelly::availableCores(omit</span> <span class="pre">=</span> <span class="pre">1)</span></code> to return all but one core and always at least one.</p>
+<p>Just like other software tools that “hijacks” all cores by default, R scripts, and packages that defaults to <code class="docutils literal notranslate"><span class="pre">detectCores()</span></code> number of parallel workers cause lots of suffering for fellow end-users and system administrators.  For instance, a shared server with 48 cores will come to a halt already after a few users run parallel processing using <code class="docutils literal notranslate"><span class="pre">detectCores()</span></code> number of parallel workers.  This problem gets worse on machines with many cores because they can host even more concurrent users.  If these R users would have used <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> instead, then the system administrator can limit the number of cores each user get to, say, two (2), by setting the environment variable <code class="docutils literal notranslate"><span class="pre">R_PARALLELLY_AVAILABLECORES_FALLBACK=2</span></code>.
+In contrast, it is <em>not</em> possible to override what <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span></code> returns, cf. <a class="reference external" href="https://bugs.r-project.org/show_bug.cgi?id=17641">PR#17641 - WISH: Make parallel::detectCores() agile to new env var R_DEFAULT_CORES </a>.</p>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> is also agile to CPU limitations set by Unix control groups (cgroups), which is often used by Linux containers (e.g. Docker, Apptainer / Singularity, and Podman) and Kubernetes (K8s) environments.  For example, <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--cpuset-cpus=0-2,8</span> <span class="pre">...</span></code> sets the CPU affinity so that the processes can only run on CPUs 0, 1, 2, and 8 on the host system.  In this case <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> detects this and returns four (4).  Another example is <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--cpu=3.4</span> <span class="pre">...</span></code>, which throttles the CPU quota to on average 3.4 CPUs on the host system.  In this case <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> detects this and returns three (3), because it rounds to the nearest integer.  In contrast, <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span></code> completely ignores such cgroups settings and returns the number of CPUs on the host system, which results in CPU overuse and degredated performance.  Continous Integration (CI) services (e.g. GitHub Actions, Travis CI, and Appveyor CI) and cloud services (e.g. RStudio Cloud) use these types of cgroups settings under the hood, which means <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> respects their CPU allocations.</p>
+<p>If running on an HPC cluster with a job scheduler, a script that uses <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> will run the number of parallel workers that the job scheduler has assigned to the job.  For example, if we submit a Slurm job as <code class="docutils literal notranslate"><span class="pre">sbatch</span> <span class="pre">--cpus-per-task=16</span> <span class="pre">...</span></code>, then <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> returns 16, because it respects the <code class="docutils literal notranslate"><span class="pre">SLURM_*</span></code> environment variables set by the scheduler.  On Son of Grid Engine (SGE), the scheduler sets <code class="docutils literal notranslate"><span class="pre">NSLOTS</span></code> when submitting using <code class="docutils literal notranslate"><span class="pre">qsub</span> <span class="pre">-pe</span> <span class="pre">smp</span> <span class="pre">8</span> <span class="pre">...</span></code> and <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> returns eight (8).  See <code class="docutils literal notranslate"><span class="pre">help(&quot;availableCores&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;parallelly&quot;)</span></code> for currently supported job schedulers, which includes ‘Fujitsu Technical Computing Suite’, ‘Load Sharing Facility’ (LSF), Simple Linux Utility for Resource Management (Slurm), Sun Grid Engine/Oracle Grid Engine/Son of Grid Engine (SGE), Univa Grid Engine (UGE), and TORQUE/PBS.</p>
+<p>Of course, <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> respects also R options and environment variables commonly used to specify the number of parallel workers, e.g. R option <code class="docutils literal notranslate"><span class="pre">mc.cores</span></code> and Bioconductor environment variable <code class="docutils literal notranslate"><span class="pre">BIOCPARALLEL_WORKER_NUMBER</span></code>. It will also detect when running <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> and limit the number of workers to two (2), which is the maximum number of parallel workers allowed by the <a class="reference external" href="https://cran.r-project.org/web/packages/policies.html">CRAN Policies</a>.  This way you, as a package developer, know that your package will always play by the rules on CRAN and Bioconductor.</p>
+<p>If nothing is set that limits the number of cores, then <code class="docutils literal notranslate"><span class="pre">availableCores()</span></code> falls back to <code class="docutils literal notranslate"><span class="pre">parallel::detectCores()</span></code> and if that returns <code class="docutils literal notranslate"><span class="pre">NA_integer_</span></code> then one (1) is returned.</p>
+<p>The below table summarize the benefits:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head text-center"><p>availableCores()</p></th>
+<th class="head text-center"><p>parallel::detectCores()</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Guaranteed to return a positive integer</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no (may return <code class="docutils literal notranslate"><span class="pre">NA_integer_</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Safely use all but some cores</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no (may return zero or less)</p></td>
+</tr>
+<tr class="row-even"><td><p>Can be overridden, e.g. by a sysadm</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Respects cgroups and Linux containers</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>Respects job scheduler allocations</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Respects CRAN policies</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>Respects Bioconductor policies</p></td>
+<td class="text-center"><p>✓</p></td>
+<td class="text-center"><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="backward-compatibility-with-the-future-package">
+<h1>Backward compatibility with the future package<a class="headerlink" href="#backward-compatibility-with-the-future-package" title="Link to this heading">#</a></h1>
+<p>The functions in this package originate from the <strong><a class="reference external" href="https://cran.r-project.org/package=future">future</a></strong> package where we have used and validated them for several years.  I moved these functions to this separate package in 2020, because they are also useful outside of the future framework.  For backward-compatibility reasons of the future framework, the R options and environment variables that are prefixed with <code class="docutils literal notranslate"><span class="pre">parallelly.*</span></code> and <code class="docutils literal notranslate"><span class="pre">R_PARALLELLY_*</span></code> can for the time being also be set with <code class="docutils literal notranslate"><span class="pre">future.*</span></code> and <code class="docutils literal notranslate"><span class="pre">R_FUTURE_*</span></code> prefixes.</p>
+</section>
+<section id="roadmap">
+<h1>Roadmap<a class="headerlink" href="#roadmap" title="Link to this heading">#</a></h1>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> Submit <strong>parallelly</strong> to CRAN, with minimal changes compared to the corresponding functions in the <strong>future</strong> package (on CRAN as of 2020-10-20)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> Update the <strong>future</strong> package to import and re-export the functions from the <strong>parallelly</strong> to maximize backward compatibility in the future framework (<strong>future</strong> 1.20.1 on CRAN as of 2020-11-03)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> Switch to use 10-15% faster <code class="docutils literal notranslate"><span class="pre">useXDR=FALSE</span></code></p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> Implement same fast parallel setup of parallel PSOCK workers as in <strong>parallel</strong> (&gt;= 4.0.0)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" checked="checked" disabled="disabled" type="checkbox"> After having validated that there is no negative impact on the future framework, allow for changes in the <strong>parallelly</strong> package, e.g. renaming the R options and environment variable to be <code class="docutils literal notranslate"><span class="pre">parallelly.*</span></code> and <code class="docutils literal notranslate"><span class="pre">R_PARALLELLY_*</span></code> while falling back to <code class="docutils literal notranslate"><span class="pre">future.*</span></code> and <code class="docutils literal notranslate"><span class="pre">R_FUTURE_*</span></code></p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Migrate, currently internal, UUID functions and export them, e.g. <code class="docutils literal notranslate"><span class="pre">uuid()</span></code>, <code class="docutils literal notranslate"><span class="pre">connectionUuid()</span></code>, and <code class="docutils literal notranslate"><span class="pre">sessionUuid()</span></code> (<a class="github reference external" href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/96">HenrikBengtsson/Wishlist-for-R#96</a>).  Because <a class="reference external" href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/21">R does not have a built-in md5 checksum function that operates on object</a>, these functions require us adding a dependency on the <strong><a class="reference external" href="https://cran.r-project.org/package=digest">digest</a></strong> package.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Add vignettes on how to set up cluster running on local or remote machines, including in Linux containers and on popular cloud services, and vignettes on common problems and how to troubleshoot them</p></li>
+</ul>
+<p>Initially, backward compatibility for the <strong>future</strong> package is of top priority.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\parallelly\doc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Feature Comparison ‘parallelly’ vs ‘parallel’</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-with-the-parallel-package">Compatibility with the parallel package</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#availablecores-vs-parallel-detectcores">availableCores() vs parallel::detectCores()</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-compatibility-with-the-future-package">Backward compatibility with the future package</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,933 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>gargle 1.5.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/gargle/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/gargle/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>gargle 1.5.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">gargle 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-5-1">gargle 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-5-0">gargle 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-4-0">gargle 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-compute-engine">Google Compute Engine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behaviour-in-a-cloud-server-context">Behaviour in a cloud/server context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-3-0">gargle 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-deprecation-out-of-band-oob-auth-flow">(Partial) deprecation out-of-band (OOB) auth flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-specific-notion-of-oauth-client">gargle-specific notion of OAuth client</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-compute-engine-and-google-kubernetes-engine">Google Compute Engine and Google Kubernetes Engine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credential-function-registry">Credential function registry</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-2-1">gargle 1.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-changes">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-2-0">gargle 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workload-identity-federation">Workload identity federation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-1-0">gargle 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oauth-token-cache">OAuth token cache</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-0-0">gargle 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-5-0">gargle 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-4-0">gargle 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-3-1">gargle 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-3-0">gargle 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-2-0">gargle 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-1-3">gargle 0.1.3</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gargle-1-5-2">
+<h1>gargle 1.5.2<a class="headerlink" href="#gargle-1-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug in an internal helper that validates input specifying a service
+account. The helper targets a common mistake where the JSON for an OAuth
+client is provided to an argument that is meant for a service account (#270).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-5-1">
+<h1>gargle 1.5.1<a class="headerlink" href="#gargle-1-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Completed some overlooked, unfinished work around the OAuth “app” to “client”
+transition that affected out-of-bound auth (#263, #264).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">secret_*()</span></code> functions are more discoverable via documentation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-5-0">
+<h1>gargle 1.5.0<a class="headerlink" href="#gargle-1-5-0" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>gargle’s existing unexported <code class="docutils literal notranslate"><span class="pre">secret_*()</span></code> functions are deprecated, in favor
+of new, exported <code class="docutils literal notranslate"><span class="pre">secret_*()</span></code> functions that are built on or inlined from
+httr2. The <code class="docutils literal notranslate"><span class="pre">vignette(&quot;managing-tokens-securely&quot;)</span></code> is updated to reflect the
+new, recommended strategy for encrypting secrets.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">secret_encrypt_json()</span></code> / <code class="docutils literal notranslate"><span class="pre">secret_decrypt_json()</span></code> are new gargle-specific
+functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">secret_write_rds()</span></code> / <code class="docutils literal notranslate"><span class="pre">secret_read_rds()</span></code>, <code class="docutils literal notranslate"><span class="pre">secret_make_key()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">secret_had_key()</span></code> are basically copies of their httr2 counterparts.</p></li>
+<li><p>Legacy functions to move away from: <code class="docutils literal notranslate"><span class="pre">secret_pw_name()</span></code>, <code class="docutils literal notranslate"><span class="pre">secret_pw_gen()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">secret_pw_exists()</span></code>, <code class="docutils literal notranslate"><span class="pre">secret_pw_get()</span></code>, <code class="docutils literal notranslate"><span class="pre">secret_can_decrypt()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">secret_read()</span></code>, <code class="docutils literal notranslate"><span class="pre">secret_write()</span></code>.</p></li>
+<li><p>The new approach makes it much easier to use gargle functions to encrypt and
+decrypt credentials in a project that is <em>not</em> necessarily an R package.</p></li>
+</ul>
+</li>
+<li><p>The transition from OAuth “app” to OAuth “client” is fully enacted now. This
+process tarted in v1.3.0, when the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_oauth_client&quot;</span></code> class was
+introduced, to support the new pseudo-OOB auth flow. The deprecations are
+implemented to preserve backwards compatibility for some time. In this
+release, function, argument, and field names are all updated to the “client”
+terminology:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">init_AuthState(client</span> <span class="pre">=)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">init_AuthState(app</span> <span class="pre">=)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AuthState$client</span></code> instead of <code class="docutils literal notranslate"><span class="pre">AuthState$app</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AuthState$set_client()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">AuthState$set_app()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gargle2.0_token(client</span> <span class="pre">=)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">gargle2.0_token(app</span> <span class="pre">=)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_user_oauth2(client</span> <span class="pre">=)</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">credentials_user_oauth2(app</span> <span class="pre">=)</span></code></p></li>
+</ul>
+<p>A new <code class="docutils literal notranslate"><span class="pre">vignette(&quot;oauth-client-not-app&quot;)</span></code> explains how a wrapper package should
+adapt.</p>
+</li>
+<li><p>When the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_verbosity&quot;</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>, there are more debugging messages around user credentials. Specifically, more information is available on the email, OAuth client, and scopes, with the goal of better understanding why a cached token is (or is not) being used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">check_is_service_account()</span></code> is a new function for use in wrapper packages to throw a more informative error when a user provides JSON for an OAuth client to an argument that is expecting JSON for a service account.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_process()</span></code> has improved handling of responses that represent an HTTP error with HTML content (as opposed to the expected and preferred JSON) (#254).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_process(call</span> <span class="pre">=</span> <span class="pre">caller_env())</span></code> is a new argument that is passed along to various helpers, which can improve error reporting for user-facing functions that call <code class="docutils literal notranslate"><span class="pre">response_process()</span></code> (#255).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-4-0">
+<h1>gargle 1.4.0<a class="headerlink" href="#gargle-1-4-0" title="Link to this heading">#</a></h1>
+<section id="google-compute-engine">
+<h2>Google Compute Engine<a class="headerlink" href="#google-compute-engine" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce(scopes</span> <span class="pre">=</span> <span class="pre">NULL)</span></code> is now equivalent to <code class="docutils literal notranslate"><span class="pre">credentials_gce(scopes</span> <span class="pre">=</span> <span class="pre">&quot;https://www.googleapis.com/auth/cloud-platform&quot;)</span></code>, i.e. there’s an even stronger current towards the recommended “cloud-platform” scope.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce(scopes</span> <span class="pre">=)</span></code> now includes those <code class="docutils literal notranslate"><span class="pre">scopes</span></code> in its request to the metadata server for an access token (#216). Note that the scopes for a GCE access token are generally pre-determined for the instance and its associated service account at creation/launch time and these requested <code class="docutils literal notranslate"><span class="pre">scopes</span></code> will have no effect. But this seems to do no harm and it is possible that there are contexts where this is useful.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> now emits considerably more information when the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_verbosity&quot;</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>. For example, it reports mismatches between requested scopes and instance scopes and between requested scopes and the access token’s actual scopes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> stores the actual scopes of the received access token, which can differ from the requested scopes. This is also noted when the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_verbosity&quot;</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">GceToken</span></code> R6 class gains a better <code class="docutils literal notranslate"><span class="pre">$print()</span></code> method that is more similar to gargle’s treatment of tokens obtained with other flows.</p></li>
+</ul>
+</section>
+<section id="behaviour-in-a-cloud-server-context">
+<h2>Behaviour in a cloud/server context<a class="headerlink" href="#behaviour-in-a-cloud-server-context" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>gargle is better able to detect when it’s running on Posit Workbench or RStudio Server, e.g., in a subprocess.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gargle_oauth_client_type()</span></code> is a new function that returns either “installed”
+or “web”.
+It returns the value of the new global option by the same name (<code class="docutils literal notranslate"><span class="pre">&quot;gargle_oauth_client_type&quot;</span></code>), if defined.
+If the option is not defined, returns “web” on RStudio Server, Posit Workbench, Posit Cloud, or Google Colaboratory and “installed” otherwise.
+In the context of out-of-band (OOB) auth, an “installed” client type leads to the conventional OOB flow (only available for GCP projects in testing mode) and a “web” client leads to the new pseudo-OOB flow.
+The option and accessor have been added to cover contexts other than those mentioned above where it is helpful to request a “web” client.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_user_oauth2()</span></code> now works in Google Colaboratory (#140).</p></li>
+</ul>
+</section>
+<section id="everything-else">
+<h2>Everything else<a class="headerlink" href="#everything-else" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>gargle now elicits user input via <code class="docutils literal notranslate"><span class="pre">readline()</span></code>, instead of via <code class="docutils literal notranslate"><span class="pre">utils::menu()</span></code>, which is favorable for interacting with the user in a Jupyter notebook (#242).</p></li>
+<li><p>The roxygen templating functions that wrapper packages can use to generate standardized documentation around auth have been updated to reflect gargle’s pivot from OAuth “app” to “client”.
+Changes of note:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_auth_configure_description()</span></code> crosslinks to <code class="docutils literal notranslate"><span class="pre">PREFIX_oauth_client()</span></code>
+now, not <code class="docutils literal notranslate"><span class="pre">PREFIX_oauth_app()</span></code>. So this assumes the package has indeed
+introduced the <code class="docutils literal notranslate"><span class="pre">PREFIX_oauth_client()</span></code> function (and, presumably, has
+deprecated <code class="docutils literal notranslate"><span class="pre">PREFIX_oauth_app()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_auth_configure_params()</span></code> gains <code class="docutils literal notranslate"><span class="pre">client</span></code> argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_auth_configure_params()</span></code> deprecates the <code class="docutils literal notranslate"><span class="pre">app</span></code> argument and uses a
+lifecycle badge. It is assumed that the badge SVG is present, which can be
+achieved with <code class="docutils literal notranslate"><span class="pre">usethis::use_lifecycle()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_auth_configure_params()</span></code> crosslinks to
+<code class="docutils literal notranslate"><span class="pre">gargle::gargle_oauth_client_from_json()</span></code>. The wrapper package therefore
+needs to state a minimum version for gargle, e.g. <code class="docutils literal notranslate"><span class="pre">gargle</span> <span class="pre">(&gt;=</span> <span class="pre">1.3.0)</span></code> (or
+higher).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_byo_oauth2()</span></code> works now for (variations of) service account tokens, as intended, not just for user tokens (#250). It also emits more information about scopes when the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_verbosity&quot;</span></code> option is set to <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-3-0">
+<h1>gargle 1.3.0<a class="headerlink" href="#gargle-1-3-0" title="Link to this heading">#</a></h1>
+<section id="partial-deprecation-out-of-band-oob-auth-flow">
+<h2>(Partial) deprecation out-of-band (OOB) auth flow<a class="headerlink" href="#partial-deprecation-out-of-band-oob-auth-flow" title="Link to this heading">#</a></h2>
+<p>On February 16, 2022, Google announced the gradual deprecation of the out-of-band (OOB) OAuth flow.
+OOB <strong>still works</strong> if the OAuth client is associated with a GCP project that is in testing mode and this is not going away.
+But OOB is no longer supported for projects in production mode.
+To be more accurate, some production-mode projects have gotten an extension to permit the use of OOB auth for a bit longer, but that’s just a temporary reprieve.</p>
+<p>The typical user who will (eventually) be impacted is:</p>
+<ul class="simple">
+<li><p>Using R via RStudio Server, Posit Workbench, or Posit Cloud.</p></li>
+<li><p>Using tidyverse packages such as googledrive, googlesheets4, or bigrquery.</p></li>
+<li><p>Relying on the built-in OAuth client. Importantly, this client is associated
+with a GCP project that is in production mode.</p></li>
+</ul>
+<p>The phased deprecation of OOB is nearly complete and we expect conventional OOB to stop working with the built-in tidyverse OAuth client on February 1, 2023, at the latest.</p>
+<p><strong>In preparation for this, gargle has gained support for a new flow, which we call pseudo-OOB (in contrast to conventional OOB)</strong>.
+The pseudo-OOB flow is triggered when <code class="docutils literal notranslate"><span class="pre">use_oob</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (an existing convention in gargle and gargle-using packages) and the configured OAuth client is of “Web application” type.
+The gargle/googledrive/googlesheets4/bigrquery packages should now default to a “Web application” client on RStudio Server, Posit Workbench and Posit Cloud, leading the user through the pseudo-OOB flow.
+Other than needing to re-auth once, affected users should still find that things “just work”.</p>
+<p>Read the <code class="docutils literal notranslate"><span class="pre">vignette(&quot;auth-from-web&quot;)</span></code> for more.</p>
+</section>
+<section id="gargle-specific-notion-of-oauth-client">
+<h2>gargle-specific notion of OAuth client<a class="headerlink" href="#gargle-specific-notion-of-oauth-client" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">gargle_oauth_client()</span></code> is a new constructor for an S3 class by the same name.
+There are two motivations:</p>
+<ul class="simple">
+<li><p>To adjust to Google’s deprecation of conventional OOB and to support
+gargle’s new pseudo-OOB flow, it is helpful for gargle to know whether an
+OAuth client ID is of type “Web application” or “Desktop app”. That means we
+need a Google- and gargle-specific notion of an OAuth client, so we can
+introduce a <code class="docutils literal notranslate"><span class="pre">type</span></code> field.</p></li>
+<li><p>A transition from httr to httr2 is on the horizon, so it makes sense to
+look more toward <code class="docutils literal notranslate"><span class="pre">httr2:oauth_client()</span></code> than to <code class="docutils literal notranslate"><span class="pre">httr::oauth_app()</span></code>.
+gargle’s vocabulary is generally shifting towards “client” and away from
+“app”.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">oauth_app_from_json()</span></code> has therefore been (soft) deprecated, in favor of a new function <code class="docutils literal notranslate"><span class="pre">gargle_oauth_client_from_json()</span></code>, which is the preferred way to instantiate an OAuth client, since the downloaded JSON conveys the client type and redirect URI(s).
+As a bridging measure, <code class="docutils literal notranslate"><span class="pre">gargle_oauth_client</span></code> currently inherits from httr’s <code class="docutils literal notranslate"><span class="pre">oauth_app</span></code>, but this probably won’t be true in the long-term.</p>
+<p><code class="docutils literal notranslate"><span class="pre">gargle_client(type</span> <span class="pre">=)</span></code> replaces <code class="docutils literal notranslate"><span class="pre">gargle_app()</span></code>.</p>
+</section>
+<section id="google-compute-engine-and-google-kubernetes-engine">
+<h2>Google Compute Engine and Google Kubernetes Engine<a class="headerlink" href="#google-compute-engine-and-google-kubernetes-engine" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> no longer asks the user about initiating an OAuth cache, which is not relevant to that flow (#221).</p>
+<p><code class="docutils literal notranslate"><span class="pre">gce_instance_service_accounts()</span></code> is a newly exported utility that exposes the service accounts available from the metadata server for the current instance (#234).</p>
+<p>The global option <code class="docutils literal notranslate"><span class="pre">&quot;gargle.gce.timeout&quot;</span></code> is newly documented in <code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code>.
+This controls the timeout, in seconds, for requests to the metadata server.
+The default value (or strategy) for setting this should often suffice, but the option exists for those with an empirical need to increase the timeout (#186, #195).</p>
+<p><code class="docutils literal notranslate"><span class="pre">vignette(&quot;non-interactive-auth&quot;)</span></code> has a new section “Workload Identity on Google Kubernetes Engine (GKE)” that explains how gargle supports the use of workload identity for applications running on GKE. This is the recommended method of auth in R code running on GKE that needs to access other Google Cloud services, such as the BigQuery API (#197, #223, &#64;MarkEdmondson1234).</p>
+</section>
+<section id="credential-function-registry">
+<h2>Credential function registry<a class="headerlink" href="#credential-function-registry" title="Link to this heading">#</a></h2>
+<p>It’s gotten a bit easier to work with the credential registry.
+The primary motivation is that, for example, on Google Compute Engine, you might
+actually want to suppress auth with the default service account and auth as a
+normal user instead.
+This is especially likely to come up with gmailr / the Gmail API.</p>
+<ul class="simple">
+<li><p>The credential-fetcher <code class="docutils literal notranslate"><span class="pre">credentials_byo_oauth2()</span></code> has been moved to the very
+beginning of the default registry. The logic is that a user who has specified
+a non-<code class="docutils literal notranslate"><span class="pre">NULL</span></code> value of <code class="docutils literal notranslate"><span class="pre">token</span></code> must mean business and does not want automagic
+auth methods like ADC or GCE to be tried before using their <code class="docutils literal notranslate"><span class="pre">token</span></code>
+(#187, #225).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">...</span></code> in <code class="docutils literal notranslate"><span class="pre">cred_funs_all()</span></code> are now
+<a class="reference external" href="https://rlang.r-lib.org/reference/dyn-dots.html">dynamic dots</a> (#224).</p></li>
+<li><p>Every registered credential function must have a unique name now.
+This is newly enforced by <code class="docutils literal notranslate"><span class="pre">cred_funs_add()</span></code> and <code class="docutils literal notranslate"><span class="pre">cred_funs_set()</span></code> (#224).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cred_funs_list_default()</span></code> is a new function that returns gargle’s default
+list of credential functions (#226).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cred_funs_add(cred_fun</span> <span class="pre">=</span> <span class="pre">NULL)</span></code> is now available to remove a credential
+function from the registry (#224).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">with_cred_funs()</span></code> and <code class="docutils literal notranslate"><span class="pre">local_cred_funs()</span></code> are new helpers for making narrowly
+scoped changes to the registry (#226).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ls</span></code> argument of <code class="docutils literal notranslate"><span class="pre">cred_funs_set()</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">funs</span></code> (#226).</p></li>
+<li><p>In general, credential registry functions now return the current registry,
+invisibly (#224).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-2-1">
+<h1>gargle 1.2.1<a class="headerlink" href="#gargle-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Help files below <code class="docutils literal notranslate"><span class="pre">man/</span></code> have been re-generated, so that they give rise to valid HTML5. (This is the impetus for this release, to keep the package safely on CRAN.)</p></li>
+<li><p>We have switched to newer oauth2.googleapis.com-based OAuth2 URIs, moving away from the <a class="reference external" href="http://accounts.google.com">accounts.google.com</a> and <a class="reference external" href="http://googleapis.com/oauth2">googleapis.com/oauth2</a> equivalents.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> no longer validates the requested scopes against instance scopes.
+In practice, it’s easy for this check to be more of a nuisance than a help (#161, #185 &#64;craigcitro).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_retry()</span></code> retries for an expanded set of HTTP codes: 408, 429, 500, 502, 503. Previously, retries were limited to 429 (#169).</p></li>
+</ul>
+<section id="dependency-changes">
+<h2>Dependency changes<a class="headerlink" href="#dependency-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The minimum versions of rlang and testthat have been bumped. The motivation is to exploit and adapt to the changes to the display of error messages.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-2-0">
+<h1>gargle 1.2.0<a class="headerlink" href="#gargle-1-2-0" title="Link to this heading">#</a></h1>
+<section id="workload-identity-federation">
+<h2>Workload identity federation<a class="headerlink" href="#workload-identity-federation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">credentials_external_account()</span></code> is a new function that implements “workload identity federation”, a new (as of April 2021) keyless authentication mechanism.
+This allows applications running on a non-Google Cloud platform, such as AWS, to access Google Cloud resources without using a conventional service account token, eliminating the security problem posed by long-lived, powerful service account credential files.</p>
+<p><code class="docutils literal notranslate"><span class="pre">credentials_external_account()</span></code> has been inserted into the default registry of credential-fetchers tried by <code class="docutils literal notranslate"><span class="pre">token_fetch()</span></code>, which makes it automatically available in certain wrapper packages, such as bigrquery.
+<code class="docutils literal notranslate"><span class="pre">credentials_app_default()</span></code> recognizes the JSON configuration for an external account and passes such a call along to <code class="docutils literal notranslate"><span class="pre">credentials_external_account()</span></code>.</p>
+<p>This new feature is still experimental and currently only supports AWS.
+This <a class="reference external" href="https://cloud.google.com/blog/products/identity-security/enable-keyless-access-to-gcp-with-workload-identity-federation">blog post</a> provides a good high-level introduction to workload identity federation.</p>
+</section>
+<section id="other-changes">
+<h2>Other changes<a class="headerlink" href="#other-changes" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">email</span></code> argument of <code class="docutils literal notranslate"><span class="pre">credentials_user_oauth2()</span></code> accepts domain-only email specification via a glob pattern.
+The goal is to make it possible for code like <code class="docutils literal notranslate"><span class="pre">PKG_auth(email</span> <span class="pre">=</span> <span class="pre">&quot;*&#64;example.com&quot;)</span></code> to identify a suitable cached token when executed on the machine of either <code class="docutils literal notranslate"><span class="pre">alice&#64;example.com</span></code> or <code class="docutils literal notranslate"><span class="pre">bob&#64;example.com</span></code>.</p>
+<p>gargle now throws errors via <code class="docutils literal notranslate"><span class="pre">cli::cli_abort()</span></code>, which means error messages now have the same styling as informational messages.</p>
+</section>
+<section id="id1">
+<h2>Dependency changes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>aws.ec2metadata and aws.signature are new in Suggests.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-1-0">
+<h1>gargle 1.1.0<a class="headerlink" href="#gargle-1-1-0" title="Link to this heading">#</a></h1>
+<section id="oauth-token-cache">
+<h2>OAuth token cache<a class="headerlink" href="#oauth-token-cache" title="Link to this heading">#</a></h2>
+<p>Two changes affect stored user OAuth tokens:</p>
+<ul class="simple">
+<li><p>The default cache location has moved, to better align with general
+conventions around where to cache user data. Here’s how that looks for a
+typical user:</p>
+<ul>
+<li><p>Typical before, macOS: <code class="docutils literal notranslate"><span class="pre">~/.R/gargle/gargle-oauth</span></code></p></li>
+<li><p>Typical after, macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Caches/gargle</span></code></p></li>
+<li><p>Typical before, Windows: <code class="docutils literal notranslate"><span class="pre">C:/Users/jane/.R/gargle/gargle-oauth</span></code></p></li>
+<li><p>Typical after, Windows: <code class="docutils literal notranslate"><span class="pre">C:/Users/jane/AppData/Local/gargle/gargle/Cache</span></code></p></li>
+</ul>
+</li>
+<li><p>Tokens created with one of the built-in OAuth apps provided by the tidyverse
+packages are checked for validity. Tokens made with an old app are deleted.
+Note that we introduced a new OAuth app in gargle v1.0.0 and the previous
+app could be disabled at any time.</p>
+<ul>
+<li><p>Nickname of previous tidyverse OAuth app: <code class="docutils literal notranslate"><span class="pre">tidyverse-calliope</span></code></p></li>
+<li><p>Nickname of tidyverse OAuth app as of gargle v1.0.0: <code class="docutils literal notranslate"><span class="pre">tidyverse-clio</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>For users who accept all default behaviour around OAuth, these changes just mean you will see some messages about cleaning and moving the token cache.
+These users can also expect to go through interactive auth (approximately once per package / API), to obtain fresh tokens made with the current tidyverse OAuth app.</p>
+<p>If the rolling of the tidyverse OAuth app is highly disruptive to your workflow, this is a good wake-up call that you should be using your own OAuth app or, perhaps, an entirely different auth method, such as using a service account token in non-interactive settings.
+As always, these articles explain how to take more control of auth:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gargle.r-lib.org/articles/get-api-credentials.html">https://gargle.r-lib.org/articles/get-api-credentials.html</a></p></li>
+<li><p><a class="reference external" href="https://gargle.r-lib.org/articles/non-interactive-auth.html">https://gargle.r-lib.org/articles/non-interactive-auth.html</a></p></li>
+</ul>
+</section>
+<section id="user-interface">
+<h2>User interface<a class="headerlink" href="#user-interface" title="Link to this heading">#</a></h2>
+<p>The user interface has gotten more stylish, thanks to the cli package (<a class="reference external" href="https://cli.r-lib.org">https://cli.r-lib.org</a>).</p>
+<p>All errors thrown by gargle route through <code class="docutils literal notranslate"><span class="pre">rlang::abort()</span></code>, providing better access to the backtrace and, potentially, error data.
+These errors have, at the very least, the <code class="docutils literal notranslate"><span class="pre">gargle_error</span></code> class and may also have additional subclasses.</p>
+<p><code class="docutils literal notranslate"><span class="pre">gargle_verbosity()</span></code> replaces <code class="docutils literal notranslate"><span class="pre">gargle_quiet()</span></code>.
+Each such function is (or was) a convenience wrapper to query the option with that name.
+Therefore, the option named “gargle_verbosity” now replaces “gargle_quiet”.
+If “gargle_verbosity” is unset, the old “gargle_quiet” is still consulted, but the user is advised to update their usage.</p>
+<p>The new “gargle_verbosity” option is more expressive and has three levels:</p>
+<ul class="simple">
+<li><p>“debug”, equivalent to the previous <code class="docutils literal notranslate"><span class="pre">gargle_quiet</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>. Use for debugging
+and troubleshooting.</p></li>
+<li><p>“info” (the default), basically equivalent to the previous
+<code class="docutils literal notranslate"><span class="pre">gargle_quiet</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>. Since gargle is not a user-facing package, it has very
+little to say and only emits messages that end users really need to see.</p></li>
+<li><p>“silent”, no previous equivalent and of little practical significance. But it
+can be used to suppress all gargle messages.</p></li>
+</ul>
+<p>The helpers <code class="docutils literal notranslate"><span class="pre">with_gargle_verbosity()</span></code> and <code class="docutils literal notranslate"><span class="pre">local_gargle_verbosity()</span></code> make it easy to temporarily modify the verbosity level, in the spirit of the <a class="reference external" href="https://withr.r-lib.org">withr package</a>.</p>
+</section>
+<section id="id2">
+<h2>Other changes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>There is special error handling when OAuth token refresh fails, due to deletion of the associated OAuth app.
+This should help users who are relying on the default app provided by a package and, presumably, they need to update that package (#168).</p>
+<p><code class="docutils literal notranslate"><span class="pre">gargle_oob_default()</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> unconditionally when running in RStudio Server.</p>
+<p><code class="docutils literal notranslate"><span class="pre">response_process()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">remember</span></code> argument.
+When <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> (the default), gargle stores the most recent response internally (with auth tokens redacted).
+Unexported functions <code class="docutils literal notranslate"><span class="pre">gargle:::gargle_last_response()</span></code> and <code class="docutils literal notranslate"><span class="pre">gargle:::gargle_last_content()</span></code> facilitate <em>post mortem</em> analysis of, e.g., a failed request (#152).</p>
+<p><code class="docutils literal notranslate"><span class="pre">google.rpc.ErrorInfo</span></code> errors are explicitly handled now, resulting in a more informative error message.</p>
+<p><code class="docutils literal notranslate"><span class="pre">request_retry()</span></code> is better able to detect when the per-user quota has been exhausted (vs. the per-project quota), resulting in a more informed choice of backoff.</p>
+</section>
+<section id="id3">
+<h2>Dependency changes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>cli is new in Imports.</p>
+<p>rstudioapi is new in Imports.</p>
+<p>rappdirs is new in Imports.</p>
+<p>httpuv is new in Suggests. We encourage its installation in interactive sessions, if we’re about to initiate OAuth flow, unless it’s clear that out-of-band auth is inevitable.</p>
+<p>gargle now relies on testthat &gt;= 3.0.0 and, specifically, uses third edition features.</p>
+<p>mockr is new in Suggests, since <code class="docutils literal notranslate"><span class="pre">testthat::use_mock()</span></code> is superseded.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-1-0-0">
+<h1>gargle 1.0.0<a class="headerlink" href="#gargle-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Better handling of <code class="docutils literal notranslate"><span class="pre">BadRequest</span></code> errors, i.e. more specifics are revealed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_app_from_json</span></code> now supports JSON files from the “Web application”
+client type (#155).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_retry()</span></code> is a drop-in substitute for <code class="docutils literal notranslate"><span class="pre">request_make()</span></code> that uses (modified) exponential backoff to retry requests that fail with error <code class="docutils literal notranslate"><span class="pre">429</span> <span class="pre">RESOURCE_EXHAUSTED</span></code> (#63).</p></li>
+<li><p>Credentials used in selected client packages have been rolled. Users of bigrquery, googledrive, and googlesheets4 can expect a prompt to re-authorize the “Tidyverse API Packages” when using an OAuth user token. This has no impact on users who use their own OAuth app (i.e. client ID and secret) or those who use service account tokens.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-5-0">
+<h1>gargle 0.5.0<a class="headerlink" href="#gargle-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gargle.r-lib.org/articles/troubleshooting.html">Troubleshooting gargle auth</a>
+is a new vignette.</p></li>
+<li><p>All user-facing messaging routes through <code class="docutils literal notranslate"><span class="pre">rlang::inform()</span></code>, which (as of
+rlang 0.4.2) prints to standard output in interactive sessions and to
+standard error in non-interactive sessions (#133). Messaging remains under
+the control of the <code class="docutils literal notranslate"><span class="pre">&quot;gargle_quiet&quot;</span></code> option, which defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Gargle2.0</span></code> class gains its own <code class="docutils literal notranslate"><span class="pre">$refresh()</span></code> method, which removes a
+token from gargle’s cache when it cannot be refreshed (#79).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_service_account()</span></code> and <code class="docutils literal notranslate"><span class="pre">credentials_app_default()</span></code> gain an
+optional <code class="docutils literal notranslate"><span class="pre">subject</span></code> argument, which can be used to pass a subject claim along
+to <code class="docutils literal notranslate"><span class="pre">httr::oauth_service_token()</span></code> (#131, &#64;samterfa).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_make()</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">encode</span> <span class="pre">=</span> <span class="pre">&quot;json&quot;</span></code>, which differs from the httr
+default, but aligns better with Google APIs (#124).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_mask()</span></code> is a utility function for constructing a
+Protocol-Buffers-style, JSON-encoded field mask from a named R list.</p></li>
+<li><p>All R6 classes use the new documentation capabilities that appeared in
+roxygen2 7.0.0.</p></li>
+<li><p>OAuth2 flow can only be initiated when <code class="docutils literal notranslate"><span class="pre">rlang::is_interactive()</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>. If
+a new token is needed in a non-interactive session, gargle now throws an
+error (#113).</p></li>
+<li><p>The application default credentials path is fixed on non-Windows platforms
+(#115, &#64;acroz).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_develop()</span></code> can accept a parameter that appears in both the path and
+the body (#123).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_process()</span></code> explicitly declares the UTF-8 encoding of the content in
+Google API responses <a class="reference external" href="https://github.com/tidyverse/googlesheets4/issues/26">tidyverse/googlesheets4#26</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_process()</span></code> is able to expose details for a wider set of errors.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-4-0">
+<h1>gargle 0.4.0<a class="headerlink" href="#gargle-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Eliminated uninformative failure when OAuth tokens cached on R &lt;= 3.5 are re-loaded on R &gt;= 3.6. The change to the default serialization version (2 vs. 3) creates an apparent mismatch between a token’s hash and its key. Instead of inexplicably failing, now we attempt to repair the cache and carry on (#109, <a class="reference external" href="https://github.com/tidyverse/googledrive/issues/274">tidyverse/googledrive#274</a>.</p></li>
+<li><p>In a non-interactive context, gargle will use a cached OAuth token, if it discovers (at least) one, even if the user has not given explicit instructions. We emit a recommendation that the user make their intent unambiguous and link to the vignette on non-interactive auth (#92).</p></li>
+<li><p>gargle consults the option <code class="docutils literal notranslate"><span class="pre">&quot;httr_oob_default&quot;</span></code>, if the option <code class="docutils literal notranslate"><span class="pre">&quot;gargle_oob_default&quot;</span></code> is unset. This is part of an effort to automatically detect the need for out-of-bound auth in more situations (#102).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_service_account()</span></code> checks explicitly that <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;service_account&quot;</span></code>. This makes it easier to detect a common mistake, where the JSON for an OAuth client is provided instead of the JSON representing a service account (#93).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> gains <code class="docutils literal notranslate"><span class="pre">cloud-platform</span></code> as a default scope, assuming that the typical user wants to “View and manage your data across Google Cloud Platform services” (#110, &#64;MarkEdmondson1234).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-3-1">
+<h1>gargle 0.3.1<a class="headerlink" href="#gargle-0-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gargle.r-lib.org/articles/non-interactive-auth.html">Non-interactive auth</a> is a new vignette that serves as a guide for any client packages that use gargle for auth.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_gce()</span></code> might actually work now (#97, &#64;wlongabaugh).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_app_default()</span></code> got a small bug fix relating to putting the token in the header (r-dbi/bigrquery#336)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token_fetch()</span></code> silently catches warnings, in addition to errors, as it falls
+through the registry of credential-fetching methods (#89).</p></li>
+<li><p>The yes/no asking if it’s OK to cache OAuth tokens prints fully now
+(r-dbi/bigrquery#333).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-3-0">
+<h1>gargle 0.3.0<a class="headerlink" href="#gargle-0-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The unexported functions available for generating standardized docs for
+<code class="docutils literal notranslate"><span class="pre">PKG_auth</span></code> functions in client packages have been updated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token_userinfo()</span></code>, <code class="docutils literal notranslate"><span class="pre">token_email()</span></code>, and <code class="docutils literal notranslate"><span class="pre">token_tokeninfo()</span></code> are newly
+exported helpers that retrieve information for a token.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AuthState$set_app()</span></code> and <code class="docutils literal notranslate"><span class="pre">AuthState$set_api_key()</span></code> now allow setting a value
+of <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, i.e. these fields are easier to clear.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_byo_oauth2()</span></code> gains the ability to ingest a token from an object of class <code class="docutils literal notranslate"><span class="pre">httr::request</span></code>, i.e. to retrieve the <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> component that holds an object of class <code class="docutils literal notranslate"><span class="pre">httr::Token2.0</span></code> that has been processed with <code class="docutils literal notranslate"><span class="pre">httr::config()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-2-0">
+<h1>gargle 0.2.0<a class="headerlink" href="#gargle-0-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>All built-in API credentials have been rotated and are stored internally in a way that reinforces appropriate use. There is a new <a class="reference external" href="https://www.tidyverse.org/google_privacy_policy/">Privacy policy</a> as well as a <a class="reference external" href="https://www.tidyverse.org/google_privacy_policy/#policies-for-authors-of-packages-or-other-applications">policy for authors of packages or other applications</a>. This is related to a process to get the gargle project verified, which affects the OAuth2 capabilities and the consent screen.</p></li>
+<li><p>New vignette on “How to get your own API credentials”, to help other package authors or users obtain their own API key or OAuth client ID and secret.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">credentials_byo_oauth2()</span></code> is a new credential function. It is included in the
+default registry consulted by <code class="docutils literal notranslate"><span class="pre">token_fetch()</span></code> and is tried just before
+<code class="docutils literal notranslate"><span class="pre">credentials_user_oauth2()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gargle-0-1-3">
+<h1>gargle 0.1.3<a class="headerlink" href="#gargle-0-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial CRAN release</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\gargle"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">gargle 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-5-1">gargle 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-5-0">gargle 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-4-0">gargle 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-compute-engine">Google Compute Engine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behaviour-in-a-cloud-server-context">Behaviour in a cloud/server context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#everything-else">Everything else</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-3-0">gargle 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-deprecation-out-of-band-oob-auth-flow">(Partial) deprecation out-of-band (OOB) auth flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-specific-notion-of-oauth-client">gargle-specific notion of OAuth client</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-compute-engine-and-google-kubernetes-engine">Google Compute Engine and Google Kubernetes Engine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credential-function-registry">Credential function registry</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-2-1">gargle 1.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-changes">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-2-0">gargle 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workload-identity-federation">Workload identity federation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-1-0">gargle 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oauth-token-cache">OAuth token cache</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-1-0-0">gargle 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-5-0">gargle 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-4-0">gargle 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-3-1">gargle 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-3-0">gargle 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-2-0">gargle 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gargle-0-1-3">gargle 0.1.3</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

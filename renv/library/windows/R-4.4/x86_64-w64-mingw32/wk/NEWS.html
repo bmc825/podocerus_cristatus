@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>wk 0.9.4 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/wk/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/wk/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>wk 0.9.4</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">wk 0.9.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-3">wk 0.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-2">wk 0.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-1">wk 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-0">wk 0.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bugfixes-and-improvements">Bugfixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-8-0">wk 0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-3">wk 0.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-2">wk 0.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-1">wk 0.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-0">wk 0.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-6-0">wk 0.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-5-0">wk 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-4-1">wk 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-4-0">wk 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-4">wk 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-3">wk 0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-2">wk 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-1">wk 0.3.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wk-0-9-4">
+<h1>wk 0.9.4<a class="headerlink" href="#wk-0-9-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Ensure package tests pass against sf 1.0-18 (#224, #225).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-9-3">
+<h1>wk 0.9.3<a class="headerlink" href="#wk-0-9-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Ensure package compiles with <code class="docutils literal notranslate"><span class="pre">STRICT_R_HEADERS=1</span></code> (#222).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-9-2">
+<h1>wk 0.9.2<a class="headerlink" href="#wk-0-9-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">wk_crs()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_set_crs()</span></code> methods for <code class="docutils literal notranslate"><span class="pre">bbox</span></code> (#213)</p></li>
+<li><p>Fix wk_trans inconsistent meta flags handling (#217)</p></li>
+<li><p>Ensure package builds on arm64 for Windows (#220)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-9-1">
+<h1>wk 0.9.1<a class="headerlink" href="#wk-0-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix format strings/arguments for R-devel (#209).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-9-0">
+<h1>wk 0.9.0<a class="headerlink" href="#wk-0-9-0" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The common well-known binary representation of POINT EMPTY (i.e.,
+POINT (nan nan)) is now handled as POINT EMPTY allowing empty points
+to roundtrip through <code class="docutils literal notranslate"><span class="pre">wkb()</span></code> vectors (#196, #204).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xy(NA,</span> <span class="pre">NA)</span></code> is now read as a null feature instead of POINT EMPTY. This
+preserves the invariant that null features can also be identified using
+<code class="docutils literal notranslate"><span class="pre">is.na()</span></code> (#205).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xy(NaN,</span> <span class="pre">NaN)</span></code> is now read as POINT EMPTY and <code class="docutils literal notranslate"><span class="pre">is.na(xy(NaN,</span> <span class="pre">NaN))</span></code>
+now returns <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. This means that both EMPTY and null points can roundtrip
+through <code class="docutils literal notranslate"><span class="pre">xy()</span></code> (#205).</p></li>
+</ul>
+</section>
+<section id="bugfixes-and-improvements">
+<h2>Bugfixes and improvements<a class="headerlink" href="#bugfixes-and-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wk_meta()</span></code> now contains a new column <code class="docutils literal notranslate"><span class="pre">is_empty</span></code>, which is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>
+for any feature that contains at least one non-empty coordinate. This allows
+more efficient detection of features with zero coordinates (#197, #199).</p></li>
+<li><p>Updated PROJ data to use the latest pull of the database packaged with
+PROJ 9.3.0 (#201).</p></li>
+<li><p>The wk package now compiles once again on gcc 4.8 (#203, #206).</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">sfc_writer()</span></code> to correctly attach the <code class="docutils literal notranslate"><span class="pre">classes</span></code> attribute to
+sfc output with mixed geometry types (#195).</p></li>
+<li><p>Function <code class="docutils literal notranslate"><span class="pre">sfc_writer()</span></code> now has an argument <code class="docutils literal notranslate"><span class="pre">promote_multi</span></code> to write any
+input as the MULTI variant. This makes it more likely that an input vector
+will be read as a single geometry type (#198).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">wk_collection_filter()</span></code> now correctly increments the <code class="docutils literal notranslate"><span class="pre">part_id</span></code> when
+calling the child handler (&#64;brownag, #194).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-8-0">
+<h1>wk 0.8.0<a class="headerlink" href="#wk-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wkb_to_hex()</span></code> (&#64;anthonynorth, #183).</p></li>
+<li><p>Implemented <code class="docutils literal notranslate"><span class="pre">vctrs::vec_proxy_equal()</span></code> for <code class="docutils literal notranslate"><span class="pre">wkb()</span></code> vctrs
+(&#64;anthonynorth, #183).</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">sfc_writer()</span></code>, which had returned NULL for some inputs
+(e.g., via <code class="docutils literal notranslate"><span class="pre">wk_collection()</span></code>) (&#64;anthonynorth, #182, #186).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_clockwise()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_counterclockwise()</span></code> to re-wind polygon rings
+(&#64;anthonynorth, #188).</p></li>
+<li><p>New replacement-function mode for <code class="docutils literal notranslate"><span class="pre">wk_coords&lt;-()</span></code> for in-place modification
+of coordinates (&#64;mdsumner, #187).</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">wk_trans_explicit()</span></code> migrated from crs2crs (&#64;mdsumner, #187).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-7-3">
+<h1>wk 0.7.3<a class="headerlink" href="#wk-0-7-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix tests for updated waldo package (#178).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-7-2">
+<h1>wk 0.7.2<a class="headerlink" href="#wk-0-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix use-after-free warnings.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-7-1">
+<h1>wk 0.7.1<a class="headerlink" href="#wk-0-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix implicit reliance on error <code class="docutils literal notranslate"><span class="pre">as.data.frame.default()</span></code>,
+which no longer occurs in r-devel (#166).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-7-0">
+<h1>wk 0.7.0<a class="headerlink" href="#wk-0-7-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Remove legacy headers that are no longer used by any downstream package
+(#146).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validate_wk_wkt()</span></code> now errors for an object that does not inherit from
+‘wk_wkt’ (#123, #146).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_crs_projjson()</span></code> to get a JSON representation of a CRS object.
+To make lookup possible based on shortcut-style CRS objects (e.g.,
+<code class="docutils literal notranslate"><span class="pre">&quot;EPSG:4326&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">4326</span></code>), added data objects <code class="docutils literal notranslate"><span class="pre">wk_proj_crs_view</span></code> and
+<code class="docutils literal notranslate"><span class="pre">wk_proj_crs_json</span></code> that contain cached versions of rendered PROJJSON
+based on the latest PROJ version (#147).</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">wk_crs_proj_definition()</span></code> method for <code class="docutils literal notranslate"><span class="pre">wk_crs_inherit()</span></code> (#136,
+#147).</p></li>
+<li><p>Conversion to sf now uses the <code class="docutils literal notranslate"><span class="pre">sfc_writer()</span></code> for all wk classes, making
+conversions faster and fixing at least one issue with conversion of NA
+geometries to sf (#135).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wk_plot()</span></code> now plots <code class="docutils literal notranslate"><span class="pre">NULL</span></code>/<code class="docutils literal notranslate"><span class="pre">NA</span></code> geometries and mixed geometry types
+more reliably (#142, #143, #149).</p></li>
+<li><p>Exported EMPTY geometries to well-known text now include dimension
+(e.g., <code class="docutils literal notranslate"><span class="pre">POINT</span> <span class="pre">Z</span> <span class="pre">EMPTY</span></code>) (#141, #150).</p></li>
+<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">wk_polygon()</span></code> doubled some points when the input contained
+closed rings (#134, #151).</p></li>
+<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">wk_count()</span></code> exposed uninitialized values for empty input
+(#139, #153).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">xy_writer()</span></code> now opportunistically avoids allocating vectors for Z
+or M values unless they are actually needed (#131, #154).</p></li>
+<li><p>Added example WKT for all geometry types and dimensions plus helper
+<code class="docutils literal notranslate"><span class="pre">wk_example()</span></code> to access them and set various properties (#155).</p></li>
+<li><p>Fixes warnings when compiling with <code class="docutils literal notranslate"><span class="pre">-Wstrict-prototypes</span></code> (#157, #158).</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">wk_chunk_map_feature()</span></code> in favour of using chunking strategies
+directly (#132, #159).</p></li>
+<li><p>Optimized <code class="docutils literal notranslate"><span class="pre">wk_coords()</span></code> for <code class="docutils literal notranslate"><span class="pre">xy()</span></code> objects (#138, #160).</p></li>
+<li><p>Added accessor methods for record-style vectors: <code class="docutils literal notranslate"><span class="pre">rct_xmin()</span></code>, <code class="docutils literal notranslate"><span class="pre">rct_xmax()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rct_ymin()</span></code>, <code class="docutils literal notranslate"><span class="pre">rct_ymax()</span></code>, <code class="docutils literal notranslate"><span class="pre">rct_width()</span></code>, <code class="docutils literal notranslate"><span class="pre">rct_height()</span></code>, <code class="docutils literal notranslate"><span class="pre">crc_center()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">crc_x()</span></code>, <code class="docutils literal notranslate"><span class="pre">crc_y()</span></code>, <code class="docutils literal notranslate"><span class="pre">crc_r()</span></code>, <code class="docutils literal notranslate"><span class="pre">xy_x()</span></code>, <code class="docutils literal notranslate"><span class="pre">xy_y()</span></code>, <code class="docutils literal notranslate"><span class="pre">xy_z()</span></code>, and <code class="docutils literal notranslate"><span class="pre">xy_m()</span></code>
+(#144, #161).</p></li>
+<li><p>Added rectangle operators <code class="docutils literal notranslate"><span class="pre">rct_intersects()</span></code>, <code class="docutils literal notranslate"><span class="pre">rct_contains()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">rct_intersection()</span></code> (#161).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-6-0">
+<h1>wk 0.6.0<a class="headerlink" href="#wk-0-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">wk_affine_rescale()</span></code> to apply the translate and scale
+operations in the correct order (#94).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">wk_handle_slice()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_chunk_map_feature()</span></code> to support
+a chunk + apply workflow when working with large vectors (#101, #107).</p></li>
+<li><p>C and R code was rewritten to avoid materializing ALTREP vectors
+(#103, #109).</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">wk_crs_proj_definition()</span></code> generic for foreign CRS objects
+(#110, #112).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_crs_longlat()</span></code> helper to help promote authority-compliant
+CRS choices (#112).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_is_geodesic()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_set_geodesic()</span></code>, and argument <code class="docutils literal notranslate"><span class="pre">geodesic</span></code>
+in <code class="docutils literal notranslate"><span class="pre">wkt()</span></code> and <code class="docutils literal notranslate"><span class="pre">wkb()</span></code> as a flag for objects whose edges must
+be interpolated along a spherical/ellipsoidal trajectory (#112).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">sf::st_geometry()</span></code> and <code class="docutils literal notranslate"><span class="pre">sf::st_sfc()</span></code> methods for wk geometry
+vectors for better integration with sf (#113, #114).</p></li>
+<li><p>Refactored well-known text parser to be more reusable and faster
+(#115, #104).</p></li>
+<li><p>Minor performance enhancement for <code class="docutils literal notranslate"><span class="pre">is.na()</span></code> and <code class="docutils literal notranslate"><span class="pre">validate_wk_wkb()</span></code>
+when called on a very long <code class="docutils literal notranslate"><span class="pre">wkb()</span></code> vector (#117).</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">validate_wk_wkb()</span></code> and <code class="docutils literal notranslate"><span class="pre">validate_wk_wkt()</span></code>, which failed
+for most valid objects (#119).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_envelope()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_envelope_handler()</span></code> to compute feature-wise
+bounding boxes (#120, #122).</p></li>
+<li><p>Fixed headers and tests to pass on big endian systems (#105, #122).</p></li>
+<li><p>Incorporated the geodesic attribute into vctrs methods, data frame
+columns, and bbox/envelope calculation (#124, #125).</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">as_xy()</span></code> for nested data frames and geodesic objects (#126, #128).</p></li>
+<li><p>Remove deprecated <code class="docutils literal notranslate"><span class="pre">wkb_problems()</span></code>, <code class="docutils literal notranslate"><span class="pre">wkt_problems()</span></code>, <code class="docutils literal notranslate"><span class="pre">wkb_format()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">wkt_format()</span></code> (#129).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wk_plot()</span></code> is now an S3 generic (#130).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-5-0">
+<h1>wk 0.5.0<a class="headerlink" href="#wk-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bugs relating to the behaviour of wk classes as
+vectors (#64, #65, #67, #70).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">crc()</span></code> objects are now correctly exported as polygons
+with a closed loop (#66, #70).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_vertices()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_coords()</span></code> to extract individual
+coordinate values from geometries with optional identifying
+information. For advanced users, the <code class="docutils literal notranslate"><span class="pre">wk_vertex_filter()</span></code>
+can be used as part of a pipeline to export coordinates
+as point geometries to another handler (#69, #71).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_flatten()</span></code> to extract geometries from collections.
+For advanced users, the <code class="docutils literal notranslate"><span class="pre">wk_flatten_filter()</span></code> can be used as
+part of a pipeline (#75, #78).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">options(&quot;max.print&quot;)</span></code> is now respected by all vector classes
+(#72, #74).</p></li>
+<li><p>Moved implementation of plot methods from wkutils to wk to
+simplify the dependency structure of both packages (#80, #76).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_polygon()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_linestring()</span></code>, and <code class="docutils literal notranslate"><span class="pre">wk_collection()</span></code>
+to construct polygons, lines, and collections. For advanced
+users, <code class="docutils literal notranslate"><span class="pre">wk_polygon_filter()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_linestring_filter()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">wk_collection_filter()</span></code> can be used as part of a pipeline
+(#77, #84).</p></li>
+<li><p>Added a C-level transform struct that can be used to simplify
+the the common pattern of transforming coordinates. These
+structs can be created by other packages; however, the
+<code class="docutils literal notranslate"><span class="pre">wk_trans_affine()</span></code> and <code class="docutils literal notranslate"><span class="pre">wk_trans_set()</span></code> transforms are
+also built using this feature. These are run using the
+new <code class="docutils literal notranslate"><span class="pre">wk_transform()</span></code> function and power the new
+<code class="docutils literal notranslate"><span class="pre">wk_set_z()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_set_m()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_drop_z()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_drop_m()</span></code>,
+functions (#87, #88, #89).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-4-1">
+<h1>wk 0.4.1<a class="headerlink" href="#wk-0-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix LTO and MacOS 3.6.2 check errors (#61).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-4-0">
+<h1>wk 0.4.0<a class="headerlink" href="#wk-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">wksxp()</span></code> in favour of improved <code class="docutils literal notranslate"><span class="pre">sf::st_sfc()</span></code> support
+(#21).</p></li>
+<li><p>Rewrite existing readers, writers, and handlers, using
+a new C API (#13).</p></li>
+<li><p>Use new C API in favour of header-only approach for all
+wk functions (#19, #22).</p></li>
+<li><p>Use cpp11 to manage safe use of callables that may longjmp
+from C++.</p></li>
+<li><p>Vector classes now propagate <code class="docutils literal notranslate"><span class="pre">attr(,</span> <span class="pre">&quot;crs&quot;)</span></code>, and check
+that operations that involve more than one vector have
+compatable CRS objects as determined by <code class="docutils literal notranslate"><span class="pre">wk_crs_equal()</span></code>.</p></li>
+<li><p>Added an R-level framework for other packages to implement
+wk readers and handlers: <code class="docutils literal notranslate"><span class="pre">wk_handle()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_translate()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">wk_writer()</span></code> (#37).</p></li>
+<li><p>Added a native reader and writer for <code class="docutils literal notranslate"><span class="pre">sf::st_sfc()</span></code> objects
+and implemented R-level generics for sfc, sfg, sf, and bbox
+objects (#28, #29, #38, #45).</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">crc()</span></code> vector class to represent circles (#40).</p></li>
+<li><p>Added a 2D cartesian bounding box handler (<code class="docutils literal notranslate"><span class="pre">wk_bbox()</span></code>) (#42).</p></li>
+<li><p>Refactored unit tests reflecting use of the new API and
+for improved test coverage (#44, #45, #46).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">wk_meta()</span></code>, <code class="docutils literal notranslate"><span class="pre">wk_vector_meta()</span></code>, and <code class="docutils literal notranslate"><span class="pre">wk_count()</span></code> to
+inspect properties of vectors (#53).</p></li>
+<li><p>Modified all internal handlers such that they work with vectors
+of unknown length (#54).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-3-4">
+<h1>wk 0.3.4<a class="headerlink" href="#wk-0-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed reference to <code class="docutils literal notranslate"><span class="pre">wkutils::plot.wk_wksxp()</span></code>, which
+no longer exists.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-3-3">
+<h1>wk 0.3.3<a class="headerlink" href="#wk-0-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed WKB import of ZM geometries that do not use EWKB.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">xy()</span></code>, <code class="docutils literal notranslate"><span class="pre">xyz()</span></code>, <code class="docutils literal notranslate"><span class="pre">xym()</span></code> and <code class="docutils literal notranslate"><span class="pre">xyzm()</span></code> classes
+to efficiently store point geometries.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">rct()</span></code> vector class to efficiently store
+two-dimensional rectangles.</p></li>
+<li><p>Fixed the CRAN check  failure caused by a circular
+dependency with  the wkutils package.</p></li>
+<li><p>Added S3 methods to coerce sf objects to and from
+<code class="docutils literal notranslate"><span class="pre">wkt()</span></code>, <code class="docutils literal notranslate"><span class="pre">wkb()</span></code> and <code class="docutils literal notranslate"><span class="pre">wksxp()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-3-2">
+<h1>wk 0.3.2<a class="headerlink" href="#wk-0-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed EWKB output for collections and multi-geometries
+that included SRID (#3).</p></li>
+<li><p>Fixed CRAN check errors related to exception handling on
+MacOS/R 3.6.2.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wk-0-3-1">
+<h1>wk 0.3.1<a class="headerlink" href="#wk-0-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">NEWS.md</span></code> file to track changes to the package.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\wk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">wk 0.9.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-3">wk 0.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-2">wk 0.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-1">wk 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-9-0">wk 0.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bugfixes-and-improvements">Bugfixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-8-0">wk 0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-3">wk 0.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-2">wk 0.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-1">wk 0.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-7-0">wk 0.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-6-0">wk 0.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-5-0">wk 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-4-1">wk 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-4-0">wk 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-4">wk 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-3">wk 0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-2">wk 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wk-0-3-1">wk 0.3.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

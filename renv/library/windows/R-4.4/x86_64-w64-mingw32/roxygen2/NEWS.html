@@ -1,0 +1,1983 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>roxygen2 7.3.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/roxygen2/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/roxygen2/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>roxygen2 7.3.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">roxygen2 7.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-3-1">roxygen2 7.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-3-0">roxygen2 7.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-3">roxygen2 7.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-2">roxygen2 7.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-1">roxygen2 7.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tags">Tags</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-markdown">(R)markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-0">roxygen2 7.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-2">roxygen2 7.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-1">roxygen2 7.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-0">roxygen2 7.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-2">roxygen2 7.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-1">roxygen2 7.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-0">roxygen2 7.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-tags">New tags</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r6">R6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-improvements">Markdown improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#default-usage">Default usage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-loading">Code loading</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-roxygen2">Extending roxygen2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-1-1">roxygen2 6.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-1-0">roxygen2 6.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-api">Extension API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-0-1">roxygen2 6.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-0-0">roxygen2 6.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown">Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-inheritance">Improved inheritance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor improvements and bug fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Tags</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s3">S3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s4">S4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Other</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Extending roxygen2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-5-0-1">roxygen2 5.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-5-0-0">roxygen2 5.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features-and-bug-fixes">Minor features and bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-changes">Internal changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-1-1">roxygen2 4.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-1-0">roxygen2 4.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-2">roxygen2 4.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-1">roxygen2 4.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-0">roxygen2 4.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-error-handling">Improved error handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-3-1-0">roxygen2 3.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-for-reference-classes">Documentation for reference classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-fixes-and-improvements">Minor fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-3-0-0">roxygen2 3.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2-2">roxygen2 2.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2-1">roxygen2 2.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2">roxygen2 2.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-1">roxygen2 2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-0">roxygen2 2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New tags</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-3-2">
+<h1>roxygen2 7.3.2<a class="headerlink" href="#roxygen2-7-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span></code> now additionally sets <code class="docutils literal notranslate"><span class="pre">options(cli.hyperlink</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> to make
+code run in included <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code>s even more consistent across sessions (#1620).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-3-1">
+<h1>roxygen2 7.3.1<a class="headerlink" href="#roxygen2-7-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>S3 method export warning no longer fails if class contains <code class="docutils literal notranslate"><span class="pre">{</span></code> or <code class="docutils literal notranslate"><span class="pre">}</span></code> (#1575).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> lists are now ordered more carefully, “foo1” comes after “foo”
+(#1563, &#64;krlmlr).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span></code> works again for quoted non-syntactic names, e.g.
+<code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span> <span class="pre">magrittr</span> <span class="pre">&quot;%&gt;%&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span> <span class="pre">rlang</span> <span class="pre">`:=`</span> </code>
+(#1570, &#64;MichaelChirico). The unquoted form <code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span> <span class="pre">magrittr</span> <span class="pre">%&gt;%</span></code>
+continues to work. Relatedly, <code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span></code> directives matching no known
+functions (e.g. <code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span> <span class="pre">utils</span> <span class="pre">plot</span> <span class="pre">pdf</span></code>) produce valid NAMESPACE files
+again.</p></li>
+<li><p>Multi-line <code class="docutils literal notranslate"><span class="pre">&#64;rawNamespace</span></code> no longer break re-runs of <code class="docutils literal notranslate"><span class="pre">namespace_roclet()</span></code>
+(#1572, &#64;MichaelChirico).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-3-0">
+<h1>roxygen2 7.3.0<a class="headerlink" href="#roxygen2-7-3-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;docType</span> <span class="pre">package</span></code> now works more like documenting <code class="docutils literal notranslate"><span class="pre">&quot;_PACKAGE&quot;</span></code>,
+creating a <code class="docutils literal notranslate"><span class="pre">{packagename}-package</span></code> alias and clearly suggesting that
+you should switch to <code class="docutils literal notranslate"><span class="pre">&quot;_PACKAGE&quot;</span></code> instead (#1491).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_PACKAGE</span></code> will no longer generate an alias for your package name if
+a function of the same name exists (#1160).</p></li>
+<li><p>The NAMESPACE roclet now reports if you have S3 methods that are missing
+an <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> tag. All S3 methods need to be <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code>ed (which confusingly
+really registers the method) even if the generic is not. This avoids rare,
+but hard to debug, problems (#1175). You can suppress the warning with
+<code class="docutils literal notranslate"><span class="pre">&#64;exportS3Method</span> <span class="pre">NULL</span></code> (#1550).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> roclet once again regenerates imports <em>before</em> loading
+package code and parsing roxygen blocks. This has been the goal for a long
+time (#372), but we accidentally broke it when adding support for code
+execution in markdown blocks. This resolves a family of problems where you
+somehow bork your <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> and can’t easily get out of it because you
+can’t re-document the package because your code doesn’t reload.</p></li>
+</ul>
+</section>
+<section id="minor-improvements-and-bug-fixes">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#minor-improvements-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>If you document a function from another package it is automatically
+imported. Additionally, if you set <code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;name</span></code> you can opt out
+of the default <code class="docutils literal notranslate"><span class="pre">reexports</span></code> topic generation and provide your own docs
+(#1408).</p></li>
+<li><p>Generate correct usage for S4 methods with non-syntactic class names.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ROXYGEN_PKG</span></code> env var provides the name of the package being documented
+(#1517).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span> <span class="pre">foo</span></code> now suggests that you might want <code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> instead
+(#1493). It also gives a more informative warning if you use it with an
+unsupported type (#1490).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>, URLs containing escapes in <code class="docutils literal notranslate"><span class="pre">URL</span></code> and <code class="docutils literal notranslate"><span class="pre">BugReports</span></code> are
+now correctly handled (&#64;HenningLorenzen-ext-bayer, #1415). Authors can now
+have multiple email addresses (&#64;jmbarbone, #1487).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">escape_examples()</span></code> is now exported (#1450).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;exportS3Method</span></code> provides the needed metadata to generate correct usage
+for S3 methods, just like <code class="docutils literal notranslate"><span class="pre">&#64;method</span></code> (#1202).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_s3_generic()</span></code> now ignores non-function objects when looking for a
+candidate function. I believe this is closer to how R operates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;import</span></code> and friends are now ignored if they try to import from the
+package being documented. This is useful to add self-dependencies in
+standalone files meant to be used in other packages (r-lib/usethis#1853).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span></code> throws a friendlier error if you try and import a non-existing
+functions (&#64;MichaelChirico, #1409).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> now gives an informative warning if you use a path that doesn’t
+exist (#1497).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code> can now also inherit from <code class="docutils literal notranslate"><span class="pre">&#64;format</span></code> (#1293).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-2-3">
+<h1>roxygen2 7.2.3<a class="headerlink" href="#roxygen2-7-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>roxygen2 now supports HTML blocks in markdown. They are only included
+in the HTML manual. They can also be produced as the output of code
+chunks.</p></li>
+<li><p>Improved support for RStudio IDE.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-2-2">
+<h1>roxygen2 7.2.2<a class="headerlink" href="#roxygen2-7-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span></code> calls <code class="docutils literal notranslate"><span class="pre">local_reproducible_output()</span></code> to make code run in
+included <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code>s more consistent with other sources (#1431).</p></li>
+<li><p>Fix duplicated argument in <code class="docutils literal notranslate"><span class="pre">roxy_block()</span></code> to avoid CRAN removal.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-2-1">
+<h1>roxygen2 7.2.1<a class="headerlink" href="#roxygen2-7-2-1" title="Link to this heading">#</a></h1>
+<section id="tags">
+<h2>Tags<a class="headerlink" href="#tags" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>All built-in tags are now documented so that you can do (e.g.) <code class="docutils literal notranslate"><span class="pre">?&quot;&#64;param&quot;</span></code>
+to get a basic description of <code class="docutils literal notranslate"><span class="pre">&#64;param</span></code> and a pointer where to learn more
+(#1165). This is powered by a new <code class="docutils literal notranslate"><span class="pre">tags_list()</span></code> lists all tags defined by
+roxygen2 and <code class="docutils literal notranslate"><span class="pre">tags_metadata()</span></code> provides some useful information about them
+for use by (e.g.) IDEs (#1375).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> can now be used to combine more types of functions
+(generics, methods and other functions) into a single topic.
+The resulting section organises the functions by type (#1181)
+and displays methods like function calls. Methods are recognized only if
+they extend the generic in the destination,or if the destination can
+heuristically be identified as a constructor.</p></li>
+<li><p>Code evaluated in inline markdown code chunks and <code class="docutils literal notranslate"><span class="pre">&#64;eval</span></code>/<code class="docutils literal notranslate"><span class="pre">&#64;evalRd</span></code>/
+<code class="docutils literal notranslate"><span class="pre">&#64;evalNamespace</span></code> is now evaluated in an environment designed to be more
+reproducible and to suppress output that won’t work in Rd (e.g. turning
+off colour and unicode support in cli) (#1351). They now also set
+knitr options <code class="docutils literal notranslate"><span class="pre">comment</span> <span class="pre">=</span> <span class="pre">#&gt;</span></code> (#1380) and <code class="docutils literal notranslate"><span class="pre">collapse</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (#1376).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> will now export both the class and constructor function when
+applied to expressions like <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">&lt;-</span> <span class="pre">setClass(&quot;foo&quot;)</span></code> (#1216).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span></code> now gives better feedback when it fails (#1089).</p></li>
+</ul>
+</section>
+<section id="r-markdown">
+<h2>(R)markdown<a class="headerlink" href="#r-markdown" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">knitr_chunk_options</span></code> option (in the <code class="docutils literal notranslate"><span class="pre">Roxygen</span></code> entry of
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> or in <code class="docutils literal notranslate"><span class="pre">man/roxygen/meta.R</span></code>) is added to the knitr chunk
+options that roxygen2 uses for markdown code blocks and inline
+code (#1390).</p></li>
+<li><p>PDF figures are only included the PDF manual, and SVG figures are only
+included in the HTML manual (#1399).</p></li>
+<li><p>You can now use alternative knitr engines in markdown code blocks (#1149).</p></li>
+<li><p>Generated HTML for code blocks never includes “NA” for language (#1251).</p></li>
+<li><p>Using a level 1 heading in the wrong tag now gives a more useful warning
+(#1374).</p></li>
+<li><p>Fix bug interpolating the results of indented inline RMarkdown (#1353).</p></li>
+</ul>
+</section>
+<section id="other">
+<h2>Other<a class="headerlink" href="#other" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>If you have a daily build of RStudio, the lists of changed Rd files are
+now clickable so you can immediately see the rendered development
+documentation (#1354).</p></li>
+<li><p>R6 documentation no longer shows inherited methods if there aren’t any
+(#1371), and only links to superclass docs if they’re actually available
+(#1236).</p></li>
+<li><p>Automated usage no longer mangles nbsp in default arguments (#1342).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-2-0">
+<h1>roxygen2 7.2.0<a class="headerlink" href="#roxygen2-7-2-0" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>New features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The NAMESPACE roclet now preserves all existing non-import directives during
+it’s first pre-processing pass. This eliminates the “NAMESPACE has changed”
+messages and reduces the incidence of namespace borking (#1254).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> now only inherits exact multiparameter matches, so if you’re
+inheriting from a function with <code class="docutils literal notranslate"><span class="pre">&#64;param</span> <span class="pre">x,y</span></code> you’ll only get the parameter
+documentation if your function needs docs for both x and y (#950).</p></li>
+<li><p>All warning messages have been reviewed to be more informative and
+actionable (#1317). <code class="docutils literal notranslate"><span class="pre">&#64;title</span></code> now checks for multiple paragraphs.
+<code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> gives a more informative warning if it contains too many lines.
+(#1074). All tags warn now if only provide whitespace (#1228), and
+problems with the first tag in each block are reported with the correct line
+number (#1235).</p></li>
+<li><p>If you have a daily build of RStudio, roxygen2 warnings will now include a
+clickable hyperlink that will take you directly to the problem (#1323).
+This technology is under active development across the IDE and the cli
+package but is extremely exciting.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>roxygen2 can once again read UTF-8 paths on windows (#1277).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;author</span></code>s are de-duplicated in merged documentation (&#64;DanChaltiel, #1333).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;exportS3method</span> <span class="pre">pkg::generic</span></code> now works when <code class="docutils literal notranslate"><span class="pre">pkg::generic</span></code> isn’t
+imported by your package (#1085).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span></code> is now adapted to change in rmarkdown 2.12 regarding math
+support in <code class="docutils literal notranslate"><span class="pre">github_document()</span></code> (#1304).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code> and friends perform less aggressive link tweaking, eliminating
+many spurious warnings. Additionally, when you do get a warning, you’ll
+now always learn which topic it’s coming from (#1135). Inherited
+<code class="docutils literal notranslate"><span class="pre">\ifelse{}{}{}</span></code> tags are now inserted correctly (without additional <code class="docutils literal notranslate"><span class="pre">{}</span></code>)
+(#1062).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code> now supports inheriting “Notes” with <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span> <span class="pre">pkg::fun</span> <span class="pre">note</span></code>
+(&#64;pat-s, #1218)</p></li>
+<li><p>Automatic <code class="docutils literal notranslate"><span class="pre">&#64;usage</span></code> now correctly wraps arguments containing syntactically
+significant whitespace (e.g anonymous functions) (#1281) and non-syntactic
+values surrounded by backticks (#1257).</p></li>
+<li><p>Markdown:</p>
+<ul>
+<li><p>Code blocks are always wrapped in <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">class=&quot;sourceCode&quot;&gt;</span></code>
+even if the language is unknown (#1234).</p></li>
+<li><p>Links with markup (e.g. <code class="docutils literal notranslate"><span class="pre">[foo</span> <span class="pre">`bar`][target]</span></code>) now cause an informative
+warning instead of generating invalid Rd.</p></li>
+<li><p>Curly braces in links are now escaped (#1259).</p></li>
+<li><p>Inline R code is now powered by knitr. Where available, (knit) print
+methods are applied (#1179). This change alters outputs and brings roxygen
+in line with console and R markdown behavior. <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">&quot;foo&quot;</span></code> no longer
+inserts anything into the resulting documentation, but <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;-</span> <span class="pre">&quot;foo&quot;;</span> <span class="pre">x</span></code>
+will. This also means that returning a character vector will insert
+commas between components, not newlines.</p></li>
+</ul>
+</li>
+<li><p>roxygen2 no longer generates invalid HTML (#1290).</p></li>
+<li><p>DOIs, arXiv links, and urls in the <code class="docutils literal notranslate"><span class="pre">Description</span></code> field of the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>
+are now converted to the appropriate Rd markup (&#64;dieghernan, #1265, #1164).
+DOIs in the <code class="docutils literal notranslate"><span class="pre">URL</span></code> field of the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> are now converted to Rd’s
+special <code class="docutils literal notranslate"><span class="pre">\doi{}</span></code> tag (&#64;ThierryO, #1296).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-1-2">
+<h1>roxygen2 7.1.2<a class="headerlink" href="#roxygen2-7-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The new <code class="docutils literal notranslate"><span class="pre">&#64;examplesIf</span></code> tag can be used to create conditional
+examples. These examples only run if a specified condition
+holds (#962).</p></li>
+<li><p>roxygen2 is now licensed as MIT (#1163).</p></li>
+<li><p>Bug fix for upcoming stringr 2.0.0 release.</p></li>
+<li><p>Code blocks with language now add <code class="docutils literal notranslate"><span class="pre">sourceCode</span></code> to the generated div; this
+makes syntax highlighting more consistent across downlit/pandoc/knitr/roxygen2.</p></li>
+<li><p>Percent signs in markdown link targets, e.g. <code class="docutils literal notranslate"><span class="pre">[text](https://foo/ba%20r)</span></code>
+are now handled correctly (#1209).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-1-1">
+<h1>roxygen2 7.1.1<a class="headerlink" href="#roxygen2-7-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>When processing cross package markdown links (e.g. <code class="docutils literal notranslate"><span class="pre">[pkg::fun()]</span></code>),
+roxygen2 now looks up the file it needs to link to, instead of linking to
+the topic, to avoid “Non-file package-anchored links” <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> warnings.</p></li>
+<li><p>R6 methods and re-exported functions are always sorted in the C locale;
+this ensures they’re always sorted the same way in every environment (#1077).</p></li>
+<li><p>roxygen2 now supports inline markdown code and code chunks inside
+Rd tags. In particular in <code class="docutils literal notranslate"><span class="pre">\out{}</span></code> (#1115).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-1-0">
+<h1>roxygen2 7.1.0<a class="headerlink" href="#roxygen2-7-1-0" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>New features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>roxygen2 now supports inline markdown code and also code chunks,
+using the same notation as the knitr package. For example:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; This manual was generated at: `r Sys.time()`.</span>
+<span class="c1">#&#39; ...</span>
+<span class="c1">#&#39; `mtcars` is a data frame with `r ncol(mtcars)` columns, here</span>
+<span class="c1">#&#39; is a summary of them:</span>
+<span class="c1">#&#39;</span>
+<span class="c1">#&#39; ```{r}</span>
+<span class="c1">#&#39; summary(mtcars)</span>
+<span class="c1">#&#39; ```</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">vignette(&quot;rd-formatting&quot;)</span></code> for details.</p>
+</li>
+<li><p>roxygen2 now keeps using Windows (CR LF) line endings for files that
+already have CR LF line endings, and uses LF for new files (#989).</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Auto-generated package documentation can now handle author ORCID comments
+containing full url (#1040).</p></li>
+<li><p>Hyperlinks to R6 methods are also added in the PDF manual (#1006).</p></li>
+<li><p>Empty annotations (alternate text) for figures added via markdown are now
+omitted. This caused issues when generating pkgdown web sites (#1051).</p></li>
+<li><p>Roxygen metadata can now have a <code class="docutils literal notranslate"><span class="pre">packages</span></code> element, giving a character vector
+of package names to load. This makes it easier to use extension package that
+provide new tags for existing roclets (#1013). See <code class="docutils literal notranslate"><span class="pre">?load_options</span></code> for
+more details.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">Roxygen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list(markdown = TRUE, packages = &quot;roxygenlabs&quot;)</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;evalNamespace()</span></code> works again (#1022).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;description</span> <span class="pre">NULL</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;details</span> <span class="pre">NULL</span></code> no longer fail; instead, these tags
+are ignored, except for <code class="docutils literal notranslate"><span class="pre">&#64;description</span> <span class="pre">NULL</span></code> in package level documentation,
+where it can be used to suppress the auto-generated Description section
+(#1008).</p></li>
+<li><p>Multiple <code class="docutils literal notranslate"><span class="pre">&#64;format</span></code> tags are now combined (#1015).</p></li>
+<li><p>The warning for <code class="docutils literal notranslate"><span class="pre">&#64;section</span></code> titles spanning multiple lines now includes a
+hint that you’re missing a colon (&#64;maelle, #994).</p></li>
+<li><p>Can now document objects created with <code class="docutils literal notranslate"><span class="pre">delayedAssign()</span></code> by forcing
+evaluation at documentation time (#1041)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-0-2">
+<h1>roxygen2 7.0.2<a class="headerlink" href="#roxygen2-7-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">\example{}</span></code> escaping has been improved (again!) so that special escapes
+within strings are correctly escaped (#990).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-0-1">
+<h1>roxygen2 7.0.1<a class="headerlink" href="#roxygen2-7-0-1" title="Link to this heading">#</a></h1>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span></code> has now an optional second argument, the top level section
+the included file will go to. It defaults to the details section (#970).
+Code chunks are now evaluated in a child of the global environment (#972).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> does a better job of munging links.</p>
+<p>Links of the form <code class="docutils literal notranslate"><span class="pre">\link[=topic]{text}</span></code> are now automatically converted to
+<code class="docutils literal notranslate"><span class="pre">\link[pkg:topic]{text}</span></code> when inherited from other packages (#979).</p>
+<p>Internal <code class="docutils literal notranslate"><span class="pre">has_topic()</span></code> helper has a better implementation; this means that
+links should no longer be munged unnecessarily (#973).</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\example{}</span></code> escaping has been considerably simplified (#967), and is now
+documented in <code class="docutils literal notranslate"><span class="pre">escape_example()</span></code>.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">\usage{}</span></code>, S3/S4 methods are no longer double-escaped (#976).</p></li>
+<li><p>Markdown tables with cells that contain multiple elements (e.g. text and code)
+are now rendered correctly (#985).</p></li>
+<li><p>Markdown code blocks containing operators and other special syntax
+(e.g. <code class="docutils literal notranslate"><span class="pre">function</span></code>, <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>) now converted to <code class="docutils literal notranslate"><span class="pre">\code{}</span></code> not <code class="docutils literal notranslate"><span class="pre">\verb{}</span></code> (#971).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-7-0-0">
+<h1>roxygen2 7.0.0<a class="headerlink" href="#roxygen2-7-0-0" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>New features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="new-tags">
+<h3>New tags<a class="headerlink" href="#new-tags" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;includeRmd</span> <span class="pre">{path.Rmd}</span></code> converts an <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code>/<code class="docutils literal notranslate"><span class="pre">.md</span></code> file to <code class="docutils literal notranslate"><span class="pre">.Rd</span></code> and includes
+it in the manual page. This allows sharing text between vignettes,
+<code class="docutils literal notranslate"><span class="pre">README.Rmd</span></code>, and the documentation. See <code class="docutils literal notranslate"><span class="pre">vignette(&quot;rd&quot;)</span></code> for details (#902).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;order</span> <span class="pre">{n}</span></code> tag controls the order in which blocks are processed. You can
+use it to override the usual ordering which proceeds from the top of
+each file to the bottom. <code class="docutils literal notranslate"><span class="pre">&#64;order</span> <span class="pre">1</span></code> will be processed before <code class="docutils literal notranslate"><span class="pre">&#64;order</span> <span class="pre">2</span></code>,
+and before any blocks that don’t have an explicit order set (#863).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;exportS3Method</span></code> tag allows you to generate <code class="docutils literal notranslate"><span class="pre">S3method()</span></code> namespace
+directives (note the different in capitalisation) (#796). Its primary use is
+for “delayed” method registration, which allows you to define methods for
+generics found in suggested packages (available in R 3.6 and greater).
+For example,</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; @exportS3Method package::generic</span>
+<span class="n">generic.foo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kc">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>will generate</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S3method</span><span class="p">(</span><span class="n">package</span><span class="p">::</span><span class="n">generic</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(See <a class="reference external" href="https://vctrs.r-lib.org/reference/s3_register.html"><code class="docutils literal notranslate"><span class="pre">vctrs::s3_register()</span></code></a>
+you need a version that works for earlier versions of R).</p>
+<p>It also has a two argument form allows you generate arbitrary <code class="docutils literal notranslate"><span class="pre">S3method()</span></code>
+directives:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; @exportS3Method generic class</span>
+<span class="kc">NULL</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S3method</span><span class="p">(</span><span class="n">generic</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">&#64;returns</span></code> is an alias for <code class="docutils literal notranslate"><span class="pre">&#64;return</span></code> (#952).</p></li>
+</ul>
+</section>
+<section id="r6">
+<h3>R6<a class="headerlink" href="#r6" title="Link to this heading">#</a></h3>
+<p>roxygen2 can now document R6 classes (#922). See <code class="docutils literal notranslate"><span class="pre">vignette(&quot;rd&quot;)</span></code> for details.</p>
+</section>
+<section id="markdown-improvements">
+<h3>Markdown improvements<a class="headerlink" href="#markdown-improvements" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Rd comments (<code class="docutils literal notranslate"><span class="pre">%</span></code>) are now automatically escaped. You will need to replace any
+existing uses of <code class="docutils literal notranslate"><span class="pre">\%</span></code> with <code class="docutils literal notranslate"><span class="pre">%</span></code> (#879).</p></li>
+<li><p>Markdown headings are supported in tags like <code class="docutils literal notranslate"><span class="pre">&#64;description</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;details</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">&#64;return</span></code> (#907, #908). Level 1 headings create a new top-level
+<code class="docutils literal notranslate"><span class="pre">\section{}</span></code>. Level 2 headings and below create nested <code class="docutils literal notranslate"><span class="pre">\subsections{}</span></code>.</p></li>
+<li><p>Markdown tables are converted to a <code class="docutils literal notranslate"><span class="pre">\tabular{}</span></code> macro (#290). roxygen2
+supports the <a class="reference external" href="https://github.github.com/gfm/#tables-extension-">GFM table syntax</a>
+which looks like this:</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>| foo | bar |
+| --- | --- |
+| baz | bim |
+</pre></div>
+</div>
+</li>
+<li><p>Markdown code (<code class="docutils literal notranslate"><span class="pre">`foofy`</span></code>) is converted to to either <code class="docutils literal notranslate"><span class="pre">\code{}</span></code> or
+<code class="docutils literal notranslate"><span class="pre">\verb{}</span></code>, depending on whether it not it parses as R code. This better
+matches the description of <code class="docutils literal notranslate"><span class="pre">\code{}</span></code> and <code class="docutils literal notranslate"><span class="pre">\verb{}</span></code> macros, solves a certain
+class of escaping problems, and should make it easier to include arbitrary
+“code” snippets in documentation without causing Rd failures (#654).</p></li>
+<li><p>Markdown links can now contain formatting, e.g. <code class="docutils literal notranslate"><span class="pre">[*mean*][mean]</span></code> will now
+generate <code class="docutils literal notranslate"><span class="pre">\link[=mean]{\emph{mean}}</span></code>.</p></li>
+<li><p>Use of unsupported markdown features (e.g. blockquotes, inline HTML,
+and horizontal rules) generates informative error messages (#804).</p></li>
+</ul>
+</section>
+<section id="default-usage">
+<h3>Default usage<a class="headerlink" href="#default-usage" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>The default formatting for function usage that spans multiple lines has
+now changed. Previously, the usage was wrapped to produce the smallest number
+of lines, e.g.:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">parse_package</span><span class="p">(</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">env_package</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="w"> </span>
+<span class="w">  </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">default_tags</span><span class="p">(),</span><span class="w"> </span><span class="n">global_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Now it is wrapped so that each argument gets its own line (#820):</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">parse_package</span><span class="p">(</span>
+<span class="w">  </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">env_package</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+<span class="w">  </span><span class="n">registry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">default_tags</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">global_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If you prefer the old behaviour you can put the following in your
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Roxygen</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">old_usage</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="code-loading">
+<h3>Code loading<a class="headerlink" href="#code-loading" title="Link to this heading">#</a></h3>
+<p>roxygen2 now provides three strategies for loading your code (#822):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">load_pkgload()</span></code>, the default, uses <a class="reference external" href="https://github.com/r-lib/pkgload">pkgload</a>.
+Compared to the previous release, this now automatically recompiles your
+package if needed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_source()</span></code> attaches required packages and <code class="docutils literal notranslate"><span class="pre">source()</span></code>s all files in <code class="docutils literal notranslate"><span class="pre">R/</span></code>.
+This is a cruder simulation of package loading than pkgload (and e.g. is
+unreliable if you use S4 extensively), but it does not require that the
+package be compiled. Use if the default strategy (used in roxygen2 6.1.0
+and above) causes you grief.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_installed()</span></code> assumes you have installed the package. This is best
+used as part of a bigger automated workflow.</p></li>
+</ul>
+<p>You can override the default either by calling (e.g.) <code class="docutils literal notranslate"><span class="pre">roxygenise(load_code</span> <span class="pre">=</span> <span class="pre">&quot;source&quot;))</span></code> or by setting the <code class="docutils literal notranslate"><span class="pre">load</span></code> option in your DESCRIPTION: <code class="docutils literal notranslate"><span class="pre">Roxygen:</span> <span class="pre">list(load</span> <span class="pre">=</span> <span class="pre">&quot;source&quot;)</span></code>.</p>
+</section>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>As well as storing roxygen options in the <code class="docutils literal notranslate"><span class="pre">Roxygen</span></code> field of the
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> you can now also store them in <code class="docutils literal notranslate"><span class="pre">man/roxygen/meta.R</span></code> (#889).
+The evaluation of this file should produce a named list that maps option
+names to values.</p></li>
+<li><p>roxygen now also looks for templates in <code class="docutils literal notranslate"><span class="pre">man/roxygen/templates</span></code> (#888).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">rd_family_title</span></code> option: this should be a named list, and is used to
+overrides the default “Other family: “ prefix that <code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> generates.
+For example, to override the prefix generated by <code class="docutils literal notranslate"><span class="pre">&#64;family</span> <span class="pre">foo</span></code> place
+<code class="docutils literal notranslate"><span class="pre">rd_family_title</span> <span class="pre">&lt;-</span> <span class="pre">list(foo</span> <span class="pre">=</span> <span class="pre">&quot;Custom</span> <span class="pre">prefix:</span> <span class="pre">&quot;)</span></code> in
+<code class="docutils literal notranslate"><span class="pre">man/roxygen/meta.R</span></code> (#830, &#64;kevinushey).</p></li>
+</ul>
+</section>
+</section>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Rd comments (<code class="docutils literal notranslate"><span class="pre">%</span></code>) are automatically escaped in markdown formatted text.
+This is a backward incompatible change because you will need to replace
+existing uses of <code class="docutils literal notranslate"><span class="pre">\%</span></code> with <code class="docutils literal notranslate"><span class="pre">%</span></code> (#879).</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">&#64;docType</span> <span class="pre">package</span></code> no longer automatically adds <code class="docutils literal notranslate"><span class="pre">-name</span></code>. Instead
+document <code class="docutils literal notranslate"><span class="pre">_PACKAGE</span></code> to get all the defaults for package documentation, or
+use <code class="docutils literal notranslate"><span class="pre">&#64;name</span></code> to override the default file name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;S3method</span></code> has been removed. It was deprecated in roxygen2 4.0.0
+released 2014-05-02, over 5 years ago.</p></li>
+<li><p>Using the old <code class="docutils literal notranslate"><span class="pre">wrap</span></code> option will now trigger a warning, as hasn’t worked
+for quite some time. Suppress the error by deleting the option from your
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>.</p></li>
+</ul>
+<section id="extending-roxygen2">
+<h3>Extending roxygen2<a class="headerlink" href="#extending-roxygen2" title="Link to this heading">#</a></h3>
+<p>The process for extending roxygen2 with new tags and new roclets has been completely overhauled, and is now documented in <code class="docutils literal notranslate"><span class="pre">vignette(&quot;extending&quot;)</span></code>. If you’re one of the few people who have written a roxygen2 extension, this will break your code - but the documentation, object structure, and print methods are now so much better that I hope it’s not too annoying! Because this interface is now documented, it will not change in the future without warning and a deprecation cycle.</p>
+<p>If you have previously made a new roclet, the major changes are:</p>
+<ul>
+<li><p>The previously internal data structures used to represent blocks and tags
+have been overhauled. They are now documented and stable. See <code class="docutils literal notranslate"><span class="pre">roxy_block()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">roxy_tag()</span></code> for details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roclet_tags()</span></code> is no longer used; instead define a <code class="docutils literal notranslate"><span class="pre">roxy_tag_parse()</span></code> method.
+For example, if you create a new <code class="docutils literal notranslate"><span class="pre">&#64;mytag</span></code> tag, it will generate a class of
+<code class="docutils literal notranslate"><span class="pre">roxy_tag_mytag</span></code>, and will be parsed by <code class="docutils literal notranslate"><span class="pre">roxy_tag_parse.roxy_tag_mytag()</span></code>
+method. The method should return a new <code class="docutils literal notranslate"><span class="pre">roxy_tag()</span></code> object with the
+<code class="docutils literal notranslate"><span class="pre">val</span></code> field set.</p>
+<p>This means that the <code class="docutils literal notranslate"><span class="pre">registry</span></code> argument is no longer needed and has
+been removed.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rd_section()</span></code> and <code class="docutils literal notranslate"><span class="pre">roxy_tag_rd()</span></code> are now exported so that you can more
+easily extend <code class="docutils literal notranslate"><span class="pre">rd_roclet()</span></code> with your own tags that generate output in
+<code class="docutils literal notranslate"><span class="pre">.Rd</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global_options</span></code> is no longer passed to all roclet methods. Instead, use
+<code class="docutils literal notranslate"><span class="pre">roxy_meta_get()</span></code> to retrieve values stored in the options (#918).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tag_two_part()</span></code> and <code class="docutils literal notranslate"><span class="pre">tag_words()</span></code> are now simple functions, not function
+factories.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tag_markdown_restricted()</span></code> has been removed because it did exactly the
+same thing as <code class="docutils literal notranslate"><span class="pre">tag_markdown()</span></code>.</p></li>
+</ul>
+<p>A big thanks goes to &#64;mikldk for starting on the vignette and motivating me to make the extension process much more pleasant (#882).</p>
+</section>
+</section>
+<section id="bug-fixes-and-minor-improvements">
+<h2>Bug fixes and minor improvements<a class="headerlink" href="#bug-fixes-and-minor-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Empty roxygen2 lines at the start of a block are now silently removed (#710).</p></li>
+<li><p>Whitespace is automatically trimmed off the <code class="docutils literal notranslate"><span class="pre">RoxygenNote</span></code> field when
+comparing the installed version of roxygen2 to the version used to
+generate the documentation (#802).</p></li>
+<li><p>Files generated on Windows systems now retain their existing line endings, or
+use unix-style line endings for new files (&#64;jonthegeek, &#64;jimhester, #840).</p></li>
+<li><p>roxygen2 now recognises fully qualified S4 functions like
+<code class="docutils literal notranslate"><span class="pre">methods::setGeneric()</span></code>, <code class="docutils literal notranslate"><span class="pre">methods::setClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">methods::setMethod()</span></code>
+(#880).</p></li>
+<li><p>Package documentation now converts ORCIDs into a useful link (#721).
+The package logo (if found at <code class="docutils literal notranslate"><span class="pre">man/images/logo.png</span></code>) is now scaled to 120px
+wide (&#64;peterdesmet, #834).</p></li>
+<li><p>Documenting an S4 method that has a <code class="docutils literal notranslate"><span class="pre">.local()</span></code> wrapper no longer fails with
+an obscure error message (#847).</p></li>
+<li><p>Functions documented in <code class="docutils literal notranslate"><span class="pre">reexports</span></code> are now sorted alphabetically by
+package (#765).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> can now be used with any combination of function types
+(#666, #848).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;detail</span></code> tags are automatically generated from the
+leading description block, and now have correct line numbers (#917).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;example</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> are interwoven in the order in which they
+appear (#868).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code>, escaped <code class="docutils literal notranslate"><span class="pre">'</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> in strings are no longer doubly escaped
+(#873).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> automatically adds <code class="docutils literal notranslate"><span class="pre">()</span></code> when linking to functions (#815),
+and print each link on its own line (to improve diffs).</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code>ing from external documentation, <code class="docutils literal notranslate"><span class="pre">\link{foo}</span></code> links
+are automatically transformed to <code class="docutils literal notranslate"><span class="pre">\link{package}{foo}</span></code> so that they work in
+the generated documentation (#635). <code class="docutils literal notranslate"><span class="pre">\href{}</span></code> links in external inherited are
+now inserted correctly (without additional <code class="docutils literal notranslate"><span class="pre">{}</span></code>) (#778).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code>ing a a function with no arguments no longer throws a confusing
+error message (#898).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span></code> automatically ignores arguments that can’t be inherited
+through <code class="docutils literal notranslate"><span class="pre">...</span></code> because they are used by the current function (&#64;mjskay, #885).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span></code> includes link to function and wraps parameters
+in <code class="docutils literal notranslate"><span class="pre">\code{}</span></code> (&#64;halldc, #842).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span></code> can be repeated to inherit dot docs from multiple
+functions (&#64;gustavdelius, #767).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span></code> avoids multiple <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments (&#64;gustavdelius, #857).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> ignores leading dots when comparing argument names (#862).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> warns if there are no parameters that require
+documentation (#836).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;param</span></code> containing only whitespace gives a clear warning message (#869).</p></li>
+<li><p>Multiple <code class="docutils literal notranslate"><span class="pre">&#64;usage</span></code> statements in a single block now generate a warning.
+Previously, the first was used without a warning.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-6-1-1">
+<h1>roxygen2 6.1.1<a class="headerlink" href="#roxygen2-6-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now specifically imports recent version of desc package (&gt;= 1.2.0) to
+fix various parsing issues (&#64;crsh, #773, #777, #779). Multi-line DESCRIPTION
+collate directives now correctly parsed on windows (&#64;brodieG, #790).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> no longer recompiles packages containing src code (#784).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> now stops with an informative error message when run in a
+directory that’s not the package root (&#64;mikmart, #704).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-6-1-0">
+<h1>roxygen2 6.1.0<a class="headerlink" href="#roxygen2-6-1-0" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>New features<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> roclet now works in two passes - it first generates the
+<code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> containing only import directives because this can be generated
+without evaluating the code in the package. This alleviates a problem
+where it was previously possible to get into a state that you could only
+get out of by carefully editing the <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> by hand (#372).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;evalRd</span> <span class="pre">foo()</span></code> evaluates <code class="docutils literal notranslate"><span class="pre">foo()</span></code> defined in the package namespace and inserts
+the results into the current block (#645). The code should return a character
+vector with one entry for each line (and they should not start with <code class="docutils literal notranslate"><span class="pre">#'</span></code>).</p>
+<p>There are two small limitations to the current implementation:</p>
+<ol class="arabic simple">
+<li><p>The generated roxygen will not affect the <code class="docutils literal notranslate"><span class="pre">&#64;md</span></code>/<code class="docutils literal notranslate"><span class="pre">&#64;noMd</span></code> status</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;evalRd</span></code> does not work inside templates.</p></li>
+</ol>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;evalNamespace</span></code> does for <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> what <code class="docutils literal notranslate"><span class="pre">&#64;evalRd</span></code> does for Rd files:
+you give it R code that produces a literal entry in <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> when
+run. This should make it easier to export functions that are generated by
+other functions in your package (#531, &#64;egnha).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherits</span></code> can now inherit examples (#588).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vignette(&quot;rd&quot;)</span></code> received a thorough updating for current best-practices.
+The vignette still needs more work so pull requests are greatly appreciated
+(#650).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> uses <code class="docutils literal notranslate"><span class="pre">pkgload::load_all()</span></code> instead of a home grown solution
+to simulate package loading (this is needed because roxygen2 uses run-time
+information to generate the documentation). This should reduce S4 related
+problems and ensures that <code class="docutils literal notranslate"><span class="pre">devtools::document()</span></code> and <code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> always
+have exactly the same behaviour (#568, #595).</p></li>
+<li><p>If an inherited section cannot be found, the warning contains the help
+page from which that section was requested (#732, &#64;krlmlr).</p></li>
+<li><p>roxygen2 now always reads and writes using UTF-8 encoding. If used with a
+package that does not have <code class="docutils literal notranslate"><span class="pre">Encoding:</span> <span class="pre">UTF-8</span></code> in the DESCRIPTION, you’ll
+now get a warning (#564, #592).</p></li>
+</ul>
+</section>
+<section id="extension-api">
+<h2>Extension API<a class="headerlink" href="#extension-api" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Roxygen blocks now have an official structure as encoded in
+<code class="docutils literal notranslate"><span class="pre">roxy_block()</span></code>. It is a named list containing the tags with attributes
+providing other metadata.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">parsed</span></code> argument to <code class="docutils literal notranslate"><span class="pre">roclet_process()</span></code> have been replaced with
+separate <code class="docutils literal notranslate"><span class="pre">blocks</span></code> and <code class="docutils literal notranslate"><span class="pre">env</span></code> arguments.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">roclet_preprocess()</span></code> generic makes it possible for roclets to perform
+actions before code is evaluated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_package()</span></code>, <code class="docutils literal notranslate"><span class="pre">parse_file()</span></code> and <code class="docutils literal notranslate"><span class="pre">parse_code()</span></code> provide an exported API
+that allows you to use roxygen’s parsing code independently of creating
+roclets.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>All tags (including <code class="docutils literal notranslate"><span class="pre">&#64;alias</span></code>) are now de-duplicated and consistently sorted.
+This reduces spurious diffs (#586, &#64;flying-sheep).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;concept</span></code> now generates one <code class="docutils literal notranslate"><span class="pre">\concept</span></code> per tag (#611).</p></li>
+<li><p>The default <code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> (i.e. the title) is now added much later in the
+process. That means that <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span> <span class="pre">description</span></code> now works when you have
+specified a title for the inheritor (#629) and the default description
+is slightly nicer when merging multiple blocks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> automatically adds its value to concepts (#611).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inherits</span></code>: The mechanism for extracting inherited Rd does a better job of
+preserving escapes (#624)</p></li>
+<li><p>Empty <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> now handled correctly (#576).</p></li>
+<li><p>Stricter regular expression ensures only files ending with <code class="docutils literal notranslate"><span class="pre">.R</span></code> or <code class="docutils literal notranslate"><span class="pre">.r</span></code> are
+parsed for roxygen comments (#625).</p></li>
+<li><p>Objects with names starting with a dot are now by default documented in
+files with prefix ‘dot-‘.</p></li>
+<li><p>Roclets can now access global options as designed. This allows templates to
+use markdown formatting if set globally (#594).</p></li>
+<li><p>You can now autogenerate package documentation even if you don’t have
+<code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> (#606).</p></li>
+<li><p>Multiple given and/or family names are now supported in the
+<code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> field of the DESCRIPTION file (#672, &#64;sgibb).</p></li>
+<li><p>If a package logo exists (<code class="docutils literal notranslate"><span class="pre">man/figures/logo.png</span></code>) it will be automatically
+included in generated package docs (#609).</p></li>
+<li><p>Usage for data objects now correctly generated, avoiding double escaping
+other components of usage (#562).</p></li>
+<li><p>Improvements to markdown translation:</p>
+<ul>
+<li><p>Code in link text is now properly rendered as code (#620, &#64;egnha).</p></li>
+<li><p>Whitespace between words in link text is now preserved as single
+space for links of the form <code class="docutils literal notranslate"><span class="pre">[text][fcn]</span></code> and <code class="docutils literal notranslate"><span class="pre">[text](URL)</span></code>
+(#628, #754, #760, &#64;egnha and &#64;jennybc).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code> in inline code (#640), code blocks (&#64;nteetor, #699) and
+links (#724) is now automatically escaped.</p></li>
+<li><p>Parsing of markdown links has been tweaked to reduce false positives
+(#555). If you still get a false positive, you can now put <code class="docutils literal notranslate"><span class="pre">\\</span></code> in front
+of the <code class="docutils literal notranslate"><span class="pre">[</span></code> to avoid it being converted to a link (#720). Links can no
+longer be followed by <code class="docutils literal notranslate"><span class="pre">{</span></code> to avoid spurious matches to Rd commands like
+<code class="docutils literal notranslate"><span class="pre">\Sexpr{}</span></code>.</p></li>
+<li><p>Unsupported markdown features now generate a mildly helpful warning
+instead of throwing an utterly useless error (#560).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">person()</span></code> now supports all
+<a class="reference external" href="https://www.loc.gov/marc/relators/relaterm.html">MARC Relator</a> role codes
+(#662, &#64;publicus).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topic_add_usage()</span></code> now outputs formatted “Usage” section with max
+width of 80 characters thanks to a now more flexible <code class="docutils literal notranslate"><span class="pre">wrap_string()</span></code>
+(&#64;JoshOBrien, #719).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-6-0-1">
+<h1>roxygen2 6.0.1<a class="headerlink" href="#roxygen2-6-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Allowing empty lines in .Rbuildignore. Previously, empty lines caused all
+files to be ignored. (#572, &#64;jakob-r)</p></li>
+<li><p>Automatically generating a usage section for an infix function containing “&lt;-”
+no longer removes “&lt;-” from the function name (#554).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-6-0-0">
+<h1>roxygen2 6.0.0<a class="headerlink" href="#roxygen2-6-0-0" title="Link to this heading">#</a></h1>
+<section id="markdown">
+<h2>Markdown<a class="headerlink" href="#markdown" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Most fields can now be written using Markdown markup instead of the
+traditional Rd language. You can turn on Markdown globally by adding
+<code class="docutils literal notranslate"><span class="pre">Roxygen:</span> <span class="pre">list(markdown</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> to <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>. The <code class="docutils literal notranslate"><span class="pre">&#64;md</span></code> / <code class="docutils literal notranslate"><span class="pre">&#64;noMd</span></code>
+tags turn Markdown parsing on / off for the given block. See
+<code class="docutils literal notranslate"><span class="pre">vignette(&quot;markdown&quot;)</span></code> for more details (#364, #431, #499, #506, #507),
+by &#64;gaborcsardi</p></li>
+</ul>
+</section>
+<section id="improved-inheritance">
+<h2>Improved inheritance<a class="headerlink" href="#improved-inheritance" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span></code> allows you to automatically generate parameter
+documentation for <code class="docutils literal notranslate"><span class="pre">...</span></code> for the common case where you pass <code class="docutils literal notranslate"><span class="pre">...</span></code> on to
+another function (#512). Because you often override some arguments, it
+comes with a flexible specification for argument selection:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span> <span class="pre">foo</span></code> takes all parameters from <code class="docutils literal notranslate"><span class="pre">foo()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span> <span class="pre">foo</span> <span class="pre">a</span> <span class="pre">b</span> <span class="pre">e:h</span></code> takes parameters <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and all
+parameters between <code class="docutils literal notranslate"><span class="pre">e</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritDotParams</span> <span class="pre">foo</span> <span class="pre">-x</span> <span class="pre">-y</span></code> takes all parameters except for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+</ul>
+<p>The documentation generated is similar to the style used in <code class="docutils literal notranslate"><span class="pre">?plot</span></code>
+and will eventually be incorporated in to RStudio’s autocomplete.</p>
+</li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code> generalises <code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code>, and allows to you inherit
+parameters, return, references, title, description, details, sections, and
+seealso.  The default <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span> <span class="pre">my_fun</span></code> will inherit all, you can document
+an object entirely by specifying only the <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span></code> tag.  Alternatively,
+you can select specific tags to inherit with <code class="docutils literal notranslate"><span class="pre">&#64;inherit</span> <span class="pre">my_fun</span> <span class="pre">return</span> <span class="pre">params</span></code>
+(#384).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">&#64;inheritSection</span> <span class="pre">fun</span> <span class="pre">title</span></code> allows you to inherit the contents of
+a single section from another topic (#513).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> now works recursively, so that you can inherit parameters
+from a function that inherited its parameters from somewhere else.  It
+also better handles <code class="docutils literal notranslate"><span class="pre">\dots</span></code> as an alias for <code class="docutils literal notranslate"><span class="pre">...</span></code> (#504).</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>Tags<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;aliases</span></code> are no longer sorted alphabetically, but instead match the
+order of their usage. This gives you more control in pkgdown.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> now escapes special characters in function names (#450).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> see alsos are added in the same order they appear, not
+alphabetically (#315). Fixed an issue where <code class="docutils literal notranslate"><span class="pre">.</span></code>s were sometimes added
+between words within a <code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> tag (#477, &#64;kevinushey).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;author</span></code> is rendered after <code class="docutils literal notranslate"><span class="pre">&#64;seealso</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;example</span></code> gives a nice warning message if you accidentally use it instead
+of <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> (#494). Multiple <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> sections are merged (#472, &#64;krlmlr).</p></li>
+<li><p>Roxygen will no longer write out topics that don’t have a name or title,
+and will instead generate a warning. This makes it easier to detect if
+you’ve accidentally used <code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> with an incorrect value (#474).</p></li>
+</ul>
+</section>
+<section id="s3">
+<h3>S3<a class="headerlink" href="#s3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Non-primitive, internal S3 generics (e.g. ‘rbind’, ‘cbind’) are now properly
+detected as S3 generics. (#488, &#64;kevinushey)</p></li>
+<li><p>Ensure that <code class="docutils literal notranslate"><span class="pre">functions</span></code> with S3 class are still treated as functions (#455).</p></li>
+<li><p>S3 method declarations via <code class="docutils literal notranslate"><span class="pre">R.methodS3::setMethodS3()</span></code> and function
+declarations via <code class="docutils literal notranslate"><span class="pre">R.oo::setConstructorS3()</span></code> are now supported
+(&#64;HenrikBengtsson, #525).</p></li>
+</ul>
+</section>
+<section id="s4">
+<h3>S4<a class="headerlink" href="#s4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>You can now document <code class="docutils literal notranslate"><span class="pre">setClassUnion()</span></code>s (#514).</p></li>
+<li><p>The default alias for S4 method now re-adds trailing ANY signatures
+that are sometimes dropped (#460).</p></li>
+<li><p>Back references are now wrapped over multiple lines, if long
+(#493, &#64;LiNk-NY).</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Other<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;_PACKAGE&quot;</span></code> documentation now generates a default <code class="docutils literal notranslate"><span class="pre">&#64;seealso</span></code> combining
+the <code class="docutils literal notranslate"><span class="pre">URL</span></code> and <code class="docutils literal notranslate"><span class="pre">BugReport</span></code> fields, and a default <code class="docutils literal notranslate"><span class="pre">&#64;author</span></code> field generated
+from the <code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> field (#527). It now works from <code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code>; before
+it only worked from <code class="docutils literal notranslate"><span class="pre">devtools::document()</span></code> (#439, &#64;krlmlr).</p></li>
+<li><p>Manually created <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> or documentation files are never overwritten,
+even if using <code class="docutils literal notranslate"><span class="pre">roxygen2</span></code> for the first time (&#64;krlmlr, #436).</p></li>
+<li><p>Changes to DESCRIPTION (i.e. <code class="docutils literal notranslate"><span class="pre">Collate:</span></code> and <code class="docutils literal notranslate"><span class="pre">RoxygenNote</span></code>) now use
+the desc package. This will minimise spurious changes (#430).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">default_data_format()</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">object_format()</span></code>.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">roclet_find()</span></code> provides a more flexible way to specify roclets:
+as roclet name (e.g. “rd_roclet”), in an package (“foo::roclet_bar”),
+or with options (“foo::roclet_bar(baz = TRUE)”).</p></li>
+<li><p>The usage of replacement functions uses non-breaking spaces so that <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code>
+will never get put on its own line (#484).</p></li>
+<li><p>Roxygen now parses nonASCII documentation correctly (as long as UTF-8
+encoded or specified Encoding in DESCRIPTION) (#532, &#64;shrektan),
+and ignores files listed in <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> (#446, &#64;fmichonneau).</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>Extending roxygen2<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">register.preref.parser()</span></code> and <code class="docutils literal notranslate"><span class="pre">register.preref.parsers()</span></code>
+have been removed. <code class="docutils literal notranslate"><span class="pre">register_tags()</span></code> has also been removed in favour of
+a new <code class="docutils literal notranslate"><span class="pre">roclet_tags()</span></code> generic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roclet()</span></code> (the constructor), <code class="docutils literal notranslate"><span class="pre">roclet_tags()</span></code>, <code class="docutils literal notranslate"><span class="pre">roclet_process()</span></code>
+<code class="docutils literal notranslate"><span class="pre">roclet_output()</span></code>, <code class="docutils literal notranslate"><span class="pre">roc_clean()</span></code> and now exported making it possible
+to create roclets in other packages.  Helper functions <code class="docutils literal notranslate"><span class="pre">roxy_tag()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">roxy_tag_warning()</span></code> are also exported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">new_roclet()</span></code> is no longer exported - use <code class="docutils literal notranslate"><span class="pre">roclet()</span></code> instead.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-5-0-1">
+<h1>roxygen2 5.0.1<a class="headerlink" href="#roxygen2-5-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">ls()</span></code>, not <code class="docutils literal notranslate"><span class="pre">names()</span></code> to list elements of environment: fixes R 3.1.0
+incompatibility (#422, &#64;kevinushey).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> again allows trailing new line (#415).</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">&#64;noRd</span></code>, where usage would cause error (#418).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-5-0-0">
+<h1>roxygen2 5.0.0<a class="headerlink" href="#roxygen2-5-0-0" title="Link to this heading">#</a></h1>
+<section id="id12">
+<h2>New features<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Roxygen now records its version in a single place: the <code class="docutils literal notranslate"><span class="pre">RoxygenNote</span></code>
+field in the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> (#338). This will be the last time an roxygen2
+upgrade changes every file in <code class="docutils literal notranslate"><span class="pre">man/</span></code>.</p></li>
+<li><p>You can now easily re-export functions that you’ve imported from another
+package:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; @export</span>
+<span class="n">magrittr</span><span class="o">::</span><span class="n">`%&gt;%`</span>
+</pre></div>
+</div>
+<p>All imported-and-re-exported functions will be documented in the same
+file (<code class="docutils literal notranslate"><span class="pre">rexports.Rd</span></code>), containing a brief description and links to the
+original documentation (#376).</p>
+</li>
+<li><p>You can more easily generate package documentation by documenting the
+special string “_PACKAGE” (&#64;krlmlr, #349):</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; @details Details</span>
+<span class="s">&quot;_PACKAGE&quot;</span>
+</pre></div>
+</div>
+<p>The title and description will be automatically filled in from the
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>.</p>
+</li>
+<li><p>New tags <code class="docutils literal notranslate"><span class="pre">&#64;rawRd</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;rawNamespace</span></code> allow you to insert raw (unescaped)
+in Rd and the <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> (this is useful for conditional imports).
+<code class="docutils literal notranslate"><span class="pre">&#64;evalRd()</span></code> is similar, but instead of literal Rd, you give it R code that
+produces literal Rd code when run. This should make it easier to experiment
+with new types of output (#385).</p></li>
+<li><p>roxygen2 now parses the source code files in the order specified in the
+<code class="docutils literal notranslate"><span class="pre">Collate</span></code> field in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>. This improves the ordering of the generated
+documentation when using <code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> and/or <code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> split across several
+<code class="docutils literal notranslate"><span class="pre">.R</span></code> files, as often happens when working with S4 (#323, #324).</p></li>
+</ul>
+</section>
+<section id="minor-features-and-bug-fixes">
+<h2>Minor features and bug fixes<a class="headerlink" href="#minor-features-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The contents of documented functions are now also parsed for roxygen comments.
+This allows, e.g., documenting a parameter’s type close to where this type is
+checked, or documenting implementation details close to the source, and
+simplifies future extensions such as the documentation of R6 classes
+(#397, &#64;krlmlr).</p></li>
+<li><p>Data objects get a simpler default <code class="docutils literal notranslate"><span class="pre">&#64;format</span></code> that describes only the
+object’s class and dimensions.  The former default, generated by generated by
+<code class="docutils literal notranslate"><span class="pre">str()</span></code>, didn’t usually produce useful output and was quite slow. The new S3
+generic <code class="docutils literal notranslate"><span class="pre">default_data_format()</span></code> generates the format and can be overridden to
+generate a custom format (#410, &#64;krlmlr).</p></li>
+<li><p>The roxygen parsers has been completely rewritten in C++ (#295). This gives a
+nice performance boost and gives:</p>
+<ul>
+<li><p>Better error messages: you now get the exact the line number of the
+tag, not just the start of the block.</p></li>
+<li><p>The parser has been simplified a little: tags now must always start
+on a new line. This is recommended practice anyway, and it means
+that escaping inline <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> (with <code class="docutils literal notranslate"><span class="pre">&#64;&#64;</span></code>) is now optional. (#235)</p></li>
+<li><p>Unknown tags now emit a warning, rather than an error.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> no longer complains about non-matching braces inside
+strings (#329).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> now cross-links each manual page only once, instead of linking
+to all aliases (&#64;gaborcsardi, #283, #367).</p></li>
+<li><p>The special <code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> parser has also been rewritten in C++, giving
+a performance boost for larger packages (#401). This is particularly
+important because it’s also called from <code class="docutils literal notranslate"><span class="pre">devtools::load_all()</span></code>.
+Additionally, a space before <code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> is no longer necessary
+(&#64;krlmlr, #342).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span> <span class="pre">foo::bar</span></code> ensures that <code class="docutils literal notranslate"><span class="pre">%</span></code> remains escaped (#313).</p></li>
+<li><p>If you document multiple arguments with one <code class="docutils literal notranslate"><span class="pre">&#64;param</span></code>, (e.g. <code class="docutils literal notranslate"><span class="pre">&#64;param</span> <span class="pre">a,b,c</span></code>)
+each parameter will get a space after it so it can be wrapped in the
+generated Rd file (#373).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;section</span></code>s with identical titles are now merged together, just like
+<code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;details</span></code>. This is useful in conjunction with the
+<code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> tag. (&#64;krlmlr, #300).</p></li>
+<li><p>Automatic <code class="docutils literal notranslate"><span class="pre">&#64;usage</span></code> is now correctly generated for functions with string
+arguments containing <code class="docutils literal notranslate"><span class="pre">&quot;\&quot;&quot;</span></code> (#265).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_options()</span></code> is now exported so <code class="docutils literal notranslate"><span class="pre">devtools::document()</span></code> doesn’t have to
+run <code class="docutils literal notranslate"><span class="pre">update_collate()</span></code> twice (#395).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_collate()</span></code> only rewrites the <code class="docutils literal notranslate"><span class="pre">Collate</span></code> entry in the DESCRIPTION file
+when it changes (#325, #723).</p></li>
+<li><p>An empty <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file is written if it is maintained by <code class="docutils literal notranslate"><span class="pre">roxygen2</span></code>
+(&#64;krlmlr, #348).</p></li>
+<li><p>Data that is not lazy-loaded can be documented (&#64;krlmlr, #390).</p></li>
+</ul>
+</section>
+<section id="internal-changes">
+<h2>Internal changes<a class="headerlink" href="#internal-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">register.preref.parser()</span></code> and <code class="docutils literal notranslate"><span class="pre">register.preref.parsers()</span></code>  have been
+deprecated - please use <code class="docutils literal notranslate"><span class="pre">register_tags()</span></code> instead.</p></li>
+<li><p>Parser callbacks registered with <code class="docutils literal notranslate"><span class="pre">register_tags()</span></code> are now called for fields
+parsed from the “introduction” (the text before the first tag)
+(&#64;gaborcsardi, #370).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-4-1-1">
+<h1>roxygen2 4.1.1<a class="headerlink" href="#roxygen2-4-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Formatting of the <code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> field in the DESCRIPTION file is now retained
+(&#64;jranke, #330).</p></li>
+<li><p>The collate roclet falls back to <code class="docutils literal notranslate"><span class="pre">base::strwrap()</span></code> when generating the
+collate field. This makes roxygen2 compatible with the next version of
+stringr.</p></li>
+<li><p>New “vignette” roclet. This vignette automatically rebuilds all out of date
+vignettes (#314).</p></li>
+<li><p>An off-by-one error in the C++ Roxygen preparser was fixed.</p></li>
+<li><p>The new <code class="docutils literal notranslate"><span class="pre">&#64;backref</span></code> tag makes it possible to override the sourceref for
+R code generators like <code class="docutils literal notranslate"><span class="pre">Rcpp</span></code> (&#64;krlmlr, #291, #294).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-4-1-0">
+<h1>roxygen2 4.1.0<a class="headerlink" href="#roxygen2-4-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The source of the documentation is added to autogenerated <code class="docutils literal notranslate"><span class="pre">.Rd</span></code> files.</p></li>
+<li><p>If there are no <code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> tags, roxygen2 leaves the collate field alone.
+This makes it easier to convert an existing project that uses a predefined
+collate, but if you start with <code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> and later remove them, you’ll
+need to also remove the collate field (#302, #303).</p></li>
+<li><p>Protected a <code class="docutils literal notranslate"><span class="pre">dir()</span></code> with <code class="docutils literal notranslate"><span class="pre">sort_c()</span></code> - If you’d noticed an inconsistency in
+ordering between <code class="docutils literal notranslate"><span class="pre">devtools::document()</span></code> and <code class="docutils literal notranslate"><span class="pre">devtools::check()</span></code> this
+was the cause of that.</p></li>
+<li><p>Fixed broken regular expression that caused problems with stringr 1.0.0.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> field in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> is now longer wrapped(&#64;krlmlr, #284).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> with plain functions now correctly includes the function name
+and can be applied to data documentation. (&#64;jimhester, #285, #288).</p></li>
+<li><p>Works again when called from <code class="docutils literal notranslate"><span class="pre">Rscript</span></code> and <code class="docutils literal notranslate"><span class="pre">methods</span></code> is not loaded
+(&#64;krlmlr, #305).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-4-0-2">
+<h1>roxygen2 4.0.2<a class="headerlink" href="#roxygen2-4-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>If you don’t use <code class="docutils literal notranslate"><span class="pre">&#64;exports</span></code> or other namespace directives, your namespace
+file will not be touched (#276).</p></li>
+<li><p>Methods no longer automatically attempt to inherit parameters from
+their generic. It’s too fraught with difficulty (#261).</p></li>
+<li><p>Roxygen now understands what to do with <code class="docutils literal notranslate"><span class="pre">setReplaceMethod()</span></code> (#266).</p></li>
+<li><p>Parameter documentation is ordered according to the order of the formals, if
+possible (&#64;krlmlr, #63).</p></li>
+<li><p>Export <code class="docutils literal notranslate"><span class="pre">is_s3_method()</span></code>.</p></li>
+<li><p>Roxygen no longer fails when run in non-UTF-8 locales on windows.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-4-0-1">
+<h1>roxygen2 4.0.1<a class="headerlink" href="#roxygen2-4-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Explicit <code class="docutils literal notranslate"><span class="pre">updateRoxygen()</span></code> is no longer needed - <code class="docutils literal notranslate"><span class="pre">roxygenize()</span></code> does the
+right thing the first time it is run.</p></li>
+<li><p>Exporting a S4 generic works (#246).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> no longer complains about absence of <code class="docutils literal notranslate"><span class="pre">wrap</span></code> field because it’s
+so unlikely that anyone wants the old behaviour (#245).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-4-0-0">
+<h1>roxygen2 4.0.0<a class="headerlink" href="#roxygen2-4-0-0" title="Link to this heading">#</a></h1>
+<p>roxygen2 4.0.0 is a major update to roxygen2 that makes provides enhanced error handling and considerably safer default behaviour. Now, roxygen2 will never overwrite a file that it did not create. This means that before you run it for the first time, you’ll need to run <code class="docutils literal notranslate"><span class="pre">roxygen2::upgradeRoxygen()</span></code>. That will flag all existing files as being created by roxygen2.</p>
+<section id="id13">
+<h2>New features<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Six vignettes provide a comprehensive overview of using roxygen2 in
+practice. Run <code class="docutils literal notranslate"><span class="pre">browseVignettes(&quot;roxygen2&quot;)</span></code> to access.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;describeIn</span></code> makes it easier to describe multiple functions in
+one file. This is especially useful if you want to document methods with
+their generic, or with a common class, but it’s also useful if you want
+to document multiple related functions in one file (#185).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;field</span></code> documents the fields on a reference class (#181). It works the
+same way as <code class="docutils literal notranslate"><span class="pre">&#64;slot</span></code> for S4 classes.</p></li>
+<li><p>You can now document objects defined elsewhere (like datasets) by
+documenting their name as a string (#221). For example, to document an
+dataset called <code class="docutils literal notranslate"><span class="pre">mydata</span></code>, you can do:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1">#&#39; Mydata set</span>
+<span class="c1">#&#39;</span>
+<span class="c1">#&#39; Some data I collected about myself</span>
+<span class="s">&quot;mydata&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>roxygen2 now adds a comment to all generated files so that you know
+they’ve been generated, and should not be hand edited.</p></li>
+<li><p>roxygen2 no longer wraps the text in Rd files by default, i.e. the default
+option is <code class="docutils literal notranslate"><span class="pre">wrap</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> now. To override it, you have to specify a field
+<code class="docutils literal notranslate"><span class="pre">Roxygen:</span> <span class="pre">list(wrap</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> (#178).</p></li>
+<li><p>Roxygenise automatically deletes out-of-date Rd files in <code class="docutils literal notranslate"><span class="pre">man/</span></code>.</p></li>
+</ul>
+</section>
+<section id="improved-error-handling">
+<h2>Improved error handling<a class="headerlink" href="#improved-error-handling" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>roxygen2 will never overwrite a file that was not generated by
+roxygen2. This means that the first time you use this version of
+roxygen, you’ll need to delete all existing Rd files. <code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code>
+gains a clean argument that will automatically remove any files
+previously created by roxygen2.</p></li>
+<li><p>Parsing is stricter: many issues that were previously warnings are
+now errors. All errors should now give you the line number of the
+roxygen block associated with the error.</p></li>
+<li><p>Every input is now checked to make sure that you have matching braces
+(e.g. every <code class="docutils literal notranslate"><span class="pre">{</span></code> has a matching <code class="docutils literal notranslate"><span class="pre">}</span></code>). This should prevent frustrating
+errors that require careful reading of <code class="docutils literal notranslate"><span class="pre">.Rd</span></code> files (#183).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;section</span></code> titles and <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> tags can now only span a single line
+to prevent common bugs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;S3method</span></code> is deprecated - just use <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> (#198).</p></li>
+<li><p>Namespace tags now throw parsing errors if you give them bad inputs (#220).</p></li>
+<li><p>Better error message if you try to document something other than NULL,
+an assignment, a class, a generic or a method (#194).</p></li>
+</ul>
+</section>
+<section id="id14">
+<h2>Bug fixes and minor improvements<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Better parsing of non-syntactic function names in other packages when
+used in <code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span></code> (#236).</p></li>
+<li><p>Deprecated arguments to <code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> (<code class="docutils literal notranslate"><span class="pre">roxygen.dir</span></code>, <code class="docutils literal notranslate"><span class="pre">copy.package</span></code>,
+<code class="docutils literal notranslate"><span class="pre">overwrite</span></code>, <code class="docutils literal notranslate"><span class="pre">unlink.target</span></code>) removed.</p></li>
+<li><p>Remove unneeded codetools and tools dependencies.</p></li>
+<li><p>Bump required Rcpp version to 0.11.0, and remove custom makefiles.</p></li>
+<li><p>Non-syntactic argument names (like <code class="docutils literal notranslate"><span class="pre">_x</span></code>) are now surrounded by back-ticks
+in the usage (#191).</p></li>
+<li><p>The internal parsers are no longer part of the public roxygen2 interface.</p></li>
+<li><p>Usage statements in generated roxygen statements non-longer contain
+non-ASCII characters and will be wrapped if long (#180).</p></li>
+<li><p>By default, reference classes now only document their own methods,
+not their methods of parents (#201).</p></li>
+<li><p>Default aliases always include the original name of the object, even if
+overridden by <code class="docutils literal notranslate"><span class="pre">&#64;name</span></code>. This also means that <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&lt;-</span> <span class="pre">setClass(&quot;A&quot;)</span></code> will get
+two aliases by default: <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">A-class</span></code> (#202). Use <code class="docutils literal notranslate"><span class="pre">&#64;aliases</span> <span class="pre">NULL</span></code> to
+suppress default alias.</p></li>
+<li><p>Non-syntactic class names (like <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code>) are now escaped in the usage
+section of S4 methods (#205).</p></li>
+<li><p>Eliminated two more cases where wrapping occurred even when <code class="docutils literal notranslate"><span class="pre">wrap</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-3-1-0">
+<h1>roxygen2 3.1.0<a class="headerlink" href="#roxygen2-3-1-0" title="Link to this heading">#</a></h1>
+<section id="documentation-for-reference-classes">
+<h2>Documentation for reference classes<a class="headerlink" href="#documentation-for-reference-classes" title="Link to this heading">#</a></h2>
+<p>It’s now possible to document reference classes, using the “docstring”
+convention described in <code class="docutils literal notranslate"><span class="pre">?setRefClass</span></code>. If you want to provide a short
+paragraph description of what a method does, make the first component of the
+message a string containing the description, e.g.:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">setRefClass</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">  </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s">&quot;Take numbers \code{a} and \code{b} and add them together&quot;</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+<p>Unlike the documentation for R functions, the documentation for methods can
+be quite succinct.</p>
+<p>Roxygen adopts the convention that documented methods are public, and will
+be listed in the man page for the object. Undocumented methods are private and
+will not be shown in the documentation. The methods for all superclasses are
+also listed, so that you don’t need to flip through multiple pages of
+documentation to understand what you can do with an object. All documented
+methods will be placed in a bulleted list in a section titled “Methods”, the
+method usage will be automatically prepended to the docstring.</p>
+</section>
+<section id="minor-fixes-and-improvements">
+<h2>Minor fixes and improvements<a class="headerlink" href="#minor-fixes-and-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixes for Rcpp 0.11.0 compatibility.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> now invisible returns a list of all files generated
+by individual roclets. This is useful for tools that want to figure
+out if there are extra files in the <code class="docutils literal notranslate"><span class="pre">man/</span></code> directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_s3_generic()</span></code> now recognises group generics (#166).</p></li>
+<li><p>Don’t try and add parameters for data objects (#165).</p></li>
+<li><p>Sort output of families using C locale (#171).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span></code> now escapes function names in references (#172).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-3-0-0">
+<h1>roxygen2 3.0.0<a class="headerlink" href="#roxygen2-3-0-0" title="Link to this heading">#</a></h1>
+<p>roxygen2 now fully supports S4 and RC (reference classes) - you should no
+longer need to manually add <code class="docutils literal notranslate"><span class="pre">&#64;alias</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;usage</span></code> tags for S4 classes, methods
+and generics, or for RC classes.</p>
+<ul class="simple">
+<li><p>The default usage definitions are much better, generating the correct
+usage for data sets (#122), S3 methods (without additional <code class="docutils literal notranslate"><span class="pre">&#64;method</span></code> tag),
+S4 generics, S4 methods, and for replacement (#119) and infix functions.
+Backslashes in function arguments in are correctly escaped. Usage statements
+also use a more sophisticated line wrapping algorithm so that they should
+cause fewer problems with the R CMD check line limit. (#89, #125).</p></li>
+<li><p>S4 classes, S4 methods, and RC classes are given better default topics,
+and the file names corresponding to those topics are shorter.</p></li>
+<li><p>S4 methods will automatically inherit parameter documentation from their
+generic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;slot</span> <span class="pre">name</span> <span class="pre">description</span></code> allows you to document the slots of a S4 class.</p></li>
+</ul>
+<p>S3 support has also been improved: roxygen2 now figures out whether a function
+is a S3 method or generic. (In the rare cases it does so incorrectly, use
+<code class="docutils literal notranslate"><span class="pre">&#64;method</span></code> to manually describe the generic and class associated with a method). This means you can remove existing uses of <code class="docutils literal notranslate"><span class="pre">&#64;method</span></code>, and can replace
+<code class="docutils literal notranslate"><span class="pre">&#64;S3method</span></code> with <code class="docutils literal notranslate"><span class="pre">&#64;export</span></code>.</p>
+<p>Roxygen now has support for package specific options through the <code class="docutils literal notranslate"><span class="pre">Roxygen</span></code>
+field in the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>. The value of the field should be R code that
+results in a list. Currently only <code class="docutils literal notranslate"><span class="pre">wrap</span></code> and <code class="docutils literal notranslate"><span class="pre">roclet</span></code> values are supported:</p>
+<ul class="simple">
+<li><p>Turn off Rd re-wrapping with adding <code class="docutils literal notranslate"><span class="pre">Roxygen:</span> <span class="pre">list(wrap</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code></p></li>
+<li><p>Change the default roclets by specifying
+<code class="docutils literal notranslate"><span class="pre">Roxygen:</span> <span class="pre">list(roclets</span> <span class="pre">=</span> <span class="pre">c(&quot;collate&quot;,</span> <span class="pre">&quot;rd&quot;))</span></code></p></li>
+</ul>
+<p>Roxygen 3.0 also includes a number of minor fixes and improvements:</p>
+<ul class="simple">
+<li><p>Infix functions are now escaped correctly in the <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code>. (Thanks to
+&#64;crowding, #111)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roxygenise()</span></code> now works more like <code class="docutils literal notranslate"><span class="pre">devtools::document()</span></code> and only ever works
+in the current directory. The arguments <code class="docutils literal notranslate"><span class="pre">roxygen.dir</span></code>, <code class="docutils literal notranslate"><span class="pre">overwrite</span></code>,
+<code class="docutils literal notranslate"><span class="pre">copy.package</span></code> and <code class="docutils literal notranslate"><span class="pre">unlink.target</span></code> have been deprecated due to potential
+data loss problems.</p></li>
+<li><p>The collate roclet is no longer a roclet: it processes R files using custom
+code (only statically, not dynamically) and is designed to be executed before
+the code is sourced.  Run <code class="docutils literal notranslate"><span class="pre">update_collate()</span></code> to update the Collate directive
+based on <code class="docutils literal notranslate"><span class="pre">&#64;include</span></code> tags - if there are none present, a collate directive
+will not be generated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;useDynLib</span></code> now works with more possible specifications - if you include a
+comma in the tag value, the output will be passed as is. This means that
+<code class="docutils literal notranslate"><span class="pre">&#64;useDynLib</span> <span class="pre">mypackage,</span> <span class="pre">.registration</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> will now generate
+<code class="docutils literal notranslate"><span class="pre">useDynLib(mypackage,</span> <span class="pre">.registration</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> in the <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code>. (#124)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inst</span></code> directory not created by default (#56).</p></li>
+<li><p>Explicitly depend on <code class="docutils literal notranslate"><span class="pre">utils</span></code> and <code class="docutils literal notranslate"><span class="pre">methods</span></code> packages to make roxygen
+compatible with <code class="docutils literal notranslate"><span class="pre">Rscript</span></code> (#72). Import <code class="docutils literal notranslate"><span class="pre">digest</span></code> package instead of
+depending on it.</p></li>
+<li><p>Always use C locale when sorting <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file or tags in <code class="docutils literal notranslate"><span class="pre">.Rd</span></code> files.
+This ensures a consistent ordering across systems (#127).</p></li>
+<li><p>Templates with extension <code class="docutils literal notranslate"><span class="pre">.r</span></code> are supported on case-sensitive file systems
+(#115). Template variables now actually work (#160, thanks to &#64;bronaugh).</p></li>
+<li><p>Suppress default aliases, format and usage with <code class="docutils literal notranslate"><span class="pre">&#64;aliases</span> <span class="pre">NULL</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&#64;format</span> <span class="pre">NULL</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;usage</span> <span class="pre">NULL</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-2-2-2">
+<h1>roxygen2 2.2.2<a class="headerlink" href="#roxygen2-2-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Correctly use keyword <code class="docutils literal notranslate"><span class="pre">datasets</span></code> not <code class="docutils literal notranslate"><span class="pre">dataset</span></code> (Fixes #60)</p></li>
+<li><p>Reference classes no longer given incorrect docType (data).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-2-2-1">
+<h1>roxygen2 2.2.1<a class="headerlink" href="#roxygen2-2-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Use unicode escapes in test files so tests pass on all platforms.</p></li>
+<li><p>Work around bug in <code class="docutils literal notranslate"><span class="pre">gsub</span></code> in C locale by manually specifying <code class="docutils literal notranslate"><span class="pre">Encoding()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-2-2">
+<h1>roxygen2 2.2<a class="headerlink" href="#roxygen2-2-2" title="Link to this heading">#</a></h1>
+<section id="id15">
+<h2>New features<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Package docType will automatically add package alias, if needed. (Fixes #4)</p></li>
+<li><p>Data docType will automatically add <code class="docutils literal notranslate"><span class="pre">datasets</span></code> keyword, default usage, and
+default format. (Fixes #5). Data docType automatically added to data
+objects.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">&#64;encoding</span></code> tag for manually setting non-ASCII encodings when needed.
+(Fixes #7)</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">write.description()</span></code> now tries much harder to respect
+users’ original DESCRIPTION field formatting instead of forcibly
+re-wrapping certain fields at 60 characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;details</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> now work correctly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;useDynLib</span></code> now works correctly:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> @useDynLib packageName routine1 routine2
+</pre></div>
+</div>
+<p>produces</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> useDynLib(packageName, routine1)
+ useDynLib(packageName, routine2)
+</pre></div>
+</div>
+<p>in the <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file, instead of separate (wrong) useDynLib statements as
+before.</p>
+</li>
+<li><p>All namespace import directives now behave in the same way as the export
+directives, producing multiple single directives instead one multiple
+directive: <code class="docutils literal notranslate"><span class="pre">&#64;importClassesFrom</span> <span class="pre">pkg</span> <span class="pre">a</span> <span class="pre">b</span></code> now produces
+<code class="docutils literal notranslate"><span class="pre">importClassesFrom(pkg,</span> <span class="pre">a)</span></code> and <code class="docutils literal notranslate"><span class="pre">importClassesFrom(pkg,</span> <span class="pre">b)</span></code></p></li>
+<li><p>In example files included with <code class="docutils literal notranslate"><span class="pre">&#64;example</span></code> you can now use infix operators
+(e.g. %*%) or other things with %, because they will be preceded by a
+backslash in the Rd file. This behaviour was already in place for examples
+directly included with <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code>.</p></li>
+<li><p>Aliases are no longer quoted, and % is escaped with a backslash (Fixes #24).
+Names also have % escaped (Fixes #50)</p></li>
+<li><p>Replacement functions (e.g. <code class="docutils literal notranslate"><span class="pre">foo&lt;-</span></code>) now get correct usage statements:
+<code class="docutils literal notranslate"><span class="pre">foo()</span> <span class="pre">&lt;-</span> <span class="pre">value</span></code> instead of <code class="docutils literal notranslate"><span class="pre">foo()&lt;-value</span></code>. (Fixes #38)</p></li>
+<li><p>Functions with no arguments now correctly get usage statements (Fixes #35)</p></li>
+<li><p>Indentation in examples now preserved (Fixes #27)</p></li>
+<li><p>roxygen2 will replace characters that are not valid in filenames with a
+character substitute, e.g. <code class="docutils literal notranslate"><span class="pre">[]</span></code> becomes <code class="docutils literal notranslate"><span class="pre">sub</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code> becomes <code class="docutils literal notranslate"><span class="pre">set</span></code> (Fixes #6)</p></li>
+<li><p>Usage strings use non-breaking spaces to prevent string default values
+containing whitespace to be split across multiple lines. This may cause
+problems in the unlikely event that you have default value containing a
+non-breaking space (`”\uA0”’)  (Fixes #21)</p></li>
+<li><p>Functions with quoted names now get correct usage statements (Fixes #41)</p></li>
+<li><p>Objects that no longer exist are not documented (Fixes #42)</p></li>
+<li><p>Errors now display file name and line number of roxygen block to help you
+find the problem. Thanks to code contributions from Renaud Gaujoux.
+(Fixes #13)</p></li>
+<li><p>Documentation with no untagged text but with <code class="docutils literal notranslate"><span class="pre">&#64;title</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&#64;details</span></code> tags now produces correct output.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-2-1">
+<h1>roxygen2 2.1<a class="headerlink" href="#roxygen2-2-1" title="Link to this heading">#</a></h1>
+<section id="id16">
+<h2>New features<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>package dependencies loaded automatically</p></li>
+<li><p>added support for the <code class="docutils literal notranslate"><span class="pre">&#64;source</span></code> tag</p></li>
+</ul>
+</section>
+<section id="id17">
+<h2>Bug fixes<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> file no longer needs to exist</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Collate</span></code> field in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> no longer needs to exist</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">=</span></code> now recognised as way of assigning functions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x$y</span> <span class="pre">&lt;-</span> <span class="pre">function()</span> <span class="pre">{...}</span></code> no longer causes error</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;example</span></code> no longer added extra new-lines.</p></li>
+<li><p>Correct directory normalisation under windows fixes broken test.</p></li>
+<li><p>A special thanks goes to Yihui Xie who contributed all of the fixes and
+improvements (bar one) in this version!</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="roxygen2-2-0">
+<h1>roxygen2 2.0<a class="headerlink" href="#roxygen2-2-0" title="Link to this heading">#</a></h1>
+<section id="major-changes">
+<h2>Major changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>now works with run-time details to give more accurate output. This requires
+that the source code that roxygen is documenting be loaded prior to
+documentation. roxygen will attempt to do so, but you need to ensure
+required packages are loaded.</p>
+<p>Run-time data fixes some long standing bugs where roxygen couldn’t correctly
+figure out function usage. We are not aware of any cases where you still
+need to use the <code class="docutils literal notranslate"><span class="pre">&#64;usage</span></code> tag.</p>
+</li>
+<li><p>written in idiomatic R, and uses S3 instead of a homegrown class system.</p></li>
+<li><p>roclets build up an internal data structure instead of writing to disk
+directly. This means that you can now use the <code class="docutils literal notranslate"><span class="pre">&#64;rdname</span></code> tag to merge
+documentation for multiple functions into one file, and that only unique
+namespace directives are written to <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> (which makes <code class="docutils literal notranslate"><span class="pre">&#64;importFrom</span></code>
+much more useful).</p></li>
+<li><p>some features have been removed, and may or may not (based on your feedback)
+be reincluded. These include the callgraph roclet, and <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">roxygen</span></code>,
+which only worked on some systems.</p></li>
+<li><p>a templating system: use the <code class="docutils literal notranslate"><span class="pre">&#64;template</span></code> tag to insert a <code class="docutils literal notranslate"><span class="pre">brew</span></code> template
+stored in <code class="docutils literal notranslate"><span class="pre">man-roxygen</span></code>. Template variables can be set using <code class="docutils literal notranslate"><span class="pre">&#64;templateVar</span> <span class="pre">name</span> <span class="pre">value</span></code> and retrieved from within the template with <code class="docutils literal notranslate"><span class="pre">&lt;%=</span> <span class="pre">name</span> <span class="pre">%&gt;</span></code></p></li>
+<li><p>extensive use of caching to make repeated runs as fast as possible. To clear
+caches and guarantee a complete rebuild, use <code class="docutils literal notranslate"><span class="pre">clear_caches()</span></code>.</p></li>
+<li><p>parsing of “introduction” (the text before the first tag) has changed. Now
+the title consists of the first paragraph (i.e. all text before the first
+empty line), the second paragraph is the description and all others are put
+in the details. Any component can be overridden with <code class="docutils literal notranslate"><span class="pre">&#64;title</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;details</span></code> as appropriate.</p></li>
+</ul>
+</section>
+<section id="minor-changes">
+<h2>Minor changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;name</span></code> is always output as an alias, even if <code class="docutils literal notranslate"><span class="pre">&#64;aliases</span></code> are used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;export</span></code> correctly uses <code class="docutils literal notranslate"><span class="pre">&#64;method</span></code> to generate <code class="docutils literal notranslate"><span class="pre">S3method</span></code> namespace
+directive</p></li>
+</ul>
+</section>
+<section id="id18">
+<h2>New tags<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;rdname</span> <span class="pre">filename</span></code> sets the output filename (without extension). Use for
+functions non-alphanumeric functions (e.g. <code class="docutils literal notranslate"><span class="pre">[&lt;-</span></code>) or if you want to document
+multiple functions in one file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;template</span> <span class="pre">templatename</span></code> includes a documentation template (see above)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;section</span> <span class="pre">Section</span> <span class="pre">title:</span> <span class="pre">contents</span></code> includes a section with any title. Don’t
+forget the colon! That separates the title of the section from its contents.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;description</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;details</span></code> tags allow you to specify description and
+details components in a template</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;family</span> <span class="pre">family</span> <span class="pre">name</span></code> automatically adds see-also cross-references between
+all functions in a family. A function can belong to multiple families.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritParams</span> <span class="pre">name</span></code> allows you to inherit the documentation for parameters
+from another function, either within the current package (<code class="docutils literal notranslate"><span class="pre">function</span></code>) or in
+any other installed package (<code class="docutils literal notranslate"><span class="pre">package:function</span></code>). Currently only supports
+single inheritance (i.e. you can’t inherit from a function that inherits
+from another function), but you can have multiple &#64;inheritParams tags.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;format</span></code> has been implemented; it existed in the roxygen package but was
+actually ignored</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\roxygen2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">roxygen2 7.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-3-1">roxygen2 7.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-3-0">roxygen2 7.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-3">roxygen2 7.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-2">roxygen2 7.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-1">roxygen2 7.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tags">Tags</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-markdown">(R)markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-2-0">roxygen2 7.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-2">roxygen2 7.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-1">roxygen2 7.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-1-0">roxygen2 7.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-2">roxygen2 7.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-1">roxygen2 7.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-7-0-0">roxygen2 7.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-tags">New tags</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r6">R6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-improvements">Markdown improvements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#default-usage">Default usage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-loading">Code loading</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-roxygen2">Extending roxygen2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-1-1">roxygen2 6.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-1-0">roxygen2 6.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-api">Extension API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-0-1">roxygen2 6.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-6-0-0">roxygen2 6.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown">Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-inheritance">Improved inheritance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor improvements and bug fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Tags</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s3">S3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s4">S4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Other</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Extending roxygen2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-5-0-1">roxygen2 5.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-5-0-0">roxygen2 5.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features-and-bug-fixes">Minor features and bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-changes">Internal changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-1-1">roxygen2 4.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-1-0">roxygen2 4.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-2">roxygen2 4.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-1">roxygen2 4.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-4-0-0">roxygen2 4.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-error-handling">Improved error handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-3-1-0">roxygen2 3.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-for-reference-classes">Documentation for reference classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-fixes-and-improvements">Minor fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-3-0-0">roxygen2 3.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2-2">roxygen2 2.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2-1">roxygen2 2.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-2">roxygen2 2.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-1">roxygen2 2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#roxygen2-2-0">roxygen2 2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New tags</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

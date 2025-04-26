@@ -1,0 +1,1501 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>doBy v4.6.25 (Release date: 2025-01-29) &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/doBy/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/doBy/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>doBy v4.6.25 (Release date: 2025-01-29)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">doBy v4.6.25 (Release date: 2025-01-29)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-24-release-date-2024-10-07">doBy v4.6.24 (Release date: 2024-10-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-23-release-date">doBy v4.6.23 (Release date: )</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-22-release-date-2024-06-20">doBy v4.6.22 (Release date: 2024-06-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-21-release-date">doBy v4.6.21 (Release date: )</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-20-release-date-2023-11-01">doBy v4.6.20 (Release date: 2023-11-01)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-19-release-date-2023-10-02">doBy v4.6.19 (Release date: 2023-10-02)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-18-release-date-2023-08-03">doBy v4.6.18 (Release date: 2023-08-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-17-release-date-2023-07-10">doBy v4.6.17 (Release date: 2023-07-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-16-release-date-2023-01-18">doBy v4.6.16 (Release date: 2023-01-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-15-release-date-2022-12-08">doBy v4.6.15 (Release date: 2022-12-08)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-14-release-date-2022-10-16">doBy v4.6.14 (Release date: 2022-10-16)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-13-release-date-2022-05-02">doBy v4.6.13 (Release date: 2022-05-02)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-11-release-date-2021-07-13">doBy v4.6.11 (Release date: 2021-07-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-10-release-date-2021-04-29">doBy v4.6.10 (Release date: 2021-04-29)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-9-release-date-2021-03-09">doBy v4.6.9 (Release date: 2021-03-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-8-release-date-2020-11-10">doBy v4.6.8 (Release date: 2020-11-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-7-release-date-2020-07-07">doBy v4.6.7 (Release date: 2020-07-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-6-release-date-2020-06-16">doBy v4.6.6 (Release date: 2020-06-16)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-5-release-date-2020-02-21">doBy v4.6.5 (Release date: 2020-02-21)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-4-1-release-date-2020-02-03">doBy v4.6-4.1 (Release date: 2020-02-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-4-release-date-2020-02-01">doBy v4.6-4 (Release date: 2020-02-01)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-3-release-date-2019-10-23">doBy v4.6-3 (Release date: 2019-10-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-2-release-date-2018-08-30">doBy v4.6-2 (Release date: 2018-08-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-1-release-date-2018-03-19">doBy v4.6-1 (Release date: 2018-03-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#soren-hojsgaard-sorenh-math-aau-dk">2020-04-26 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2019-12-20 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2019-10-23 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2018-08-30 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2018-03-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2018-03-04 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2016-01-01 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2016-02-15 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2015-11-25 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2014-12-07 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2014-11-11 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2014-09-26 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2014-09-08 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2013-11-28 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2013-07-20 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2013-03-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2012-11-16 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">2012-05-28 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">2012-05-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">2012-02-17 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">2012-01-29 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">2012-01-18 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2012-01-18 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2012-01-17 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2011-12-30 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#soren-hojsgaard-sorenh-agrsci-dk">2011-11-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">2011-11-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">2011-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">2011-06-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">2011-05-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">2011-03-28 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">2011-02-02 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">2011-01-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">2010-12-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">2010-11-24 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">2010-11-11 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">2010-11-09 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">2010-05-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">2009-10-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">2009-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">2009-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">2009-09-07 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">2009-08-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">2009-07-28 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">2009-01-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">2008-12-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">2008-10-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">2008-10-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">2008-09-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">2008-09-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">2008-09-18 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">2008-06-13 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">2008-05-20 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">2008-03-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">2008-02-13 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">2007-12-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">2007-09-30 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id56">2007-05-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id57">2007-05-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id58">2007-04-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id59">2007-03-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id60">2006-12-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id61">2006-11-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id62">2006-11-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id63">2006-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id64">2006-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id65">2006-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id66">2006-10-16 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id67">2006-10-10 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id68">2006-10-03 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id69">2006-10-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id70">2006-09-27 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id71">2006-09-18 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id72">2006-02-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id73">2006-02-02 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id74">2006-01-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id75">2006-01-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-25-release-date-2025-01-29">
+<h1>doBy v4.6.25 (Release date: 2025-01-29)<a class="headerlink" href="#doby-v4-6-25-release-date-2025-01-29" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Various minor changes; too many to remember.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-24-release-date-2024-10-07">
+<h1>doBy v4.6.24 (Release date: 2024-10-07)<a class="headerlink" href="#doby-v4-6-24-release-date-2024-10-07" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">response_plot</span></code> function added.</p></li>
+<li><p>file with matrix operations removed.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-23-release-date">
+<h1>doBy v4.6.23 (Release date: )<a class="headerlink" href="#doby-v4-6-23-release-date" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>income data added</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-22-release-date-2024-06-20">
+<h1>doBy v4.6.22 (Release date: 2024-06-20)<a class="headerlink" href="#doby-v4-6-22-release-date-2024-06-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Various internal cleanups</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-21-release-date">
+<h1>doBy v4.6.21 (Release date: )<a class="headerlink" href="#doby-v4-6-21-release-date" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>crickets data added</p></li>
+<li><p>Added function <code class="docutils literal notranslate"><span class="pre">binomial_to_bernoulli_data</span></code>, <code class="docutils literal notranslate"><span class="pre">model_stability_glm</span></code>, <code class="docutils literal notranslate"><span class="pre">plot_lm</span></code></p></li>
+<li><p>Functionality of <code class="docutils literal notranslate"><span class="pre">split_byrow</span></code> and <code class="docutils literal notranslate"><span class="pre">split_bycol</span></code> extended</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-20-release-date-2023-11-01">
+<h1>doBy v4.6.20 (Release date: 2023-11-01)<a class="headerlink" href="#doby-v4-6-20-release-date-2023-11-01" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p>smaller changes to expr_to_fun (length_nparm is argument)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-19-release-date-2023-10-02">
+<h1>doBy v4.6.19 (Release date: 2023-10-02)<a class="headerlink" href="#doby-v4-6-19-release-date-2023-10-02" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p>Smaller changes in section_fun and related functions</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-18-release-date-2023-08-03">
+<h1>doBy v4.6.18 (Release date: 2023-08-03)<a class="headerlink" href="#doby-v4-6-18-release-date-2023-08-03" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p>R version requirement updated to ensure that Rs native pipe is available</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-17-release-date-2023-07-10">
+<h1>doBy v4.6.17 (Release date: 2023-07-10)<a class="headerlink" href="#doby-v4-6-17-release-date-2023-07-10" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bquote_fun_list</span></code> removed again; too over engineered</p></li>
+<li><p>Minor bug fixes</p></li>
+<li><p>Improved documentation</p></li>
+<li><p>Added functions: <code class="docutils literal notranslate"><span class="pre">chr_to_matrix()</span></code>, <code class="docutils literal notranslate"><span class="pre">matrix_op()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-16-release-date-2023-01-18">
+<h1>doBy v4.6.16 (Release date: 2023-01-18)<a class="headerlink" href="#doby-v4-6-16-release-date-2023-01-18" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bquote_fun_list</span></code> added</p></li>
+<li><p>Improved documentation</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-15-release-date-2022-12-08">
+<h1>doBy v4.6.15 (Release date: 2022-12-08)<a class="headerlink" href="#doby-v4-6-15-release-date-2022-12-08" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">restrict_fun</span></code> renamed to <code class="docutils literal notranslate"><span class="pre">section_fun</span></code> and takes different arguments (<code class="docutils literal notranslate"><span class="pre">nms</span></code>, <code class="docutils literal notranslate"><span class="pre">vls</span></code>)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-14-release-date-2022-10-16">
+<h1>doBy v4.6.14 (Release date: 2022-10-16)<a class="headerlink" href="#doby-v4-6-14-release-date-2022-10-16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Functions <code class="docutils literal notranslate"><span class="pre">split_byrow()</span></code> and <code class="docutils literal notranslate"><span class="pre">split_bycol()</span></code> added.</p></li>
+<li><p>Function <code class="docutils literal notranslate"><span class="pre">expr_to_fun</span></code> added.</p></li>
+<li><p>Functions <code class="docutils literal notranslate"><span class="pre">scale2()</span></code>, <code class="docutils literal notranslate"><span class="pre">scaleBy()</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_by()</span></code> functions added</p></li>
+<li><p>Funcetion <code class="docutils literal notranslate"><span class="pre">recover_pca_data()</span></code> added</p></li>
+<li><p>added data: <code class="docutils literal notranslate"><span class="pre">crime_rate</span></code> (crimeRate with State variable now being rownames)</p></li>
+<li><p>added data: <code class="docutils literal notranslate"><span class="pre">prostate</span></code> and <code class="docutils literal notranslate"><span class="pre">personality</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-13-release-date-2022-05-02">
+<h1>doBy v4.6.13 (Release date: 2022-05-02)<a class="headerlink" href="#doby-v4-6-13-release-date-2022-05-02" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>data <code class="docutils literal notranslate"><span class="pre">carcassall</span></code>: definition of factors corrected.</p></li>
+<li><p>added data <code class="docutils literal notranslate"><span class="pre">cad</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-11-release-date-2021-07-13">
+<h1>doBy v4.6.11 (Release date: 2021-07-13)<a class="headerlink" href="#doby-v4-6-11-release-date-2021-07-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">restrict</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">restrict_fun</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary_mb</span></code> (mb for microbenchmark) added. Faster than <code class="docutils literal notranslate"><span class="pre">summary</span></code>
+from microbenchmark package.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-10-release-date-2021-04-29">
+<h1>doBy v4.6.10 (Release date: 2021-04-29)<a class="headerlink" href="#doby-v4-6-10-release-date-2021-04-29" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">specialize</span></code> function removed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">restrict</span></code> function replaces <code class="docutils literal notranslate"><span class="pre">specialize</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-9-release-date-2021-03-09">
+<h1>doBy v4.6.9 (Release date: 2021-03-09)<a class="headerlink" href="#doby-v4-6-9-release-date-2021-03-09" title="Link to this heading">#</a></h1>
+<p>=========================================</p>
+<ul class="simple">
+<li><p>Improved documentation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-8-release-date-2020-11-10">
+<h1>doBy v4.6.8 (Release date: 2020-11-10)<a class="headerlink" href="#doby-v4-6-8-release-date-2020-11-10" title="Link to this heading">#</a></h1>
+<p>=========================================</p>
+<ul class="simple">
+<li><p>head / tail added for <code class="docutils literal notranslate"><span class="pre">splitByData</span></code> (a list resulting from
+calling splitBy)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sapplyBy</span></code> / <code class="docutils literal notranslate"><span class="pre">sapply_by</span></code> added</p></li>
+<li><p>subSeq works on factors now (coerces to character)</p></li>
+<li><p>sub_seq added; synonymous to subSeq</p></li>
+<li><p>rle2 added; similar to rle but works also on factors</p></li>
+<li><p>is_grouped added</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">math</span></code> / <code class="docutils literal notranslate"><span class="pre">mathmark</span></code> dataset added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-7-release-date-2020-07-07">
+<h1>doBy v4.6.7 (Release date: 2020-07-07)<a class="headerlink" href="#doby-v4-6-7-release-date-2020-07-07" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>interaction_plot (based on ggplot2 etc) added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-6-release-date-2020-06-16">
+<h1>doBy v4.6.6 (Release date: 2020-06-16)<a class="headerlink" href="#doby-v4-6-6-release-date-2020-06-16" title="Link to this heading">#</a></h1>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>esticon.gls is now exported</p></li>
+<li><p>xxx_by functions matching xxxBy introduced. xxx_by functions take
+data as first argument and work therefore well with the pipe.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-5-release-date-2020-02-21">
+<h1>doBy v4.6.5 (Release date: 2020-02-21)<a class="headerlink" href="#doby-v4-6-5-release-date-2020-02-21" title="Link to this heading">#</a></h1>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Minor issues related to checks made by the development version of R.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-4-1-release-date-2020-02-03">
+<h1>doBy v4.6-4.1 (Release date: 2020-02-03)<a class="headerlink" href="#doby-v4-6-4-1-release-date-2020-02-03" title="Link to this heading">#</a></h1>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>NAMESPACE file is being generated automatically</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-4-release-date-2020-02-01">
+<h1>doBy v4.6-4 (Release date: 2020-02-01)<a class="headerlink" href="#doby-v4-6-4-release-date-2020-02-01" title="Link to this heading">#</a></h1>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>Issue related to class vs inherits solved</p></li>
+<li><p>NEWS file added</p></li>
+<li><p>Update of fev data</p></li>
+<li><p>cropyield data added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-3-release-date-2019-10-23">
+<h1>doBy v4.6-3 (Release date: 2019-10-23)<a class="headerlink" href="#doby-v4-6-3-release-date-2019-10-23" title="Link to this heading">#</a></h1>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>LE_matrix etc. handles a dataframe correctly for the ‘at’ argument</p></li>
+</ul>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>taylor function added</p></li>
+<li><p>fev data from isdals added</p></li>
+<li><p>lmBy reintroduced due to popular demand.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-2-release-date-2018-08-30">
+<h1>doBy v4.6-2 (Release date: 2018-08-30)<a class="headerlink" href="#doby-v4-6-2-release-date-2018-08-30" title="Link to this heading">#</a></h1>
+<p>Changes</p>
+<ul class="simple">
+<li><p>sampleBy and lapplyBy functions reintroduced due to popular demand.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="doby-v4-6-1-release-date-2018-03-19">
+<h1>doBy v4.6-1 (Release date: 2018-03-19)<a class="headerlink" href="#doby-v4-6-1-release-date-2018-03-19" title="Link to this heading">#</a></h1>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>Previous functionality of core xxBy-functions reestablished to
+ensure that downstream packages work.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="soren-hojsgaard-sorenh-math-aau-dk">
+<h1>2020-04-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#soren-hojsgaard-sorenh-math-aau-dk" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>esticon.gls is now exported</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>2019-12-20 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update of fev data</p></li>
+<li><p>cropyield data added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>2019-10-23 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>taylor function added</p></li>
+<li><p>fev data from isdals added</p></li>
+<li><p>lmBy reintroduced due to popular demand.</p></li>
+<li><p>LE_matrix etc. handles a dataframe correctly for the ‘at’ argument</p></li>
+<li><p>Version 4.6-3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>2018-08-30 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>sampleBy and lapplyBy functions reintroduced due to popular demand.</p></li>
+<li><p>Version 4.6-2 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>2018-03-19 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Previous functionality of core xxBy-functions reestablished to
+ensure that downstream packages work.</p></li>
+<li><p>Version 4.6-1 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>2018-03-04 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improvements of esticon and linest; methods added.</p></li>
+<li><p>Improvements of LSmeans vignette.</p></li>
+<li><p>Version 4.6-0 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>2016-01-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Converted to roxygen format</p></li>
+<li><p>Many of the less useful by functions are removed.</p></li>
+<li><p>Put on github</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>2016-02-15 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated with version requirement for R version</p></li>
+<li><p>slurry data added</p></li>
+<li><p>Version 4.5-15 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>2015-11-25 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>NAMESPACE file updated with S3 registrations</p></li>
+<li><p>potatoes dataset added</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>2014-12-07 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fixed in LSmatrix; thanks to Ida Bulow Christensen for the
+bug report.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id10">
+<h1>2014-11-11 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>linest now accepts K=NULL, in which case K is taken to be the
+diagonal matrix</p></li>
+<li><p>No longer Depend(s) on MASS</p></li>
+<li><p>Some datasets added</p></li>
+<li><p>Version 4.5-12 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id11">
+<h1>2014-09-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>summaryBy did not check if each element in FUN was a
+function. Fixed now.</p></li>
+<li><p>Version 4.5-11 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id12">
+<h1>2014-09-08 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added the ‘haldCement’ data</p></li>
+<li><p>lapplyBy: Argument keep.groupid added</p></li>
+<li><p>nullBasis function/method added</p></li>
+<li><p>popMeans function re-introduced (just a different name for
+LSmeans)</p></li>
+<li><p>dose.LD50 removed; car::deltaMethod can probably do the same.</p></li>
+<li><p>Version 4.5-11 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id13">
+<h1>2013-11-28 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>LSmeans, LSmatrix and linest functions added. (There are not yet
+methods for <code class="docutils literal notranslate"><span class="pre">nlme</span></code> and <code class="docutils literal notranslate"><span class="pre">survival</span></code> objects but they will be added).</p></li>
+<li><p>popMeans and popMatrix functions removed</p></li>
+<li><p>Vignette on LSmeans added.</p></li>
+<li><p>Version 4.5-10 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id14">
+<h1>2013-07-20 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>splitBy and summaryBy have been reworked.</p></li>
+<li><p>formulaFunBy and xyFunBy functions added.</p></li>
+<li><p>Vignettes expanded.</p></li>
+<li><p>summaryBy, splitBy now also accept a list / vector as “formula”
+specification.</p></li>
+<li><p>recodeVar works properly on formulas</p></li>
+<li><p>Version 4.5-7 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id15">
+<h1>2013-03-19 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>parseGroupFormula function added. The function will take a
+“group formula” with a vertical bar apart into components.</p></li>
+<li><p>createFunBy function added. The function can create groupwise
+functions.</p></li>
+<li><p>documentation of lmBy improved</p></li>
+<li><p>various utility functions related to lmBy added.</p></li>
+<li><p>Version 4.5-6 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id16">
+<h1>2012-11-16 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Rmarkup removed; the markdown package does a better job.</p></li>
+<li><p>Version 4.5-5 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id17">
+<h1>2012-05-28 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id17" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updates of Rmarkup</p></li>
+<li><p>Version 4.5-4 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id18">
+<h1>2012-05-19 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updates of Rmarkup</p></li>
+<li><p>Version 4.5-3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id19">
+<h1>2012-02-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id19" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>descStat function added. Thanks to Gregor Gorjanc.</p></li>
+<li><p>popMeans extended so that the grid values appear in the output
+by default</p></li>
+<li><p>Version 4.5.2 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id20">
+<h1>2012-01-29 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Minor enhancement to Rmarkup()</p></li>
+<li><p>Version 4.5.1 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id21">
+<h1>2012-01-18 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id21" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>popMeans method for lme objects added</p></li>
+<li><p>lsmeans aliases for popMeans removed</p></li>
+<li><p>Version 4.5.0 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id22">
+<h1>2012-01-18 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id22" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Small changes to package structure</p></li>
+<li><p>Version 4.4.6 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id23">
+<h1>2012-01-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>URL updated</p></li>
+<li><p>Rscript2HTML changed to Rmarkup</p></li>
+<li><p>Version 4.4.5 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id24">
+<h1>2011-12-30 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;math&#46;aau&#46;dk">sorenh<span>&#64;</span>math<span>&#46;</span>aau<span>&#46;</span>dk</a><a class="headerlink" href="#id24" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Change of email address</p></li>
+<li><p>Version 4.4.4 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="soren-hojsgaard-sorenh-agrsci-dk">
+<h1>2011-11-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#soren-hojsgaard-sorenh-agrsci-dk" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Function lmBy (and related methods) added</p></li>
+<li><p>Version 4.4.3 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id25">
+<h1>2011-11-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Dataset milkman added</p></li>
+<li><p>Version 4.4.2 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id26">
+<h1>2011-10-23 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id26" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>funBy function added (documentation to be done)</p></li>
+<li><p>scaleBy function added</p></li>
+<li><p>Minor bug fixed in summaryBy</p></li>
+<li><p>popMeans extended to <code class="docutils literal notranslate"><span class="pre">mer</span></code> objects</p></li>
+<li><p>KRmodcomp, PBmodcomp etc moved to the pbkrtest
+package</p></li>
+<li><p>Version 4.4.1 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id27">
+<h1>2011-06-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id27" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>subSeq function speeded up by considerably</p></li>
+<li><p>KRmodcomp: Kenward-Rogers method for calculating denominator degrees of
+freedom for F–tests in mixed models (as fitted with lmer)</p></li>
+<li><p>PBmodcomp, BCmodcomp, PBrefdist: Functions for calculating
+p-values based on parametric bootstrap for tests in mixed
+models (as fitted with lmer)</p></li>
+<li><p>Version 4.4.0 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id28">
+<h1>2011-05-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id28" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>HTMLreport changed to Rscript2HTML</p></li>
+<li><p>timeSinceEvent function enhanced</p></li>
+<li><p>Version 4.3.1 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id29">
+<h1>2011-03-28 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id29" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>popMeans (lsMeans) and linMeans functions added.</p></li>
+<li><p>A vignette describing the use of popMeans added.</p></li>
+<li><p>Functions popMatrix and linMatrix added</p></li>
+<li><p>Version 4.3.0 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id30">
+<h1>2011-02-02 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id30" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fixed in timeSinceEvent</p></li>
+<li><p>More work done on HTMLreport</p></li>
+<li><p>Version 4.2.3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id31">
+<h1>2011-01-12 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id31" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>HTMLreport function extended</p></li>
+<li><p>Version 4.2.1 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id32">
+<h1>2010-12-12 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id32" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>HTMLreport function has been added.</p></li>
+<li><p>Version 4.2.0 has been uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id33">
+<h1>2010-11-24 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id33" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>timeSinceEvent function has been added</p></li>
+<li><p>summaryBy now takes the additional argument full.dimension which
+when TRUE causes the result to have the same number of rows as the
+input dataframe.</p></li>
+<li><p>Version 4.1.2 has been uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id34">
+<h1>2010-11-11 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id34" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>recodevar deprecated.</p></li>
+<li><p>recodeVar introduced with extended functionality.</p></li>
+<li><p>subSeq function added.</p></li>
+<li><p>renameCol function added.</p></li>
+<li><p>Version 4.1.1 has been uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id35">
+<h1>2010-11-09 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id35" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>lsmeans function has been added.</p></li>
+<li><p>Version 4.1.0 has been uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id36">
+<h1>2010-05-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id36" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The sugar beets dataset ‘beets’ has been added</p></li>
+<li><p>doBy no longer depends on Hmisc</p></li>
+<li><p>Version 4.0.6 has been uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id37">
+<h1>2009-10-21 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id37" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>orderBy applied to a dataframe with one column only returned a
+vector. Has been fixed so that a dataframe is returned.</p></li>
+<li><p>Version 4.0.5 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id38">
+<h1>2009-10-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id38" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug in NAMESPACE file fixed</p></li>
+<li><p>Version 4.0.4 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id39">
+<h1>2009-10-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id39" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>esticon method for ‘mer’ objects added. (Was previously for ‘lmer’
+objects).</p></li>
+<li><p>Version 4.0.3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id40">
+<h1>2009-09-07 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id40" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug in summaryBy fixed: Strata did not match their values (as
+defined by the <code class="docutils literal notranslate"><span class="pre">rh.variables</span></code>). Thanks to Pascal Hirsch for pointing
+this out.</p></li>
+<li><p>Version 4.0.2 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id41">
+<h1>2009-08-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id41" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug in summaryBy fixed: id vars were included in the
+stratification of data which they should not be. Thanks to Joshua
+Rest for pointing this out.</p></li>
+<li><p>Version 4.0.1 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id42">
+<h1>2009-07-28 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id42" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>coxph method added for the esticon function. Thanks to
+Alessandro A Leidi.</p></li>
+<li><p>splitBy changed so that names of the entries in the list match
+the levels of the factors (it used to be that the names matched
+the levels of the factors in reverse order).</p></li>
+<li><p>The formula in splitBy can now also be a character vector.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">which.maxn</span></code> and <code class="docutils literal notranslate"><span class="pre">which.minn</span></code> functions added</p></li>
+<li><p>Version 4.0.0 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id43">
+<h1>2009-01-12 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id43" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>splitBy had inconsistent output across cases. Fixed now</p></li>
+<li><p>Version 3.8 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id44">
+<h1>2008-12-21 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id44" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>splitBy failed if by-variables were constant. Fixed now.</p></li>
+<li><p>Version 3.7 uploaded.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id45">
+<h1>2008-10-14 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id45" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>splitBy now follows convention that first variable varies
+fastest.</p></li>
+<li><p>Version 3.6 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id46">
+<h1>2008-10-14 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id46" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated description of dietox data</p></li>
+<li><p>Version 3.5 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id47">
+<h1>2008-09-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id47" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Small bug in summaryBy fixed</p></li>
+<li><p>Version 3.4 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id48">
+<h1>2008-09-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id48" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Small bug in summaryBy fixed</p></li>
+<li><p>Version 3.3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id49">
+<h1>2008-09-18 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id49" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Longer formulas now accepted (bug caused by a naive use of deparse())</p></li>
+<li><p>Version 3.2 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id50">
+<h1>2008-06-13 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id50" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bugs in variable names in summaryBy fixed</p></li>
+<li><p>Small update of documentation</p></li>
+<li><p>Version 3.1 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id51">
+<h1>2008-05-20 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id51" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>summaryBy speeded up; postfix argument removed</p></li>
+<li><p>Version 3.0 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id52">
+<h1>2008-03-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id52" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Minor bugs removed.</p></li>
+<li><p>Version 2.3 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id53">
+<h1>2008-02-13 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id53" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">firstobs</span></code> and <code class="docutils literal notranslate"><span class="pre">lastobs</span></code> functions added</p></li>
+<li><p>Version 2.2 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id54">
+<h1>2007-12-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id54" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>splitBy: Results becomes a <code class="docutils literal notranslate"><span class="pre">splitByData</span></code> object. Two attributes
+are added: 1) grps, which is the grouping factors coded into a
+single variable. 2) idxvec, (a list) which holds the position of
+each row in the original data set.</p></li>
+<li><p>lapplyBy: Following the changes above, the results of lapplyBy
+follows the ordering given by formula.</p></li>
+<li><p>subsetBy: Now subset is a logical expression, not a character string</p></li>
+<li><p>Version 2.1 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id55">
+<h1>2007-09-30 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id55" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>DESCRIPTION file change from Depends: Hmisc to Imports: Hmisc;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id56">
+<h1>2007-05-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id56" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>summaryBy: Behaviour with . on rhs of formula when data contains no
+factors has been corrected.</p></li>
+<li><p>Version 1.9 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id57">
+<h1>2007-05-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id57" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Miscellaneous corrections in the .Rd files</p></li>
+<li><p>lapplyBy function has been added</p></li>
+<li><p>Vignette has been updated</p></li>
+<li><p>Version 1.8 uploaded</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id58">
+<h1>2007-04-21 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id58" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>orderBy changed so that signs in formula determines whether to
+sort ascendingly or decreasingly</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id59">
+<h1>2007-03-21 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id59" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>esticon extended to handle gls objects.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id60">
+<h1>2006-12-14 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id60" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.6 uploaded</p></li>
+<li><p>.asNumericMatrix2 etc now work correctly with date formats</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id61">
+<h1>2006-11-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id61" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.5 uploaded</p></li>
+<li><p>Typo in package title corrected</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id62">
+<h1>2006-11-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id62" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.4 built and uploaded</p></li>
+<li><p>A warning from Kurt H (regarding gsub…) has been fixed</p></li>
+<li><p>Internal functions have been ‘dotted’</p></li>
+<li><p>A NAMESPACE file has been added</p></li>
+<li><p>A file describing how to generate the NAMESPACE file
+automatically has been added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id63">
+<h1>2006-10-23 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id63" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.3 built and uploaded</p></li>
+<li><p>Bug in splitBy corrected so that it works when rhs includes a
+character variable.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id64">
+<h1>2006-10-23 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id64" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.2 built and uploaded</p></li>
+<li><p>Description of codstom data updated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix2dataFrame2</span></code> and <code class="docutils literal notranslate"><span class="pre">subsAttr2</span></code> added</p></li>
+<li><p>postfix argument in summaryBy can be a list</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id65">
+<h1>2006-10-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id65" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.1 built and uploaded</p></li>
+<li><p>codstom.Rd updated</p></li>
+<li><p>asNumericMatrix2 added because asNumericMatrix in Hmisc does not
+work if a variable is of type ‘character’</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id66">
+<h1>2006-10-16 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id66" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 1.0 built and uploaded</p></li>
+<li><p>summaryBy: More issues about naming of variables have been
+sorted out</p></li>
+<li><p>summaryBy: Argument order=TRUE has been added</p></li>
+<li><p>summaryBy: prefix=NULL changed to postfix=NULL, argument p2d has
+been added</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id67">
+<h1>2006-10-10 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id67" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 0.9 built and uploaded</p></li>
+<li><p>summaryBy assigns better names to generated variables</p></li>
+<li><p>A vignette has been created</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id68">
+<h1>2006-10-03 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id68" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 0.8 built and uploaded</p></li>
+<li><p>Handles now ordered factors</p></li>
+<li><p>Fixed bug so that summaryBy now works with do.call</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id69">
+<h1>2006-10-01 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id69" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version 0.7 built and uploaded</p></li>
+<li><p>splitBy is now based on functions in the Hmisc package for
+representing dataframes as matrices, which makes the function work
+also for ‘large’ (10000 rows) datasets.</p></li>
+<li><p>summaryBy can now take . on both lhs and rhs of “~”</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id70">
+<h1>2006-09-27 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id70" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Various bugs have been fixed</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id71">
+<h1>2006-09-18 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id71" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>summaryBy has been reimplemented.</p></li>
+<li><p>summaryBy takes . as argument on both lhs and rhs in formula</p></li>
+<li><p>summaryBy, splitBy takes drop=FALSE argument (just like split
+does)</p></li>
+<li><p>transformBy function has been added</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id72">
+<h1>2006-02-05 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id72" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>sampleBy modified allow for also ‘systematic samples’,
+e.g. every 5th row.</p></li>
+<li><p>summaryBy takes … arguments to FUN. No default NA action is
+taken.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id73">
+<h1>2006-02-02 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id73" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>A sampleBy function has been added.</p></li>
+<li><p>A subsetBy function has been added.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id74">
+<h1>2006-01-26 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id74" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Function summaryBy modified so one can write log(x) on the left
+hand side of ‘~’</p></li>
+<li><p>Function summaryBy modified such that NAs are removed. What to
+do about Inf??</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id75">
+<h1>2006-01-17 Søren Højsgaard <a class="reference external" href="mailto:sorenh&#37;&#52;&#48;agrsci&#46;dk">sorenh<span>&#64;</span>agrsci<span>&#46;</span>dk</a><a class="headerlink" href="#id75" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Function summaryBy modified to take dot (.) as lhs in formula and to
+take <code class="docutils literal notranslate"><span class="pre">idvar</span> <span class="pre">=</span> <span class="pre">~formula</span></code></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\doBy"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">doBy v4.6.25 (Release date: 2025-01-29)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-24-release-date-2024-10-07">doBy v4.6.24 (Release date: 2024-10-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-23-release-date">doBy v4.6.23 (Release date: )</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-22-release-date-2024-06-20">doBy v4.6.22 (Release date: 2024-06-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-21-release-date">doBy v4.6.21 (Release date: )</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-20-release-date-2023-11-01">doBy v4.6.20 (Release date: 2023-11-01)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-19-release-date-2023-10-02">doBy v4.6.19 (Release date: 2023-10-02)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-18-release-date-2023-08-03">doBy v4.6.18 (Release date: 2023-08-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-17-release-date-2023-07-10">doBy v4.6.17 (Release date: 2023-07-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-16-release-date-2023-01-18">doBy v4.6.16 (Release date: 2023-01-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-15-release-date-2022-12-08">doBy v4.6.15 (Release date: 2022-12-08)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-14-release-date-2022-10-16">doBy v4.6.14 (Release date: 2022-10-16)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-13-release-date-2022-05-02">doBy v4.6.13 (Release date: 2022-05-02)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-11-release-date-2021-07-13">doBy v4.6.11 (Release date: 2021-07-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-10-release-date-2021-04-29">doBy v4.6.10 (Release date: 2021-04-29)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-9-release-date-2021-03-09">doBy v4.6.9 (Release date: 2021-03-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-8-release-date-2020-11-10">doBy v4.6.8 (Release date: 2020-11-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-7-release-date-2020-07-07">doBy v4.6.7 (Release date: 2020-07-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-6-release-date-2020-06-16">doBy v4.6.6 (Release date: 2020-06-16)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-5-release-date-2020-02-21">doBy v4.6.5 (Release date: 2020-02-21)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-4-1-release-date-2020-02-03">doBy v4.6-4.1 (Release date: 2020-02-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-4-release-date-2020-02-01">doBy v4.6-4 (Release date: 2020-02-01)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-3-release-date-2019-10-23">doBy v4.6-3 (Release date: 2019-10-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-2-release-date-2018-08-30">doBy v4.6-2 (Release date: 2018-08-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#doby-v4-6-1-release-date-2018-03-19">doBy v4.6-1 (Release date: 2018-03-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#soren-hojsgaard-sorenh-math-aau-dk">2020-04-26 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2019-12-20 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2019-10-23 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2018-08-30 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2018-03-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2018-03-04 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2016-01-01 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2016-02-15 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2015-11-25 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2014-12-07 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2014-11-11 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2014-09-26 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2014-09-08 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2013-11-28 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2013-07-20 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2013-03-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2012-11-16 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">2012-05-28 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">2012-05-19 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">2012-02-17 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">2012-01-29 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">2012-01-18 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2012-01-18 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2012-01-17 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2011-12-30 Søren Højsgaard sorenh@math.aau.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#soren-hojsgaard-sorenh-agrsci-dk">2011-11-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">2011-11-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">2011-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">2011-06-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">2011-05-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">2011-03-28 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">2011-02-02 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">2011-01-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">2010-12-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">2010-11-24 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">2010-11-11 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">2010-11-09 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">2010-05-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">2009-10-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">2009-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">2009-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">2009-09-07 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">2009-08-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">2009-07-28 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">2009-01-12 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">2008-12-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">2008-10-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">2008-10-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">2008-09-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">2008-09-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">2008-09-18 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">2008-06-13 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">2008-05-20 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">2008-03-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">2008-02-13 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">2007-12-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">2007-09-30 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id56">2007-05-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id57">2007-05-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id58">2007-04-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id59">2007-03-21 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id60">2006-12-14 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id61">2006-11-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id62">2006-11-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id63">2006-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id64">2006-10-23 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id65">2006-10-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id66">2006-10-16 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id67">2006-10-10 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id68">2006-10-03 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id69">2006-10-01 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id70">2006-09-27 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id71">2006-09-18 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id72">2006-02-05 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id73">2006-02-02 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id74">2006-01-26 Søren Højsgaard sorenh@agrsci.dk</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id75">2006-01-17 Søren Højsgaard sorenh@agrsci.dk</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

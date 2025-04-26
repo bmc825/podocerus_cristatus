@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>yulab.utils 0.2.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/yulab.utils/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/yulab.utils/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>yulab.utils 0.2.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">yulab.utils 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-9">yulab.utils 0.1.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-8">yulab.utils 0.1.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-7">yulab.utils 0.1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-6">yulab.utils 0.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-5">yulab.utils 0.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-4">yulab.utils 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-3">yulab.utils 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-2">yulab.utils 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-1">yulab.utils 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-0">yulab.utils 0.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-9">yulab.utils 0.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-8">yulab.utils 0.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-7">yulab.utils 0.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-6">yulab.utils 0.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-5">yulab.utils 0.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-4">yulab.utils 0.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-3">yulab.utils 0.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-2">yulab.utils 0.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-1">yulab.utils 0.0.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-2-0">
+<h1>yulab.utils 0.2.0<a class="headerlink" href="#yulab-utils-0-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">get_caller_package()</span></code> (2025-01-08, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-9">
+<h1>yulab.utils 0.1.9<a class="headerlink" href="#yulab-utils-0-1-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c2()</span></code> to concate two vectors into a ‘chunked_array’ object (2024-12-03, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-8">
+<h1>yulab.utils 0.1.8<a class="headerlink" href="#yulab-utils-0-1-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add new citation (The Innovation 2024) (2024-11-07, Thu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pload()</span></code> now supports github package (2024-11-06, Wed)</p></li>
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">pkg_ref()</span></code> (2024-08-26, Mon)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-7">
+<h1>yulab.utils 0.1.7<a class="headerlink" href="#yulab-utils-0-1-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">has_internet()</span></code> for testing internet connection (2024-08-26, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkg_ref()</span></code> to access textVersion of package reference (2024-08-21, Wed)</p></li>
+<li><p>export <code class="docutils literal notranslate"><span class="pre">str_detect()</span></code> (20024-08-19, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_dir()</span></code> to setup user data dir (20024-08-17, Sat)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">which_os()</span></code> to return the system name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">has_bin()</span></code> to check whether a command is exist in the system</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-6">
+<h1>yulab.utils 0.1.6<a class="headerlink" href="#yulab-utils-0-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mydownload()</span></code> for downloading online file (2024-08-17, Sat)</p>
+<ul>
+<li><p>internally use ‘httr2’ and is ‘https’ friendly</p></li>
+</ul>
+</li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">bib_ggtree()</span></code> and <code class="docutils literal notranslate"><span class="pre">bib_knowledge()</span></code> with all previous related publications (2024-08-12, Mon)</p></li>
+<li><p>remove memory caching and disable file cache by default in <code class="docutils literal notranslate"><span class="pre">yread()</span></code> and <code class="docutils literal notranslate"><span class="pre">yread_tsv()</span></code> (2024-07-27, Sat)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bib_ggtree()</span></code> and <code class="docutils literal notranslate"><span class="pre">bib_knowledge()</span></code> (2024-07-27, Sat)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-5">
+<h1>yulab.utils 0.1.5<a class="headerlink" href="#yulab-utils-0-1-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">yulab_msg()</span></code> for startup message of packages developed by YuLab (2024-07-26, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-4">
+<h1>yulab.utils 0.1.4<a class="headerlink" href="#yulab-utils-0-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">str_extract()</span></code> to extract substring using a regular expression pattern (2024–01-25, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-3">
+<h1>yulab.utils 0.1.3<a class="headerlink" href="#yulab-utils-0-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>with cache ability (2023-12-27, Wed)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_cache()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_cache_item()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_cache()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_cache_item()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_cache_element()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rm_cache_item()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rm_cache()</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-2">
+<h1>yulab.utils 0.1.2<a class="headerlink" href="#yulab-utils-0-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>mv translate functions to the ‘fanyi’ package (2023-12-14, Thu)</p></li>
+<li><p>tools to switch from PCRE or TRE in regular expression (2023-12-13, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-1">
+<h1>yulab.utils 0.1.1<a class="headerlink" href="#yulab-utils-0-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">normalizePath()</span></code> in <code class="docutils literal notranslate"><span class="pre">o()</span></code> to convert file paths to canonical form (2023-10-06, Fri, #4)</p></li>
+<li><p>change the default parameter, <code class="docutils literal notranslate"><span class="pre">ref</span> <span class="pre">=</span> <span class="pre">&quot;master&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">ref</span> <span class="pre">=</span> <span class="pre">&quot;HEAD&quot;</span></code> in the <code class="docutils literal notranslate"><span class="pre">install_zip_gh()</span></code> function to use the default branch of the GitHub repo (2023-10-02, Mon)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-1-0">
+<h1>yulab.utils 0.1.0<a class="headerlink" href="#yulab-utils-0-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_zip()</span></code> allows both binary and source zip files (2023-09-20, Wed)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pload()</span></code> for loading package with the ability to install it if not available (2023-09-16, Sat)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_dependencies()</span></code> and <code class="docutils literal notranslate"><span class="pre">packageTitle()</span></code> (2023-09-11, Mon)</p></li>
+<li><p>import ‘fs’ and ‘digest’ (2023-09-07, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-9">
+<h1>yulab.utils 0.0.9<a class="headerlink" href="#yulab-utils-0-0-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ls2df()</span></code> convert list of vector to a data.frame (2023-09-01, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-8">
+<h1>yulab.utils 0.0.8<a class="headerlink" href="#yulab-utils-0-0-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mat2list()</span></code> and <code class="docutils literal notranslate"><span class="pre">combinations()</span></code> (2023-08-22, Tue)</p></li>
+<li><p>remove default ‘params’ setting in <code class="docutils literal notranslate"><span class="pre">yread_tsv()</span></code> (2023-08-15, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-7">
+<h1>yulab.utils 0.0.7<a class="headerlink" href="#yulab-utils-0-0-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">check_pkg()</span></code> to call <code class="docutils literal notranslate"><span class="pre">rlang::check_installed()</span></code> with reason set automatically (2023-08-03, Thu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yread()</span></code> and <code class="docutils literal notranslate"><span class="pre">yread_tsv()</span></code> that read file with caching (2023-08-02, Wed)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbindlist()</span></code> to rbind a list (2023-08-01, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exec()</span></code> to run system command (2023-06-19, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_range()</span></code> to normalize data by range (2023-06-18, Sun)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-6">
+<h1>yulab.utils 0.0.6<a class="headerlink" href="#yulab-utils-0-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mat2df()</span></code> to convert matrix to a tidy data frame (2022-12-20, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_starts()</span></code> and <code class="docutils literal notranslate"><span class="pre">str_ends()</span></code> (2022-07-29, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-5">
+<h1>yulab.utils 0.0.5<a class="headerlink" href="#yulab-utils-0-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_fun_from_pkg()</span></code> outputs friendly message if the pkg is not installed (2022-06-08, Wed)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show_in_excel()</span></code>, <code class="docutils literal notranslate"><span class="pre">CRANpkg()</span></code>, <code class="docutils literal notranslate"><span class="pre">Biocpkg()</span></code>, <code class="docutils literal notranslate"><span class="pre">Githubpkg()</span></code>, <code class="docutils literal notranslate"><span class="pre">mypkg()</span></code> (2021-10-13, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-4">
+<h1>yulab.utils 0.0.4<a class="headerlink" href="#yulab-utils-0-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">str_wrap()</span></code> (2021-10-09, Sat)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-3">
+<h1>yulab.utils 0.0.3<a class="headerlink" href="#yulab-utils-0-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.cb()</span></code> (2021-08-17)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-2">
+<h1>yulab.utils 0.0.2<a class="headerlink" href="#yulab-utils-0-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o()</span></code>, <code class="docutils literal notranslate"><span class="pre">install_zip()</span></code>, <code class="docutils literal notranslate"><span class="pre">get_fun_from_pkg()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="yulab-utils-0-0-1">
+<h1>yulab.utils 0.0.1<a class="headerlink" href="#yulab-utils-0-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">is.installed()</span></code>, <code class="docutils literal notranslate"><span class="pre">scihub_dl()</span></code>, <code class="docutils literal notranslate"><span class="pre">sudo_install()</span></code></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\yulab.utils"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">yulab.utils 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-9">yulab.utils 0.1.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-8">yulab.utils 0.1.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-7">yulab.utils 0.1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-6">yulab.utils 0.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-5">yulab.utils 0.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-4">yulab.utils 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-3">yulab.utils 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-2">yulab.utils 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-1">yulab.utils 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-1-0">yulab.utils 0.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-9">yulab.utils 0.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-8">yulab.utils 0.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-7">yulab.utils 0.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-6">yulab.utils 0.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-5">yulab.utils 0.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-4">yulab.utils 0.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-3">yulab.utils 0.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-2">yulab.utils 0.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#yulab-utils-0-0-1">yulab.utils 0.0.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

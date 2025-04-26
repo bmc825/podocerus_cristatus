@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>plyr 1.8.9 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/plyr/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/plyr/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>plyr 1.8.9</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">plyr 1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-8">plyr 1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-7">plyr 1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-6">plyr 1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-5">plyr 1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-4">Version 1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-3">Version 1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-2">Version 1.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-1">Version 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8">Version 1.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-functions">New features and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-plyr">Parallel plyr</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-improvements">Performance improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-1">Version 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7">Version 1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6">Version 1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2">Version 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-1">Version 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2011-03-02">Version 1.5 (2011-03-02)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-1-2011-04-05">Version 1.4.1 (2011-04-05)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-2011-01-03">Version 1.4 (2011-01-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-1-2010-12-30">Version 1.3.1 (2010-12-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-2010-12-28">Version 1.3 (2010-12-28)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-1-2010-09-10">Version 1.2.1 (2010-09-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-2010-09-09">Version 1.2 (2010-09-09)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-2010-07-19">Version 1.1 (2010-07-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2010-07-02">Version 1.0 (2010-07-02)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-improvements">Speed improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-2">Version 0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New features:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-9-2009-06-23">Version 0.1.9 (2009-06-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-8-2009-04-20">Version 0.1.8 (2009-04-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-7-2009-04-15">Version 0.1.7 (2009-04-15)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-6-2009-04-15">Version 0.1.6 (2009-04-15)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-ups">Speed-ups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-5-2009-02-23">Version 0.1.5 (2009-02-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-4-2008-12-12">Version 0.1.4 (2008-12-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-3-2008-11-19">Version 0.1.3 (2008-11-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-2-2008-11-18">Version 0.1.2 (2008-11-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-1-2008-10-08">Version 0.1.1 (2008-10-08)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="plyr-1-8-9">
+<h1>plyr 1.8.9<a class="headerlink" href="#plyr-1-8-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixes for <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plyr-1-8-8">
+<h1>plyr 1.8.8<a class="headerlink" href="#plyr-1-8-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update so <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> passes cleanly in future R-devel.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plyr-1-8-7">
+<h1>plyr 1.8.7<a class="headerlink" href="#plyr-1-8-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update so <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> passes cleanly in future R-devel.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plyr-1-8-6">
+<h1>plyr 1.8.6<a class="headerlink" href="#plyr-1-8-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update so <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> passes cleanly on R and R-devel.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plyr-1-8-5">
+<h1>plyr 1.8.5<a class="headerlink" href="#plyr-1-8-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update so <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> passes cleanly on R and R-devel.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-4">
+<h1>Version 1.8.4<a class="headerlink" href="#version-1-8-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update so <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> passes cleanly on R and R-devel.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-3">
+<h1>Version 1.8.3<a class="headerlink" href="#version-1-8-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Revert to C version of <code class="docutils literal notranslate"><span class="pre">loop_apply()</span></code> as Rcpp version was appears to be
+having PROTECTion problems. (Also fixes #256)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-2">
+<h1>Version 1.8.2<a class="headerlink" href="#version-1-8-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update for changes in R namespace best-practices.</p></li>
+<li><p>New parameter <code class="docutils literal notranslate"><span class="pre">.id</span></code> to <code class="docutils literal notranslate"><span class="pre">adply()</span></code> that specifies the name(s) of
+the index column(s). (Thanks to Kirill Müller, #191)</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">split_indices()</span></code> when <code class="docutils literal notranslate"><span class="pre">n</span></code> isn’t supplied.</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">.id</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">ldply()</span></code> and <code class="docutils literal notranslate"><span class="pre">rdply()</span></code> allowing for
+<code class="docutils literal notranslate"><span class="pre">.id</span> <span class="pre">=</span> <span class="pre">NULL</span></code> to work as described in the help. (Thanks to Doug Mitarotonda, #207,
+and Marek, #224 and #225)</p></li>
+<li><p>Deprecate exotic functions <code class="docutils literal notranslate"><span class="pre">liply()</span></code> and <code class="docutils literal notranslate"><span class="pre">isplit2()</span></code>, remove unused and
+unexported functions <code class="docutils literal notranslate"><span class="pre">dots()</span></code> and <code class="docutils literal notranslate"><span class="pre">parallel_fe()</span></code> (Thanks to Kirill
+Müller, #242, #248)</p></li>
+<li><p>Warn on duplicate names that cause certain array functions to fail. (Thanks
+to Kirill Müller, #211)</p></li>
+<li><p>Parameter <code class="docutils literal notranslate"><span class="pre">.inform</span></code> is now honored for <code class="docutils literal notranslate"><span class="pre">?_ply()</span></code> calls. (Thanks to
+Kirill Müller, #209)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-1">
+<h1>Version 1.8.1<a class="headerlink" href="#version-1-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New parameter <code class="docutils literal notranslate"><span class="pre">.id</span></code> to <code class="docutils literal notranslate"><span class="pre">ldply()</span></code> and <code class="docutils literal notranslate"><span class="pre">rdply()</span></code> that specifies the name of
+the index column. (Thanks to Kirill Müller, #107, #140, #142)</p></li>
+<li><p>The .id column in <code class="docutils literal notranslate"><span class="pre">ldply()</span></code> is generated as a factor to preserve
+the sort order, but only if the new <code class="docutils literal notranslate"><span class="pre">.id</span></code> parameter is set. (Thanks to Kirill
+Müller, #137)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> now silently drops NULL inputs (#138)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> avoids array copying which had produced quadratic time
+complexity. <code class="docutils literal notranslate"><span class="pre">*dply</span></code> of large numbers of groups should be faster.
+(Contributed by Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> handles non-numeric matrix columns (i.e. factor arrays,
+character arrays, list arrays); also arrays with more than 2
+dimensions can be used. Dimnames of array columns are now preserved.
+(Contributed by Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill(x,y)</span></code> converts factor columns of Y to character when
+columns of X are character. <code class="docutils literal notranslate"><span class="pre">join(x,y)</span></code> and <code class="docutils literal notranslate"><span class="pre">match_df(x,y)</span></code> now work
+when the key column in X is character and Y is factor. (Contributed
+by Peter Meilstrup)</p></li>
+<li><p>Fix faulty array allocation which caused problems when using <code class="docutils literal notranslate"><span class="pre">split_indices</span></code>
+with large (&gt; 2^24) vectors.  (Fixes #131)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list_to_array()</span></code> incorrectly determined dimensions if column of labels
+contained any missing values (#169).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r*ply</span></code> expression is evaluated exactly <code class="docutils literal notranslate"><span class="pre">.n</span></code> times, evaluation results are
+consistent with side effects. (#158, thanks to Kirill Müller)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8">
+<h1>Version 1.8<a class="headerlink" href="#version-1-8" title="Link to this heading">#</a></h1>
+<section id="new-features-and-functions">
+<h2>New features and functions<a class="headerlink" href="#new-features-and-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">**ply</span></code> gain a <code class="docutils literal notranslate"><span class="pre">.inform</span></code> argument (previously only available in <code class="docutils literal notranslate"><span class="pre">llply</span></code>) - this gives more useful debugging information at the cost of some speed. (Thanks to Brian Diggs, #57)</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">.dims</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> <code class="docutils literal notranslate"><span class="pre">alply</span></code>’s output gains dimensions and dimnames, similar to <code class="docutils literal notranslate"><span class="pre">apply</span></code>. Sequential indexing of a list produced by <code class="docutils literal notranslate"><span class="pre">alply</span></code> should be unaffected. (Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colwise</span></code>, <code class="docutils literal notranslate"><span class="pre">numcolwise</span></code> and <code class="docutils literal notranslate"><span class="pre">catcolwise</span></code> now all accept additional arguments in …. (Thanks to Stavros Macrakis, #62)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">here</span></code> makes it possible to use <code class="docutils literal notranslate"><span class="pre">**ply</span></code> + a function that uses non-standard evaluation (e.g. <code class="docutils literal notranslate"><span class="pre">summarise</span></code>, <code class="docutils literal notranslate"><span class="pre">mutate</span></code>, <code class="docutils literal notranslate"><span class="pre">subset</span></code>, <code class="docutils literal notranslate"><span class="pre">arrange</span></code>) inside a function.  (Thanks to Peter Meilstrup, #3)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_all</span></code> recursively joins a list of data frames. (Fixes #29)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name_rows</span></code> provides a convenient way of saving and then restoring row names so that you can preserve them if you need to. (#61)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">progress_time</span></code> (used with <code class="docutils literal notranslate"><span class="pre">.progress</span> <span class="pre">=</span> <span class="pre">&quot;time&quot;</span></code>) estimates the amount of time remaining before the job is completed. (Thanks to Mike Lawrence, #78)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise</span></code> now works iteratively so that later columns can refer to earlier.  (Thanks to Jim Hester, #44)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">take</span></code> makes it easy to subset along an arbitrary dimension.</p></li>
+<li><p>Improved documentation thanks to patches from Tim Bates.</p></li>
+</ul>
+</section>
+<section id="parallel-plyr">
+<h2>Parallel plyr<a class="headerlink" href="#parallel-plyr" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">**ply</span></code> gains a <code class="docutils literal notranslate"><span class="pre">.paropts</span></code> argument, a list of options that is passed onto
+<code class="docutils literal notranslate"><span class="pre">foreach</span></code> for controlling parallel computation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_ply</span></code> now accepts <code class="docutils literal notranslate"><span class="pre">.parallel</span></code> argument to enable parallel processing.
+(Fixes #60)</p></li>
+<li><p>Progress bars are disabled when using parallel plyr (Fixes #32)</p></li>
+</ul>
+</section>
+<section id="performance-improvements">
+<h2>Performance improvements<a class="headerlink" href="#performance-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a*ply</span></code>: 25x speedup when indexing array objects, 3x speedup when indexing
+data frames.  This should substantially reduce the overhead of using <code class="docutils literal notranslate"><span class="pre">a*ply</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d*ply</span></code> subsetting has been considerably optimised: this will have a small
+impact unless you have a very large number of groups, in which case it will be
+considerably faster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">idata.frame</span></code>: Subsetting immutable data frames with <code class="docutils literal notranslate"><span class="pre">[.idf</span></code> is now
+faster (Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quickdf</span></code> is around 20% faster</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split_indices</span></code>, which powers much internal splitting code (like
+<code class="docutils literal notranslate"><span class="pre">vaggregate</span></code>, <code class="docutils literal notranslate"><span class="pre">join</span></code> and <code class="docutils literal notranslate"><span class="pre">d*ply</span></code>) is about 2x faster.  It was already
+incredibly fast ~0.2s for 1,000,000 obs, so this won’t have much impact on
+overall performance</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*aply</span></code> functions now bind list mode results into a list-array
+(Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*aply</span></code> now accepts 0-dimension arrays as inputs. (#88)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> now works correctly for factor and Date inputs. (Fixes #130)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*dply</span></code> now deals better with matrix results, converting them to data frames,
+rather than vectors. (Fixes #12)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d*ply</span></code> will now preserve factor levels input if <code class="docutils literal notranslate"><span class="pre">drop</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> (#81)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join</span></code> works correctly when there are no common rows (Fixes #74), or when
+one input has no rows (Fixes #48). It also consistently orders the columns:
+common columns, then x cols, then y cols (Fixes #40).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quickdf</span></code> correctly handles NA variable names. (Fixes #66. Thanks to Scott
+Kostyshak)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> and <code class="docutils literal notranslate"><span class="pre">rbind.fill.matrix</span></code> work consistently with matrices and data
+frames with zero rows. Fixes #79. (Peter Meilstrup)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> now stops if inputs are not data frames. (Fixes #51)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> now works consistently with 0 column data frames</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">round_any</span></code> now works with <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> objects, thanks to Jean-Olivier
+Irisson (#76)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-7-1">
+<h1>Version 1.7.1<a class="headerlink" href="#version-1-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix bug in id, using numeric instead of integer</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-7">
+<h1>Version 1.7<a class="headerlink" href="#version-1-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code>: if a column contains both factors and characters (in different
+inputs), the resulting column will be coerced to character</p></li>
+<li><p>When there are more than 2^31 distinct combinations <code class="docutils literal notranslate"><span class="pre">id</span></code>, switches to a
+slower fallback strategy using strings (inspired by <code class="docutils literal notranslate"><span class="pre">merge</span></code>) that guarantees
+correct results. This fixes problems with <code class="docutils literal notranslate"><span class="pre">join</span></code> when joining across many
+columns. (Fixes #63)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split_indices</span></code> checks input more aggressively to prevent segfaults.
+Fixes #43.</p></li>
+<li><p>fix small bug in <code class="docutils literal notranslate"><span class="pre">loop_apply</span></code> which lead to segfaults in certain
+circumstances. (Thanks to Pål Westermark for patch)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">itertools</span></code> and <code class="docutils literal notranslate"><span class="pre">iterators</span></code> moved to suggests from imports so that plyr now
+only depends on base R.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-6">
+<h1>Version 1.6<a class="headerlink" href="#version-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>documentation improved using new features of <code class="docutils literal notranslate"><span class="pre">roxygen2</span></code></p></li>
+<li><p>fixed namespacing issue which lead to lost labels when subsetting the
+results of <code class="docutils literal notranslate"><span class="pre">*lply</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colwise</span></code> automatically strips off split variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rlply</span></code> now correctly deals with <code class="docutils literal notranslate"><span class="pre">rlply(4,</span> <span class="pre">NULL)</span></code> (thanks to bug report from
+Eric Goldlust)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> tries harder to keep attributes, retaining the attributes from
+the first occurrence of each column it finds. It also now works with
+variables of class <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> and preserves the ordered status of factors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arrange</span></code> now works with one column data frames</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-2">
+<h1>Version 1.5.2<a class="headerlink" href="#version-1-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">d*ply</span></code> returns correct number of rows when function returns vector</p></li>
+<li><p>fix NAMESPACE bug which was causing problems with ggplot2</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-1">
+<h1>Version 1.5.1<a class="headerlink" href="#version-1-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> now treats 1d arrays in the same way as <code class="docutils literal notranslate"><span class="pre">rbind</span></code> (i.e. it turns
+them into ordinary vectors)</p></li>
+<li><p>fix bug in rename when renaming multiple columns</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-2011-03-02">
+<h1>Version 1.5 (2011-03-02)<a class="headerlink" href="#version-1-5-2011-03-02" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>new <code class="docutils literal notranslate"><span class="pre">strip_splits</span></code> function removes splitting variables from the data frames
+returned by <code class="docutils literal notranslate"><span class="pre">ddply</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rename</span></code> moved in from reshape, and rewritten.</p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">match_df</span></code> function makes it easy to subset a data frame to only contain
+values matching another data frame. Inspired by
+<a class="reference external" href="http://stackoverflow.com/questions/4693849">http://stackoverflow.com/questions/4693849</a>.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Bug fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">**ply</span></code> now works when passed a list of functions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*dply</span></code> now correctly names output even when some output combinations are
+missing (NULL) (Thanks to bug report from Karl Ove Hufthammer)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*dply</span></code> preserves the class of many more object types.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a*ply</span></code> now correctly works with zero length margins, operating on the
+entire object (Thanks to bug report from Stavros Macrakis)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join</span></code> now implements joins in a more SQL like way, returning all possible
+matches, not just the first one. It is still a (little) faster than merge.
+The previous behaviour is accessible with <code class="docutils literal notranslate"><span class="pre">match</span> <span class="pre">=</span> <span class="pre">&quot;first&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join</span></code> is now more symmetric so that <code class="docutils literal notranslate"><span class="pre">join(x,</span> <span class="pre">y,</span> <span class="pre">&quot;left&quot;)</span></code> is closer to
+<code class="docutils literal notranslate"><span class="pre">join(y,</span> <span class="pre">x,</span> <span class="pre">&quot;right&quot;)</span></code>, modulo column ordering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">named.quoted</span></code> failed when quoted expressions were longer than 50
+characters. (Thanks to bug report from Eric Goldlust)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.fill</span></code> now correctly maintains POSIXct tzone attributes and preserves
+missing factor levels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split_labels</span></code> correctly preserves empty factor levels, which means that
+<code class="docutils literal notranslate"><span class="pre">drop</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> should work in more places. Use <code class="docutils literal notranslate"><span class="pre">base::droplevels</span></code> to remove
+levels that don’t occur in the data, and <code class="docutils literal notranslate"><span class="pre">drop</span> <span class="pre">=</span> <span class="pre">T</span></code> to remove combinations
+of levels that don’t occur.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vaggregate</span></code> now passes <code class="docutils literal notranslate"><span class="pre">...</span></code> to the aggregation function when working out
+the output type (thanks to bug report by Pavan Racherla)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-1-2011-04-05">
+<h1>Version 1.4.1 (2011-04-05)<a class="headerlink" href="#version-1-4-1-2011-04-05" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add citation to JSS article</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-2011-01-03">
+<h1>Version 1.4 (2011-01-03)<a class="headerlink" href="#version-1-4-2011-01-03" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> now takes an additional parameter <code class="docutils literal notranslate"><span class="pre">wt_var</span></code> which allows you to
+compute weighted sums. This is as fast, or faster than, <code class="docutils literal notranslate"><span class="pre">tapply</span></code> or <code class="docutils literal notranslate"><span class="pre">xtabs</span></code>.</p></li>
+<li><p>Really fix bug in <code class="docutils literal notranslate"><span class="pre">names.quoted</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.</span></code> now captures the environment in which it was evaluated. This should fix
+an esoteric class of bugs which no-one probably ever encountered, but will
+form the basis for an improved version of <code class="docutils literal notranslate"><span class="pre">ggplot2::aes</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-3-1-2010-12-30">
+<h1>Version 1.3.1 (2010-12-30)<a class="headerlink" href="#version-1-3-1-2010-12-30" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">names.quoted</span></code> that interfered with ggplot2</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-3-2010-12-28">
+<h1>Version 1.3 (2010-12-28)<a class="headerlink" href="#version-1-3-2010-12-28" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>New features<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">mutate</span></code> that works like transform to add new columns or
+overwrite existing columns, but computes new columns iteratively so later
+transformations can use columns created by earlier transformations. (It’s
+also about 10x faster) (Fixes #21)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Bug fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>split column names are no longer coerced to valid R names.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quickdf</span></code> now adds names if missing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise</span></code> preserves variable names if explicit names not provided
+(Fixes #17)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arrays</span></code> with names should be sorted correctly once again (also fixed a bug
+in the test case that prevented me from catching this automatically)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m_ply</span></code> no longer possesses .parallel argument (mistakenly added)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ldply</span></code> (and hence <code class="docutils literal notranslate"><span class="pre">adply</span></code> and <code class="docutils literal notranslate"><span class="pre">ddply</span></code>) now correctly passes on .parallel
+argument (Fixes #16)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> uses a better strategy for converting to integers, making it possible
+to use for cases with larger potential numbers of combinations</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-1-2010-09-10">
+<h1>Version 1.2.1 (2010-09-10)<a class="headerlink" href="#version-1-2-1-2010-09-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix bug in llply fast path that causes problems with ggplot2.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-2010-09-09">
+<h1>Version 1.2 (2010-09-09)<a class="headerlink" href="#version-1-2-2010-09-09" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>New features<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">l*ply</span></code>, <code class="docutils literal notranslate"><span class="pre">d*ply</span></code>, <code class="docutils literal notranslate"><span class="pre">a*ply</span></code> and <code class="docutils literal notranslate"><span class="pre">m*ply</span></code> all gain a .parallel argument that when
+<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, applies functions in parallel using a parallel backend registered with
+the foreach package:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq_len</span><span class="p">(</span><span class="m">20</span><span class="p">)</span>
+<span class="n">wait</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="nf">Sys.sleep</span><span class="p">(</span><span class="m">0.1</span><span class="p">)</span>
+<span class="nf">system.time</span><span class="p">(</span><span class="nf">llply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">wait</span><span class="p">))</span>
+<span class="c1">#  user  system elapsed</span>
+<span class="c1"># 0.007   0.005   2.005</span>
+
+<span class="n">doParallel</span><span class="o">::</span><span class="nf">registerDoParallel</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">system.time</span><span class="p">(</span><span class="nf">llply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">wait</span><span class="p">,</span><span class="w"> </span><span class="n">.parallel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="c1">#  user  system elapsed</span>
+<span class="c1"># 0.020   0.011   1.038</span>
+</pre></div>
+</div>
+<p>This work has been generously supported by BD (Becton Dickinson).</p>
+</li>
+</ul>
+</section>
+<section id="minor-changes">
+<h2>Minor changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>a<em>ply and m</em>ply gain an .expand argument that controls whether data frames
+produce a single output dimension (one element for each row), or an output
+dimension for each variable.</p></li>
+<li><p>new vaggregate (vector aggregate) function, which is equivalent to tapply,
+but much faster (~ 10x), since it avoids copying the data.</p></li>
+<li><p>llply: for simple lists and vectors, with no progress bar, no extra info,
+and no parallelisation, llply calls lapply directly to avoid all the
+overhead associated with those unused extra features.</p></li>
+<li><p>llply: in serial case, for loop replaced with custom C function that takes
+about 40% less time (or about 20% less time than lapply). Note that as a
+whole, llply still has much more overhead than lapply.</p></li>
+<li><p>round_any now lives in plyr instead of reshape</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Bug fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">list_to_array</span></code> works correct even when there are missing values in the array.
+This is particularly important for daply.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-1-2010-07-19">
+<h1>Version 1.1 (2010-07-19)<a class="headerlink" href="#version-1-1-2010-07-19" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*dply</span></code> deals more gracefully with the case when all results are NULL
+(fixes #10)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*aply</span></code> correctly orders output regardless of dimension names
+(fixes #11)</p></li>
+<li><p>join gains type = “full” which preserves all x and y rows</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-2010-07-02">
+<h1>Version 1.0 (2010-07-02)<a class="headerlink" href="#version-1-0-2010-07-02" title="Link to this heading">#</a></h1>
+<section id="new-functions">
+<h2>New functions<a class="headerlink" href="#new-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>arrange, a new helper method for reordering a data frame.</p></li>
+<li><p>count, a version of table that returns data frames immediately and that is
+much much faster for high-dimensional data.</p></li>
+<li><p>desc makes it easy to sort any vector in descending order</p></li>
+<li><p>join, works like merge but can be much faster and has a somewhat simpler
+syntax drawing from SQL terminology</p></li>
+<li><p>rbind.fill.matrix is like rbind.fill but works for matrices, code
+contributed by C. Beleites</p></li>
+</ul>
+</section>
+<section id="speed-improvements">
+<h2>Speed improvements<a class="headerlink" href="#speed-improvements" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>experimental immutable data frame (idata.frame) that vastly speeds up
+subsetting - for large datasets with large numbers of groups, this can yield
+10-fold speed ups. See examples in ?idata.frame to see how to use it.</p></li>
+<li><p>rbind.fill rewritten again to increase speed and work with more data types</p></li>
+<li><p>d*ply now much faster with nested groups</p>
+<p>This work has been generously supported by BD (Becton Dickinson).</p>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-2">
+<h1>Version 0.2<a class="headerlink" href="#version-0-2" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>New features:<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>d*ply now accepts NULL for splitting variables, indicating that the data
+should not be split</p></li>
+<li><p>plyr no longer exports internal functions, many of which were causing
+clashes with other packages</p></li>
+<li><p>rbind.fill now works with data frame columns that are lists or matrices</p></li>
+<li><p>test suite ensures that plyr behaviour is correct and will remain correct
+as I make future improvements.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Bug fixes:<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>**ply: if zero splits, empty list(), data.frame() or logical() returned,
+as appropriate for the output type</p></li>
+<li><p>**ply: leaving .fun as NULL now always returns list
+(thanks to Stavros Macrakis for the bug report)</p></li>
+<li><p>a*ply: labels now respect options(stringAsFactors)</p></li>
+<li><p>each: scoping bug fixed, thanks to Yasuhisa Yoshida for the bug report</p></li>
+<li><p>list_to_dataframe is more consistent when processing a single data frame</p></li>
+<li><p>NAs preserved in more places</p></li>
+<li><p>progress bars: guaranteed to terminate even if **ply prematurely terminates</p></li>
+<li><p>progress bars: misspelling gives informative warning, instead of
+uninformative error</p></li>
+<li><p>splitter_d: fixed ordering bug when .drop = FALSE</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-9-2009-06-23">
+<h1>Version 0.1.9 (2009-06-23)<a class="headerlink" href="#version-0-1-9-2009-06-23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix bug in rbind.fill when NULLs present in list</p></li>
+<li><p>improve each to recognise when all elements are numeric</p></li>
+<li><p>fix labelling bug in <code class="docutils literal notranslate"><span class="pre">d*ply</span></code> when .drop = FALSE</p></li>
+<li><p>additional methods for quoted objects</p></li>
+<li><p>add summarise helper - this function is like transform, but creates a new data frame rather than reusing the old (thanks to Brendan O’Connor for the neat idea)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-8-2009-04-20">
+<h1>Version 0.1.8 (2009-04-20)<a class="headerlink" href="#version-0-1-8-2009-04-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>made rbind a little faster (~20%) using an idea from Richard Raubertas</p></li>
+<li><p>daply now works correctly when splitting variables that contain empty factor levels</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-7-2009-04-15">
+<h1>Version 0.1.7 (2009-04-15)<a class="headerlink" href="#version-0-1-7-2009-04-15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Version of rbind.fill that copies attributes.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-6-2009-04-15">
+<h1>Version 0.1.6 (2009-04-15)<a class="headerlink" href="#version-0-1-6-2009-04-15" title="Link to this heading">#</a></h1>
+<section id="improvements">
+<h2>Improvements:<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>all ply functions deal more elegantly when given function names: can supply a vector of function names, and name is used as label in output</p></li>
+<li><p>failwith and each now work with function names as well as functions (i.e. “nrow” instead of nrow)</p></li>
+<li><p>each now accepts a list of functions or a vector of function names</p></li>
+<li><p>l*ply will use list names where present</p></li>
+<li><p>if .inform is TRUE, error messages will give you information about where errors within your data - hopefully this will make problems easier to track down</p></li>
+<li><p>d*ply no longer converts splitting variables to factors when drop = T (thanks to bug report from Charlotte Wickham)</p></li>
+</ul>
+</section>
+<section id="speed-ups">
+<h2>Speed-ups<a class="headerlink" href="#speed-ups" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>massive speed ups for splitting large arrays</p></li>
+<li><p>fixed typo that was causing a 50% speed penalty for d*ply</p></li>
+<li><p>rewritten rbind.fill is considerably (&gt; 4x) faster for many data frames</p></li>
+<li><p>colwise about twice as fast</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>Bug fixes:<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>daply: now works when the data frame is split by multiple variables</p></li>
+<li><p>aaply: now works with vectors</p></li>
+<li><p>ddply: first variable now varies slowest as you’d expect</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-5-2009-02-23">
+<h1>Version 0.1.5 (2009-02-23)<a class="headerlink" href="#version-0-1-5-2009-02-23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>colwise now accepts a quoted list as its second argument.  This allows you to
+specify the names of columns to work on: colwise(mean, .(lat, long))</p></li>
+<li><p>d_ply and a_ply now correctly pass … to the function</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-4-2008-12-12">
+<h1>Version 0.1.4 (2008-12-12)<a class="headerlink" href="#version-0-1-4-2008-12-12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Greatly improved speed (&gt; 10x faster) and memory usage (50%) for splitting
+data frames with many combinations</p></li>
+<li><p>Splitting variables containing missing values now handled consistently</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-3-2008-11-19">
+<h1>Version 0.1.3 (2008-11-19)<a class="headerlink" href="#version-0-1-3-2008-11-19" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed problem where when splitting by a variable that contained missing
+values, missing combinations would be drop, and labels wouldn’t match up</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-2-2008-11-18">
+<h1>Version 0.1.2 (2008-11-18)<a class="headerlink" href="#version-0-1-2-2008-11-18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a*ply</span></code> now works correctly with array-lists</p></li>
+<li><p>drop. -&gt; .drop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r*ply</span></code> now works with …</p></li>
+<li><p>use inherits instead of is so method package doesn’t need to be loaded</p></li>
+<li><p>fix bug with using formulas</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-1-1-2008-10-08">
+<h1>Version 0.1.1 (2008-10-08)<a class="headerlink" href="#version-0-1-1-2008-10-08" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>argument names now start with . (instead of ending with it) - this should prevent name clashes with arguments of the called function</p></li>
+<li><p>return informative error if .fun is not a function</p></li>
+<li><p>use full names in all internal calls to avoid argument name clashes</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\plyr"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">plyr 1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-8">plyr 1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-7">plyr 1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-6">plyr 1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plyr-1-8-5">plyr 1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-4">Version 1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-3">Version 1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-2">Version 1.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-1">Version 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8">Version 1.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-functions">New features and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-plyr">Parallel plyr</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-improvements">Performance improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-1">Version 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7">Version 1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6">Version 1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2">Version 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-1">Version 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2011-03-02">Version 1.5 (2011-03-02)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-1-2011-04-05">Version 1.4.1 (2011-04-05)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-2011-01-03">Version 1.4 (2011-01-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-1-2010-12-30">Version 1.3.1 (2010-12-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-2010-12-28">Version 1.3 (2010-12-28)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-1-2010-09-10">Version 1.2.1 (2010-09-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-2010-09-09">Version 1.2 (2010-09-09)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-2010-07-19">Version 1.1 (2010-07-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2010-07-02">Version 1.0 (2010-07-02)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-improvements">Speed improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-2">Version 0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New features:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-9-2009-06-23">Version 0.1.9 (2009-06-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-8-2009-04-20">Version 0.1.8 (2009-04-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-7-2009-04-15">Version 0.1.7 (2009-04-15)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-6-2009-04-15">Version 0.1.6 (2009-04-15)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-ups">Speed-ups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-5-2009-02-23">Version 0.1.5 (2009-02-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-4-2008-12-12">Version 0.1.4 (2008-12-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-3-2008-11-19">Version 0.1.3 (2008-11-19)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-2-2008-11-18">Version 0.1.2 (2008-11-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-1-1-2008-10-08">Version 0.1.1 (2008-10-08)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

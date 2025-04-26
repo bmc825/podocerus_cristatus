@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/bslib/lib/bsw4/README';</script>
+    <link rel="index" title="Index" href="../../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/bslib/lib/bsw4/README.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Usage</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Usage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-pre-compiled-asset">Via Pre-compiled Asset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-cdn">Via CDN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-sass-imports">Via Sass Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-npm">Via NPM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#react-users-create-react-app-or-similar-bundler">React Users (<code class="docutils literal notranslate"><span class="pre">create-react-app</span></code>, or similar bundler)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-ruby-gem">Via Ruby Gem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-api">Via API</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#author">Author</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#copyright-and-license">Copyright and License</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p align="center">
+  <img width="200" height="200" src="https://bootswatch.com/_assets/img/logo-dark.svg">
+</p>
+<h3 align="center">Bootswatch</h3>
+<p align="center">
+  A collection of open source themes for <a href="https://getbootstrap.com/">Bootstrap</a>
+  <br>
+  <a href="https://bootswatch.com"><strong>View Bootswatch themes »</strong></a>
+  <br>
+  <br>
+  <a href="https://github.com/thomaspark/bootswatch/issues/new">Report bug</a>
+  ·
+  <a href="https://github.com/thomaspark/bootswatch/issues/new">Request feature</a>
+  ·
+  <a href="https://blog.bootswatch.com/">Blog</a>
+</p>
+<section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
+<p>There are a few different ways you can integrate Bootswatch into your project.</p>
+<section id="via-pre-compiled-asset">
+<h2>Via Pre-compiled Asset<a class="headerlink" href="#via-pre-compiled-asset" title="Link to this heading">#</a></h2>
+<p>Download the <code class="docutils literal notranslate"><span class="pre">bootstrap.min.css</span></code> file associated with a theme and replace
+Bootstrap’s default stylesheet. You must still include Bootstrap’s JavaScript
+file to have functional dropdowns, modals, etc.</p>
+</section>
+<section id="via-cdn">
+<h2>Via CDN<a class="headerlink" href="#via-cdn" title="Link to this heading">#</a></h2>
+<p>You can use the themes via CDN at <a class="reference external" href="https://www.jsdelivr.com/package/npm/bootswatch">jsDelivr</a>.</p>
+</section>
+<section id="via-sass-imports">
+<h2>Via Sass Imports<a class="headerlink" href="#via-sass-imports" title="Link to this heading">#</a></h2>
+<p>If you’re using <a class="reference external" href="https://sass-lang.com/">Sass</a> (SCSS) in your project, you can
+import the <code class="docutils literal notranslate"><span class="pre">_variables.scss</span></code> and <code class="docutils literal notranslate"><span class="pre">_bootswatch.scss</span></code> files for a given theme.
+This method allows you to override theme variables.</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span><span class="c1">// Your variable overrides go here, e.g.:</span>
+<span class="c1">// $h1-font-size: 3rem;</span>
+
+<span class="k">@import</span><span class="w"> </span><span class="s2">&quot;~bootswatch/dist/[theme]/variables&quot;</span><span class="p">;</span>
+<span class="k">@import</span><span class="w"> </span><span class="s2">&quot;~bootstrap/scss/bootstrap&quot;</span><span class="p">;</span>
+<span class="k">@import</span><span class="w"> </span><span class="s2">&quot;~bootswatch/dist/[theme]/bootswatch&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Make sure to import Bootstrap’s <code class="docutils literal notranslate"><span class="pre">bootstrap.scss</span></code> in between <code class="docutils literal notranslate"><span class="pre">_variables.scss</span></code>
+and <code class="docutils literal notranslate"><span class="pre">_bootswatch.scss</span></code>!</p>
+</section>
+<section id="via-npm">
+<h2>Via NPM<a class="headerlink" href="#via-npm" title="Link to this heading">#</a></h2>
+<p>You can install as a package with the command <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">bootswatch</span></code>.</p>
+<section id="react-users-create-react-app-or-similar-bundler">
+<h3>React Users (<code class="docutils literal notranslate"><span class="pre">create-react-app</span></code>, or similar bundler)<a class="headerlink" href="#react-users-create-react-app-or-similar-bundler" title="Link to this heading">#</a></h3>
+<p>Modern JavaScript bundlers (webpack, parcel, rollup) support <code class="docutils literal notranslate"><span class="pre">import</span></code>ing CSS from JS files. This can make it easier to deploy various 1st and 3rd party assets predictably. Note: <em>There are tradeoffs to the following method, research your tooling before deploying to production.</em></p>
+<p>Before continuing, ensure you’ve run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">bootswatch</span></code> in your local project folder. (Use either <code class="docutils literal notranslate"><span class="pre">npm</span></code> or <code class="docutils literal notranslate"><span class="pre">yarn</span></code>.)</p>
+<p>Add the following <code class="docutils literal notranslate"><span class="pre">import</span></code> to your top-level <code class="docutils literal notranslate"><span class="pre">index.js</span></code> (or <code class="docutils literal notranslate"><span class="pre">App.js</span></code>) file. Add it <strong>before</strong> any other <code class="docutils literal notranslate"><span class="pre">.css</span></code> imports.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="s2">&quot;bootswatch/dist/[theme]/bootstrap.min.css&quot;</span><span class="p">;</span>
+<span class="c1">// TODO: Note: Replace ^[theme]^ (examples: darkly, slate, cosmo, spacelab, and superhero. See https://bootswatch.com for current theme names.)</span>
+</pre></div>
+</div>
+<p>Here’s an example of updated <code class="docutils literal notranslate"><span class="pre">imports</span></code> in <code class="docutils literal notranslate"><span class="pre">App.js</span></code> to use “slate” theme (using a <code class="docutils literal notranslate"><span class="pre">create-react-app</span></code> fresh project.)</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">logo</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./logo.svg&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;bootswatch/dist/slate/bootstrap.min.css&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Added this :boom:</span>
+<span class="k">import</span><span class="w"> </span><span class="s1">&#39;./App.css&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="via-ruby-gem">
+<h2>Via Ruby Gem<a class="headerlink" href="#via-ruby-gem" title="Link to this heading">#</a></h2>
+<p>In your Ruby project, you can access the latest version of each theme by adding
+the following to your Gemfile and running <code class="docutils literal notranslate"><span class="pre">bundle</span> <span class="pre">install</span></code>:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">gem</span><span class="w"> </span><span class="s2">&quot;bootswatch&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">github</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;thomaspark/bootswatch&quot;</span>
+</pre></div>
+</div>
+<p>Each theme directory is then accessible via the path
+<code class="docutils literal notranslate"><span class="pre">&quot;#{Gem.loaded_specs[&quot;bootswatch&quot;].load_paths.first}/[theme]&quot;</span></code>.</p>
+<p>Ruby on Rails users can add the following to an initializer (e.g.
+<code class="docutils literal notranslate"><span class="pre">config/initializers/bootswatch.rb</span></code>):</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">paths</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="no">Gem</span><span class="o">.</span><span class="n">loaded_specs</span><span class="o">[</span><span class="s2">&quot;bootswatch&quot;</span><span class="o">].</span><span class="n">load_paths</span>
+</pre></div>
+</div>
+<p>And thus be able to import themes via Sass like so:</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span><span class="k">@import</span><span class="w"> </span><span class="s2">&quot;[theme]/variables&quot;</span><span class="p">;</span>
+<span class="k">@import</span><span class="w"> </span><span class="s2">&quot;~bootstrap/scss/bootstrap&quot;</span><span class="p">;</span>
+<span class="k">@import</span><span class="w"> </span><span class="s2">&quot;[theme]/bootswatch&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="via-api">
+<h2>Via API<a class="headerlink" href="#via-api" title="Link to this heading">#</a></h2>
+<p>A simple JSON API is available for integrating your platform with Bootswatch.
+More info can be found on the <a class="reference external" href="https://bootswatch.com/help/#api">Help page</a>.</p>
+</section>
+</section>
+<section id="customization">
+<h1>Customization<a class="headerlink" href="#customization" title="Link to this heading">#</a></h1>
+<p>Bootswatch is open source and you’re welcome to modify the themes.</p>
+<p>Each theme consists of two SASS files. <code class="docutils literal notranslate"><span class="pre">_variables.scss</span></code>, which is included by default in Bootstrap, allows you to customize the settings. <code class="docutils literal notranslate"><span class="pre">_bootswatch.scss</span></code> introduces more extensive structural changes.</p>
+<p>Check out the <a class="reference external" href="https://bootswatch.com/help/#customization">Help page</a> for more details on building your own theme.</p>
+</section>
+<section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h1>
+<p>It’s through your contributions that Bootswatch will continue to improve. You can contribute in several ways.</p>
+<p><strong>Issues:</strong> Provide a detailed report of any bugs you encounter and open an issue on <a class="reference external" href="https://github.com/thomaspark/bootswatch/issues">GitHub</a>.</p>
+<p><strong>Documentation:</strong> If you’d like to fix a typo or beef up the docs, you can fork the project, make your changes, and submit a pull request.</p>
+<p><strong>Code:</strong> Make a fix and submit it as a pull request. When making changes, it’s important to keep the CSS and SASS versions in sync. To do this, be sure to edit the SASS source files for the particular theme first, then run the  tasks <code class="docutils literal notranslate"><span class="pre">grunt</span> <span class="pre">swatch</span></code> to build the CSS.</p>
+<p><strong>Donation:</strong> Donations are gratefully accepted via <a class="reference external" href="https://github.com/sponsors/thomaspark">GitHub</a> and <a class="reference external" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;amp;hosted_button_id=PU2DH4BMF9MWS&amp;amp;source=url">PayPal</a>.</p>
+</section>
+<section id="author">
+<h1>Author<a class="headerlink" href="#author" title="Link to this heading">#</a></h1>
+<p>Thomas Park</p>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/thomaspark">thomaspark</a></p></li>
+<li><p><a class="reference external" href="https://thomaspark.co/">https://thomaspark.co/</a></p></li>
+</ul>
+</section>
+<section id="thanks">
+<h1>Thanks<a class="headerlink" href="#thanks" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://github.com/mdo">Mark Otto</a> and <a class="reference external" href="https://github.com/fat">Jacob Thornton</a> for <a class="reference external" href="https://github.com/twbs/bootstrap">Bootstrap</a>.</p>
+<p><a class="reference external" href="https://jgog.in/">Jenil Gogari</a> for his contributions to the Flatly theme.</p>
+<p><a class="reference external" href="https://github.com/jostylr">James Taylor</a> for <a class="reference external" href="https://github.com/jostylr/cors-lite">cors-lite</a>.</p>
+<p><a class="reference external" href="https://github.com/cjsewell">Corey Sewell</a> for SASS conversion.</p>
+</section>
+<section id="copyright-and-license">
+<h1>Copyright and License<a class="headerlink" href="#copyright-and-license" title="Link to this heading">#</a></h1>
+<p>Copyright 2014-2020 Thomas Park</p>
+<p>Code released under the MIT License.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\bslib\lib\bsw4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Usage</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-pre-compiled-asset">Via Pre-compiled Asset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-cdn">Via CDN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-sass-imports">Via Sass Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-npm">Via NPM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#react-users-create-react-app-or-similar-bundler">React Users (<code class="docutils literal notranslate"><span class="pre">create-react-app</span></code>, or similar bundler)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-ruby-gem">Via Ruby Gem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#via-api">Via API</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#author">Author</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#thanks">Thanks</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#copyright-and-license">Copyright and License</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

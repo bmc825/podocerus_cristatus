@@ -1,0 +1,128 @@
+Traceback (most recent call last):
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Define custom order for microhabitat categories
+custom_order <- c("Algae", "Sertulariidae_BRYO", "Sertulariidae", "Lafoea", "Hydrallmania","Other" )
+
+# Count microhabitat and set the factor order
+microhabitat_counts <- data_microhabitat_count_clean %>%
+  group_by(Microhabitat, Group_2) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(Microhabitat = factor(Microhabitat, levels = custom_order))
+
+# Fill and outline colors (manually defined to match nudie plot)
+fill_colors <- c(
+  "Algae" = "#c54d43",               # lighter orange
+  "Sertulariidae_BRYO" = "#85c0df",  # lighter blue
+  "Sertulariidae" = "#e78946",       # lighter brown
+  "Lafoea" = "#e78946",
+  "Hydrallmania" = "#e78946",
+  "Other" = "#e78946"
+)
+
+outline_colors <- c(
+  "Algae" = "#a6291e",               # dark red
+  "Sertulariidae_BRYO" = "#0283d9",  # dark blue
+  "Sertulariidae" = "#E66101",       # dark brown
+  "Lafoea" = "#E66101",
+  "Hydrallmania" = "#E66101",
+  "Other" = "#E66101"
+)
+
+# Ensure Microhabitat is in correct order
+microhabitat_counts <- data_microhabitat_count_clean %>%
+  group_by(Microhabitat, Group_2) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(
+    Microhabitat = factor(Microhabitat, levels = custom_order),
+    fill_color = fill_colors[Microhabitat],
+    outline_color = outline_colors[Microhabitat]
+  )
+
+# Final plot styled like nudie plot
+plot_microhabitat_abundance <- ggplot(microhabitat_counts, aes(x = Microhabitat, y = Count)) +
+  geom_bar(
+    stat = "identity",
+    aes(fill = fill_color, color = outline_color),
+    width = 0.8,
+    linewidth = 0.6,
+    position = position_dodge(width = 0.9)
+  ) +
+  geom_text(
+    aes(label = Group_2, y = Count + 4),
+    size = 2.5,
+    fontface = "bold",
+    color = "black"
+  ) +
+  scale_fill_identity() +
+  scale_color_identity() +
+  scale_x_discrete(labels = microhabitat_labels) +
+  labs(
+    x = "Microhabitat",
+    y = "Total count"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    strip.text = element_text(face = "bold", size = 10),
+    panel.spacing = unit(0.5, "lines"),
+    legend.position = "none"
+  )
+
+
+# Save the plot
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_microhabitat_abundance.png",
+       plot = plot_microhabitat_abundance, width = 3, height = 3, units = "in", dpi = 300)
+
+------------------
+
+
+Error: object 'microhabitat_labels' not found
+Traceback:
+
+1. discrete_scale(aesthetics = c("x", "xmin", "xmax", "xend"), name = name, 
+ .     palette = identity, ..., expand = expand, guide = guide, 
+ .     position = position, super = ScaleDiscretePosition)
+2. check_breaks_labels(breaks, labels, call = call)
+3. .handleSimpleError(function (cnd) 
+ . {
+ .     watcher$capture_plot_and_output()
+ .     cnd <- sanitize_call(cnd)
+ .     watcher$push(cnd)
+ .     switch(on_error, continue = invokeRestart("eval_continue"), 
+ .         stop = invokeRestart("eval_stop"), error = NULL)
+ . }, "object 'microhabitat_labels' not found", base::quote(eval(expr, 
+ .     envir)))
+

@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>later 1.4.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/later/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/later/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>later 1.4.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">later 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-4-0">later 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-2">later 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-1">later 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-0">later 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-2-0">later 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-1-0-1">later 1.1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-0-0">later 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-8-0">later 0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-5">later 0.7.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-4">later 0.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-3">later 0.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-2">later 0.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-1">later 0.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-unreleased">later 0.7 (unreleased)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-6">later 0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-5">later 0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-4">later 0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-3">later 0.3</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="later-1-4-1">
+<h1>later 1.4.1<a class="headerlink" href="#later-1-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #203: Resolves an issue where packages that have <code class="docutils literal notranslate"><span class="pre">LinkingTo:</span> <span class="pre">later</span></code> (including <code class="docutils literal notranslate"><span class="pre">promises</span></code> and <code class="docutils literal notranslate"><span class="pre">httpuv</span></code>) and were built against <code class="docutils literal notranslate"><span class="pre">later</span></code> 1.4.0, would fail to load on systems that actually had older versions of <code class="docutils literal notranslate"><span class="pre">later</span></code> installed, erroring out with the message “function ‘execLaterFdNative’ not provided by package ‘later’”. With this fix, such dependent packages should gracefully deal with older versions at load time, and complain with helpful error messages if newer C interfaces (than are available on the installed <code class="docutils literal notranslate"><span class="pre">later</span></code>) are accessed. (#204)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-4-0">
+<h1>later 1.4.0<a class="headerlink" href="#later-1-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">later_fd()</span></code> which executes a function when a file descriptor is ready for reading or writing, at some indeterminate time in the future (subject to an optional timeout). This facilitates an event-driven approach to asynchronous or streaming downloads. (&#64;shikokuchuo and &#64;jcheng5, #190)</p></li>
+<li><p>Fixed #186: Improvements to package load time as <code class="docutils literal notranslate"><span class="pre">rlang</span></code> is now only loaded when used. This is a notable efficiency for packages with only a ‘linking to’ dependency on <code class="docutils literal notranslate"><span class="pre">later</span></code>. Also updates to native symbol registration from dynamic lookup. (&#64;shikokuchuo and &#64;wch, #187)</p></li>
+<li><p>Fixed #191: Errors raised in later callbacks were being re-thrown as generic C++ std::runtime_error with Rcpp &gt;= 1.0.10 (since 2022!). (&#64;shikokuchuo and &#64;lionel-, #192)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-3-2">
+<h1>later 1.3.2<a class="headerlink" href="#later-1-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">unused</span> <span class="pre">variable</span></code> compiler warning. (&#64;MichaelChirico, #176)</p></li>
+<li><p>Fixed #177: The order of includes in <code class="docutils literal notranslate"><span class="pre">later.h</span></code> could cause compilation errors on some platforms. (&#64;jeroen, #178)</p></li>
+<li><p>Closed #181: Fix R CMD check warning re error() format strings (for r-devel). (#133)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-3-1">
+<h1>later 1.3.1<a class="headerlink" href="#later-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>For C function declarations that take no parameters, added <code class="docutils literal notranslate"><span class="pre">void</span></code> parameter. (#172)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-3-0">
+<h1>later 1.3.0<a class="headerlink" href="#later-1-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #148: When later was attached, <code class="docutils literal notranslate"><span class="pre">parallel::makeForkCluster()</span></code> would fail. (#149)</p></li>
+<li><p>Fixed #150: It was possible for callbacks to execute in the wrong order if the clock time was changed in between the scheduling of two callbacks. (#151)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-2-0">
+<h1>later 1.2.0<a class="headerlink" href="#later-1-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #138: later is now licensed as MIT. (#139)</p></li>
+<li><p>Closed #140: Previously, the event loop stopped running if the R process was forked. (#141)</p></li>
+<li><p>Closed #143: Packages which link to later no longer need to take a direct dependency on Rcpp, because <code class="docutils literal notranslate"><span class="pre">later.h</span></code> no longer includes <code class="docutils literal notranslate"><span class="pre">Rcpp.h</span></code>. (#144)</p></li>
+<li><p>Removed dependency on the BH package. C++11 is now required. (#147)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-1-0-1">
+<h1>later 1.1.0.1<a class="headerlink" href="#later-1-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Private event loops are now automatically run by their parent. That is, whenever an event loop is run, its children event loops are automatically run. The <code class="docutils literal notranslate"><span class="pre">create_loop()</span></code> function has a new parameter <code class="docutils literal notranslate"><span class="pre">parent</span></code>, which defaults to the current loop. The auto-running behavior can be disabled by using <code class="docutils literal notranslate"><span class="pre">create_loop(parent=NULL)</span></code>. (#119)</p></li>
+<li><p>Fixed #73, #109: Previously, later did not build on some platforms, notably ARM, because the <code class="docutils literal notranslate"><span class="pre">-latomic</span></code> linker was needed on those platforms. A configure script now detects when <code class="docutils literal notranslate"><span class="pre">-latomic</span></code> is needed. (#114)</p></li>
+<li><p>Previously, <code class="docutils literal notranslate"><span class="pre">execLaterNative</span></code> was initialized when the package was loaded, but not <code class="docutils literal notranslate"><span class="pre">execLaterNative2</span></code>, resulting in a warning message in some cases. (#116)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-1-0-0">
+<h1>later 1.0.0<a class="headerlink" href="#later-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added private event loops: these are event loops that can be run independently from the global event loop. These are useful when you have code that schedules callbacks with <code class="docutils literal notranslate"><span class="pre">later()</span></code>, and you want to call <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> block and wait for those callbacks to execute before continuing. Without private event loops, if you call <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> to wait until a particular callback has finished, you might inadvertantly run other callbacks that were scheduled by other code. With private event loops, you can create a private loop, schedule a callback on it, then call <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> on that loop until it executes, all without interfering with the global loop. (#84)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-8-0">
+<h1>later 0.8.0<a class="headerlink" href="#later-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #77: On some platforms, the system’s C library has support for C11-style threads, but there is no <code class="docutils literal notranslate"><span class="pre">threads.h</span></code> header file. In this case, later’s configure script tried to use the tinycthread, but upon linking, there were function name conflicts between tinycthread and the system’s C library. Later no longer tries to use the system’s <code class="docutils literal notranslate"><span class="pre">threads.h</span></code>, and the functions in tinycthread were renamed so that they do not accidentally link to the system C library’s C11-style thread functions. PR #79</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">all</span></code> argument to <code class="docutils literal notranslate"><span class="pre">run_now()</span></code>; defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, but if set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then <code class="docutils literal notranslate"><span class="pre">run_now</span></code> will run at most one later operation before returning. PR #75</p></li>
+<li><p>Fixed issue #74: Using later with R at the terminal on POSIX could cause 100% CPU. This was caused by later accidentally provoking R to call its input handler continuously. PR #76</p></li>
+<li><p>Fixed issue #73: Linking later on ARM failed because <code class="docutils literal notranslate"><span class="pre">boost::atomic</span></code> requires the <code class="docutils literal notranslate"><span class="pre">-lboost_atomic</span></code> flag. Now later tries to use <code class="docutils literal notranslate"><span class="pre">std::atomic</span></code> when available (when the compiler supports C++11), and falls back to <code class="docutils literal notranslate"><span class="pre">boost::atomic</span></code> if not. PR #80</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-5">
+<h1>later 0.7.5<a class="headerlink" href="#later-0-7-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue where the order of callbacks scheduled by native later::later could be nondeterministic if they are scheduled too quickly. This was because callbacks were sorted by the time at which they come due, which could be identical. Later now uses the order of insertion as a tiebreaker. PR #69</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-4">
+<h1>later 0.7.4<a class="headerlink" href="#later-0-7-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #45 and #63: glibc 2.28 and musl (used on Arch and Alpine Linux) added support for C11-style threads.h, which masked functions from the tinycthread library used by later. Later now detects support for threads.h and uses it if available; otherwise it uses tinycthread. PR #64</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-3">
+<h1>later 0.7.3<a class="headerlink" href="#later-0-7-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #57: If a user interrupt occurred when later (internally) called <code class="docutils literal notranslate"><span class="pre">sys.nframe()</span></code>, the R process would crash. PR #58</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-2">
+<h1>later 0.7.2<a class="headerlink" href="#later-0-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #48: Occasional timedwait errors from later::run_now. Thanks, &#64;vnijs! PR #49</p></li>
+<li><p>Fixed a build warning on OS X 10.11 and earlier. PR #54</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-1">
+<h1>later 0.7.1<a class="headerlink" href="#later-0-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #39: Calling the C++ function <code class="docutils literal notranslate"><span class="pre">later::later()</span></code> from a different thread could cause an R GC event to occur on that thread, leading to memory corruption. PR #40</p></li>
+<li><p>Decrease latency of repeated top-level execution.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-7-unreleased">
+<h1>later 0.7 (unreleased)<a class="headerlink" href="#later-0-7-unreleased" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue #22: GC events could cause an error message: <code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">unimplemented</span> <span class="pre">type</span> <span class="pre">'integer'</span> <span class="pre">in</span> <span class="pre">'coerceToInteger'</span></code>. PR #23</p></li>
+<li><p>Fixed issues #25, #29, and #31: If errors occurred when callbacks were executed by R’s input handler (as opposed to by <code class="docutils literal notranslate"><span class="pre">run_now()</span></code>), then they would not be properly handled by R and put the terminal in a problematic state. PR #33</p></li>
+<li><p>Fixed issue #37: High CPU usage on Linux. PR #38</p></li>
+<li><p>Fixed issue #36: Failure to build on OS X &lt;=10.12 (thanks &#64;mingwandroid). PR #21</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-6">
+<h1>later 0.6<a class="headerlink" href="#later-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix a hang on address sanitized (ASAN) builds of R. Issue #16, PR #17</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> function now takes a <code class="docutils literal notranslate"><span class="pre">timeoutSecs</span></code> argument. If no tasks are ready to run at the time <code class="docutils literal notranslate"><span class="pre">run_now(timeoutSecs)</span></code> is invoked, we will wait up to <code class="docutils literal notranslate"><span class="pre">timeoutSecs</span></code> for one to become ready. The default value of <code class="docutils literal notranslate"><span class="pre">0</span></code> means <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> will return immediately if no tasks are ready, which is the same behavior as in previous releases. PR #19</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> function used to return only when it was unable to find any more tasks that were due. This means that if tasks were being scheduled at an interval faster than the tasks are executed, <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> would never return. This release changes that behavior so that a timestamp is taken as <code class="docutils literal notranslate"><span class="pre">run_now()</span></code> begins executing, and only tasks whose timestamps are earlier or equal to it are run. PR #18</p></li>
+<li><p>Fix compilation errors on Solaris. Reported by Brian Ripley. PR #20</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-5">
+<h1>later 0.5<a class="headerlink" href="#later-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix a hang on Fedora 25+ which prevented the package from being installed successfully. Reported by &#64;lepennec. Issue #7, PR #10</p></li>
+<li><p>Fixed issue #12: When an exception occurred in a callback function, it would cause future callbacks to not execute. PR #13</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">next_op_secs()</span></code> function to report the number of seconds before the next scheduled operation. PR #15</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-4">
+<h1>later 0.4<a class="headerlink" href="#later-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">loop_empty()</span></code> function, which returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if there are currently no callbacks that are scheduled to execute in the present or future.</p></li>
+<li><p>On POSIX platforms, fix an issue where socket connections hang when written to/read from while a later callback is scheduled. The fix required stopping the input handler from being called in several spurious situations: 1) when callbacks are already being run, 2) when R code is busy executing (we used to try as often as possible, now we space it out a bit), and 3) when all the scheduled callbacks are in the future. To accomplish this, we use a background thread that acts like a timer to poke the file descriptor whenever the input handler needs to be run–similar to what we already do for Windows. Issue #4</p></li>
+<li><p>On all platforms, don’t invoke callbacks if callbacks are already being invoked (unless explicitly requested by a caller to <code class="docutils literal notranslate"><span class="pre">run_now()</span></code>).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="later-0-3">
+<h1>later 0.3<a class="headerlink" href="#later-0-3" title="Link to this heading">#</a></h1>
+<p>Initial release.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\later"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">later 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-4-0">later 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-2">later 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-1">later 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-3-0">later 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-2-0">later 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-1-0-1">later 1.1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-1-0-0">later 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-8-0">later 0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-5">later 0.7.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-4">later 0.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-3">later 0.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-2">later 0.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-1">later 0.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-7-unreleased">later 0.7 (unreleased)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-6">later 0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-5">later 0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-4">later 0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#later-0-3">later 0.3</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

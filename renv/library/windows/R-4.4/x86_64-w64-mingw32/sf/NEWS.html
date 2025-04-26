@@ -1,0 +1,1385 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>version 1.0-19 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/sf/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/sf/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>version 1.0-19</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">version 1.0-19</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-18">version 1.0-18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-17">version 1.0-17</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-16">version 1.0-16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-15">version 1.0-15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-14">version 1.0-14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-13">version 1.0-13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-12">version 1.0-12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-11">version 1.0-11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-10">version 1.0-10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-9">version 1.0-9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-8">version 1.0-8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-7">version 1.0-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-6">version 1.0-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-5">version 1.0-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-4">version 1.0-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-3">version 1.0-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2">version 1.0-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1">version 1.0-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0">version 1.0-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-8">version 0.9-8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-7">version 0.9-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-6">version 0.9-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-5">version 0.9-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-4">version 0.9-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-3">version 0.9-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-2">version 0.9-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-1">version 0.9-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-0">version 0.9-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-1">version 0.8-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-0">version 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-7">version 0.7-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-6">version 0.7-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-5">version 0.7-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-4">version 0.7-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-3">version 0.7-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-2">version 0.7-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-1">version 0.7-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-0">version 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-4">version 0.6-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-3">version 0.6-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-2">version 0.6-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-1">version 0.6-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-0">version 0.6-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-5">version 0.5-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-4">version 0.5-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-3">version 0.5-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-2">version 0.5-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-1">version 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-0">version 0.5-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-3">version 0.4-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-2">version 0.4-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-1">version 0.4-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-0">version 0.4-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-4-feb-6-2017">version 0.3-4, Feb 6, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-2-feb-4-2017">version 0.3-2, Feb 4, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-1-jan-31-2017">version 0.3-1, Jan 31, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-2-8-jan-5-2017">version 0.2-8, Jan 5, 2017</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="version-1-0-19">
+<h1>version 1.0-19<a class="headerlink" href="#version-1-0-19" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix type checks in C++ GDAL area and length computation functions, anticipating GDAL 3.10.0; #2466, #2468, #2469 by &#64;rsbivand and &#64;rouault</p></li>
+<li><p>improve test on empty geometries, which changed in 1.0-18; #2463</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> <code class="docutils literal notranslate"><span class="pre">ogrinfo</span></code> has an argument <code class="docutils literal notranslate"><span class="pre">read_only</span></code> which, when <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> (or <code class="docutils literal notranslate"><span class="pre">options</span></code> includes <code class="docutils literal notranslate"><span class="pre">&quot;-ro&quot;</span></code>), opens a datasource in read-only mode (#2460; <code class="docutils literal notranslate"><span class="pre">sf</span></code> did this before 1.0-17); by default a datasource is opened in update (read-write) mode (since sf 1.0-17; #2420)</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">sf</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">ppp</span></code> conversion <code class="docutils literal notranslate"><span class="pre">as.ppp.sf()</span></code> accepts a data.frame of marks instead of just 1 column #2450, by &#64;agila5</p></li>
+<li><p>add flag for preservation of point order in <code class="docutils literal notranslate"><span class="pre">st_voronoi</span></code> #1371 for GEOS &gt;= 3.12</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-18">
+<h1>version 1.0-18<a class="headerlink" href="#version-1-0-18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support  <code class="docutils literal notranslate"><span class="pre">POLYGON</span> <span class="pre">FULL</span></code> simple feature geometry, representing the entire Earth surface, as used by <code class="docutils literal notranslate"><span class="pre">s2geometry</span></code>; see also <a class="reference external" href="https://r-spatial.org/r/2024/10/11/polygonfull.html">https://r-spatial.org/r/2024/10/11/polygonfull.html</a> for a longer introduction; #2441</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sfc()</span></code> has an argument <code class="docutils literal notranslate"><span class="pre">oriented</span></code> which, when set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, adds an attribute <code class="docutils literal notranslate"><span class="pre">oriented=TRUE</span></code> to an <code class="docutils literal notranslate"><span class="pre">sfc</span></code> object, indicating that this object should not be reoriented in conversion to <code class="docutils literal notranslate"><span class="pre">s2_geography</span></code> (avoiding using the global option <code class="docutils literal notranslate"><span class="pre">s2_oriented</span></code>); <code class="docutils literal notranslate"><span class="pre">st_as_sfc.bbox()</span></code> sets this to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>; #2441</p></li>
+<li><p>fix build failure with GDAL &lt; 3.4.0 #2436</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_simplify()</span></code> now accepts feature-wise tolerance values when <code class="docutils literal notranslate"><span class="pre">s2</span></code> is switched on #2442</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-17">
+<h1>version 1.0-17<a class="headerlink" href="#version-1-0-17" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_transform()</span></code> method for <code class="docutils literal notranslate"><span class="pre">bbox</span></code> objects; this uses OGRCoordinateTransformation::TransformBounds(), densifying first and antemeridian proof; #2415</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_filter.sf()</span></code> correctly scopes <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> arguments using !! operator; #2416</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[.sfc</span></code> and <code class="docutils literal notranslate"><span class="pre">[&lt;-.sfc</span></code> use matrix/array type subsetting for <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects that have a <code class="docutils literal notranslate"><span class="pre">dim</span></code> attribute</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_exterior_ring()</span></code> to extract exterior rings (remove holes); #2406</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">text.sf()</span></code>, <code class="docutils literal notranslate"><span class="pre">text.sfc()</span></code>, <code class="docutils literal notranslate"><span class="pre">points.sf()</span></code>, <code class="docutils literal notranslate"><span class="pre">points.sfc()</span></code> to annotate base plots at geometry centroids; #2399</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sf()</span></code> no longer strips <code class="docutils literal notranslate"><span class="pre">tbl</span></code> or <code class="docutils literal notranslate"><span class="pre">tbl_df</span></code> class labels; #2378</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_layers()</span></code> returns an object of class <code class="docutils literal notranslate"><span class="pre">c(&quot;sf_layers&quot;,</span> <span class="pre">&quot;data.frame&quot;)</span></code>, with a dedicated <code class="docutils literal notranslate"><span class="pre">print</span></code> method.</p></li>
+<li><p>when <code class="docutils literal notranslate"><span class="pre">dim</span></code> is not <code class="docutils literal notranslate"><span class="pre">XYZM</span></code>, <code class="docutils literal notranslate"><span class="pre">sf_as_sf.data.frame()</span></code> interprets a length 4 <code class="docutils literal notranslate"><span class="pre">coords</span></code> argument to specify the corners of a rectangular polygon; #2357</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_interpolate_aw()</span></code> gains an <code class="docutils literal notranslate"><span class="pre">na.rm</span></code> argument, for removing features with <code class="docutils literal notranslate"><span class="pre">NA</span></code> attributes before interpolating; #830</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">merge.sf()</span></code> no longer renames geometry column; #2334</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-16">
+<h1>version 1.0-16<a class="headerlink" href="#version-1-0-16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_join()</span></code> no longer renames the geometry column; #2327</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> works when unprojected polygon geometry crosses the antemeridian; #2331</p></li>
+<li><p>clean up and modernization of S3 registration of methods and tests; #2285, #2288, #2316, #2341, #2342, by &#64;olivroy</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[.sfc</span></code> works when setting argument <code class="docutils literal notranslate"><span class="pre">op</span></code>; #2320</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> for polygons is sensitive to setting <code class="docutils literal notranslate"><span class="pre">oriented</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> to prevent wrongly correcting ring directions; #2308</p></li>
+<li><p>add support for the GDAL <code class="docutils literal notranslate"><span class="pre">footprint</span></code> utility (requiring GDAL &gt;= 3.8.0) to <code class="docutils literal notranslate"><span class="pre">gdal_utils</span></code>; #2305, by &#64;goergen95</p></li>
+<li><p>existing environment variables <code class="docutils literal notranslate"><span class="pre">PROJ_LIB</span></code> and <code class="docutils literal notranslate"><span class="pre">PROJ_DATA</span></code> are (again) ignored on <code class="docutils literal notranslate"><span class="pre">sf</span></code> binary CRAN installations (win + macos), effectively by overwriting them during the R session and restoring them on exit; this does not happen if environment variable <code class="docutils literal notranslate"><span class="pre">R_SF_USE_PROJ_DATA</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>. #2298</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_line_project()</span></code> to find how far a point is when projected on a line; #2291</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_line_interpolate()</span></code> to obtain a point at a certain distance along a line; #2291</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-15">
+<h1>version 1.0-15<a class="headerlink" href="#version-1-0-15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_perimeter()</span></code> generic to cover both geographic and projected coordinates; #268, #2279, by &#64;JosiahParry</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> method for <code class="docutils literal notranslate"><span class="pre">bbox</span></code>, with special provisions for ellipsoidal coordinates; #2283</p></li>
+<li><p>documentation clean-up by &#64;olivroy; #2266, #2285</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_convex_hull()</span></code> uses <code class="docutils literal notranslate"><span class="pre">s2::s2_convex_hull()</span></code> for geodetic coordinates; #2250</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">directed</span></code> argument to <code class="docutils literal notranslate"><span class="pre">st_line_merge()</span></code>; #2264</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_union.sfc()</span></code> given <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> works consistently across geodetic and projected objects; #2262</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_union.sf()</span></code> given <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> unions pairwise if <code class="docutils literal notranslate"><span class="pre">by_feature</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>; #2259</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> work around issue with GPKG driver if <code class="docutils literal notranslate"><span class="pre">wkt_filter</span></code> is set; #2248</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> uses GDAL’s stream reading when <code class="docutils literal notranslate"><span class="pre">use_stream</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>; #2238 by &#64;paleolimbot</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_transform()</span></code> responds to in-session changes to <code class="docutils literal notranslate"><span class="pre">sf_proj_network()</span></code>; #2166</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code>: <code class="docutils literal notranslate"><span class="pre">key.width</span></code> is sensitive to pointsize graphics parameter <code class="docutils literal notranslate"><span class="pre">par(&quot;ps&quot;)</span></code>; keys with factor levels suggest a proper size if they won’t fit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code>: <code class="docutils literal notranslate"><span class="pre">key.pos</span></code> can hold a second value in [0, 1] determining the relative position of the key in the available space</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[&lt;-.sf</span></code> fixes the <code class="docutils literal notranslate"><span class="pre">agr</span></code> attribute when it is broken; #2211</p></li>
+<li><p>if the env. variable <code class="docutils literal notranslate"><span class="pre">ADD_SF_NAMESPACE</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects get a new attribute, <code class="docutils literal notranslate"><span class="pre">.sf_namespace</span></code>, which forces loading the <code class="docutils literal notranslate"><span class="pre">sf</span></code> namespace when it has not been loaded so far, e.g. for proper printing or plotting of an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object; #2212 by Mike Mahoney</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distinct.sf()</span></code> is type-safe for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects with zero rows; #2204</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise.sf()</span></code> raises an error if <code class="docutils literal notranslate"><span class="pre">.by</span></code> is given but no <code class="docutils literal notranslate"><span class="pre">across()</span></code> on the geometry; #2207</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> matches fields on name first, than on position; this matters for formats that have pre-defined names, such as GPX; #2202</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-14">
+<h1>version 1.0-14<a class="headerlink" href="#version-1-0-14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code> when using a key for multiple factor variables; #2196, #2195</p></li>
+<li><p>fix use of <code class="docutils literal notranslate"><span class="pre">as.numeric_version</span></code> in a test, for upcoming change in r-devel</p></li>
+<li><p>code tidy-ing: fix many lintr suggestions, thanks to Michael Chirico (#2181 - #2191)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-13">
+<h1>version 1.0-13<a class="headerlink" href="#version-1-0-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> adds <code class="docutils literal notranslate"><span class="pre">&quot;ogrinfo&quot;</span></code> utility (requires GDAL &gt;= 3.7.0); #2160</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf()</span></code> catches errors when setting invalid crs values, raised by Jon Skøien</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">rename_with.sf()</span></code> method; #1472</p></li>
+<li><p>use GEOS’ overlayNG routines for (GEOS) Intersection, Difference, Union and SymDifference; #2143</p></li>
+<li><p>added <code class="docutils literal notranslate"><span class="pre">duplicated.sf()</span></code>; #2138, #2140, thanks to &#64;bart1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">select.sf()</span></code> allows selecting the same column twice under different names; #1886</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf.ppplist()</span></code> is deprecated; #1926</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> handles empty geometries; #1961</p></li>
+<li><p>don’t repeat longlat messages in <code class="docutils literal notranslate"><span class="pre">summarise.sf()</span></code>; #1519</p></li>
+<li><p>fix random sampling on the sphere; #2133</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-12">
+<h1>version 1.0-12<a class="headerlink" href="#version-1-0-12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update NAMESPACE to <code class="docutils literal notranslate"><span class="pre">useDynLib(sf,</span> <span class="pre">.registration=TRUE)</span></code>; #2127 thanks to &#64;eddelbuettel</p></li>
+<li><p>fix call in <code class="docutils literal notranslate"><span class="pre">gdal_addo()</span></code>; #2124</p></li>
+<li><p>fix issues that came up with older GDAL version, use <code class="docutils literal notranslate"><span class="pre">GDAL_VERSION_NUM</span></code> consistently; #2123 #2121 #2119</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-11">
+<h1>version 1.0-11<a class="headerlink" href="#version-1-0-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code> also accepts area units for <code class="docutils literal notranslate"><span class="pre">cellsize</span></code>, for square and hexagonal grids; #1505</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_concave_hull()</span></code>, for concave hulls, if GEOS &gt;= 3.11.0; #1964</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_triangulate_constrained()</span></code>, for constrained Delaunay triangulation, if GEOS &gt;= 3.10.0; #1964</p></li>
+<li><p>clean up the retrieval of length or angle units from WKT representations; <a class="reference external" href="https://lists.osgeo.org/pipermail/gdal-dev/2023-March/056994.html">https://lists.osgeo.org/pipermail/gdal-dev/2023-March/056994.html</a></p></li>
+<li><p>conversion to GEOS uses the <code class="docutils literal notranslate"><span class="pre">GEOS_PREC_VALID_OUTPUT</span></code> flag, which makes sure that the “[o]utput is always valid. Collapsed geometry elements (including both polygons and lines) are removed.”</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-10">
+<h1>version 1.0-10<a class="headerlink" href="#version-1-0-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> has a <code class="docutils literal notranslate"><span class="pre">config_options</span></code> argument to set further GDAL options, just like <code class="docutils literal notranslate"><span class="pre">st_write()</span></code>; #2003</p></li>
+<li><p>fix slow writing of logical vectors in <code class="docutils literal notranslate"><span class="pre">st_write()</span></code>; #1409; #1689</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_drivers()</span></code> has an argument <code class="docutils literal notranslate"><span class="pre">regex</span></code> to filter on driver (long) name; #2090</p></li>
+<li><p>drop C++11 as a system requirement</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c.sfc()</span></code> (and, consequently, <code class="docutils literal notranslate"><span class="pre">dplyr::bind_rows()</span></code>) gives an error if components have different CRS; #1884</p></li>
+<li><p>data imported from <code class="docutils literal notranslate"><span class="pre">maps</span></code> are associated with the Clark 1866 ellipsoid; #2080</p></li>
+<li><p>fix importing legacy <code class="docutils literal notranslate"><span class="pre">SpatialPolygon</span></code> objects without comments; #2063, #2069, <a class="github reference external" href="https://github.com/rstudio/leaflet/issues/833">rstudio/leaflet#833</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> no longer errors on mixes of <code class="docutils literal notranslate"><span class="pre">XY</span></code> and <code class="docutils literal notranslate"><span class="pre">XYZ</span></code> geometries; #2046 #1592</p></li>
+<li><p>in <code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code>, when numeric <code class="docutils literal notranslate"><span class="pre">breaks</span></code> are given a legend key is always plotted; #2065</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_crs()$axes</span></code> returns a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> with axes properties (name, orientation, conversion factor) when GDAL &gt;= 3.0.0</p></li>
+<li><p>clean up unit handling for geometry measures (length, area, distance) and crs;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_crs(x)$ud_unit</span></code> returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if units are unknown; #2049</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> substitutes an <code class="docutils literal notranslate"><span class="pre">NA</span></code> crs with <code class="docutils literal notranslate"><span class="pre">ENGCRS[&quot;Undefined</span> <span class="pre">Cartesian</span> <span class="pre">SRS</span> <span class="pre">with</span> <span class="pre">unknown</span> <span class="pre">unit&quot;]</span></code>; #2049, #2054</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_can_transform()</span></code> checks whether a transformation between two crs exists; see <a class="github reference external" href="https://github.com/dieghernan/tidyterra/issues/64">dieghernan/tidyterra#64</a>; #2049</p></li>
+<li><p>the matrix returned by <code class="docutils literal notranslate"><span class="pre">st_coordinates()</span></code> has no row names, to reduce output size</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-9">
+<h1>version 1.0-9<a class="headerlink" href="#version-1-0-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>adjust for changes how R-devel handles <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code>; #2028</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_break_antimeridian()</span></code>; #1983, #1991 by Roger Bivand</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">Fibonacci</span></code> as a spatial sampling type in <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code></p></li>
+<li><p>use the global <code class="docutils literal notranslate"><span class="pre">options(&quot;sf_use_s2&quot;)</span></code> to determine whether to use s2, rather than a value in a local environment; #1977</p></li>
+<li><p>fix utils <code class="docutils literal notranslate"><span class="pre">mdiminfo</span></code> and <code class="docutils literal notranslate"><span class="pre">mdimtranslate</span></code> in <code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code></p></li>
+<li><p>extend arguments of <code class="docutils literal notranslate"><span class="pre">gdal_read_mdim()</span></code> needed by <code class="docutils literal notranslate"><span class="pre">stars::read_mdim()</span></code> if <code class="docutils literal notranslate"><span class="pre">stars</span></code> &gt;= 0.5-7; add <code class="docutils literal notranslate"><span class="pre">gdal_write_mdim()</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">drop_na()</span></code> method for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects; #1975</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-8">
+<h1>version 1.0-8<a class="headerlink" href="#version-1-0-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_drop_geometry.default()</span></code> returns <code class="docutils literal notranslate"><span class="pre">x</span></code> unmodified;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_project()</span></code> accepts 3- or 4-column matrices, containing z and t values;</p></li>
+<li><p>optimization for <code class="docutils literal notranslate"><span class="pre">st_sfc()</span></code> by &#64;paleolimbot; #1938, #1925</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[&lt;-.sfc()</span></code> recomputes the bounding box; <code class="docutils literal notranslate"><span class="pre">st_sfc()</span></code> gets parameter <code class="docutils literal notranslate"><span class="pre">compute_bbox</span></code>; #1965</p></li>
+<li><p>add new algorithm and drop option to <code class="docutils literal notranslate"><span class="pre">st_make_valid()</span></code> when using GEOS and GEOS &gt;= 3.10.1; #1655</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_minimum_rotated_rectangle()</span></code>, available when GEOS &gt;= 3.9.0; #1953</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> with <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;hexagonal&quot;</span></code> for corner case (n=1), add a <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument for a progress bar; #1945</p></li>
+<li><p>add package <code class="docutils literal notranslate"><span class="pre">pbapply</span></code> to Suggests; #1945</p></li>
+<li><p>add pdf driver to windows build; #1942</p></li>
+<li><p>clarify <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> argument in <code class="docutils literal notranslate"><span class="pre">st_transform()</span></code> when axis order is ambiguous; #1934</p></li>
+<li><p>handle argument <code class="docutils literal notranslate"><span class="pre">xpd</span></code> in calls to <code class="docutils literal notranslate"><span class="pre">plot.sfc_POLYGON()</span></code> and <code class="docutils literal notranslate"><span class="pre">plot.sfc_MULTIPOLYGON()</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">pivot_wider()</span></code> method, by Henning Teickner; #1915</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">gdal_addo()</span></code> to add or remove overviews from raster images; #1921</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_layers()</span></code> returns <code class="docutils literal notranslate"><span class="pre">crs</span></code> of each layer in a <code class="docutils literal notranslate"><span class="pre">crs</span></code> list of <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects</p></li>
+<li><p>restore <code class="docutils literal notranslate"><span class="pre">st_graticule()</span></code> behaviour to pre-sf 1.0-0; <a class="github reference external" href="https://github.com/tidyverse/ggplot2/issues/4571">tidyverse/ggplot2#4571</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_metadata()</span></code> sets metadata item names properly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> gains an argument <code class="docutils literal notranslate"><span class="pre">optional</span></code> passed on to <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> to avoid changing column names; #1916</p></li>
+<li><p>GPX files are autodetected by <code class="docutils literal notranslate"><span class="pre">st_read()</span></code>; #1917</p></li>
+<li><p>unnecessary coordinate names are not returned in <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code>, making the output size smaller; #1879</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-7">
+<h1>version 1.0-7<a class="headerlink" href="#version-1-0-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_drop_geometry()</span></code> is a generic; #1914</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_crs(x)$ud_unit</span></code> returns the unit of the coordinate reference system of <code class="docutils literal notranslate"><span class="pre">x</span></code></p></li>
+<li><p>geometric predicates return <code class="docutils literal notranslate"><span class="pre">sgbp</span></code> objects omitting self-intersections etc. by passing <code class="docutils literal notranslate"><span class="pre">remove_self</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> and unique symmetric relationship by passing <code class="docutils literal notranslate"><span class="pre">retain_unique</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (to <code class="docutils literal notranslate"><span class="pre">...</span></code> if needed); this simplifies identifying (and removing) duplicated geometries; duplicates are identified by e.g. by <code class="docutils literal notranslate"><span class="pre">st_equals(x,</span> <span class="pre">retain_unique</span> <span class="pre">=</span> <span class="pre">TRUE)</span> <span class="pre">|&gt;</span> <span class="pre">unlist()</span> <span class="pre">|&gt;</span> <span class="pre">unique()</span></code>; #1893</p></li>
+<li><p>fix compile issue against GDAL &lt; 2.5.0 introduced in 1.0-6; #1899</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-6">
+<h1>version 1.0-6<a class="headerlink" href="#version-1-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>adapt to new <code class="docutils literal notranslate"><span class="pre">spatstat.random</span></code> package; #1892</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_geometry&lt;-()</span></code> also allows to rename a geometry column in an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object; #1890</p></li>
+<li><p>for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects, the <code class="docutils literal notranslate"><span class="pre">st_as_sfc()</span></code> method is an alias for <code class="docutils literal notranslate"><span class="pre">st_geometry()</span></code>; #1882</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code> speeded up; #1579 thanks to Krzysztof Dyba</p></li>
+<li><p>remove direct and indirect dependencies on <code class="docutils literal notranslate"><span class="pre">rgeos</span></code> and <code class="docutils literal notranslate"><span class="pre">rgdal</span></code>; #1869</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">stats::dist</span></code> rather than GEOS for symmetric point-point Euclidian distance computation; #1874</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-5">
+<h1>version 1.0-5<a class="headerlink" href="#version-1-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>package startup message reports status of <code class="docutils literal notranslate"><span class="pre">sf_use_s2()</span></code>; #1782</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_use_s2()</span></code> uses <code class="docutils literal notranslate"><span class="pre">message()</span></code> to report a change; #1782</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> using regular sampling for ellipsoidal coordinates “works” as if coordinates were Cartesian; #1837</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-4">
+<h1>version 1.0-4<a class="headerlink" href="#version-1-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">st_delete()</span></code> deletes a data source, or layer(s) within a data source; #1828</p></li>
+<li><p>fix memory leak in <code class="docutils literal notranslate"><span class="pre">WKT1_ESRI</span></code> retrieval; #1690</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-3">
+<h1>version 1.0-3<a class="headerlink" href="#version-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>cope with how GEOS &gt;= 3.10.0 handles illegal geometries (e.g., non-closed rings); #1807</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">crs</span></code> objects have a <code class="docutils literal notranslate"><span class="pre">$srid</span></code> method to extract the SRID (as authority “name:code”); #1804</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_grob()</span></code> methods for <code class="docutils literal notranslate"><span class="pre">sfc_*</span></code> objects correctly handle empty geometries; #1789 with help from Hiroaki Yutani</p></li>
+<li><p>when writing objects with <code class="docutils literal notranslate"><span class="pre">NA</span></code> as CRS to GeoPackage, assign “Unknown Cartesian CRS” first - this is in line with using Cartesian geometry operations for objects with <code class="docutils literal notranslate"><span class="pre">NA</span></code> as CRS; #1776</p></li>
+<li><p>add coerce method from <code class="docutils literal notranslate"><span class="pre">sgbp</span></code> to <code class="docutils literal notranslate"><span class="pre">sparseMatrix</span></code>; #1750</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> for <code class="docutils literal notranslate"><span class="pre">GEOMETRYCOLLECTIONS</span></code> containing empty geometries; #1767</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">st_is_valid()</span></code> for bogus polygons and projected coordinates; #1666, #1760; #1761</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-2">
+<h1>version 1.0-2<a class="headerlink" href="#version-1-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_write()</span></code> using GDAL handle binary attributes (OFTBinary fields) ; #1721</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">pivot_longer</span></code> method is added for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects (the <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> method works, but raises a warning)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind.sf</span></code> preserves primary geometry column; #1717</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">configure</span></code> constrains using <code class="docutils literal notranslate"><span class="pre">--static</span></code> to <code class="docutils literal notranslate"><span class="pre">Darwin</span></code> platform; #1702, #1712, #1713</p></li>
+<li><p>old-style <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects created with sf &lt; 0.9-0 generate a message, and will cause a warning in the future.</p></li>
+<li><p>when <code class="docutils literal notranslate"><span class="pre">st_crs()</span></code> is called with a WKT2 as text input, its <code class="docutils literal notranslate"><span class="pre">input</span></code> field will be replaced with the CRS name (if it has one).</p></li>
+<li><p>GEOS (&gt;= 3.9.0) operations use <code class="docutils literal notranslate"><span class="pre">GEOSGeom_setPrecision_r</span></code> to set precision of geometries; #1535</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> with specified <code class="docutils literal notranslate"><span class="pre">query</span></code> ignores argument <code class="docutils literal notranslate"><span class="pre">layers</span></code>, and warns if it is given; #1444</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-1">
+<h1>version 1.0-1<a class="headerlink" href="#version-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix regression in <code class="docutils literal notranslate"><span class="pre">st_intersection()</span></code>: when using s2 attributes were assigned wrongly; #1704</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">crs</span></code> (sf) to <code class="docutils literal notranslate"><span class="pre">CRS</span></code> (sp) conversion no longer needs validation by <code class="docutils literal notranslate"><span class="pre">rgdal</span></code>; <a class="github reference external" href="https://github.com/edzer/sp/issues/107">edzer/sp#107</a></p></li>
+<li><p>retrieve ESRI’s WKT version of CRS by <code class="docutils literal notranslate"><span class="pre">st_crs(id)$WKT1_ESRI</span></code>; #1690</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-0">
+<h1>version 1.0-0<a class="headerlink" href="#version-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">s2</span></code> to Imports:</p></li>
+<li><p>add Dewey Dunnington to contributors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_use_s2()</span></code> prints a message when using s2 has been switched to on or off.</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">s2</span></code> spherical geometry as default when coordinates are ellipsoidal. This can
+be switched off (defaulting to planar geometry, using GEOS, as in sf &lt; 1.0-0)
+by setting environment variable <code class="docutils literal notranslate"><span class="pre">_SF_USE_S2</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> before package <code class="docutils literal notranslate"><span class="pre">sf</span></code>
+is loaded, or by <code class="docutils literal notranslate"><span class="pre">sf_use_s2(FALSE)</span></code>; #1649</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_nearest_feature()</span></code> with missing <code class="docutils literal notranslate"><span class="pre">y</span></code> returns nearest features in the remaining set of <code class="docutils literal notranslate"><span class="pre">x</span></code>; <a class="github reference external" href="https://github.com/r-spatial/s2/issues/111">r-spatial/s2#111</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> gains an argument <code class="docutils literal notranslate"><span class="pre">config_options</span></code> to set GDAL config options; #1618</p></li>
+<li><p>fix regression in <code class="docutils literal notranslate"><span class="pre">sf_project(...,</span> <span class="pre">keep</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>; #1635</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-8">
+<h1>version 0.9-8<a class="headerlink" href="#version-0-9-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_as_sf()</span></code> method for terra’s <code class="docutils literal notranslate"><span class="pre">SpatVector</span></code> class; #1567</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distinct.sf()</span></code> works by default on all variables, and keeps active geometry active; #1613</p></li>
+<li><p>improve (fix?) polygonize/contour code; #1608</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_proj_network()</span></code> reports whether PROJ uses network (CDN) grids, can switch it on or off, and can set the CDN url.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> returns obj, invisibly; #1597</p></li>
+<li><p>fix regression in n-ary <code class="docutils literal notranslate"><span class="pre">st_intersection()</span></code>, #1595, introduced at #1549</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_inscribed_circle()</span></code> computes the maximum inscribed circle for polygons (requires GEOS &gt;= 3.9.0)</p></li>
+<li><p>allow to <code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> from COMPOUNDCURVE, MULTISURFACE or CURVEPOLYGON to GEOMETRYCOLLECTION, and back; #1573</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">st_as_grob()</span></code> when plotting a mix of MULTI and non-MULTI geometries of the same base type</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-7">
+<h1>version 0.9-7<a class="headerlink" href="#version-0-9-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>n-ary <code class="docutils literal notranslate"><span class="pre">st_intersection()</span></code> skips failing geometries, rather than returning an error; #1549</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">s2_centroid()</span></code> for geographical coordinates if <code class="docutils literal notranslate"><span class="pre">sf_use_s2()</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_text()</span></code> method for <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects can return projjson (if GDAL &gt;= 3.1.0 and PROJ &gt; 6.2.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_transform()</span></code> no longer warns on conversions like <code class="docutils literal notranslate"><span class="pre">&quot;+proj=ob_tran</span> <span class="pre">+o_proj=longlat</span> <span class="pre">+o_lat_p=45</span> <span class="pre">+o_lon_p=30&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_wkb()</span></code> takes <code class="docutils literal notranslate"><span class="pre">srid</span></code> from <code class="docutils literal notranslate"><span class="pre">wkt</span></code> field of <code class="docutils literal notranslate"><span class="pre">crs</span></code> when <code class="docutils literal notranslate"><span class="pre">input</span></code> field doesn’t contain it; #1490</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code> adds <code class="docutils literal notranslate"><span class="pre">key.pos=0</span></code> option to run the logic behind the key without plotting it; #1487</p></li>
+<li><p>fix bug in <code class="docutils literal notranslate"><span class="pre">select.sf()</span></code> when selected variables were renamed; #1483</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf.stars(...,</span> <span class="pre">merge</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> now works if CRS is <code class="docutils literal notranslate"><span class="pre">NA</span></code>; #1389</p></li>
+<li><p>add (dynamically loaded) <code class="docutils literal notranslate"><span class="pre">as_wkb()</span></code> methods for <code class="docutils literal notranslate"><span class="pre">sf</span></code>, <code class="docutils literal notranslate"><span class="pre">sfc</span></code> and <code class="docutils literal notranslate"><span class="pre">sfg</span></code>, making <code class="docutils literal notranslate"><span class="pre">st_as_s2()</span></code> unnecessary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_s2()</span></code> transforms non-longlat objects to EPSG:4326 first</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-6">
+<h1>version 0.9-6<a class="headerlink" href="#version-0-9-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> print (GDAL-style) progress bar if <code class="docutils literal notranslate"><span class="pre">quiet</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> (except for <code class="docutils literal notranslate"><span class="pre">info</span></code> and <code class="docutils literal notranslate"><span class="pre">mdiminfo</span></code>)</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">CPL_gdal_warper</span></code> for multi bands; <a class="github reference external" href="https://github.com/r-spatial/stars/issues/320">r-spatial/stars#320</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_proj_search_paths()</span></code> retrieves and sets the proj search path (if GDAL &gt; 3.0.3)</p></li>
+<li><p>when loading sf, <code class="docutils literal notranslate"><span class="pre">sf_use_s2()</span></code> is set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> unless environment variable <code class="docutils literal notranslate"><span class="pre">_SF_USE_S2</span></code> equals <code class="docutils literal notranslate"><span class="pre">true</span></code> (this changes to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> in sf 1.0-0)</p></li>
+<li><p>resolve GDAL/PROJ version vulnerabilities in CRS-crs conversion; #1479</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> gains an argument, <code class="docutils literal notranslate"><span class="pre">by_polygon</span></code>, to more clevery sample <code class="docutils literal notranslate"><span class="pre">MULTIPOLYGON</span></code> geometries; #1480</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> accepts non-integer sample sizes, with a (suppressable) warning and handles values of sizes that would round to zero; #1480</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> adds utils <code class="docutils literal notranslate"><span class="pre">mdiminfo</span></code> and <code class="docutils literal notranslate"><span class="pre">mdimtranslate</span></code> (requires GDAL &gt;= 3.1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_union()</span></code> gains an argument <code class="docutils literal notranslate"><span class="pre">is_coverage</span></code>, which, when set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, leads to much faster unioning in case features form a coverage (polygons don’t overlap); #1462 by Don Baston</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">gdal_utils(&quot;translate&quot;)</span></code> locking input file; #1452</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code> no longer selects cells intersecting with <code class="docutils literal notranslate"><span class="pre">x</span></code>; #1447</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">s2::s2_dwithin_matrix()</span></code> in <code class="docutils literal notranslate"><span class="pre">st_is_within_distance()</span></code>; #1367</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-5">
+<h1>version 0.9-5<a class="headerlink" href="#version-0-9-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Only when package <code class="docutils literal notranslate"><span class="pre">s2</span></code> &gt;= 1.0.1 is available: support for spherical geometry operators (predicates, transformers, measures, nearest point/feature) for geographic coordinates in package <code class="docutils literal notranslate"><span class="pre">s2</span></code> is now by default switched off, and can be switched on by <code class="docutils literal notranslate"><span class="pre">sf_use_s2(TRUE)</span></code>; see <a class="reference external" href="https://www.r-spatial.org/r/2020/06/17/s2.html">https://www.r-spatial.org/r/2020/06/17/s2.html</a> and vignette sf7. It is planned to be switched on by default in sf 1.0-0.</p></li>
+<li><p>drop Z and/or M coordinate in <code class="docutils literal notranslate"><span class="pre">st_as_s2()</span></code>, with message</p></li>
+<li><p>geometry predicates and transformers gain an … argument to pass <code class="docutils literal notranslate"><span class="pre">s2::s2_options()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dplyr::select()</span></code> now ensures the geometry column sticks to the back rather than the front of the data frame; #1425</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dplyr::rename()</span></code> now preserves the active geometry column even when it is renamed; #1431</p></li>
+<li><p>proj units query adjusted to PROJ 7.1.0 release; #1434</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-4">
+<h1>version 0.9-4<a class="headerlink" href="#version-0-9-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>empty geom generators take care of XYZ etc dim; #1400</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write_sf()</span></code> and <code class="docutils literal notranslate"><span class="pre">read_sf()</span></code> no longer warn when reading tables without geometries</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> writes non-spatial tables when given a plain <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> or <code class="docutils literal notranslate"><span class="pre">tbl_df</span></code>; #1345</p></li>
+<li><p>the default for <code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code> in <code class="docutils literal notranslate"><span class="pre">st_read</span></code> and <code class="docutils literal notranslate"><span class="pre">st_sf</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> for R version &gt;= 4.1.0</p></li>
+<li><p>the sf method for <code class="docutils literal notranslate"><span class="pre">dplyr::select()</span></code> supports renaming the geometry column; #1415</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-3">
+<h1>version 0.9-3<a class="headerlink" href="#version-0-9-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_is_valid()</span></code> is a generic</p></li>
+<li><p>Windows CRAN binaries use GDAL 3.0.4, PROJ 6.3.1 and GEOS 3.8.0, thanks to Jeroen Ooms’ rwinlib work; #1275</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code> gains an <code class="docutils literal notranslate"><span class="pre">extent</span></code> argument to set the extent (xlim, ylim) of the plot; <code class="docutils literal notranslate"><span class="pre">extent</span></code> must be an object with an <code class="docutils literal notranslate"><span class="pre">st_bbox()</span></code> method, such as an <code class="docutils literal notranslate"><span class="pre">sf</span></code> or a <code class="docutils literal notranslate"><span class="pre">stars</span></code> object; #1193</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-2">
+<h1>version 0.9-2<a class="headerlink" href="#version-0-9-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_axis_order(TRUE)</span></code> gives and error if GDAL has version &lt; 2.5.0</p></li>
+<li><p>loading PROJ units <code class="docutils literal notranslate"><span class="pre">link</span></code>, <code class="docutils literal notranslate"><span class="pre">us_in</span></code>, <code class="docutils literal notranslate"><span class="pre">ind_yd</span></code>, <code class="docutils literal notranslate"><span class="pre">ind_ft</span></code>, and <code class="docutils literal notranslate"><span class="pre">ind_ch</span></code> into the udunits database is no longer done at package load time, but when function <code class="docutils literal notranslate"><span class="pre">sf_add_proj_units()</span></code> is called.</p></li>
+<li><p>fix line sampling for small densities; #1365</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_project()</span></code> handles <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects when PROJ version is below 6 using proj.4 string representations.</p></li>
+<li><p>avoid using <code class="docutils literal notranslate"><span class="pre">isFALSE</span></code> in <code class="docutils literal notranslate"><span class="pre">st_write()</span></code>; #1342</p></li>
+<li><p>fix regression in <code class="docutils literal notranslate"><span class="pre">gdal_utils(&quot;translate&quot;,</span> <span class="pre">...)</span></code>; #1339</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-1">
+<h1>version 0.9-1<a class="headerlink" href="#version-0-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix an invalid read bug in <code class="docutils literal notranslate"><span class="pre">st_m_range()</span></code>; #1332</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_crs(4326)</span> <span class="pre">==</span> <span class="pre">st_crs(&quot;+proj=longlat</span> <span class="pre">+ellps=WGS84</span> <span class="pre">+datum=WGS84</span> <span class="pre">+no_defs&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> for GDAL &gt;= 3.0, irrespective authority compliance of axis order; see #1331 and <a class="github reference external" href="https://github.com/ropensci/scrubr/issues/34">ropensci/scrubr#34</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_project()</span></code> has a parameter <code class="docutils literal notranslate"><span class="pre">authority_compliant</span></code> to return coordinates in “visualisation order”; when <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> it returns coordinates in authority compliant axis order (e.g. EPSG:4326 latitude longitude); default is <code class="docutils literal notranslate"><span class="pre">st_axis_order()</span></code>.</p></li>
+<li><p>fix test for Solaris and certain GDAL/PROJ versions</p></li>
+<li><p>fix error reading category table through GDAL; <a class="github reference external" href="https://github.com/r-spatial/stars/issues/245">r-spatial/stars#245</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-9-0">
+<h1>version 0.9-0<a class="headerlink" href="#version-0-9-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>see r-spatial blog post: <a class="reference external" href="https://www.r-spatial.org/r/2020/03/17/wkt.html">https://www.r-spatial.org/r/2020/03/17/wkt.html</a></p></li>
+<li><p>modify <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects to reflect our post-proj4string world (#1146; #1225): crs objects contain two fields, <code class="docutils literal notranslate"><span class="pre">input</span></code> with the user input (if any), and <code class="docutils literal notranslate"><span class="pre">wkt</span></code> with a well-known-text  (or WKT2) representation of the coordinate reference system. <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects have a <code class="docutils literal notranslate"><span class="pre">$</span></code> method to dynamically retrieve the <code class="docutils literal notranslate"><span class="pre">epsg</span></code> (integer) or <code class="docutils literal notranslate"><span class="pre">proj4string</span></code> representation, using e.g. <code class="docutils literal notranslate"><span class="pre">x$epsg</span></code>.</p></li>
+<li><p>support for PostGIS 3 using WKT and the new-style <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects; #1234, #1303, #1308 by &#64;etiennebr</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write_db()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_read_db()</span></code> are defunct. Use <code class="docutils literal notranslate"><span class="pre">st_write</span></code> and <code class="docutils literal notranslate"><span class="pre">st_read</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> uses <code class="docutils literal notranslate"><span class="pre">append</span></code>, replacing (and deprecating) argument <code class="docutils literal notranslate"><span class="pre">update</span></code>; <code class="docutils literal notranslate"><span class="pre">st_write</span></code> fails when a layer already exists and <code class="docutils literal notranslate"><span class="pre">append</span></code> has not been set explicitly to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> (append) or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (overwrite); #1266</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_proj_info()</span></code> was renamed into <code class="docutils literal notranslate"><span class="pre">sf_proj_info</span></code>; <code class="docutils literal notranslate"><span class="pre">sf_proj_info</span></code> can get and set the PROJ data search path and use of CDN; #1277</p></li>
+<li><p>adapt to new <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> version; <a class="github reference external" href="https://github.com/tidyverse/dplyr/issues/4917">tidyverse/dplyr#4917</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> is a generic</p></li>
+<li><p>write <code class="docutils literal notranslate"><span class="pre">stars</span></code> rasters with wkt info, rather than proj4strings</p></li>
+<li><p>when GEOS &gt;= 3.8.0, <code class="docutils literal notranslate"><span class="pre">st_make_valid</span></code> is provided by <code class="docutils literal notranslate"><span class="pre">sf</span></code> rather than by <code class="docutils literal notranslate"><span class="pre">lwgeom</span></code> #989</p></li>
+<li><p>allow for single-sided buffers for linear geometries; #1001</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_reverse()</span></code> methods to reverse points in a linestring (requires GEOS &gt;= 3.7.0); #1246</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code> returns grid cells or points that intersect with the target geometry, not its bounding box; #1260</p></li>
+<li><p>allow for PROJ &gt;= 7; #1254</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_geometry_type()</span></code> accepts <code class="docutils literal notranslate"><span class="pre">by_geometry</span></code> argument; #1264</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-1">
+<h1>version 0.8-1<a class="headerlink" href="#version-0-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf.map()</span></code> no longer requires <code class="docutils literal notranslate"><span class="pre">maptools</span></code> and <code class="docutils literal notranslate"><span class="pre">sp</span></code>; dropped dependency on maptools.</p></li>
+<li><p>work around a bug in 6.0.0 &lt;= PROJ &lt; 6.3.1: replace <code class="docutils literal notranslate"><span class="pre">+init=epsg:XXXX</span> <span class="pre">...</span></code> strings with the <code class="docutils literal notranslate"><span class="pre">XXXX</span></code> EPSG integer, to work around a bug in PROJ; see <a class="github reference external" href="https://github.com/OSGeo/PROJ/pull/1875">OSGeo/PROJ#1875</a> and links therein. If <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments are present, raise a warning that these are ignored.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf.map()</span></code> no longer requires <code class="docutils literal notranslate"><span class="pre">maptools</span></code> and <code class="docutils literal notranslate"><span class="pre">sp</span></code>; drop dependency on maptools.</p></li>
+<li><p>conversion between <code class="docutils literal notranslate"><span class="pre">spatstat</span></code> classes <code class="docutils literal notranslate"><span class="pre">owin</span></code>, <code class="docutils literal notranslate"><span class="pre">ppp</span></code> and <code class="docutils literal notranslate"><span class="pre">psp</span></code> and <code class="docutils literal notranslate"><span class="pre">sf</span></code> classes no longer use <code class="docutils literal notranslate"><span class="pre">maptools</span></code>; #1204</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> processes open options <code class="docutils literal notranslate"><span class="pre">-oo</span></code> and <code class="docutils literal notranslate"><span class="pre">-doo</span></code> properly; <a class="github reference external" href="https://github.com/ITSLeeds/geofabric/issues/12">ITSLeeds/geofabric#12</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> directly interfaces <code class="docutils literal notranslate"><span class="pre">spatstat</span></code> sampling methods, e.g. <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;Thomas&quot;</span></code> calls <code class="docutils literal notranslate"><span class="pre">spatstat::rThomas</span></code> after converting input arguments (window) and converts returned <code class="docutils literal notranslate"><span class="pre">ppp</span></code> object to <code class="docutils literal notranslate"><span class="pre">sf</span></code>’s <code class="docutils literal notranslate"><span class="pre">POINT</span></code> geometries; #1204 with help from Ege Rubak and Jakub Nowosad</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_project()</span></code> gains an option <code class="docutils literal notranslate"><span class="pre">keep</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> to return <code class="docutils literal notranslate"><span class="pre">Inf</span></code> values for points not projectable; #1228</p></li>
+<li><p>support <code class="docutils literal notranslate"><span class="pre">vctrs</span></code> methods for geometry list columns; this makes <code class="docutils literal notranslate"><span class="pre">unnest</span></code> work again (#1172); #1196 by Lionel Henry</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sf.pq_geometry()</span></code> converts binary geom columns from RPostgres::dbGetQuery; #1195</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> can convert <code class="docutils literal notranslate"><span class="pre">MULTICURVE</span></code> to <code class="docutils literal notranslate"><span class="pre">MULTILINESTRING</span></code>; #1194</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> gains a parameter <code class="docutils literal notranslate"><span class="pre">wkt_filter</span></code> for spatially filtering the features to be read; #1192</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_area()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_length()</span></code> handle <code class="docutils literal notranslate"><span class="pre">+to_meter</span></code> argument in PROJ strings; #1170</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_filter()</span></code> generic for filtering on spatial features only; #1148</p></li>
+<li><p>a new UBSAN error in <code class="docutils literal notranslate"><span class="pre">wkb_read()</span></code> was resolved; #1154, #1152</p></li>
+<li><p>new method <code class="docutils literal notranslate"><span class="pre">st_shift_longitude()</span></code> to re-center data for a Pacific view. #1218</p></li>
+<li><p>output of <code class="docutils literal notranslate"><span class="pre">st_as_text()</span></code> with <code class="docutils literal notranslate"><span class="pre">MULTIPOINT</span></code> has nested parentheses around points. E.g., <code class="docutils literal notranslate"><span class="pre">MULTIPOINT</span> <span class="pre">((0</span> <span class="pre">0),</span> <span class="pre">(1</span> <span class="pre">1))</span></code> instead of <code class="docutils literal notranslate"><span class="pre">MULTIPOINT</span> <span class="pre">(0</span> <span class="pre">0,</span> <span class="pre">1</span> <span class="pre">1)</span></code>; #1219, #1221</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-0">
+<h1>version 0.8-0<a class="headerlink" href="#version-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix tests for PROJ 6.2.0 not accepting +units=</p></li>
+<li><p>fixes for tidyr 1.0-0 release; attempt to port <code class="docutils literal notranslate"><span class="pre">nest.sf()</span></code> and <code class="docutils literal notranslate"><span class="pre">unnest.sf()</span></code>; #1068, #1145</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> better closes connections after use; #1143</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">drivers</span></code> options, to limit the drivers attempted; #1142</p></li>
+<li><p>rather than replacing, <code class="docutils literal notranslate"><span class="pre">st_write()</span></code> and <code class="docutils literal notranslate"><span class="pre">write_sf()</span></code> append to an existing layer if <code class="docutils literal notranslate"><span class="pre">update=TRUE</span></code>; #1126</p></li>
+<li><p>improve plotting of <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> and <code class="docutils literal notranslate"><span class="pre">Date</span></code> attributes (<code class="docutils literal notranslate"><span class="pre">Date</span></code> requiring classInt &gt;= 0.4-2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> geometries read by GDAL are returned as empty geometries; #1119</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils('rasterize',</span> <span class="pre">...)</span></code> accepts non-existing destinations, defined by e.g. resolution and extent options (see #1116 for an example), and overwrites if needed (see #1136 for an example)</p></li>
+<li><p>add Dan Baston as contributor; #1120 and many others</p></li>
+<li><p>in addition to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">st_sfc()</span></code> also converts <code class="docutils literal notranslate"><span class="pre">NA</span></code> values into empty geometries; #1114.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_join()</span></code> is a generic</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-7">
+<h1>version 0.7-7<a class="headerlink" href="#version-0-7-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plot()</span></code> handles <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> values in legend</p></li>
+<li><p>constructor functions like <code class="docutils literal notranslate"><span class="pre">st_linestring()</span></code> check and break on <code class="docutils literal notranslate"><span class="pre">NA</span></code> coordinates; #1101, #1102</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-6">
+<h1>version 0.7-6<a class="headerlink" href="#version-0-7-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>have examples of <code class="docutils literal notranslate"><span class="pre">st_write</span></code> write only to the temporary R session directory</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-5">
+<h1>version 0.7-5<a class="headerlink" href="#version-0-7-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as(x,</span> <span class="pre">&quot;Spatial&quot;)</span></code> gives a proper error message on empty geometries; #1093</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> takes care of empty polygons; #1094</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_nearest_*</span></code> functions warn in case they are used with geographic coordinates; #1081</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_union()</span></code> no longer segfaults on zero row <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects; #1077</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_transform()</span></code> no longer breaks on zero row <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects; #1075</p></li>
+<li><p>when PROJ &gt;= 6.1.0 is available and sf comes with datum files (as is the case with statically linked Windows and OSX CRAN binaries), <code class="docutils literal notranslate"><span class="pre">PROJ_LIB</span></code> is no longer temporarily overwritten, but the PROJ C api is used to set the datum path; #1074, suggested by Jeroen Ooms</p></li>
+<li><p>sf compiles against GDAL 3.x and PROJ 6.1.0, using the new <code class="docutils literal notranslate"><span class="pre">proj.h</span></code> interface; #1070</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_distance()</span></code> returns <code class="docutils literal notranslate"><span class="pre">NA</span></code> for empty geometries, rather than 0; #1055</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-4">
+<h1>version 0.7-4<a class="headerlink" href="#version-0-7-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add example on how voronoi polygons can be tied back to the points they contain; #1030</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_difference(x,</span> <span class="pre">y)</span></code>, with <code class="docutils literal notranslate"><span class="pre">x</span></code> an <code class="docutils literal notranslate"><span class="pre">sfc</span></code> with zero feature geometries, returns <code class="docutils literal notranslate"><span class="pre">x</span></code>; #1024</p></li>
+<li><p>don’t reset (base) plot device when <code class="docutils literal notranslate"><span class="pre">add</span> <span class="pre">=</span> <span class="pre">TRUE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">==</span></code> and <code class="docutils literal notranslate"><span class="pre">!=</span></code> return <code class="docutils literal notranslate"><span class="pre">NA</span></code> when one of the operands is an empty geometry; #1013</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_intersects()</span></code> is a generic</p></li>
+<li><p>drop requiring <code class="docutils literal notranslate"><span class="pre">proj_api.h</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">proj.h</span></code>, this enables compatibility to PROJ 6.0.0 and GDAL 2.5.0-dev; #988</p></li>
+<li><p>fix regression in binary predicates introduced in #855; #999 reported by Barry Rowlingson</p></li>
+<li><p>fix bug in <code class="docutils literal notranslate"><span class="pre">gdal_utils</span></code> util <code class="docutils literal notranslate"><span class="pre">warper</span></code> on certain GDAL/OS combinations; <a class="github reference external" href="https://github.com/r-spatial/stars/issues/117">r-spatial/stars#117</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c.sfc()</span></code> ignores the type (class) of empty <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects when choosing the result type; #985, #982</p></li>
+<li><p>rename the default value for <code class="docutils literal notranslate"><span class="pre">distance</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;Euclidean&quot;</span></code>, rather than  <code class="docutils literal notranslate"><span class="pre">&quot;distance&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">st_distance()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-3">
+<h1>version 0.7-3<a class="headerlink" href="#version-0-7-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add argument <code class="docutils literal notranslate"><span class="pre">exact</span></code> to <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code>, defaulting to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>; #896</p></li>
+<li><p>fixed n-ary <code class="docutils literal notranslate"><span class="pre">st_difference()</span></code> for cases where geometries are entirely contained in others; #975, by Jonathan Marshall</p></li>
+<li><p>faster <code class="docutils literal notranslate"><span class="pre">Ops.sfc()</span></code>, added <code class="docutils literal notranslate"><span class="pre">st_normalize()</span></code>; #973 by Thomas Lin Pedersen</p></li>
+<li><p>new grob constructor for sfc objects; #971 by Thomas Lin Pedersen; add Thomas as contributor</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">group_split()</span></code> and <code class="docutils literal notranslate"><span class="pre">group_map()</span></code> methods for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects (experimental); #969</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">st_interpolate_aw()</span></code> a generic;</p></li>
+<li><p>argument <code class="docutils literal notranslate"><span class="pre">col</span></code> for <code class="docutils literal notranslate"><span class="pre">plot</span></code> of <code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> <code class="docutils literal notranslate"><span class="pre">sfc</span></code>’s is <code class="docutils literal notranslate"><span class="pre">NA</span></code> (open) for (multi) polygon geometries</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-2">
+<h1>version 0.7-2<a class="headerlink" href="#version-0-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>feature IDs are no longer returned as names on the geometry list column, but optionally returned by <code class="docutils literal notranslate"><span class="pre">st_read</span></code> as attribute column; #812</p></li>
+<li><p>when plotting multiple attributes, plot.sf adds a (single, common) key if <code class="docutils literal notranslate"><span class="pre">key.pos</span></code> is set</p></li>
+<li><p>precision can be specified in distance units; #901</p></li>
+<li><p>support log-scale in color legend by setting <code class="docutils literal notranslate"><span class="pre">logz</span></code> to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> in <code class="docutils literal notranslate"><span class="pre">plot.sf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_intersects()</span></code> etc. will prepare <code class="docutils literal notranslate"><span class="pre">y</span></code> when <code class="docutils literal notranslate"><span class="pre">y</span></code> is polygons and <code class="docutils literal notranslate"><span class="pre">x</span></code> is points; #885 by Dan Baston</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> (and <code class="docutils literal notranslate"><span class="pre">write_sf()</span></code>) returns its first argument, invisibly; #889</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-1">
+<h1>version 0.7-1<a class="headerlink" href="#version-0-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix bug that broke n-ary <code class="docutils literal notranslate"><span class="pre">st_intersection()</span></code> on platforms using clang; #867</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-0">
+<h1>version 0.7-0<a class="headerlink" href="#version-0-7-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>adds several interfaces to GDAL functions, meant to be used by package <code class="docutils literal notranslate"><span class="pre">stars</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> receives a <code class="docutils literal notranslate"><span class="pre">query</span></code> argument that can run queries against OGR datasets; #834, by Barry Rowlingson and Michael Sumner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_sf()</span></code> no longer first creates tibbles from <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>s, but creates them directly; #853, db propagation by Etienne Racine</p></li>
+<li><p>check difference between compile-time and run-time GEOS versions; #844</p></li>
+<li><p>all GEOS routines are (more) robust against memory leaks, by using unique pointers; #822, #845, by Dan Baston</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_buffer()</span></code> receives the buffer styles <code class="docutils literal notranslate"><span class="pre">endCapStyle</span></code>, <code class="docutils literal notranslate"><span class="pre">joinStyle</span></code> and <code class="docutils literal notranslate"><span class="pre">mitreLimit</span></code>; #833, #842 by Michael Sumner</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-4">
+<h1>version 0.6-4<a class="headerlink" href="#version-0-6-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">st_area()</span></code> is a generic; <a class="github reference external" href="https://github.com/r-spatial/stars/issues/32">r-spatial/stars#32</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write()</span></code> resolves <code class="docutils literal notranslate"><span class="pre">~</span></code> correctly; #456</p></li>
+<li><p>read and write feature IDs as sfc list column names; #812</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_centroid()</span></code> works for empty geometries, returning an empty point #769</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_nearest_points()</span></code>, to obtain the (<code class="docutils literal notranslate"><span class="pre">LINESTRING</span></code> connecting the) two nearest points for pairs of geometries; #788</p></li>
+<li><p>add hexagonal tiling to <code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code></p></li>
+<li><p>add regular and hexagonal sampling to <code class="docutils literal notranslate"><span class="pre">st_sample()</span></code></p></li>
+<li><p>fixes for PROJ 5.0.1; #545</p></li>
+<li><p>fixes for GDAL 2.3.0; #759</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sample()</span></code> supports regular sampling of <code class="docutils literal notranslate"><span class="pre">LINESTRING</span></code>; #725 by &#64;statnmap</p></li>
+<li><p>Support reading and writing of database <code class="docutils literal notranslate"><span class="pre">Pool</span></code> objects; #756</p></li>
+<li><p>fix plotting of <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects without attributes; #755</p></li>
+<li><p>add reference to the <a class="reference external" href="https://journal.r-project.org/archive/2018/RJ-2018-009/index.html">R Journal article</a> in CITATION</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-3">
+<h1>version 0.6-3<a class="headerlink" href="#version-0-6-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>move dependency <code class="docutils literal notranslate"><span class="pre">RPostgreSQL</span></code> from Imports: back to Suggests:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_centroid.sf()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_point_on_surface.sf</span></code> also warn if attributes are not constant over geometries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise()</span></code> allows the user to define geometries for summaries; #714, by Kirill Mueller</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code> emits a warning if <code class="docutils literal notranslate"><span class="pre">col</span></code> does not have length 1 or <code class="docutils literal notranslate"><span class="pre">nrow(x)</span></code>, and requires <code class="docutils literal notranslate"><span class="pre">pal</span></code> (rather than <code class="docutils literal notranslate"><span class="pre">col</span></code>) to set a palette for factors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf()</span></code> provides control over legend keys using <code class="docutils literal notranslate"><span class="pre">key.length</span></code> and <code class="docutils literal notranslate"><span class="pre">key.width</span></code>, decrease default key length; #731</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sgbp</span></code> objects receive an <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> method; #715</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-2">
+<h1>version 0.6-2<a class="headerlink" href="#version-0-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>GDAL read/write supports logical variables; #722</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_crop()</span></code> to simplify cropping objects with a rectangular area; #720</p></li>
+<li><p>fix bug in <code class="docutils literal notranslate"><span class="pre">[&lt;-</span></code> when columns are added to an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object; #718</p></li>
+<li><p>use dynamic registration of S3 methods, similar to how hms does this; #710 by Kirill Mueller</p></li>
+<li><p>(partially) address writing GPKG to network drive, writing to temp file first; #628</p></li>
+<li><p>add Kirill Mueller as contributor</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_make_grid()</span></code> is faster; #708, by Dan Baston</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_write()</span></code> are generic, with methods for directly reading from and writing to database connections; <code class="docutils literal notranslate"><span class="pre">st_read_db</span></code> and <code class="docutils literal notranslate"><span class="pre">st_write_db</span></code> are deprecated; #558, thanks to Etienne Racine &#64;etiennebr</p></li>
+<li><p>Package <code class="docutils literal notranslate"><span class="pre">RPostgreSQL</span></code> moved from Suggests to Imports</p></li>
+<li><p>restore compatibility with GDAL 2.0.x versions (which won’t have <code class="docutils literal notranslate"><span class="pre">gdal_utils</span></code>); #686</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_sf()</span></code> can also read tables without geometry; #684, by Andy Teucher</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-1">
+<h1>version 0.6-1<a class="headerlink" href="#version-0-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>method <code class="docutils literal notranslate"><span class="pre">distinct()</span></code> works; #669, #672</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> for pairs of geometries (<code class="docutils literal notranslate"><span class="pre">sfg</span></code>, <code class="docutils literal notranslate"><span class="pre">sfc</span></code>) return geometric union, difference, intersection and symmetric difference, respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_cast()</span></code> from <code class="docutils literal notranslate"><span class="pre">MULTIPOLYGON</span></code> to <code class="docutils literal notranslate"><span class="pre">MULTILINESTRING</span></code> should work properly; #660</p></li>
+<li><p>all Rcpp interfaces needed by package <code class="docutils literal notranslate"><span class="pre">stars</span></code> have been moved into <code class="docutils literal notranslate"><span class="pre">sf</span></code>; pkg <code class="docutils literal notranslate"><span class="pre">stars</span></code> is R-only, and only <code class="docutils literal notranslate"><span class="pre">sf</span></code> needs linking to GDAL.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdal_utils()</span></code> interfaces the 9 gdal utils using the C++ API</p></li>
+<li><p>improve resetting (base) plots; add <code class="docutils literal notranslate"><span class="pre">reset</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> in a call to <code class="docutils literal notranslate"><span class="pre">plot</span></code> to enable adding to plots that have a legend</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> when a table contains no geometries, rather than giving an error; it does emit a warning in this case. See <a class="reference external" href="https://stat.ethz.ch/pipermail/r-sig-geo/2018-February/026344.html">https://stat.ethz.ch/pipermail/r-sig-geo/2018-February/026344.html</a></p></li>
+<li><p>move <code class="docutils literal notranslate"><span class="pre">pillar</span></code> from <code class="docutils literal notranslate"><span class="pre">Imports:</span></code> to <code class="docutils literal notranslate"><span class="pre">Suggests:</span></code></p></li>
+<li><p>update to the new rwinlib distribution of gdal (adds JPG2000); #639</p></li>
+<li><p>speed up computation of centroids for largest polygon; #623</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_as_sfc.raw</span></code> method</p></li>
+<li><p>Bugfix: binary operations (<code class="docutils literal notranslate"><span class="pre">st_intersection</span></code>, <code class="docutils literal notranslate"><span class="pre">st_difference</span></code>, etc) no longer fail when operating on data frames of class <code class="docutils literal notranslate"><span class="pre">&quot;tbl_df&quot;</span></code> with common column names; #644</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-0">
+<h1>version 0.6-0<a class="headerlink" href="#version-0-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">pillar</span></code> to Imports: to provide method for printing WKT geometries in tibbles</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_text</span></code>, and subsequently <code class="docutils literal notranslate"><span class="pre">format</span></code> and <code class="docutils literal notranslate"><span class="pre">print</span></code>, use argument <code class="docutils literal notranslate"><span class="pre">digits</span></code> (or <code class="docutils literal notranslate"><span class="pre">options(digits</span> <span class="pre">=</span> <span class="pre">n)</span></code>) to control the number of digits used for printing coordinates; default is <code class="docutils literal notranslate"><span class="pre">options(&quot;digits&quot;)</span></code>, which is typically 7.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_is_within_distance</span></code> works with geographic coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_cast</span></code> from <code class="docutils literal notranslate"><span class="pre">MULTIPOLYGON</span></code> to <code class="docutils literal notranslate"><span class="pre">MULTILINESTRING</span></code> no longer changes the number of features/feature geometries, but conversion from <code class="docutils literal notranslate"><span class="pre">MULTIPOLYGON</span></code> to <code class="docutils literal notranslate"><span class="pre">LINESTRING</span></code> (typically) does; #596</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_distance</span></code> for long/lat geographic coordinates uses <code class="docutils literal notranslate"><span class="pre">lwgeom</span></code>, accepting all geometry types; argument <code class="docutils literal notranslate"><span class="pre">dist_fun</span></code> is deprecated as a consequence, and distance calculations are different from those in sf versions 0.5-5 or earlier; #593</p></li>
+<li><p>add package <code class="docutils literal notranslate"><span class="pre">lwgeom</span></code> to Suggests; <code class="docutils literal notranslate"><span class="pre">st_area</span></code>, <code class="docutils literal notranslate"><span class="pre">st_length</span></code>, <code class="docutils literal notranslate"><span class="pre">st_distance</span></code>, <code class="docutils literal notranslate"><span class="pre">st_segmentize</span></code> for long/lat CRS use package <code class="docutils literal notranslate"><span class="pre">lwgeom</span></code> instead of <code class="docutils literal notranslate"><span class="pre">geosphere</span></code>; #593</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_length</span></code> returns zero for polygon-type geometries; #593</p></li>
+<li><p>if present, add units of attribute to default plot title; #591</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">unnest</span></code> method, which depends on <code class="docutils literal notranslate"><span class="pre">tidyr</span></code> &gt; 0.7-2; #570 PR by &#64;karldw</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">largest</span></code> option to <code class="docutils literal notranslate"><span class="pre">st_join</span></code> to get largest intersection match only; #547, by &#64;tiernanmartin</p></li>
+<li><p>change default maximum number of feature to print to 10, controllable by <code class="docutils literal notranslate"><span class="pre">options(sf_max_print)</span></code>; #556</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">Hausdorff</span></code> (and <code class="docutils literal notranslate"><span class="pre">Frechet</span></code> for those with GEOS 3.7.0) as options to <code class="docutils literal notranslate"><span class="pre">st_distance</span></code>; add <code class="docutils literal notranslate"><span class="pre">par</span></code> for densified versions</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_snap</span></code>, for snapping geometries to other geometries, within a tolerance</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">st_wrap_dateline</span></code> a generic, with methods for <code class="docutils literal notranslate"><span class="pre">sf</span></code>, <code class="docutils literal notranslate"><span class="pre">sfc</span></code> and <code class="docutils literal notranslate"><span class="pre">sfg</span></code>; #541</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf</span></code> and <code class="docutils literal notranslate"><span class="pre">st_as_grob</span></code> (used by ggplot2) are robust against misspecified ring directions (holes that have the same direction as the exterior rings), by using <code class="docutils literal notranslate"><span class="pre">rule</span> <span class="pre">=</span> <span class="pre">&quot;evenodd&quot;</span></code>; #540</p></li>
+<li><p>functions depending on <code class="docutils literal notranslate"><span class="pre">liblwgeom</span></code> (<code class="docutils literal notranslate"><span class="pre">st_make_valid</span></code>, <code class="docutils literal notranslate"><span class="pre">st_geohash</span></code>, <code class="docutils literal notranslate"><span class="pre">st_plit</span></code>) have been moved to their own package, <a class="github reference external" href="https://github.com/r-spatial/lwgeom">r-spatial/lwgeom</a>; argument <code class="docutils literal notranslate"><span class="pre">use_gdal</span></code> of <code class="docutils literal notranslate"><span class="pre">st_transform</span></code> has been deprecated, instead one can use <code class="docutils literal notranslate"><span class="pre">lwgeom::st_transform_proj</span></code>; sf no longer tries to link to liblwgeom; #509, #537, #487</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read</span></code>, <code class="docutils literal notranslate"><span class="pre">st_sf</span></code> and <code class="docutils literal notranslate"><span class="pre">st_sfc</span></code> gain a parameter <code class="docutils literal notranslate"><span class="pre">check_ring_dir</span></code> (default: <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>) that checks ring directions and corrects to: exterior counter clockwise, holes clockwise, when seen from above.</p></li>
+<li><p>get rid of <code class="docutils literal notranslate"><span class="pre">classInt::classIntervals</span></code> warning if number of unique values is smaller than the number of breaks asked for</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-5">
+<h1>version 0.5-5<a class="headerlink" href="#version-0-5-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>have <code class="docutils literal notranslate"><span class="pre">classInt</span></code> in Imports:, to not break other package checks</p></li>
+<li><p>add vignettes 5: plotting sf objects and 6: miscellaneous; #324</p></li>
+<li><p>add (default) color key to <code class="docutils literal notranslate"><span class="pre">plot.sf</span></code> if single map is plotted, contributed by &#64;hughjonesd; #528</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_as_sfc</span></code> can read EWKT; #530</p></li>
+<li><p>argument <code class="docutils literal notranslate"><span class="pre">max.plot</span></code> takes its default from <code class="docutils literal notranslate"><span class="pre">options(sf_max.plot=n)</span></code>, if present; #516</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf</span></code> gets an arguments <code class="docutils literal notranslate"><span class="pre">pal</span></code> to specify a color palette function; #526</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.sf</span></code> gets arguments <code class="docutils literal notranslate"><span class="pre">breaks</span></code> and <code class="docutils literal notranslate"><span class="pre">nbreaks</span></code>; add support for <code class="docutils literal notranslate"><span class="pre">classInt::classIntervals</span></code> styles for finding class intervals (using <code class="docutils literal notranslate"><span class="pre">breaks</span></code>)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_as_sf</span></code> methods for <code class="docutils literal notranslate"><span class="pre">ppp</span></code>, <code class="docutils literal notranslate"><span class="pre">lpp</span></code> and <code class="docutils literal notranslate"><span class="pre">psp</span></code> objects from spatstat.</p></li>
+<li><p>allow for direct route to proj.4 ignoring GDAL (requiring liblwgeom); #509, #511</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">print</span></code> method for <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects; #517</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sf_extSoftVersion</span></code> reveals whether GDAL was linked to GEOS; #510</p></li>
+<li><p>better check input of <code class="docutils literal notranslate"><span class="pre">st_polygon</span></code>; #514</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_node</span></code>, similar to <code class="docutils literal notranslate"><span class="pre">rgeos::gNode</span></code></p></li>
+<li><p>support for reading <code class="docutils literal notranslate"><span class="pre">OFTInteger64List</span></code> fields; #508</p></li>
+<li><p>sparse geometric binary predicate lists have a class, <code class="docutils literal notranslate"><span class="pre">sgbp</span></code>, and attributes <code class="docutils literal notranslate"><span class="pre">region.id</span></code> and <code class="docutils literal notranslate"><span class="pre">predicate</span></code>; #234, #524</p></li>
+<li><p>prevent <code class="docutils literal notranslate"><span class="pre">st_split</span></code> from stopping the R session; #492</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_intersection</span></code>, <code class="docutils literal notranslate"><span class="pre">st_union</span></code> and so on also print a message when used directly on long/lat coordinates; #496</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">rep</span></code> method for <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects</p></li>
+<li><p>comparing two <code class="docutils literal notranslate"><span class="pre">crs</span></code> objects uses the GDAL function <code class="docutils literal notranslate"><span class="pre">IsSame</span></code>; #180</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_collection_extract</span></code>, which, given an object with geometries of type <code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> or <code class="docutils literal notranslate"><span class="pre">GEOMETRYCOLLECTION</span></code>, returns an object consisting only of elements of the specified type; by Andy Teucher, #482</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> exports GeoJSON with UTF-8 encoding on Windows; #444</p></li>
+<li><p>move package methods from Imports: to Depends: ; #478</p></li>
+<li><p>deal better with precision setting and propagation; #476</p></li>
+<li><p>fix bug in <code class="docutils literal notranslate"><span class="pre">st_layers</span></code> in case layers have no geometry; #334</p></li>
+<li><p>clarify argument <code class="docutils literal notranslate"><span class="pre">envelope</span></code> in <code class="docutils literal notranslate"><span class="pre">st_voronoi</span></code>; #474</p></li>
+<li><p>change aggregate to make it return the same geometry as ‘by’, padding attributes with NA where needed; #453</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-4">
+<h1>version 0.5-4<a class="headerlink" href="#version-0-5-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix compatibility problems introduced by <code class="docutils literal notranslate"><span class="pre">tidyr</span></code> 0.7-0 using rlang magic</p></li>
+<li><p>convert path names to UTF-8 in <code class="docutils literal notranslate"><span class="pre">st_read</span></code>, <code class="docutils literal notranslate"><span class="pre">st_write</span></code> and <code class="docutils literal notranslate"><span class="pre">st_layers</span></code>; #471</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_sfc</span></code> converts <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values into empty geometries, and correctly identifies empty <code class="docutils literal notranslate"><span class="pre">POINT</span></code>s; #466, #463</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> abbreviates column names if driver is <code class="docutils literal notranslate"><span class="pre">ESRI</span> <span class="pre">Shapefile</span></code>; #464</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">of_largest_polygon</span></code> argument to <code class="docutils literal notranslate"><span class="pre">st_centroid</span></code>, to get the centroid of the largest polygon; #450</p></li>
+<li><p>fix use of <code class="docutils literal notranslate"><span class="pre">st_relate</span></code> as join predicate for <code class="docutils literal notranslate"><span class="pre">st_join</span></code>; #454</p></li>
+<li><p>fix bug where <code class="docutils literal notranslate"><span class="pre">st_intersects</span></code> with empty second argument would crash; #458</p></li>
+<li><p>produce better WKT; #463</p></li>
+<li><p>fix bug in <code class="docutils literal notranslate"><span class="pre">st_cast.sf</span></code>; #461, #462</p></li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">st_read</span></code> SRS assignment logic; corrects reading projected geojson with gdal 2.2.0; #449</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_intersection</span></code> etc. on <code class="docutils literal notranslate"><span class="pre">tbl</span></code> also return <code class="docutils literal notranslate"><span class="pre">tbl</span></code>; #448</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[.sf</span></code> preserves class, e.g. of <code class="docutils literal notranslate"><span class="pre">tbl</span></code>; #448</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-3">
+<h1>version 0.5-3<a class="headerlink" href="#version-0-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support and propagate all Proj.4 +units=xx length units; #446</p></li>
+<li><p>allow for arith ops on empty <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> return an empty graticule object when argument <code class="docutils literal notranslate"><span class="pre">datum</span></code> is <code class="docutils literal notranslate"><span class="pre">NA</span></code>;</p></li>
+<li><p>export <code class="docutils literal notranslate"><span class="pre">as_Spatial</span></code>, to make it easier for packages to convert <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects without importing <code class="docutils literal notranslate"><span class="pre">sf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_distance</span></code> gains a parameter <code class="docutils literal notranslate"><span class="pre">by_element</span></code> to obtain pairwise distances; #437</p></li>
+<li><p>add the ability to <code class="docutils literal notranslate"><span class="pre">aggregate</span></code> using a simple feature <code class="docutils literal notranslate"><span class="pre">by</span></code> argument; #429</p></li>
+<li><p>make the <code class="docutils literal notranslate"><span class="pre">op</span></code> argument to <code class="docutils literal notranslate"><span class="pre">[.sf</span></code> work</p></li>
+<li><p>speed up <code class="docutils literal notranslate"><span class="pre">st_coordinates</span></code> for <code class="docutils literal notranslate"><span class="pre">POINT</span></code> geometries; #433</p></li>
+<li><p>fix performance regression for <code class="docutils literal notranslate"><span class="pre">st_bbox</span></code>; #418</p></li>
+<li><p>correct bug in <code class="docutils literal notranslate"><span class="pre">st_union</span></code>, <code class="docutils literal notranslate"><span class="pre">st_difference</span></code> and <code class="docutils literal notranslate"><span class="pre">st_sym_difference</span></code> introduced in 0.5-2; #431</p></li>
+<li><p>inform gdal about the CRS always through the proj4string, never through the epsg; see #424</p></li>
+<li><p>properly deal with kilometre units; #424 (fixed by Karl Dunkle Werner)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_is_within_distance</span></code>, only to return a sparse index matrix; #419</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> work with world2 (0,360); #421, #422, fixed by Ben Best</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> to return graticules in native crs; <a class="github reference external" href="https://github.com/tidyverse/ggplot2/issues/2200">tidyverse/ggplot2#2200</a> (WIP)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> to support data in <code class="docutils literal notranslate"><span class="pre">NA_crs_</span></code>; <a class="github reference external" href="https://github.com/tidyverse/ggplot2/issues/2199">tidyverse/ggplot2#2199</a></p></li>
+<li><p>fix bug when joining an sf-tibble with a <code class="docutils literal notranslate"><span class="pre">tibble</span></code>; #414</p></li>
+<li><p>read gdal <code class="docutils literal notranslate"><span class="pre">StringList</span></code>, <code class="docutils literal notranslate"><span class="pre">RealList</span></code>, and <code class="docutils literal notranslate"><span class="pre">IntegerList</span></code> fields into a list-column; #416</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-2">
+<h1>version 0.5-2<a class="headerlink" href="#version-0-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>made ready for rwinlib/gdal2; #408</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">[.sf</span></code> for selections including <code class="docutils literal notranslate"><span class="pre">NA</span></code> values like <code class="docutils literal notranslate"><span class="pre">x[c(1,NA,2)]</span></code>; #403</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">[&lt;-</span></code> method for <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects; automatically replaces <code class="docutils literal notranslate"><span class="pre">NULL</span></code> with an empty geometry; #411</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_point_on_surface()</span></code> to return a point that is guaranteed to be on the surface (standard compliance)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_sf</span></code> returns an sf-tibble, an object of class <code class="docutils literal notranslate"><span class="pre">c(&quot;sf&quot;,</span> <span class="pre">&quot;tbl_df&quot;,</span> <span class="pre">&quot;tbl&quot;,</span> <span class="pre">&quot;data.frame&quot;)</span></code></p></li>
+<li><p>work around for <code class="docutils literal notranslate"><span class="pre">dplyr::filter</span></code> not dispatching geometry column subsetting to <code class="docutils literal notranslate"><span class="pre">sf::[.sfc</span></code></p></li>
+<li><p>allow <code class="docutils literal notranslate"><span class="pre">units</span></code> object as <code class="docutils literal notranslate"><span class="pre">dist</span></code> argument to <code class="docutils literal notranslate"><span class="pre">st_buffer</span></code>; these must be convertable to <code class="docutils literal notranslate"><span class="pre">arc_degree</span></code> for geographic, and to a length unit for non-geographic data; #399</p></li>
+<li><p>prevent gdal from crashing when trying to <code class="docutils literal notranslate"><span class="pre">st_transform</span></code> an empty geometry; #398</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_as_sfc</span></code> method for <code class="docutils literal notranslate"><span class="pre">bbox</span></code>, returning the bbox polygon; #377</p></li>
+<li><p>strip file name extension from default layer name in <code class="docutils literal notranslate"><span class="pre">st_write</span></code>; #392</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_sf</span></code> replace <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values in an <code class="docutils literal notranslate"><span class="pre">sfc</span></code> list-column with the appropriate empty geometry; #372</p></li>
+<li><p>allow setting <code class="docutils literal notranslate"><span class="pre">ndiscr</span></code> through <code class="docutils literal notranslate"><span class="pre">ggplot2::coords_sf</span></code> to improve graticule plotting in <code class="docutils literal notranslate"><span class="pre">geom_sf</span></code>; #396</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-1">
+<h1>version 0.5-1<a class="headerlink" href="#version-0-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add spatial indexes to most binary geometry operations; #394 and <a class="reference external" href="http://r-spatial.org/r/2017/06/22/spatial-index.html">http://r-spatial.org/r/2017/06/22/spatial-index.html</a></p></li>
+<li><p>drastically reduce memory footprint of <code class="docutils literal notranslate"><span class="pre">st_intersection</span></code> and similar; #394</p></li>
+<li><p>support RSQLite 2.0 by providing an <code class="docutils literal notranslate"><span class="pre">st_as_sfc</span></code> method for list columns of class <code class="docutils literal notranslate"><span class="pre">blob</span></code></p></li>
+<li><p>drop dependency on dbplyr</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-0">
+<h1>version 0.5-0<a class="headerlink" href="#version-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>better handle empty/NULL geometries in shapefiles; #351</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">unite_.sf</span></code> method</p></li>
+<li><p>deprecate <code class="docutils literal notranslate"><span class="pre">FUN</span></code> argument to <code class="docutils literal notranslate"><span class="pre">st_join</span></code>; #376</p></li>
+<li><p>improve graticule tic label placement in <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>; #375 and <a class="github reference external" href="https://github.com/tidyverse/ggplot2/issues/2119">tidyverse/ggplot2#2119</a></p></li>
+<li><p>improve <code class="docutils literal notranslate"><span class="pre">configure</span></code> logic to deal with libraries installed in custom locations; #335</p></li>
+<li><p>fix bug where <code class="docutils literal notranslate"><span class="pre">geom_sf</span></code> wouldn’t deal with Z and/or M geoms; #373</p></li>
+<li><p>return more conveniently typed empty geoms; #372</p></li>
+<li><p>fix subsetting with <code class="docutils literal notranslate"><span class="pre">[</span></code> of <code class="docutils literal notranslate"><span class="pre">sf</span></code> using <code class="docutils literal notranslate"><span class="pre">drop</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>, #370</p></li>
+<li><p>in addition to <code class="docutils literal notranslate"><span class="pre">m</span></code>, allow <code class="docutils literal notranslate"><span class="pre">rad</span></code> units to <code class="docutils literal notranslate"><span class="pre">st_segmentize</span></code></p></li>
+<li><p>add example how to <code class="docutils literal notranslate"><span class="pre">st_read</span></code> GeoJSON from a string; #185</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">separate_.sf</span></code> method</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_split</span></code> to split geometries (only available if compiled against liblwgeom), #359</p></li>
+<li><p>fix bug reading and writing dates (months 1 off): #358</p></li>
+<li><p>[.sf and [.sfc also select on i when i is an <code class="docutils literal notranslate"><span class="pre">sfg</span></code> object, and accept a geometric predicate function with optional arguments; #352</p></li>
+<li><p>on reading through GDAL, empty (NULL) geometries no longer result in an error; on creation, they no longer automatically give a <code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> object; #351</p></li>
+<li><p>on plotting with <code class="docutils literal notranslate"><span class="pre">ggplot2::geom_sf</span></code>, empty geometries no longer break; grid functions return <code class="docutils literal notranslate"><span class="pre">nullGrob()</span></code> for them; #351</p></li>
+<li><p>arith operations on empty geometries no longer break or give warnings; #351</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_as_sf.data.frame</span></code> by default break on <code class="docutils literal notranslate"><span class="pre">NA</span></code> values in coordinates; #342</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_join</span></code> accept further arguments, to be passed on to the <code class="docutils literal notranslate"><span class="pre">join</span></code> function (e.g. a pattern for <code class="docutils literal notranslate"><span class="pre">st_relate</span></code>)</p></li>
+<li><p>have WKB reader throw an error on (some) malformed inputs, and check for buffer bounds</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-3">
+<h1>version 0.4-3<a class="headerlink" href="#version-0-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>back-port <code class="docutils literal notranslate"><span class="pre">do_union</span></code> argument to dplyr &lt;= 0.5.0, using lazyeval</p></li>
+<li><p>all strings returned from OGR/GDAL get encoding set to <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>, making them work on non-UTF-8 platforms; #5</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$.crs</span></code> retrieves proj4string components, such as <code class="docutils literal notranslate"><span class="pre">st_crs(4326)$datum</span></code> in addition to <code class="docutils literal notranslate"><span class="pre">epsg</span></code> and <code class="docutils literal notranslate"><span class="pre">proj4string</span></code></p></li>
+<li><p>let <code class="docutils literal notranslate"><span class="pre">st_geohash</span></code> return geohash for (average) points (only when sf was linked to liblwgeom)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-2">
+<h1>version 0.4-2<a class="headerlink" href="#version-0-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise.sf</span></code> always returns an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object, also for global (non-grouped) summaries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise.sf</span></code> gains an argument <code class="docutils literal notranslate"><span class="pre">do_union</span></code> which determines whether to union the geometries for which a summary is given, or to <code class="docutils literal notranslate"><span class="pre">st_combine</span></code> them (not resolving boundaries); #331</p></li>
+<li><p>rename argument <code class="docutils literal notranslate"><span class="pre">union</span></code> of <code class="docutils literal notranslate"><span class="pre">aggregate.sf</span></code> into <code class="docutils literal notranslate"><span class="pre">do_union</span></code>, for consistency with <code class="docutils literal notranslate"><span class="pre">summarise</span></code>; #331</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">nest_</span></code> method for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_relate</span></code> gets a <code class="docutils literal notranslate"><span class="pre">pattern</span></code> parameter, same as <code class="docutils literal notranslate"><span class="pre">rgeos::gRelate</span></code>; add examples to get rook and queen neighbour lists using this; #234</p></li>
+<li><p>support for direct reading of spatialite and sqlite geometry wkb blobs</p></li>
+<li><p>build proper support for <code class="docutils literal notranslate"><span class="pre">cbind</span></code> and <code class="docutils literal notranslate"><span class="pre">rbind</span></code> methods for <code class="docutils literal notranslate"><span class="pre">sf</span></code>, which work (as documented) when <em>all</em> arguments are of class <code class="docutils literal notranslate"><span class="pre">sf</span></code>; <code class="docutils literal notranslate"><span class="pre">dplyr::bind_cols</span></code> or <code class="docutils literal notranslate"><span class="pre">st_sf(data.frame(sf,</span> <span class="pre">df))</span></code> work for binding <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>s to an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_segmentize()</span></code> and <code class="docutils literal notranslate"><span class="pre">st_line_sample()</span></code> accept units arguments</p></li>
+<li><p>document problem reading shapefiles from USB drives on OSX; #252</p></li>
+<li><p>improve docs of <code class="docutils literal notranslate"><span class="pre">st_is_valid</span></code> and <code class="docutils literal notranslate"><span class="pre">st_make_valid</span></code>; #296</p></li>
+<li><p>coercing <code class="docutils literal notranslate"><span class="pre">sf</span></code> to <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> works better; #298</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_line_sample</span></code> gains argument <code class="docutils literal notranslate"><span class="pre">sample</span></code> to specify the points t.b. sampled; #299 #300 thanks to &#64;joethorley</p></li>
+<li><p>add compatibility to upcoming dplyr 0.6.0; #304 #42</p></li>
+<li><p>write GDAL fields by name, not by number, fixing a KML problem #308</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> gains arguments <code class="docutils literal notranslate"><span class="pre">delete_layer</span></code> and <code class="docutils literal notranslate"><span class="pre">delete_dsn</span></code> to allow overwrite capability #307 #274</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write_sf</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">delete_layer=TRUE</span></code>, silently overwriting layers if they’re already present</p></li>
+<li><p>compatibility with GDAL 2.2beta0; #303; #309</p></li>
+<li><p>replace <code class="docutils literal notranslate"><span class="pre">st_write_db</span></code> with a version that is fast for large datasets (#285), thanks to Josh London</p></li>
+<li><p>take out more memory leaking examples in tests</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">aggregate</span></code> method for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects assumes the <code class="docutils literal notranslate"><span class="pre">by</span></code> argument to be identical to that of <code class="docutils literal notranslate"><span class="pre">stats::aggregate</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_wrap_dateline</span></code> wraps (cuts up) geometries crossing the antimeridian, such that they no longer cross it.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-1">
+<h1>version 0.4-1<a class="headerlink" href="#version-0-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>restore 3.3.0 and c++11 requirement</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read</span></code> respects time that is read as UTC</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> writes time always as UTC, since GDAL does not have a mechanism to define local timezones other than “unknown” or “local”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_length</span></code> works for POINT and MULTIPOINT (returning 0); POLYGON and MULTIPOLYGON are converted to MULTILINESTRING before computing length, thus giving polygon perimeter (#268)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> has <code class="docutils literal notranslate"><span class="pre">update</span></code> depend on driver; for databases, the default is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (it refers to update of the database, and not to overwriting the table in the database, this will by default not succeed); #274</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_read</span></code> supports reading objects with multiple geometry columns #257 #255</p></li>
+<li><p>support writing (exporting) objects with non-standard columns, such as <code class="docutils literal notranslate"><span class="pre">units</span></code> or <code class="docutils literal notranslate"><span class="pre">POSIXlt</span></code> #264</p></li>
+<li><p>catch dependencies on GEOS 3.3.5 (hence no 0.4-0 CRAN binary for MacOSX) #260</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-0">
+<h1>version 0.4-0<a class="headerlink" href="#version-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_is_valid</span></code> catch corrupt geometries too, returning <code class="docutils literal notranslate"><span class="pre">NA</span></code> in that case (requiring GEOS 3.5.0)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_make_valid</span></code>, only available when sf was linked to <code class="docutils literal notranslate"><span class="pre">liblwgeom</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_coordinates</span></code> method, returning coordinates matrix with indexes</p></li>
+<li><p>remove <code class="docutils literal notranslate"><span class="pre">unlist.sfg</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">as.matrix.sfg</span></code>; have as.matrix.sfg add indexes to coordinates</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_bind_cols</span></code> method</p></li>
+<li><p>improve handling features that can’t be projected</p></li>
+<li><p>support uniform sampling over polygons on the sphere</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_sample</span></code>, for sampling points on multipoints, linestrings, or polygons</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">c</span></code> method for <code class="docutils literal notranslate"><span class="pre">sfc</span></code> objects</p></li>
+<li><p>import and export <code class="docutils literal notranslate"><span class="pre">magrittr::%&gt;%</span></code></p></li>
+<li><p>support ggplot’ing geometrycollections</p></li>
+<li><p>drop C++11 requirement, allowing build for older R versions</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_proj_info</span></code>, modelled after <code class="docutils literal notranslate"><span class="pre">rgdal::projInfo</span></code></p></li>
+<li><p>overwriting datasets with <code class="docutils literal notranslate"><span class="pre">st_write()</span></code> is no longer allowed; <code class="docutils literal notranslate"><span class="pre">update=TRUE</span></code> appends to them, permitted the driver supports appending.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_write</span></code> gains an argument, <code class="docutils literal notranslate"><span class="pre">update</span></code>, which when <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> will try to append to existing datasets (#204)</p></li>
+<li><p>added list of corresponding function for migration from sp, rgdal and rgeos to sf at <a class="github reference external" href="https://github.com/edzer/sfr/wiki/migrating">edzer/sfr</a></p></li>
+<li><p>remove deprecated <code class="docutils literal notranslate"><span class="pre">st_list</span></code></p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">st_makegrid</span></code> to <code class="docutils literal notranslate"><span class="pre">st_make_grid</span></code>, and <code class="docutils literal notranslate"><span class="pre">st_linemerge</span></code> to <code class="docutils literal notranslate"><span class="pre">st_line_merge</span></code></p></li>
+<li><p>add <a class="reference external" href="http://NEWS.md">NEWS.md</a> file (#207)</p></li>
+<li><p>faster conversion of <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> into <code class="docutils literal notranslate"><span class="pre">POINT</span></code> <code class="docutils literal notranslate"><span class="pre">sf</span></code> object, using <code class="docutils literal notranslate"><span class="pre">st_as_sf</span></code> (Michael Sumner)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbind</span></code> method for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects keeps coordinate reference system</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-3-4-feb-6-2017">
+<h1>version 0.3-4, Feb 6, 2017<a class="headerlink" href="#version-0-3-4-feb-6-2017" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_contains_properly</span></code> spatial predicate</p></li>
+<li><p>GEOS functions (geometry operations) accept XYZ geometries (and ignore Z)</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">prepared</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> the default for all geometry binary operations</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-3-2-feb-4-2017">
+<h1>version 0.3-2, Feb 4, 2017<a class="headerlink" href="#version-0-3-2-feb-4-2017" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add user interrupt checks in all GEOS geometry operations</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> do something useful for polar projections</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> return <code class="docutils literal notranslate"><span class="pre">NA</span></code> labels when labels are useless</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">merge.sf</span></code> methods to merge <code class="docutils literal notranslate"><span class="pre">sf</span></code> object and <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> (#193)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_join</span></code> for table joins based on (user-defined) spatial predicates</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">dplyr</span></code>-style non-spatial joins for <code class="docutils literal notranslate"><span class="pre">sf</span></code> objects (<code class="docutils literal notranslate"><span class="pre">left_join</span></code>, <code class="docutils literal notranslate"><span class="pre">full_join</span></code> etc.) (#193)</p></li>
+<li><p>allow for multiple non-gathered variables (#196)</p></li>
+<li><p>add missing meridian to <code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> (#198)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-3-1-jan-31-2017">
+<h1>version 0.3-1, Jan 31, 2017<a class="headerlink" href="#version-0-3-1-jan-31-2017" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">merge</span></code> method (#193)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">st_graticule</span></code> for laea (#198)</p></li>
+<li><p>allow <code class="docutils literal notranslate"><span class="pre">st_buffer</span></code> with feature-dependent buffer distance (#197)</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">spread</span></code> return an <code class="docutils literal notranslate"><span class="pre">sf</span></code> object (#196)</p></li>
+<li><p>clarify <code class="docutils literal notranslate"><span class="pre">overwrite</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> in write docs</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">st_as_sf.map</span></code> (#194)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">prepared</span></code> arg to spatial binary predicates, to speed up large intersections</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_voronoi</span></code> interface (requires that lib GEOS &gt;= 3.5.0)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">st_as_sf</span></code> methods for <code class="docutils literal notranslate"><span class="pre">map</span></code> objects (library maps)</p></li>
+<li><p>add RStudio project file</p></li>
+<li><p>have <code class="docutils literal notranslate"><span class="pre">st_bbox</span></code> return a <code class="docutils literal notranslate"><span class="pre">bbox</span></code> object which has an <code class="docutils literal notranslate"><span class="pre">st_crs</span></code> method</p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">st_drop_zm</span></code> into <code class="docutils literal notranslate"><span class="pre">st_zm</span></code>, for general more handling of Z and M</p></li>
+<li><p>allow for 3D coordinates returned, when <code class="docutils literal notranslate"><span class="pre">+proj=geocent</span></code> (#172; #103)</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">NA_integer_</span></code> handling in shapefiles I/O (#184)</p></li>
+<li><p>add and fix <code class="docutils literal notranslate"><span class="pre">st_agr</span></code> API, to set and get attribute-to-geometry relationships</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-2-8-jan-5-2017">
+<h1>version 0.2-8, Jan 5, 2017<a class="headerlink" href="#version-0-2-8-jan-5-2017" title="Link to this heading">#</a></h1>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\sf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">version 1.0-19</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-18">version 1.0-18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-17">version 1.0-17</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-16">version 1.0-16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-15">version 1.0-15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-14">version 1.0-14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-13">version 1.0-13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-12">version 1.0-12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-11">version 1.0-11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-10">version 1.0-10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-9">version 1.0-9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-8">version 1.0-8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-7">version 1.0-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-6">version 1.0-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-5">version 1.0-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-4">version 1.0-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-3">version 1.0-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2">version 1.0-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1">version 1.0-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0">version 1.0-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-8">version 0.9-8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-7">version 0.9-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-6">version 0.9-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-5">version 0.9-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-4">version 0.9-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-3">version 0.9-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-2">version 0.9-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-1">version 0.9-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9-0">version 0.9-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-1">version 0.8-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-0">version 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-7">version 0.7-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-6">version 0.7-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-5">version 0.7-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-4">version 0.7-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-3">version 0.7-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-2">version 0.7-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-1">version 0.7-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-0">version 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-4">version 0.6-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-3">version 0.6-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-2">version 0.6-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-1">version 0.6-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-0">version 0.6-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-5">version 0.5-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-4">version 0.5-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-3">version 0.5-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-2">version 0.5-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-1">version 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-0">version 0.5-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-3">version 0.4-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-2">version 0.4-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-1">version 0.4-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-0">version 0.4-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-4-feb-6-2017">version 0.3-4, Feb 6, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-2-feb-4-2017">version 0.3-2, Feb 4, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-3-1-jan-31-2017">version 0.3-1, Jan 31, 2017</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-2-8-jan-5-2017">version 0.2-8, Jan 5, 2017</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

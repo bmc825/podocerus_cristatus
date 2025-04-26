@@ -1,0 +1,1144 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TreeTools 1.13.0 (2025-01-09) &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/TreeTools/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/TreeTools/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TreeTools 1.13.0 (2025-01-09)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TreeTools 1.13.0 (2025-01-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-12-0-2024-07-25">TreeTools 1.12.0 (2024-07-25)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-methods-and-functions">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enhancements">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-11-1-2024-06-06">TreeTools 1.11.1 (2024-06-06)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-11-0-2024-05-23">TreeTools 1.11.0 (2024-05-23)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-10-0-2023-08-18">TreeTools 1.10.0 (2023-08-18)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations-and-breaking-changes">Deprecations and breaking changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-2-2023-04-25">TreeTools 1.9.2 (2023-04-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-1-2023-03-21">TreeTools 1.9.1 (2023-03-21)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-0-2022-11-29">TreeTools 1.9.0 (2022-11-29)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-8-0-2022-09-15">TreeTools 1.8.0 (2022-09-15)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-3-2022-07-20">TreeTools 1.7.3 (2022-07-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-2-2022-05-24">TreeTools 1.7.2 (2022-05-24)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-1-2022-03-25">TreeTools 1.7.1 (2022-03-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-0-2022-03-21">TreeTools 1.7.0 (2022-03-21)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-6-0-2022-01-12">TreeTools 1.6.0 (2022-01-12)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-5-1-2021-10-06">TreeTools 1.5.1 (2021-10-06)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-5-0-2021-09-13">TreeTools 1.5.0 (2021-09-13)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-functions">Improved functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-5-2021-06-23">TreeTools 1.4.5 (2021-06-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-4-2021-04-23">TreeTools 1.4.4 (2021-04-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-3-2021-04-12">TreeTools 1.4.3 (2021-04-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-2-2021-01-26">TreeTools 1.4.2 (2021-01-26)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-1-2020-12-09">TreeTools 1.4.1 (2020-12-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-0-2020-10-20">TreeTools 1.4.0 (2020-10-20)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-3-1">TreeTools 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-3-0-2020-09-22">TreeTools 1.3.0 (2020-09-22)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-2-0-2020-08-30">TreeTools 1.2.0 (2020-08-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-1-0-2020-07-07">TreeTools 1.1.0 (2020-07-07)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-0-0-2020-06-08">TreeTools 1.0.0 (2020-06-08)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-4-2020-03-04">TreeTools 0.1.4 (2020-03-04)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-3-2020-01-07">TreeTools 0.1.3 (2020-01-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-2-2020-12-18">TreeTools 0.1.2 (2020-12-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-1">TreeTools 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-0-2019-10-30">TreeTools 0.1.0 (2019-10-30)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="treetools-1-13-0-2025-01-09">
+<h1>TreeTools 1.13.0 (2025-01-09)<a class="headerlink" href="#treetools-1-13-0-2025-01-09" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%in%</span></code> and <code class="docutils literal notranslate"><span class="pre">match</span></code> methods for phylo / multiPhylo objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Decompose()</span></code> decomposes additive (ordered) phylogenetic characters by
+binary decomposition.</p></li>
+<li><p>Check for overflow in splits functions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-12-0-2024-07-25">
+<h1>TreeTools 1.12.0 (2024-07-25)<a class="headerlink" href="#treetools-1-12-0-2024-07-25" title="Link to this heading">#</a></h1>
+<section id="new-methods-and-functions">
+<h2>New methods and functions<a class="headerlink" href="#new-methods-and-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TopologyOnly()</span></code> removes metadata from phylo objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">J1Index()</span></code> computes the robust, universal tree balance measure of
+Lemant <em>et al</em>. 2022 <a class="reference external" href="doi:10.1093/sysbio/syac027">doi:10.1093/sysbio/syac027</a>, incorporating <a class="reference external" href="https://github.com/robjohnnoble/RUtreebalance">code</a> by Rob Noble.</p></li>
+</ul>
+</section>
+<section id="enhancements">
+<h2>Enhancements<a class="headerlink" href="#enhancements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Consistent sequence of list entries in phylo objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomTree()</span></code> returns trees for &lt; 3 leaves.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">root_on_node()</span></code> handles trees with &lt; 2 leaves.</p></li>
+<li><p>Support larger trees in <code class="docutils literal notranslate"><span class="pre">TotalCopheneticIndex()</span></code>, fixing
+<a class="reference external" href="https://github.com/ms609/TreeTools/issues/158">#158</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-11-1-2024-06-06">
+<h1>TreeTools 1.11.1 (2024-06-06)<a class="headerlink" href="#treetools-1-11-1-2024-06-06" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Set random seed and increase tolerance to avoid false negatives on tests.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-11-0-2024-05-23">
+<h1>TreeTools 1.11.0 (2024-05-23)<a class="headerlink" href="#treetools-1-11-0-2024-05-23" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>New methods and functions<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">YuleTree()</span></code> generates a random tree by the Yule process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DescendantTips()</span></code> complements <code class="docutils literal notranslate"><span class="pre">DescendantEdges()</span></code>, rewritten in C++,
+fixing a bug when edges were not in preorder.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NodeNumbers()</span></code> returns the indices of nodes within a tree.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Enhancements<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomTree(root</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> roots the tree on a random edge.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RoguePlot()$legendLabels</span></code> returns suggested labels for legend.</p></li>
+<li><p>Support node labels in <code class="docutils literal notranslate"><span class="pre">AddTip()</span></code>, <code class="docutils literal notranslate"><span class="pre">CollapseNode()</span></code>, <code class="docutils literal notranslate"><span class="pre">DropTip()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">MakeTreeBinary()</span></code>, <code class="docutils literal notranslate"><span class="pre">Renumber()</span></code>, <code class="docutils literal notranslate"><span class="pre">Reorder()</span></code>, <code class="docutils literal notranslate"><span class="pre">SortTree()</span></code>, <code class="docutils literal notranslate"><span class="pre">Subtree()</span></code>
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/149">#149</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AddTip(edgeLength</span> <span class="pre">=</span> <span class="pre">NULL)</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">lengthBelow</span></code>. This will become the
+default in a future release.</p></li>
+<li><p>An entry point to the C++ function <code class="docutils literal notranslate"><span class="pre">root_on_node()</span></code> is now exported
+(intended for expert use only).</p></li>
+<li><p>Fix handling of weighted trees by <code class="docutils literal notranslate"><span class="pre">root_on_node()</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">KeepTip()</span></code> internally so <code class="docutils literal notranslate"><span class="pre">SplitFrequency()</span></code> supports <code class="docutils literal notranslate"><span class="pre">Splits</span></code> objects
+as documented.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-10-0-2023-08-18">
+<h1>TreeTools 1.10.0 (2023-08-18)<a class="headerlink" href="#treetools-1-10-0-2023-08-18" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>New methods and functions<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TipTimedTree()</span></code> displays trees where leaves are associated with absolute
+ages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadMrBayesTrees()</span></code> samples trees from posterior of MrBayes output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is.TreeNumber()</span></code> method.</p></li>
+</ul>
+</section>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Support zero-edge trees in <code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code> and <code class="docutils literal notranslate"><span class="pre">NSplits()</span></code>.</p></li>
+<li><p>Support empty constraints in <code class="docutils literal notranslate"><span class="pre">AddUnconstrained()</span></code>.</p></li>
+<li><p>Add space between tokens in <code class="docutils literal notranslate"><span class="pre">WriteTntCharacters()</span></code> to support continuous
+characters (<a class="reference external" href="https://github.com/ms609/TreeTools/issues/139">#139</a>).</p></li>
+</ul>
+</section>
+<section id="deprecations-and-breaking-changes">
+<h2>Deprecations and breaking changes<a class="headerlink" href="#deprecations-and-breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Change order of parameters in <code class="docutils literal notranslate"><span class="pre">DescendantEdges()</span></code></p></li>
+<li><p>Deprecate <code class="docutils literal notranslate"><span class="pre">AllDescendantEdges()</span></code>; use <code class="docutils literal notranslate"><span class="pre">DescendantEdges()</span></code> instead.</p></li>
+<li><p>Deprecate <code class="docutils literal notranslate"><span class="pre">EnforceOutgroup()</span></code>; use <code class="docutils literal notranslate"><span class="pre">RootTree()</span></code> instead.</p></li>
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">NonDuplicateRoot()</span></code> and <code class="docutils literal notranslate"><span class="pre">in.Splits()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-9-2-2023-04-25">
+<h1>TreeTools 1.9.2 (2023-04-25)<a class="headerlink" href="#treetools-1-9-2-2023-04-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improve support for comments in <code class="docutils literal notranslate"><span class="pre">ReadNotes()</span></code>.</p></li>
+<li><p>Support Nexus-escaped <code class="docutils literal notranslate"><span class="pre">''</span></code>s in <code class="docutils literal notranslate"><span class="pre">ReadCharacters()</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">legend</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">RoguePlot()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RoguePlot()</span></code> now returns invisibly.</p></li>
+<li><p>Deprecate <code class="docutils literal notranslate"><span class="pre">SpectrumLegend()</span></code> – spun off to separate
+<a class="reference external" href="https://ms609.github.io/PlotTools/">“PlotTools”</a> package.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-9-1-2023-03-21">
+<h1>TreeTools 1.9.1 (2023-03-21)<a class="headerlink" href="#treetools-1-9-1-2023-03-21" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AddUnconstrained()</span></code> and <code class="docutils literal notranslate"><span class="pre">ImposeConstraint()</span></code> handle wider range of inputs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhyDatToMatrix()</span></code> can (and by default does) override levels to write
+ambiguous tokens in custom formats such as <code class="docutils literal notranslate"><span class="pre">{01}</span></code>.</p></li>
+<li><p>Call C functions using symbols, not strings.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-9-0-2022-11-29">
+<h1>TreeTools 1.9.0 (2022-11-29)<a class="headerlink" href="#treetools-1-9-0-2022-11-29" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>New methods and functions<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ZeroTaxonTree()</span></code> creates a <code class="docutils literal notranslate"><span class="pre">phylo</span></code> object with no leaves.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DropTip()</span></code> gains new methods <code class="docutils literal notranslate"><span class="pre">DropTip.list()</span></code> and <code class="docutils literal notranslate"><span class="pre">DropTip.NULL()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.matrix.phylo()</span></code> converts a tree to a matrix representation, allowing
+a tree to be passed as a constraint to <code class="docutils literal notranslate"><span class="pre">ImposeConstraint()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.matrix.Splits()</span></code> and <code class="docutils literal notranslate"><span class="pre">as.matrix.phyDat()</span></code> methods added as synonyms to
+<code class="docutils literal notranslate"><span class="pre">as.logical.Splits()</span></code> and <code class="docutils literal notranslate"><span class="pre">PhyDatToMatrix()</span></code>.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Improvements<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Handle <code class="docutils literal notranslate"><span class="pre">TipLabels(0)</span></code> and <code class="docutils literal notranslate"><span class="pre">BalancedTree(0)</span></code>.</p></li>
+<li><p>Support zero-leaf trees in <code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code> and <code class="docutils literal notranslate"><span class="pre">duplicated.Splits()</span></code>.</p></li>
+<li><p>Support non-identical tip labels in <code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code>.</p></li>
+<li><p>Try Latin-1 encoding if <code class="docutils literal notranslate"><span class="pre">ReadCharacters()</span></code> family fail under UTF-8.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-8-0-2022-09-15">
+<h1>TreeTools 1.8.0 (2022-09-15)<a class="headerlink" href="#treetools-1-8-0-2022-09-15" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>New methods and functions<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TntOrder()</span></code> renumbers a tree’s nodes to match TNT’s convention.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code> methods for Splits objects.</p></li>
+<li><p>Set names of splits object with <code class="docutils literal notranslate"><span class="pre">names(splits)</span> <span class="pre">&lt;-</span> <span class="pre">...</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code> support character vectors in the form “…***”.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Improvements<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadTntTree()</span></code> reads tree tags and follows TNT node numbering conventions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SpectrumLegend()</span></code> gains <code class="docutils literal notranslate"><span class="pre">title</span></code> parameter and more styling options.</p></li>
+<li><p>Support &gt; 32767 trees in <code class="docutils literal notranslate"><span class="pre">Consensus()</span></code>
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/127">#127</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DropTip()</span></code> speed improved when branch lengths are present.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-7-3-2022-07-20">
+<h1>TreeTools 1.7.3 (2022-07-20)<a class="headerlink" href="#treetools-1-7-3-2022-07-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadTntTree()</span></code> supports multi-line trees.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.MixedBase()</span></code> supports larger trees (44-32767 tips).</p></li>
+<li><p>Add deprecation warning to <code class="docutils literal notranslate"><span class="pre">in.Splits()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-7-2-2022-05-24">
+<h1>TreeTools 1.7.2 (2022-05-24)<a class="headerlink" href="#treetools-1-7-2-2022-05-24" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RenumberTips()</span></code> drops “preorder” attribute, as reordering tip labels may
+break edge ordering guarantee.</p></li>
+<li><p>Native implementation of <code class="docutils literal notranslate"><span class="pre">ClusterTable</span></code> class.</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">throw</span></code> with <code class="docutils literal notranslate"><span class="pre">stop</span></code> in C++ scripts.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-7-1-2022-03-25">
+<h1>TreeTools 1.7.1 (2022-03-25)<a class="headerlink" href="#treetools-1-7-1-2022-03-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AddTip()</span></code>: Fix bug when adding tip to root of weighted tree.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-7-0-2022-03-21">
+<h1>TreeTools 1.7.0 (2022-03-21)<a class="headerlink" href="#treetools-1-7-0-2022-03-21" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>New methods and functions<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rev.Splits()</span></code> reverses order in which splits are listed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeepTip.Splits()</span></code> is a faster alternative to <code class="docutils literal notranslate"><span class="pre">SubSplit()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%in%.Splits()</span></code> retains names when comparing small splits
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/40">#40</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sort.multiPhylo()</span></code> sorts lists of trees according to their mixed base
+representation (<a class="reference external" href="https://github.com/ms609/TreeTools/issues/84">#84</a>).</p></li>
+<li><p>Bitwise manipulation of splits with <code class="docutils literal notranslate"><span class="pre">|</span></code>, <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">xor</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.MixedBase()</span></code> uniquely represents binary trees as a mixed-base vector.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PathLengths()</span></code> describes all paths within a tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeptVerts()</span></code> and <code class="docutils literal notranslate"><span class="pre">KeptPaths()</span></code> identify elements in reduced trees.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PostorderOrder()</span></code> describes a sequence of edges corresponding to a
+postorder traversal of a tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SpectrumLegend()</span></code> adds gradients to plot legends.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>Improvements<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Improve handling of zero-split trees.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DropTip()</span></code> no longer adds a root to unrooted trees, and retains edge lengths.</p></li>
+<li><p>Improve speed of <code class="docutils literal notranslate"><span class="pre">DropTip()</span></code>, by an order of magnitude in some cases.</p></li>
+<li><p>Support edge lengths in <code class="docutils literal notranslate"><span class="pre">Preorder()</span></code>, <code class="docutils literal notranslate"><span class="pre">RootTree()</span></code>, <code class="docutils literal notranslate"><span class="pre">UnrootTree()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Postorder()</span></code> (<a class="reference external" href="https://github.com/ms609/TreeTools/issues/49">#49</a>,
+<a class="reference external" href="https://github.com/ms609/TreeTools/issues/89">#89</a>).</p></li>
+<li><p>Fix bug when tree is rooted on a discontinuous outgroup.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SortTree()</span></code> handles weighted and non-binary trees
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/25">#25</a>,
+<a class="reference external" href="https://github.com/ms609/TreeTools/issues/49">#25</a>),
+and gains option to sort by tip labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TipsInSplits(smallest</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> counts tips in smaller bipartition.</p></li>
+<li><p>Fix a bug with <code class="docutils literal notranslate"><span class="pre">phyDat</span></code> objects in <code class="docutils literal notranslate"><span class="pre">ArtificialExtinction()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RenumberTips()</span></code> allows <code class="docutils literal notranslate"><span class="pre">tipOrder</span></code> to contain elements not present in <code class="docutils literal notranslate"><span class="pre">tree</span></code>.</p></li>
+<li><p>Use lighter Rcpp headers.</p></li>
+<li><p>Small improvements to computational efficiency.</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h2>Deprecations<a class="headerlink" href="#deprecations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Remove deprecated function <code class="docutils literal notranslate"><span class="pre">PostorderEdges()</span></code>
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/35">#35</a>).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-6-0-2022-01-12">
+<h1>TreeTools 1.6.0 (2022-01-12)<a class="headerlink" href="#treetools-1-6-0-2022-01-12" title="Link to this heading">#</a></h1>
+<section id="new-functions">
+<h2>New functions<a class="headerlink" href="#new-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RoguePlot()</span></code> plots the positions of rogue taxa.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>Improvements<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DropTip()</span></code> gains <code class="docutils literal notranslate"><span class="pre">check</span></code> parameter to allow slightly faster operation where
+input is guaranteed to be valid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomTree()</span></code> gains <code class="docutils literal notranslate"><span class="pre">nodes</span></code> parameter allow the inclusion of polytomies.</p></li>
+<li><p>Infer <code class="docutils literal notranslate"><span class="pre">tips</span></code> parameter if missing in <code class="docutils literal notranslate"><span class="pre">StringToPhyDat()</span></code>.</p></li>
+<li><p>Remove dependency on “phangorn” (allowing use on R &lt; 4.1)</p></li>
+<li><p>Improve parsing of information from nexus files.</p></li>
+<li><p>Export <code class="docutils literal notranslate"><span class="pre">DropTipPhylo()</span></code> as wrapper to <code class="docutils literal notranslate"><span class="pre">DropTip.phylo()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-5-1-2021-10-06">
+<h1>TreeTools 1.5.1 (2021-10-06)<a class="headerlink" href="#treetools-1-5-1-2021-10-06" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PhyDatToMatrix()</span></code> optionally encodes ambiguous / inapplicable tokens as <code class="docutils literal notranslate"><span class="pre">NA</span></code>.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">sort.multiPhylo()</span></code>.</p></li>
+<li><p>Update test suite for compatibility with “testthat” &gt; 3.0.4 (&#64;hadley, #83).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-5-0-2021-09-13">
+<h1>TreeTools 1.5.0 (2021-09-13)<a class="headerlink" href="#treetools-1-5-0-2021-09-13" title="Link to this heading">#</a></h1>
+<section id="id11">
+<h2>New functions<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ConstrainedNJ()</span></code> returns an approximation to a neighbour-joining tree
+that respects constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolarizeSplits()</span></code> marks a specified taxon as representing the ingroup of all
+splits.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">KeepTip()</span></code> and improve performance of <code class="docutils literal notranslate"><span class="pre">DropTip()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImposeConstraint()</span></code> makes a tree consistent with topological constraints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo.Splits()</span></code> represents a <code class="docutils literal notranslate"><span class="pre">Splits</span></code> object as a tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Consensus()</span></code> is a faster C++ implementation of <code class="docutils literal notranslate"><span class="pre">ape::consensus()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ClusterTable()</span></code> C++ functionality imported from “TreeDist”.</p></li>
+</ul>
+</section>
+<section id="improved-functions">
+<h2>Improved functions<a class="headerlink" href="#improved-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Warn when empty cells passed to <code class="docutils literal notranslate"><span class="pre">MatrixToPhyDat()</span></code>.</p></li>
+<li><p>Warn when <code class="docutils literal notranslate"><span class="pre">LabelSplits(labels)</span></code> lack names.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SplitFrequency()</span></code> drops tips from <code class="docutils literal notranslate"><span class="pre">forest</span></code> that aren’t in <code class="docutils literal notranslate"><span class="pre">reference</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AddTipEverywhere()</span></code> supports trees with &lt; 3 leaves.</p></li>
+<li><p>Make <code class="docutils literal notranslate"><span class="pre">RootTree()</span></code> and <code class="docutils literal notranslate"><span class="pre">PhyDatToMatrix()</span></code> more robust.</p></li>
+<li><p>Support <code class="docutils literal notranslate"><span class="pre">encoding</span></code> option in <code class="docutils literal notranslate"><span class="pre">ReadCharacters()</span></code> function family.</p></li>
+<li><p>Support <code class="docutils literal notranslate"><span class="pre">CHARSTATELABELS</span></code> in <code class="docutils literal notranslate"><span class="pre">ReadCharacters()</span></code>.</p></li>
+<li><p>Support for more formatting quirks in <code class="docutils literal notranslate"><span class="pre">ReadNotes()</span></code>.</p></li>
+<li><p>Better support ambiguous tokens in <code class="docutils literal notranslate"><span class="pre">WriteTntCharacters()</span></code>.</p></li>
+</ul>
+</section>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fast matching functions from “fastmatch”.</p></li>
+<li><p>Improve efficiency of <code class="docutils literal notranslate"><span class="pre">Preorder()</span></code> and <code class="docutils literal notranslate"><span class="pre">Postorder()</span></code>,
+and lift limit on tree size.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-5-2021-06-23">
+<h1>TreeTools 1.4.5 (2021-06-23)<a class="headerlink" href="#treetools-1-4-5-2021-06-23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Correct calculation of minimum value in <code class="docutils literal notranslate"><span class="pre">TCIContext()</span></code>.</p></li>
+<li><p>Extract tip labels from objects in <code class="docutils literal notranslate"><span class="pre">StringToPhyDat()</span></code>.</p></li>
+<li><p>Support <code class="docutils literal notranslate"><span class="pre">AddTip(tree,</span> <span class="pre">where</span> <span class="pre">=</span> <span class="pre">&quot;tip</span> <span class="pre">name&quot;)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SplitFrequency()</span></code> supports four-leaf trees.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">RootTree.matrix()</span></code> method for edge matrices.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">TipLabels.phyDat()</span></code> method.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">NULL</span></code> methods for tree reordering functions.</p></li>
+<li><p>Additions and improvements to text parsing functions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-4-2021-04-23">
+<h1>TreeTools 1.4.4 (2021-04-23)<a class="headerlink" href="#treetools-1-4-4-2021-04-23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">NTip.phyDat()</span></code> method.</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">MakeTreeBinary()</span></code> docs and tests to reflect updated behaviour of
+<code class="docutils literal notranslate"><span class="pre">ape::multi2di()</span></code> in ‘ape’ v5.5.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-3-2021-04-12">
+<h1>TreeTools 1.4.3 (2021-04-12)<a class="headerlink" href="#treetools-1-4-3-2021-04-12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AddTip()</span></code> supports edge lengths.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CladisticInfo()</span></code> supports <code class="docutils literal notranslate"><span class="pre">Splits</span></code> objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.multiPhylo()</span></code> converts trees, datasets and Splits objects into
+<code class="docutils literal notranslate"><span class="pre">multiPhylo</span></code> objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LabelSplits(labels</span> <span class="pre">=</span> <span class="pre">NULL)</span></code> labels each split with its associated node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhyDatToMatrix()</span></code> supports integer-only levels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SortTree()</span></code> supports lists of trees.</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">ReadTntCharacters()</span></code> character block extraction
+(<a class="reference external" href="https://github.com/ms609/TreeTools/issues/50">#50</a>).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-2-2021-01-26">
+<h1>TreeTools 1.4.2 (2021-01-26)<a class="headerlink" href="#treetools-1-4-2-2021-01-26" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support star trees in <code class="docutils literal notranslate"><span class="pre">RootTree()</span></code>.</p></li>
+<li><p>Improve memory handling in <code class="docutils literal notranslate"><span class="pre">root_on_node()</span></code>.</p></li>
+<li><p>Documentation linkage.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-1-2020-12-09">
+<h1>TreeTools 1.4.1 (2020-12-09)<a class="headerlink" href="#treetools-1-4-1-2020-12-09" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MSTEdges()</span></code> supports distance matrices with &gt; 256 entries.</p></li>
+<li><p>Package ‘vdiffr’ used conditionally.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-4-0-2020-10-20">
+<h1>TreeTools 1.4.0 (2020-10-20)<a class="headerlink" href="#treetools-1-4-0-2020-10-20" title="Link to this heading">#</a></h1>
+<section id="id12">
+<h2>New functions<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MSTLength()</span></code> reports length of minimum spanning tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AllTipLabels()</span></code> returns all labels from all trees in a list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PairwiseDistances()</span></code> (from ‘TreeDistData’) computes distances between all
+pairs of trees in a list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ArtificialExtinction()</span></code> gains <code class="docutils literal notranslate"><span class="pre">replaceAll</span></code> option.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WriteTntCharacters(types</span> <span class="pre">=</span> <span class="pre">...)</span></code> writes different character types to TNT
+file.</p></li>
+<li><p>Tree characterization S3 methods: add <code class="docutils literal notranslate"><span class="pre">.default</span></code> and <code class="docutils literal notranslate"><span class="pre">.NULL</span></code>.</p></li>
+</ul>
+</section>
+<section id="id13">
+<h2>Enhancements<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MSTEdges()</span></code> implemented in C++, improving runtime by orders of magnitude.</p></li>
+<li><p>Improved parsing of TNT character files.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-3-1">
+<h1>TreeTools 1.3.1<a class="headerlink" href="#treetools-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improved parsing of TNT files.</p></li>
+<li><p>Fix misspecified C++ linkage.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-3-0-2020-09-22">
+<h1>TreeTools 1.3.0 (2020-09-22)<a class="headerlink" href="#treetools-1-3-0-2020-09-22" title="Link to this heading">#</a></h1>
+<section id="id14">
+<h2>New functions<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SisterSize()</span></code> and <code class="docutils literal notranslate"><span class="pre">RootNodeDist()</span></code> measure sister-clade size and root-node
+distance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MSTEdges()</span></code>: Edges of minimum spanning tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SplitImbalance()</span></code>: how balanced is each split?</p></li>
+<li><p>New C++ functions <code class="docutils literal notranslate"><span class="pre">root_on_node()</span></code> and <code class="docutils literal notranslate"><span class="pre">root_binary()</span></code> to root trees quickly
+and robustly.</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>Enhancements<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TNTReadTree()</span></code> handles additional punctuation characters.</p></li>
+<li><p>Import RdMacros package ‘Rdpack’.</p></li>
+<li><p>C++ implementation of <code class="docutils literal notranslate"><span class="pre">TipsInSplits()</span></code>.</p></li>
+<li><p>Export C++ functions <code class="docutils literal notranslate"><span class="pre">preorder_edges_and_nodes()</span></code> and <code class="docutils literal notranslate"><span class="pre">postorder_edges()</span></code>.</p></li>
+<li><p>Remove obsolete copy of C++ code from ‘phangorn’.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-2-0-2020-08-30">
+<h1>TreeTools 1.2.0 (2020-08-30)<a class="headerlink" href="#treetools-1-2-0-2020-08-30" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ArtificialExtinction()</span></code>: Remove characters that are absent in a fossil
+template.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WriteTntCharacters()</span></code>: Write morphological dataset in TNT format.</p></li>
+<li><p>Improve TNT dataset parsing.</p></li>
+<li><p>Documentation improvements.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-1-0-2020-07-07">
+<h1>TreeTools 1.1.0 (2020-07-07)<a class="headerlink" href="#treetools-1-1-0-2020-07-07" title="Link to this heading">#</a></h1>
+<section id="id16">
+<h2>New functions<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomTree()</span></code>: Draw tree from uniform distribution, instead of via
+<code class="docutils literal notranslate"><span class="pre">ape::rtree()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MakeTreeBinary()</span></code>: Uniform equivalent of <code class="docutils literal notranslate"><span class="pre">ape::multi2di()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">match.list()</span></code> method for lists of splits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SplitsInBinaryTree()</span></code>: How many splits occur in an <em>n</em>-leaf binary tree?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vapply64()</span></code>, <code class="docutils literal notranslate"><span class="pre">sapply64()</span></code>, <code class="docutils literal notranslate"><span class="pre">replicate64()</span></code>: helper functions when a function
+returns a 64-bit integer.</p></li>
+</ul>
+</section>
+<section id="id17">
+<h2>Enhancements<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use methods for <code class="docutils literal notranslate"><span class="pre">UnrootTree()</span></code>, <code class="docutils literal notranslate"><span class="pre">RootTree()</span></code>, <code class="docutils literal notranslate"><span class="pre">RootOnNode()</span></code> to support
+lists of trees.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-1-0-0-2020-06-08">
+<h1>TreeTools 1.0.0 (2020-06-08)<a class="headerlink" href="#treetools-1-0-0-2020-06-08" title="Link to this heading">#</a></h1>
+<section id="id18">
+<h2>New functions<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CladisticInfo()</span></code>: Calculate the information content of a tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RootNode()</span></code>: Which node is a tree’s root?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnrootTree()</span></code>: Safely remove a root node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NodeDepth()</span></code>: Discriminate shallow from deep nodes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NodeOrder()</span></code>, <code class="docutils literal notranslate"><span class="pre">NDescendants()</span></code>: Count edges incident to each node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CladeSizes()</span></code>: Count leaves / nodes descended from each node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ListAncestors()</span></code>: List ancestors of a node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LabelSplits()</span></code>: Label splits on plotted tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DropTip()</span></code>: Remove tip, handling weird node orders.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LeafLabelInterchange()</span></code>: Exchange position of <em>n</em> tips.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StarTree()</span></code>: Generate unresolved tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TotalCopheneticIndex()</span></code> integrated from ‘tci’ package.</p></li>
+</ul>
+</section>
+<section id="id19">
+<h2>Deprecations<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PostorderEdges()</span></code>: use <code class="docutils literal notranslate"><span class="pre">Postorder()</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NonDuplicateRoot()</span></code>: unused internal function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">match.Splits()</span></code>: use <code class="docutils literal notranslate"><span class="pre">match()</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">in.Splits()</span></code>: use <code class="docutils literal notranslate"><span class="pre">%in%.Splits()</span></code> instead.</p></li>
+</ul>
+</section>
+<section id="id20">
+<h2>Enhancements<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Improve support for unrooted trees in <code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code>.</p></li>
+<li><p>Use methods so <code class="docutils literal notranslate"><span class="pre">Reorder</span></code> functions can handle <code class="docutils literal notranslate"><span class="pre">multiPhylo</span></code> objects and edges.</p></li>
+<li><p>Handle funny node orders.</p></li>
+<li><p>Support continuous characters in <code class="docutils literal notranslate"><span class="pre">ReadCharacters()</span></code>.</p></li>
+<li><p>Improve performance of <code class="docutils literal notranslate"><span class="pre">as.logical.Splits()</span></code> and related functions.</p></li>
+<li><p>Fail nicely when trees are too large for memory.</p></li>
+<li><p>Fix memory leak in <code class="docutils literal notranslate"><span class="pre">as.Splits()</span></code>.</p></li>
+<li><p>Various under-the-hood improvements to functions.</p></li>
+<li><p>Documentation improvements.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-0-1-4-2020-03-04">
+<h1>TreeTools 0.1.4 (2020-03-04)<a class="headerlink" href="#treetools-0-1-4-2020-03-04" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Catch hang-inducing bugs in <code class="docutils literal notranslate"><span class="pre">RootOnNode()</span></code>.</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">doubleFactorials</span></code> cache to fix <code class="docutils literal notranslate"><span class="pre">as.integer()</span></code> rounding error.</p></li>
+<li><p>Support unrooted trees in <code class="docutils literal notranslate"><span class="pre">AddTipEverywhere()</span></code>.</p></li>
+<li><p>Documentation improvements.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-0-1-3-2020-01-07">
+<h1>TreeTools 0.1.3 (2020-01-07)<a class="headerlink" href="#treetools-0-1-3-2020-01-07" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RootOnNode()</span></code>: Quickly root a tree on a specified node.</p></li>
+<li><p>Improve portability of C++ code.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-0-1-2-2020-12-18">
+<h1>TreeTools 0.1.2 (2020-12-18)<a class="headerlink" href="#treetools-0-1-2-2020-12-18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as.Newick</span></code>: Fast conversion to Newick format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.TreeNumber</span></code>: Tree shape enumeration.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-0-1-1">
+<h1>TreeTools 0.1.1<a class="headerlink" href="#treetools-0-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add functions to translate trees to mixed base integers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RenumberTips</span></code> can extract tip order from <code class="docutils literal notranslate"><span class="pre">phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">Splits</span></code> objects.</p></li>
+<li><p>Documentation changes to satisfy CRAN submission requirements.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treetools-0-1-0-2019-10-30">
+<h1>TreeTools 0.1.0 (2019-10-30)<a class="headerlink" href="#treetools-0-1-0-2019-10-30" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Pre-release version spun out of <a class="reference external" href="https://ms609.github.io/TreeSearch/">‘TreeSearch’</a>
+package.  Some functionality is subject to change.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\TreeTools"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TreeTools 1.13.0 (2025-01-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-12-0-2024-07-25">TreeTools 1.12.0 (2024-07-25)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-methods-and-functions">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enhancements">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-11-1-2024-06-06">TreeTools 1.11.1 (2024-06-06)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-11-0-2024-05-23">TreeTools 1.11.0 (2024-05-23)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-10-0-2023-08-18">TreeTools 1.10.0 (2023-08-18)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations-and-breaking-changes">Deprecations and breaking changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-2-2023-04-25">TreeTools 1.9.2 (2023-04-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-1-2023-03-21">TreeTools 1.9.1 (2023-03-21)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-9-0-2022-11-29">TreeTools 1.9.0 (2022-11-29)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-8-0-2022-09-15">TreeTools 1.8.0 (2022-09-15)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-3-2022-07-20">TreeTools 1.7.3 (2022-07-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-2-2022-05-24">TreeTools 1.7.2 (2022-05-24)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-1-2022-03-25">TreeTools 1.7.1 (2022-03-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-7-0-2022-03-21">TreeTools 1.7.0 (2022-03-21)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">New methods and functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-6-0-2022-01-12">TreeTools 1.6.0 (2022-01-12)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-5-1-2021-10-06">TreeTools 1.5.1 (2021-10-06)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-5-0-2021-09-13">TreeTools 1.5.0 (2021-09-13)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-functions">Improved functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-5-2021-06-23">TreeTools 1.4.5 (2021-06-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-4-2021-04-23">TreeTools 1.4.4 (2021-04-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-3-2021-04-12">TreeTools 1.4.3 (2021-04-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-2-2021-01-26">TreeTools 1.4.2 (2021-01-26)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-1-2020-12-09">TreeTools 1.4.1 (2020-12-09)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-4-0-2020-10-20">TreeTools 1.4.0 (2020-10-20)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-3-1">TreeTools 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-3-0-2020-09-22">TreeTools 1.3.0 (2020-09-22)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-2-0-2020-08-30">TreeTools 1.2.0 (2020-08-30)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-1-0-2020-07-07">TreeTools 1.1.0 (2020-07-07)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-1-0-0-2020-06-08">TreeTools 1.0.0 (2020-06-08)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Deprecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Enhancements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-4-2020-03-04">TreeTools 0.1.4 (2020-03-04)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-3-2020-01-07">TreeTools 0.1.3 (2020-01-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-2-2020-12-18">TreeTools 0.1.2 (2020-12-18)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-1">TreeTools 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treetools-0-1-0-2019-10-30">TreeTools 0.1.0 (2019-10-30)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

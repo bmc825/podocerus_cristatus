@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>bslib 0.9.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/bslib/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/bslib/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>bslib 0.9.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">bslib 0.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements-and-bug-fixes">Improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-8-0">bslib 0.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-7-0">bslib 0.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-improvements">Changes &amp; improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-2">bslib 0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-1">bslib 0.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-0">bslib 0.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-5-1">bslib 0.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-5-0">bslib 0.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-improvements">Breaking changes / improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-2">bslib 0.4.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potentially-breaking-changes">Potentially breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-1">bslib 0.4.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-0">bslib 0.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-3-1">bslib 0.3.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-3-0">bslib 0.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-5-1">bslib 0.2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-5">bslib 0.2.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-improvements">New features and improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-4">bslib 0.2.4</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="bslib-0-9-0">
+<h1>bslib 0.9.0<a class="headerlink" href="#bslib-0-9-0" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The navbar-related style options of <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> and <code class="docutils literal notranslate"><span class="pre">navset_bar()</span></code> have been consolidated into a single <code class="docutils literal notranslate"><span class="pre">navbar_options</span></code> argument that pairs with a new <code class="docutils literal notranslate"><span class="pre">navbar_options()</span></code> helper. Using the direct <code class="docutils literal notranslate"><span class="pre">position</span></code>, <code class="docutils literal notranslate"><span class="pre">bg</span></code>, <code class="docutils literal notranslate"><span class="pre">inverse</span></code>, <code class="docutils literal notranslate"><span class="pre">collapsible</span></code>, and <code class="docutils literal notranslate"><span class="pre">underline</span></code> arguments will continue to work with a deprecation message. (#1141)</p>
+<p>Related to the above change, <code class="docutils literal notranslate"><span class="pre">navset_bar()</span></code> now defaults to using <code class="docutils literal notranslate"><span class="pre">underline</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> so that both <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> and <code class="docutils literal notranslate"><span class="pre">navset_bar()</span></code> use the same set of default <code class="docutils literal notranslate"><span class="pre">navbar_options()</span></code>.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">navbar_options()</span></code>, <code class="docutils literal notranslate"><span class="pre">inverse</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">theme</span></code>, which takes values <code class="docutils literal notranslate"><span class="pre">&quot;light&quot;</span></code> (dark text on a <strong>light</strong> background), <code class="docutils literal notranslate"><span class="pre">&quot;dark&quot;</span></code> (light text on a <strong>dark</strong> background), or <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> (follow page settings, the default). This change affects that default navbar foreground and background colors for Bootswatch preset themes with Bootstrap 5. Detailed instructions for customizing the navbar appearance, especially for Bootswatch themes, can be found in <code class="docutils literal notranslate"><span class="pre">?navbar_options</span></code>. (#1146)</p>
+</li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>bslib now supports unified theming with <a class="reference external" href="https://posit-dev.github.io/brand-yml/">brand.yml</a>. brand.yml lets you theme your Shiny apps, Quarto documents and more with a single, portable YAML file. Learn more in the new <a class="reference external" href="https://rstudio.github.io/bslib/dev/articles/brand-yml/">Unified theming with brand.yml</a> article. (#1148)</p></li>
+</ul>
+</section>
+<section id="improvements-and-bug-fixes">
+<h2>Improvements and bug fixes<a class="headerlink" href="#improvements-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">navset_card_pills()</span></code>, <code class="docutils literal notranslate"><span class="pre">navset_card_underline()</span></code>, <code class="docutils literal notranslate"><span class="pre">navset_card_tabs()</span></code> fixed to now respect header/footer arguments (&#64;tanho63, #1024)</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">bs_themer()</span></code> (and <code class="docutils literal notranslate"><span class="pre">bs_theme_preview()</span></code>) that caused it to stop applying changes if a Sass variable was <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. (&#64;meztez, #1112)</p></li>
+<li><p>Optimized for better performance the internal functions that compile Sass to call the <code class="docutils literal notranslate"><span class="pre">color-contrast()</span></code> algorithm. (#1140)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_switch()</span></code> and <code class="docutils literal notranslate"><span class="pre">input_dark_mode()</span></code> can be included in Shiny’s <a class="reference external" href="https://shiny.posit.co/r/articles/share/bookmarking-state/">bookmarking feature</a>. (#1166)</p></li>
+<li><p>Fixed an issue with the Shiny preset (<code class="docutils literal notranslate"><span class="pre">bs_theme(5,</span> <span class="pre">&quot;shiny&quot;)</span></code>) that caused a floating underling to appear when a <code class="docutils literal notranslate"><span class="pre">nav_panel_hidden()</span></code> was used and active. (#1170)</p></li>
+<li><p>bslib now uses navbar markup with Bootstrap 5 that’s closer to the expected markup for Bootstrap. We still include the <code class="docutils literal notranslate"><span class="pre">navbar-default</span></code> or <code class="docutils literal notranslate"><span class="pre">navbar-inverse</span></code> classes on the <code class="docutils literal notranslate"><span class="pre">&lt;nav&gt;</span></code> element, for backwards compatibility, but in apps that use Bootstrap 5 these classes have no styles. (#1146)</p></li>
+<li><p>The following functions are no longer marked “experimental”: <code class="docutils literal notranslate"><span class="pre">accordion()</span></code>, <code class="docutils literal notranslate"><span class="pre">breakpoints()</span></code>, <code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">input_dark_mode()</span></code>, <code class="docutils literal notranslate"><span class="pre">input_switch()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code>, <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>, <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code>, <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code>, <code class="docutils literal notranslate"><span class="pre">popover()</span></code>, <code class="docutils literal notranslate"><span class="pre">tooltip()</span></code> and <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-8-0">
+<h1>bslib 0.8.0<a class="headerlink" href="#bslib-0-8-0" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>Breaking changes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>To help reduce the potential for squashed content, the main content area of <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code> and <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> with a <code class="docutils literal notranslate"><span class="pre">sidebar</span></code> now have a (customizable) minimum height and width on a “medium-sized” window. To revert to previous behavior, set <code class="docutils literal notranslate"><span class="pre">theme</span> <span class="pre">=</span> <span class="pre">bs_theme(&quot;bslib-page-main-min-height&quot;</span> <span class="pre">=</span> <span class="pre">&quot;unset&quot;,</span> <span class="pre">&quot;bslib-page-main-min-width&quot;</span> <span class="pre">=</span> <span class="pre">&quot;unset&quot;)</span></code>. (#1057, #1059, #1084)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">card_image()</span></code> had a couple breaking changes (#1076):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fill</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> to avoid stretching/shrinking the image vertically (and thus, changing it’s aspect ratio). To restore the previous behavior, set <code class="docutils literal notranslate"><span class="pre">fill</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> instead of <code class="docutils literal notranslate"><span class="pre">card_body</span></code>. As a result, <code class="docutils literal notranslate"><span class="pre">card_image()</span></code> no longer has padding around it, making it easier to create “full-bleed” card images (<a class="reference external" href="https://getbootstrap.com/docs/5.3/components/card/#images">for example</a>). To restore the previous behavior, wrap <code class="docutils literal notranslate"><span class="pre">card_image()</span></code> in a <code class="docutils literal notranslate"><span class="pre">card_body()</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>New features<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">card_image()</span></code> gains several new features (#1076):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">alt</span></code> is now a formal argument and is set to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> by default. This default value marks images as decorative; please describe the image in the <code class="docutils literal notranslate"><span class="pre">alt</span></code> attribute if it is not decorative.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">border_radius</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> by default, in which case the image’s position in the card will automatically determine whether it should receive the <code class="docutils literal notranslate"><span class="pre">.card-img-top</span></code> (first child), <code class="docutils literal notranslate"><span class="pre">.card-img-bottom</span></code> (last child) or <code class="docutils literal notranslate"><span class="pre">.card-img</span></code> (only child).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span></code> is designed to accept a path to a local (server-side) file, but now recognizes remote files that start with a protocol prefix, e.g. <code class="docutils literal notranslate"><span class="pre">https://</span></code>, or two slashes, e.g. <code class="docutils literal notranslate"><span class="pre">//</span></code>. Local files are base64-encoded and embedded in the HTML output, while remote files are linked directly. To use a relative path for a file that will be served by the Shiny app, use <code class="docutils literal notranslate"><span class="pre">src</span></code> instead of file, e.g. <code class="docutils literal notranslate"><span class="pre">card_image(src</span> <span class="pre">=</span> <span class="pre">&quot;cat.jpg&quot;)</span></code> where <code class="docutils literal notranslate"><span class="pre">cat.jpg</span></code> is stored in <code class="docutils literal notranslate"><span class="pre">www/</span></code>.</p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">open</span></code> argument of <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> now includes the option to place a sidebar that’s always open on mobile screens <em>above the main content</em> with <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">=</span> <span class="pre">list(mobile</span> <span class="pre">=</span> <span class="pre">&quot;always-above&quot;)</span></code>. (#1088)</p></li>
+</ul>
+</section>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adjusted the border color of checkbox and radio buttons to match the border color of the input group in <code class="docutils literal notranslate"><span class="pre">bs_theme(preset=&quot;shiny&quot;)</span></code>. (#1038)</p></li>
+<li><p>On mobile, the main and sidebar content areas of a <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> no longer overlap with the sidebar toggle button. (#1084)</p></li>
+<li><p>bslib now re-exports <code class="docutils literal notranslate"><span class="pre">htmltools::css()</span></code> to make it easier to specify style declarations. (#1086)</p></li>
+<li><p>Example apps provided with bslib have now moved from <code class="docutils literal notranslate"><span class="pre">examples</span></code> to <code class="docutils literal notranslate"><span class="pre">examples-shiny</span></code> to take advantage of the new <code class="docutils literal notranslate"><span class="pre">package</span></code> argument in <code class="docutils literal notranslate"><span class="pre">shiny::runExample()</span></code> with shiny &gt;= 1.8.1. For example, try <code class="docutils literal notranslate"><span class="pre">shiny::runExample(&quot;build-a-box&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;bslib&quot;)</span></code>. (#1049)</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">toggle_sidebar()</span></code> once again correctly closes a sidebar. (&#64;fredericva, #1043)</p></li>
+<li><p>bslib now avoids re-defining its components when used in a context where they are already available, e.g. in a Quarto dashboard. (#1045)</p></li>
+<li><p>Improved the appearance of cards with sidebars and headers in the Shiny preset, especially when custom card color themes are used, e.g. with <code class="docutils literal notranslate"><span class="pre">text-bg-primary</span></code> or other Bootstrap utility classes. (#1056)</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">card_body(fillable</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code>, bslib now preserves flow-layout margin bottom settings. (#1073)</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> that caused a spurious and confusing error message. (#1081)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-7-0">
+<h1>bslib 0.7.0<a class="headerlink" href="#bslib-0-7-0" title="Link to this heading">#</a></h1>
+<p>This large release includes many improvements and bug fixes for newer UI components like <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code>, <code class="docutils literal notranslate"><span class="pre">card()</span></code>, and <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code>. In addition, the new <code class="docutils literal notranslate"><span class="pre">input_task_button()</span></code> offers a drop-in replacement for <code class="docutils literal notranslate"><span class="pre">shiny::actionButton()</span></code> (to prevent multiple submissions of the same operation) as well as pairing nicely with the new <code class="docutils literal notranslate"><span class="pre">shiny::ExtendedTask</span></code> for implementing truly non-blocking operations in Shiny.</p>
+<section id="id3">
+<h2>New features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">input_task_button()</span></code>, a replacement for <code class="docutils literal notranslate"><span class="pre">shiny::actionButton()</span></code> that automatically prevents an operation from being submitted multiple times. It does this by, upon click, immediately transitioning to a “Processing…” visual state that does not let the button be clicked again. The button resets to its clickable state automatically after the reactive flush it causes is complete; or, for advanced scenarios, <code class="docutils literal notranslate"><span class="pre">update_task_button()</span></code> can be used to manually control when the button resets.</p></li>
+<li><p>Both <code class="docutils literal notranslate"><span class="pre">card()</span></code> and <code class="docutils literal notranslate"><span class="pre">value_box()</span></code> now take an <code class="docutils literal notranslate"><span class="pre">id</span></code> argument that, when provided, is used to report the full screen state of the card or value box to the server. For example, when using <code class="docutils literal notranslate"><span class="pre">card(id</span> <span class="pre">=</span> <span class="pre">&quot;my_card&quot;,</span> <span class="pre">full_screen</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> you can determine if the card is currently in full screen mode by reading the boolean value of <code class="docutils literal notranslate"><span class="pre">input$my_card_full_screen</span></code>. (#1006, #1032)</p></li>
+</ul>
+</section>
+<section id="changes-improvements">
+<h2>Changes &amp; improvements<a class="headerlink" href="#changes-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code>:</p>
+<ul>
+<li><p>The page-level <code class="docutils literal notranslate"><span class="pre">sidebar</span></code> for <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code>/<code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> is now always open (and not collapsible) by default on mobile screens. To revert to the old behavior, set <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">=</span> <span class="pre">&quot;desktop&quot;</span></code> in the <code class="docutils literal notranslate"><span class="pre">sidebar</span></code>. (#943)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">open</span></code> now accepts a list with <code class="docutils literal notranslate"><span class="pre">mobile</span></code> and <code class="docutils literal notranslate"><span class="pre">desktop</span></code> values to control the sidebar’s initial state on each screen size, choosing from <code class="docutils literal notranslate"><span class="pre">&quot;open&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;closed&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;always&quot;</span></code> (for an always-open sidebar that cannot be collapsed). (#943)</p></li>
+<li><p>The collapse toggle now has a high <code class="docutils literal notranslate"><span class="pre">z-index</span></code> value to ensure it always appears above elements in the main content area. The sidebar overlay also now receives the same high <code class="docutils literal notranslate"><span class="pre">z-index</span></code> on mobile layouts. (#958)</p></li>
+</ul>
+</li>
+<li><p>Improved <code class="docutils literal notranslate"><span class="pre">card(full_screen</span> <span class="pre">=</span> <span class="pre">TRUE,</span> <span class="pre">...)</span></code> accessibility:</p>
+<ul>
+<li><p>Full-screen cards are now supported on mobile devices: the <em>Expand card</em> button is revealed when a user taps on the card (thanks &#64;Damonsoul, #961).</p></li>
+<li><p>The <em>Expand card</em> button is now accessible via keyboard navigation and appropriate ARIA attributes connect the card with the expand and close buttons.</p></li>
+<li><p>For JavaScript-oriented users, the expansion/collapse is now accompanied by a custom <code class="docutils literal notranslate"><span class="pre">bslib.card</span></code> event with the full screen state reported in the <code class="docutils literal notranslate"><span class="pre">event.detail.fullScreen</span></code> property. (#959)</p></li>
+</ul>
+</li>
+<li><p>Improvements to the default theme (i.e., Shiny preset):</p>
+<ul>
+<li><p>In the default theme, cards now use a slightly smaller shadow and the same shadow style is also now used by popovers. (#998)</p></li>
+<li><p>Increased spacing between elements. This change is most noticeable in the <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code> or <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> component. In these and other components, you can use <code class="docutils literal notranslate"><span class="pre">gap</span></code> and <code class="docutils literal notranslate"><span class="pre">padding</span></code> arguments to choose your own values, or you can set the <code class="docutils literal notranslate"><span class="pre">$bslib-spacer</span></code> (Sass) or <code class="docutils literal notranslate"><span class="pre">--bslib-spacer</span></code> (CSS) variable. (#998)</p></li>
+</ul>
+</li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">col_widths</span></code> now sets the <code class="docutils literal notranslate"><span class="pre">sm</span></code> breakpoint by default, rather than the <code class="docutils literal notranslate"><span class="pre">md</span></code> breakpoint. For example, <code class="docutils literal notranslate"><span class="pre">col_widths</span> <span class="pre">=</span> <span class="pre">c(12,</span> <span class="pre">6,</span> <span class="pre">6)</span></code> is now equivalent to <code class="docutils literal notranslate"><span class="pre">breakpoints(sm</span> <span class="pre">=</span> <span class="pre">c(12,</span> <span class="pre">6,</span> <span class="pre">6))</span></code> rather than <code class="docutils literal notranslate"><span class="pre">breakpoints(md</span> <span class="pre">=</span> <span class="pre">c(12,</span> <span class="pre">6,</span> <span class="pre">6))</span></code>. (#1014)</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">col_widths</span></code> has a <code class="docutils literal notranslate"><span class="pre">breakpoints()</span></code> at <code class="docutils literal notranslate"><span class="pre">lg</span></code> or wider, it now uses a better default column width for the smaller breakpoints not listed in the <code class="docutils literal notranslate"><span class="pre">col_widths</span></code> value. That said, you can always include <code class="docutils literal notranslate"><span class="pre">sm</span></code> or <code class="docutils literal notranslate"><span class="pre">md</span></code> in your <code class="docutils literal notranslate"><span class="pre">breakpoints()</span></code> definition to have complete control over column widths at those sizes. (#931)</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">row_heights</span></code> is a non-<code class="docutils literal notranslate"><span class="pre">breakpoints()</span></code> object, that value is used for the row heights at all breakpoints. Previously, it was used for the row heights from <code class="docutils literal notranslate"><span class="pre">&quot;sm&quot;</span></code> up. (#931)</p></li>
+<li><p>When an integer value for any breakpoint is provided to <code class="docutils literal notranslate"><span class="pre">col_widths</span></code>, a 12-unit grid is always used. For example, <code class="docutils literal notranslate"><span class="pre">breakpoints(md</span> <span class="pre">=</span> <span class="pre">3,</span> <span class="pre">lg</span> <span class="pre">=</span> <span class="pre">NA)</span></code> will pick a best-fitting layout for large screen sizes using the 12-column grid. Previously, the best fit algorithm might adjust the number of columns as a shortcut to an easy solution. That shortcut is only taken when an auto-fit layout is requested for every breakpoint, e.g. <code class="docutils literal notranslate"><span class="pre">col_widths</span> <span class="pre">=</span> <span class="pre">breakpoints(md</span> <span class="pre">=</span> <span class="pre">NA,</span> <span class="pre">lg</span> <span class="pre">=</span> <span class="pre">NA)</span></code> or <code class="docutils literal notranslate"><span class="pre">col_widths</span> <span class="pre">=</span> <span class="pre">NA</span></code>. (#928)</p></li>
+<li><p>Underlying logic moved from R to Typescript to improve the portability of the component. (#931)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_box()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code> and <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> now all have <code class="docutils literal notranslate"><span class="pre">min_height</span></code> and <code class="docutils literal notranslate"><span class="pre">max_height</span></code> arguments. These are useful in filling layouts, like <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>, <code class="docutils literal notranslate"><span class="pre">page_sidebar(fillable</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> or <code class="docutils literal notranslate"><span class="pre">page_navbar(fillable</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>. For example, you can use <code class="docutils literal notranslate"><span class="pre">layout_columns(min_height</span> <span class="pre">=</span> <span class="pre">300,</span> <span class="pre">max_height</span> <span class="pre">=</span> <span class="pre">500)</span></code> to ensure that a set of items (likely arranged in a row of columns) are always between 300 and 500 pixels tall. (#1016)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code> now places the <code class="docutils literal notranslate"><span class="pre">title</span></code> element in a <code class="docutils literal notranslate"><span class="pre">.navbar</span></code> container that matches the structure of <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code>. This ensures that the title elements of <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code> and <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> have consistent appearance. (#998)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_fillable_container()</span></code>, <code class="docutils literal notranslate"><span class="pre">as_fill_item()</span></code> and <code class="docutils literal notranslate"><span class="pre">as_fill_carrier()</span></code> now always include the htmltools fill CSS dependency. This means that they are no longer usable with the <code class="docutils literal notranslate"><span class="pre">$addAttr()</span></code> <code class="docutils literal notranslate"><span class="pre">htmltools::tagQuery</span></code> method; authors should instead pass elements to the <code class="docutils literal notranslate"><span class="pre">as_fillable_container()</span></code> and <code class="docutils literal notranslate"><span class="pre">as_fill_*()</span></code> functions and use the <code class="docutils literal notranslate"><span class="pre">css_selector</span></code> argument to apply fill options to specific elements. (#946)</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Bug fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed an issue where the page might be given a window title of <code class="docutils literal notranslate"><span class="pre">NA</span></code> if the primary <code class="docutils literal notranslate"><span class="pre">title</span></code> argument of a page function, such as <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code>, is <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or a suitable window title could not be inferred. (#933)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">card()</span></code>s (and <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>s) now correctly exit full screen mode when they are removed from the UI.  If you want to update a card without potentially exiting the full-screen mode, update specific parts of the card using <code class="docutils literal notranslate"><span class="pre">uiOutput()</span></code> or <code class="docutils literal notranslate"><span class="pre">textOutput()</span></code>. (#1005)</p></li>
+<li><p>Fixed a handful of <code class="docutils literal notranslate"><span class="pre">update_popover()</span></code> bugs. (#747, #1017)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tooltip()</span></code> and <code class="docutils literal notranslate"><span class="pre">popover()</span></code> now work as expected when inserted into a navbar/navset via <code class="docutils literal notranslate"><span class="pre">nav_insert()</span></code>. (#1020)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uiOutput()</span></code> and <code class="docutils literal notranslate"><span class="pre">conditionalPanel()</span></code> no longer result in unwanted double padding when their parent container uses <code class="docutils literal notranslate"><span class="pre">gap</span></code> for spacing multiple elements (e.g., <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code>, <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>, etc). (#992, #1031)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> and <code class="docutils literal notranslate"><span class="pre">navset_bar()</span></code> now validate and transform <code class="docutils literal notranslate"><span class="pre">padding</span></code> and <code class="docutils literal notranslate"><span class="pre">gap</span></code> arguments into appropriate CSS values. (#991)</p></li>
+<li><p>Fixed an issue where the <code class="docutils literal notranslate"><span class="pre">xs</span></code> breakpoint in a <code class="docutils literal notranslate"><span class="pre">breakpoints()</span></code> object used for <code class="docutils literal notranslate"><span class="pre">row_heights</span></code> in <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code> would override all other breakpoints. (#1014)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-6-2">
+<h1>bslib 0.6.2<a class="headerlink" href="#bslib-0-6-2" title="Link to this heading">#</a></h1>
+<p>Increased the version requirement on the <code class="docutils literal notranslate"><span class="pre">{sass}</span></code> package to 0.4.9. As a result, <code class="docutils literal notranslate"><span class="pre">font_google(local=TRUE)</span></code> should no longer fail to download font files.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-6-1">
+<h1>bslib 0.6.1<a class="headerlink" href="#bslib-0-6-1" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>Bug fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed the CSS for the <code class="docutils literal notranslate"><span class="pre">bslib-page-dashboard</span></code> class in the Shiny preset to correctly support <code class="docutils literal notranslate"><span class="pre">page_sidebar(class</span> <span class="pre">=</span> <span class="pre">&quot;bslib-page-dashboard&quot;)</span></code> and <code class="docutils literal notranslate"><span class="pre">page_navbar(nav_panel(class</span> <span class="pre">=</span> <span class="pre">&quot;bslib-page-dashboard&quot;))</span></code>. (#917)</p></li>
+<li><p>Fixed a minor bug to allow the themer demo to be run directly, outside of <code class="docutils literal notranslate"><span class="pre">bs_theme_preview()</span></code>. (#918)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-6-0">
+<h1>bslib 0.6.0<a class="headerlink" href="#bslib-0-6-0" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>Breaking changes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">preset=&quot;shiny&quot;</span></code>. This provides an additional set of theming defaults and rules that make it easier to create Shiny apps (in particular, dashboards) that look good out of the box. To revert to the previous behavior, set <code class="docutils literal notranslate"><span class="pre">bs_theme(preset=&quot;bootstrap&quot;)</span></code>. (#711)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_box()</span></code> no longer defaults to <code class="docutils literal notranslate"><span class="pre">theme_color</span> <span class="pre">=</span> <span class="pre">&quot;primary&quot;</span></code>. To restore the previous behavior, please use <code class="docutils literal notranslate"><span class="pre">theme</span> <span class="pre">=</span> <span class="pre">&quot;primary&quot;</span></code>. In addition to the default style change, the <code class="docutils literal notranslate"><span class="pre">theme_color</span></code> is now deprecated in favor of <code class="docutils literal notranslate"><span class="pre">theme</span></code>. (#758)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">underline</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>, meaning that navigation links in the navbar now have underline styling by default (set <code class="docutils literal notranslate"><span class="pre">underline</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> to revert to previous behavior). (#784)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page()</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag instead of <code class="docutils literal notranslate"><span class="pre">tagList()</span></code>. This change allows <code class="docutils literal notranslate"><span class="pre">page()</span></code> to treat named arguments as HTML attributes for the <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag, making it possible to add page-level classes or other attributes. (#809)</p></li>
+<li><p>The JS/CSS assets behind <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code> components (e.g., <code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>, etc) are all now bundled into one <code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code> and included with the return value of <code class="docutils literal notranslate"><span class="pre">bs_theme_dependencies()</span></code> (previously they were attached at the component-level). (#810)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> no longer requires <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> is no longer the first argument, meaning that <code class="docutils literal notranslate"><span class="pre">width</span></code> must be named if used. The new default is <code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">&quot;200px&quot;</span></code>, which combines with <code class="docutils literal notranslate"><span class="pre">fixed_width</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> to produce a responsive layout where each column is at least 200px wide. This means that, in most cases, <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> can automatically layout an unknown number of items without you having to set <code class="docutils literal notranslate"><span class="pre">width</span></code>. (#853)</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>New features<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The default version of Bootstrap is now v5.3.1, upgraded from v5.2.2. The most notable thing that comes with the update is the ability to toggle between light/dark <a class="reference external" href="https://getbootstrap.com/docs/5.3/customize/color-modes/">color modes</a> purely client-side (i.e., no calls to Sass required). (#749, #764)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">input_dark_mode()</span></code>, a new input control that provides a toggle button that can be used to switch between the dark and light modes when using Bootstrap 5.3. By default, dark mode is applied automatically if the user’s operating system is also in dark mode. App authors can toggle dark mode programmatically from the server using <code class="docutils literal notranslate"><span class="pre">toggle_dark_mode()</span></code>, and if you provide <code class="docutils literal notranslate"><span class="pre">input_dark_mode()</span></code> with an <code class="docutils literal notranslate"><span class="pre">id</span></code>, you can read the current color mode via the corresponding input value. (#787)</p></li>
+<li><p>Shiny’s Bootstrap theme preset is now used by default in <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code> and all related <code class="docutils literal notranslate"><span class="pre">page_*()</span></code> functions in bslib. This theme brings a fresh new design to all Shiny apps and dashboards created with bslib. This dashboard design anticipates heavy use of cards for organizing content, and works best with a gray background for contrast with minimalistic white cards. This treatment can be enabled in <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code>, <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code> and other <code class="docutils literal notranslate"><span class="pre">page_*()</span></code> functions by adding the <code class="docutils literal notranslate"><span class="pre">bslib-page-dashboard</span></code> class to the page container or body tag.</p>
+<p>The preset can also be customized using the <code class="docutils literal notranslate"><span class="pre">$bslib-dashboard-design</span></code> and <code class="docutils literal notranslate"><span class="pre">$bslib-enable-shadows</span></code> Sass variables. Set these to <code class="docutils literal notranslate"><span class="pre">false</span></code> to disable the dashboard treatment and card shadows, respectively. These variables can be set via <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">bs_theme(&quot;bslib-dashboard-design&quot;</span> <span class="pre">=</span> <span class="pre">&quot;false&quot;)</span></code>. (#897, #906)</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_box()</span></code> has been updated with a number of new features and improvements:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_box()</span></code> now supports many new themes and styles, or fully customizable themes using the new <code class="docutils literal notranslate"><span class="pre">value_box_theme()</span></code> function. To reflect the new capabilities, we’ve replaced <code class="docutils literal notranslate"><span class="pre">theme_color</span></code> with a new <code class="docutils literal notranslate"><span class="pre">theme</span></code> argument. The previous argument will continue work as expected, but with a deprecation warning. (#758)</p>
+<p>In addition to the Bootstrap theme names (<code class="docutils literal notranslate"><span class="pre">primary</span></code> ,<code class="docutils literal notranslate"><span class="pre">secondary</span></code>, etc.), you can now use the main Boostrap colors (<code class="docutils literal notranslate"><span class="pre">purple</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code>, <code class="docutils literal notranslate"><span class="pre">red</span></code>, etc.). You can also choose to apply the color to the background or foreground by prepending a <code class="docutils literal notranslate"><span class="pre">bg-</span></code> or <code class="docutils literal notranslate"><span class="pre">text-</span></code> prefix to the theme or color name. Finally, we’ve also added new gradient themes allowing you to pair any two color names as <code class="docutils literal notranslate"><span class="pre">bg-gradient-{from}-{to}</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">bg-gradient-purple-blue</span></code>).</p>
+<p>These named color themes aren’t limited to value boxes: because they’re powered by small utility classes, you can use them anywhere within your bslib-powered UI.</p>
+</li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">showcase_bottom()</span></code>, a new <code class="docutils literal notranslate"><span class="pre">value_box()</span></code> layout that places the showcase below the value box title and value, perfect for a full-bleed plot. (#758)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">showcase_left_center()</span></code> and <code class="docutils literal notranslate"><span class="pre">showcase_top_right()</span></code> no longer take two values for the <code class="docutils literal notranslate"><span class="pre">width</span></code> argument. Instead, they now take a single value (e.g., <code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">&quot;30%&quot;</span></code>) representing the width of the showcase are in the value box. Furthermore, they’ve both gained <code class="docutils literal notranslate"><span class="pre">width_full_screen</span></code> arguments that determine the width of the showcase area when the value box is expanded to fill the screen. (#758)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">showcase_layout</span></code> argument of <code class="docutils literal notranslate"><span class="pre">value_box()</span></code> now accepts one of three character values: <code class="docutils literal notranslate"><span class="pre">&quot;left</span> <span class="pre">center&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top</span> <span class="pre">right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>. (#758)</p></li>
+<li><p>A new <a class="reference external" href="https://bslib.shinyapps.io/build-a-box/">Build a Box app</a> is now available online or via bslib. See <code class="docutils literal notranslate"><span class="pre">?value_box()</span></code> for details. The app helps preview a set of value boxes while you configure and customize their appearance and provides you with code to copy and paste into your app. (#790)</p></li>
+</ul>
+</li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">navset_underline()</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">navset_card_underline()</span></code> functions as well as a <code class="docutils literal notranslate"><span class="pre">underline</span></code> argument to <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> to leverage the new <a class="reference external" href="https://getbootstrap.com/docs/5.3/components/navs-tabs/#underline">nav-underline</a> styling on navigation links. (#784)</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>Improvements<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">bs_themer()</span></code> app now supports previewing the dark mode variant of Bootstrap 5 themes. (#767)</p></li>
+<li><p>Improved the style and appearance of the button to enter full screen in <code class="docutils literal notranslate"><span class="pre">card()</span></code>s and <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>es to better adapt to Bootstrap’s dark mode. (#780)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">htmltools::save_html()</span></code> now works as expected when applied directly to components (e.g., <code class="docutils literal notranslate"><span class="pre">card()</span></code>, etc) and pages with a non-default theme. (#823, #815)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> received a new design. The button to collapse and expand the sidebar now appears at the top (instead of the bottom) of the sidebar. On mobile devices, the sidebar now fills the <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> area as an overlay, rather than expanding from above the main content area. <strong>Note</strong> the <code class="docutils literal notranslate"><span class="pre">max_mobile_height</span></code> argument of <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> determines the maximum height of the sidebar area on mobile, but it now only applies when <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">=</span> <span class="pre">&quot;always&quot;</span></code>. (#798)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> now uses an <code class="docutils literal notranslate"><span class="pre">&lt;aside&gt;</span></code> element for the sidebar’s container and a <code class="docutils literal notranslate"><span class="pre">&lt;header&gt;</span></code> element for the sidebar title. The classes of each element remain the same, but the semantic meaning of the elements is now better reflected in the HTML markup. (#580)</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code>, when <code class="docutils literal notranslate"><span class="pre">width</span></code> is a CSS unit – e.g. <code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">&quot;400px&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">=</span> <span class="pre">&quot;25%&quot;</span></code> – and <code class="docutils literal notranslate"><span class="pre">fixed_width</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> will ensure that the columns are at least <code class="docutils literal notranslate"><span class="pre">width</span></code> wide, unless the parent container is narrower than <code class="docutils literal notranslate"><span class="pre">width</span></code>. (#851)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bs_global_theme()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">preset</span></code> argument to match the function signature of <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code>. (#896)</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>Bug fixes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">toggle_switch()</span></code> now works correctly when called from within a Shiny module. <code class="docutils literal notranslate"><span class="pre">update_switch()</span></code> worked as expected, but <code class="docutils literal notranslate"><span class="pre">toggle_switch()</span></code> didn’t apply the module’s namespace to the <code class="docutils literal notranslate"><span class="pre">id</span></code> of the switch to be updated. (#769)</p></li>
+<li><p>Filter controls in the popovers of <code class="docutils literal notranslate"><span class="pre">DT::datatable()</span></code> tables now better match the current Bootstrap theme and are responsive to the dark mode setting in Bootstrap 5.3. (#267, #775).</p></li>
+<li><p>A double border no longer appears when an accordion is used inside a <code class="docutils literal notranslate"><span class="pre">sidebar(open=&quot;always&quot;)</span></code> context. (#795)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> no longer gives the sidebar main content area the <code class="docutils literal notranslate"><span class="pre">role=&quot;main&quot;</span></code> attribute. (#580)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-5-1">
+<h1>bslib 0.5.1<a class="headerlink" href="#bslib-0-5-1" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>New features<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">tooltip()</span></code>, <code class="docutils literal notranslate"><span class="pre">update_tooltip()</span></code>, and <code class="docutils literal notranslate"><span class="pre">toggle_tooltip()</span></code> for easy creation (and server-side updating) of <a class="reference external" href="https://getbootstrap.com/docs/5.2/components/tooltips/">Bootstrap tooltips</a> (a way to display additional information when focusing (or hovering over) a UI element). (#662)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">popover()</span></code>, <code class="docutils literal notranslate"><span class="pre">update_popover()</span></code>, and <code class="docutils literal notranslate"><span class="pre">toggle_popover()</span></code> for easy creation (and server-side updating) of <a class="reference external" href="https://getbootstrap.com/docs/5.2/components/popovers/">Bootstrap popovers</a>. Popovers are similar to tooltips, but are more persistent, and should primarily be used with button-like UI elements (e.g., <code class="docutils literal notranslate"><span class="pre">actionButton()</span></code>, <code class="docutils literal notranslate"><span class="pre">bsicons::bs_icon()</span></code>, etc). (#702)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">input_switch()</span></code> and <code class="docutils literal notranslate"><span class="pre">update_switch()</span></code> for easy creation (and server-side updating) of a <a class="reference external" href="https://getbootstrap.com/docs/5.2/forms/checks-radios/#switches">Bootstrap’s switch input</a> (an on-off toggle for binary input values). (#483)</p></li>
+<li><p>Added two new toggle functions: <code class="docutils literal notranslate"><span class="pre">toggle_switch()</span></code> for toggling the state of an <code class="docutils literal notranslate"><span class="pre">input_switch()</span></code> element and <code class="docutils literal notranslate"><span class="pre">toggle_sidebar()</span></code> for toggling the state of a <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> element (<code class="docutils literal notranslate"><span class="pre">sidebar_toggle()</span></code> remains as an alias of <code class="docutils literal notranslate"><span class="pre">toggle_sidebar()</span></code>). (#709)</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>Improvements<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed quarto-dev/quarto-cli#6081: <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code>’s components (e.g., <code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code>, etc.) now work more sensibly in Quarto docs. (#664)</p></li>
+<li><p>Closed #672: <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> gains <code class="docutils literal notranslate"><span class="pre">gap</span></code> and <code class="docutils literal notranslate"><span class="pre">padding</span></code> arguments to control the vertical gap between items in the sidebar and the padding around the sidebar’s content. (#725)</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>Bug fixes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #636: Outputs in sidebars now work as expected when an initially-closed sidebar is opened. (#624)</p></li>
+<li><p>Closed #640: <code class="docutils literal notranslate"><span class="pre">accordion()</span></code> no longer errors when an <code class="docutils literal notranslate"><span class="pre">id</span></code> isn’t supplied inside a Shiny <code class="docutils literal notranslate"><span class="pre">session</span></code> context. (#646)</p></li>
+<li><p>Closed #639: <code class="docutils literal notranslate"><span class="pre">nav_panel()</span></code>’s <code class="docutils literal notranslate"><span class="pre">icon</span></code> argument now supports generic <code class="docutils literal notranslate"><span class="pre">HTML()</span></code>, meaning that things like <code class="docutils literal notranslate"><span class="pre">bsicons::bs_icon()</span></code> and <code class="docutils literal notranslate"><span class="pre">fontawesome::fa()</span></code> can be used as values. (#645)</p></li>
+<li><p>Light-styled buttons in bslib-provided Bootswatch themes are now consistent with their design in Bootswatch. Previously, they were inadvertently styled similarly to secondary buttons. (#687)</p></li>
+<li><p>Closed #727: <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code> now enforces equal column widths by avoiding layout issues caused by grid container overflow. (#729)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-5-0">
+<h1>bslib 0.5.0<a class="headerlink" href="#bslib-0-5-0" title="Link to this heading">#</a></h1>
+<p>This significant release focuses on making dashboards with filling/responsive layouts easier. See the new <a class="reference external" href="https://rstudio.github.io/bslib/articles/dashboards.html">Getting Started with Dashboards article</a> to learn more. It also includes new components (<code class="docutils literal notranslate"><span class="pre">accordion()</span></code>) as well as many improvements and bug fixes for existing features and components.</p>
+<p><code class="docutils literal notranslate"><span class="pre">{bslib}</span></code>’s dashboarding features are still experimental at this point, but this release represents a significant step towards being our recommended way to create Shiny dashboards.</p>
+<section id="breaking-changes-improvements">
+<h2>Breaking changes / improvements<a class="headerlink" href="#breaking-changes-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">card_body()</span></code> now provides the same behavior as <code class="docutils literal notranslate"><span class="pre">card_body_fill()</span></code> (i.e., it is both a fillable container and fill item) by default. And, now, since <code class="docutils literal notranslate"><span class="pre">card_body()</span></code> can do everything <code class="docutils literal notranslate"><span class="pre">card_body_fill()</span></code> can do, <code class="docutils literal notranslate"><span class="pre">card_body_fill()</span></code> has been deprecated. The main benefit of this change is that <code class="docutils literal notranslate"><span class="pre">card(full_screen</span> <span class="pre">=</span> <span class="pre">TRUE,</span> <span class="pre">...)</span></code> with output(s) passed to <code class="docutils literal notranslate"><span class="pre">...</span></code> “just works” in an intuitive way. To revert to the previous behavior, set <code class="docutils literal notranslate"><span class="pre">fillable</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">fill</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> in calls to <code class="docutils literal notranslate"><span class="pre">card_body()</span></code> and set <code class="docutils literal notranslate"><span class="pre">wrapper</span> <span class="pre">=</span> <span class="pre">function(x)</span> <span class="pre">card_body(x,</span> <span class="pre">fillable</span> <span class="pre">=</span> <span class="pre">FALSE,</span> <span class="pre">fill</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> in calls to <code class="docutils literal notranslate"><span class="pre">card()</span></code>. (#498)</p></li>
+<li><p>Closed #375: <code class="docutils literal notranslate"><span class="pre">margin-top</span></code> is no longer included on header tags that aren’t created via pandoc. If this negatively impacts spacing above headers, consider adding a suitable <a class="reference external" href="https://rstudio.github.io/bslib/articles/utility-classes.html">utility class</a> (for example, change <code class="docutils literal notranslate"><span class="pre">shiny::titlePanel(&quot;My</span> <span class="pre">title&quot;)</span></code> to <code class="docutils literal notranslate"><span class="pre">tagAppendAttributes(titlePanel(&quot;My</span> <span class="pre">title&quot;),</span> <span class="pre">class</span> <span class="pre">=</span> <span class="pre">&quot;mt-3&quot;,</span> <span class="pre">.selector</span> <span class="pre">=</span> <span class="pre">&quot;h2&quot;)</span></code>). (#396)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fill()</span></code> (now called <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>) had several breaking changes (listed below) to better accommodate filling layouts. If this breaks existing behavior, consider using <code class="docutils literal notranslate"><span class="pre">shiny::fillPage(theme</span> <span class="pre">=</span> <span class="pre">bslib::bs_theme(),</span> <span class="pre">...)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">page_fill()</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fill()</span></code> now produces a <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag with <code class="docutils literal notranslate"><span class="pre">display:flex</span></code> (instead of <code class="docutils literal notranslate"><span class="pre">display:block</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fill()</span></code> no longer fills the windows height on mobile (i.e., narrow screens) by default (set <code class="docutils literal notranslate"><span class="pre">fillable_mobile</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> to restore the old behavior).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fill()</span></code> now adds <code class="docutils literal notranslate"><span class="pre">padding</span></code> and <code class="docutils literal notranslate"><span class="pre">gap</span></code> by default, set <code class="docutils literal notranslate"><span class="pre">padding</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">gap</span> <span class="pre">=</span> <span class="pre">0</span></code> to restore the old behavior.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> (and also <code class="docutils literal notranslate"><span class="pre">shiny::navbarPage()</span></code> with <code class="docutils literal notranslate"><span class="pre">theme</span> <span class="pre">=</span> <span class="pre">bs_theme()</span></code>) had a couple breaking changes:</p>
+<ul>
+<li><p>The container of each page is now <code class="docutils literal notranslate"><span class="pre">display:flex</span></code> (instead of <code class="docutils literal notranslate"><span class="pre">display:block</span></code>). If this breaks existing behavior, set <code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code>’s <code class="docutils literal notranslate"><span class="pre">fillable</span></code> argument to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">header</span></code> and <code class="docutils literal notranslate"><span class="pre">footer</span></code> is no longer wrapped in an additional <code class="docutils literal notranslate"><span class="pre">shiny::fluidRow()</span></code> container. If this breaks existing behavior, consider wrapping the <code class="docutils literal notranslate"><span class="pre">header</span></code> and <code class="docutils literal notranslate"><span class="pre">footer</span></code> value(s) with <code class="docutils literal notranslate"><span class="pre">shiny::fluidRow()</span></code>). (#479)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code>’s <code class="docutils literal notranslate"><span class="pre">fill</span></code> argument now controls whether or not the <em>layout container</em> is allowed to grow/shrink to fit a fillable container (e.g., <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>). It also gains a new <code class="docutils literal notranslate"><span class="pre">fillable</span></code> argument for controlling whether <em>UI elements</em> are allowed to fill their row height. This is more consistent with the meaning of <code class="docutils literal notranslate"><span class="pre">fill</span></code> in other functions, like <code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">card_body()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code>, etc. (#498)</p></li>
+<li><p>Defaults for the following Bootstrap 5 Sass variables were changed to <code class="docutils literal notranslate"><span class="pre">null</span></code>: <code class="docutils literal notranslate"><span class="pre">$accordion-button-active-bg</span></code>, <code class="docutils literal notranslate"><span class="pre">$accordion-button-active-color</span></code>, and <code class="docutils literal notranslate"><span class="pre">$accordion-icon-active-color</span></code>. To restore the old behavior, do <code class="docutils literal notranslate"><span class="pre">bs_add_variables(theme,</span> <span class="pre">&quot;accordion-button-active-bg&quot;</span> <span class="pre">=</span> <span class="pre">&quot;tint-color($component-active-bg,</span> <span class="pre">90%)&quot;,</span> <span class="pre">&quot;accordion-button-active-color&quot;</span> <span class="pre">=</span> <span class="pre">&quot;shade-color($primary,</span> <span class="pre">10%)&quot;,</span> <span class="pre">&quot;accordion-icon-active-color&quot;</span> <span class="pre">=</span> <span class="pre">&quot;$accordion-button-active-color&quot;,</span> <span class="pre">.where</span> <span class="pre">=</span> <span class="pre">&quot;declarations&quot;)</span></code>. (#475)</p></li>
+</ul>
+</section>
+<section id="id13">
+<h2>New features<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">page_sidebar()</span></code>, for easy dashboard creation. (#588)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> API for creating sidebar layouts in various contexts. See <a class="reference external" href="https://rstudio.github.io/bslib/articles/sidebars/index.html">the article</a> to learn more. (#479)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">layout_columns()</span></code>, for responsive column-based grid layouts. (#587)</p></li>
+<li><p>Adds a new <code class="docutils literal notranslate"><span class="pre">accordion()</span></code> API. See <code class="docutils literal notranslate"><span class="pre">help(accordion)</span></code> for examples and details. Note also <code class="docutils literal notranslate"><span class="pre">accordion()</span></code> is designed to <a class="reference external" href="https://rstudio.github.io/bslib/articles/sidebars/index.html#sidebar-accordions">work well inside a <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code></a>. (#475)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code>, <code class="docutils literal notranslate"><span class="pre">navset_card_tab()</span></code>, and <code class="docutils literal notranslate"> <span class="pre">navset_card_pill()</span></code> gain a <code class="docutils literal notranslate"><span class="pre">sidebar</span></code> argument for putting a <code class="docutils literal notranslate"><span class="pre">sidebar()</span></code> on every page/tab/pill. (#479)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">fillable</span></code> argument to make the content of particular page(s) fit the window/card. (#479)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code> (aka, <code class="docutils literal notranslate"><span class="pre">page_fill()</span></code>) is now considered a <code class="docutils literal notranslate"><span class="pre">fillable</span></code> container, meaning that <code class="docutils literal notranslate"><span class="pre">fill</span></code> items like <code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code>, and <code class="docutils literal notranslate"><span class="pre">layout_sidebar()</span></code> now grow/shrink to fit the window’s height when they appear as a direct child of <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>. (#479)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_navbar()</span></code> and <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code> gain <code class="docutils literal notranslate"><span class="pre">fillable_mobile</span></code> arguments to control whether the page should grow/shrink to fit the viewport on mobile. (#479)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">card()</span></code>, <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>, and <code class="docutils literal notranslate"><span class="pre">card_image()</span></code> gain <code class="docutils literal notranslate"><span class="pre">max_height</span></code>/<code class="docutils literal notranslate"><span class="pre">min_height</span></code> and <code class="docutils literal notranslate"><span class="pre">fill</span></code> arguments. (#498)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">card_body()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">padding</span></code> argument. (#587)</p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">as_fill()</span></code>, <code class="docutils literal notranslate"><span class="pre">as_fillable()</span></code>, <code class="docutils literal notranslate"><span class="pre">as_fill_carrier()</span></code>, <code class="docutils literal notranslate"><span class="pre">is_fill()</span></code>, and <code class="docutils literal notranslate"><span class="pre">is_fillable()</span></code> for testing and coercing potential to fill. (#498)</p></li>
+</ul>
+</section>
+<section id="id14">
+<h2>Bug fixes<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #558: nested cards with <code class="docutils literal notranslate"><span class="pre">fullscreen</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> now correctly and individually expand to fill the window. Tab focus behavior while in full screen mode has also been improved. (#557)</p></li>
+<li><p>Closed #573: Improved styling when a dynamic result is supplied to <code class="docutils literal notranslate"><span class="pre">value_box()</span></code>’s <code class="docutils literal notranslate"><span class="pre">title</span></code>/<code class="docutils literal notranslate"><span class="pre">value</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">value_box(&quot;Dynamic</span> <span class="pre">value&quot;,</span> <span class="pre">uiOutput(&quot;value&quot;))</span></code>). (#605)</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h2>Deprecations<a class="headerlink" href="#deprecations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">card_body_fill()</span></code> has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">card_body()</span></code>. (#498)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">page_fill()</span></code> has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">page_fillable()</span></code>. (#498)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nav()</span></code> has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">nav_panel()</span></code> and <code class="docutils literal notranslate"><span class="pre">nav_content()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">nav_panel_hidden()</span></code>. (#476)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">navs_*()</span></code> family of functions have been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">navset_*()</span></code> (#476):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">navs_tab()</span></code> is now <code class="docutils literal notranslate"><span class="pre">navset_tab()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">navs_pill()</span></code> is now <code class="docutils literal notranslate"><span class="pre">navset_pill()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">navs_pill_list()</span></code> is now <code class="docutils literal notranslate"><span class="pre">navset_pill_list()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">navs_bar()</span></code> is now <code class="docutils literal notranslate"><span class="pre">navset_bar()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">navs_tab_card()</span></code> and <code class="docutils literal notranslate"><span class="pre">navs_pill_card()</span></code> are now <code class="docutils literal notranslate"><span class="pre">navset_card_tab()</span></code> and <code class="docutils literal notranslate"><span class="pre">navset_card_pill()</span></code>, respectively.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-4-2">
+<h1>bslib 0.4.2<a class="headerlink" href="#bslib-0-4-2" title="Link to this heading">#</a></h1>
+<section id="potentially-breaking-changes">
+<h2>Potentially breaking changes<a class="headerlink" href="#potentially-breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Upgraded Bootstrap 5 (i.e., <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">5)</span></code>) from 5.1.3 to 5.2.2. (#438, #455)</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>New features<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adds a new <code class="docutils literal notranslate"><span class="pre">card()</span></code> API as well as <code class="docutils literal notranslate"><span class="pre">value_box()</span></code> and <code class="docutils literal notranslate"><span class="pre">layout_column_wrap()</span></code>. To learn more about this new functionality, refer to these new pkgdown articles:</p>
+<ul>
+<li><p><a class="reference external" href="https://rstudio.github.io/bslib/articles/cards.html">https://rstudio.github.io/bslib/articles/cards.html</a></p></li>
+<li><p><a class="reference external" href="https://rstudio.github.io/bslib/articles/value-boxes.html">https://rstudio.github.io/bslib/articles/value-boxes.html</a></p></li>
+<li><p><a class="reference external" href="https://rstudio.github.io/bslib/articles/column-layout.html">https://rstudio.github.io/bslib/articles/column-layout.html</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-4-1">
+<h1>bslib 0.4.1<a class="headerlink" href="#bslib-0-4-1" title="Link to this heading">#</a></h1>
+<section id="id16">
+<h2>Bug Fixes<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #458. This release <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code> now requires <code class="docutils literal notranslate"><span class="pre">{memoise}</span></code> 2.0.1 or above.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-4-0">
+<h1>bslib 0.4.0<a class="headerlink" href="#bslib-0-4-0" title="Link to this heading">#</a></h1>
+<section id="id17">
+<h2>Breaking changes<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">5</span></code> (i.e., Bootstrap 5). If this change happens to break an existing app, consider specifying <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">4)</span></code> to revert the change in the Bootstrap version. (#374)</p></li>
+<li><p>The default coloring on some Bootswatch 4+ theme’s <code class="docutils literal notranslate"><span class="pre">.navbar-default</span></code>/<code class="docutils literal notranslate"><span class="pre">.navbar-inverse</span></code> class has changed slightly to better match their Bootswatch 3 coloring. Also, since this coloring is now based solely on <a class="reference external" href="https://rstudio.github.io/bslib/articles/bs5-variables.html"><code class="docutils literal notranslate"><span class="pre">$navbar-*</span></code> variables</a>, Bootswatch themes now work better in combination with custom <code class="docutils literal notranslate"><span class="pre">$navbar-*</span></code> values (e.g., <code class="docutils literal notranslate"><span class="pre">bs_theme(&quot;navbar-bg&quot;</span> <span class="pre">=</span> <span class="pre">...)</span></code> can be used to provide the background color, and foreground colors will automatically contrast appropriately). (#392)</p></li>
+</ul>
+</section>
+<section id="id18">
+<h2>New features<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Upgraded Bootstrap 5 (i.e., <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">5)</span></code>) from 5.1.0 to 5.1.3 (#378)</p></li>
+<li><p>Closed #369: <code class="docutils literal notranslate"><span class="pre">bs_dependency_defer()</span></code> now memoises <code class="docutils literal notranslate"><span class="pre">func</span></code> (by default), reducing the time required to render multiple instances of the same <a class="reference external" href="https://rstudio.github.io/bslib/articles/custom-components.html#dynamically-themeable-component">dynamically themable widget</a>. (#405)</p></li>
+</ul>
+</section>
+<section id="id19">
+<h2>Bug fixes<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #393: Bootstrap 5’s <code class="docutils literal notranslate"><span class="pre">$form-check-label-*</span></code> variables now work as expected with <code class="docutils literal notranslate"><span class="pre">shiny::radioButtons()</span></code>, <code class="docutils literal notranslate"><span class="pre">shiny::checkboxInput()</span></code>, and <code class="docutils literal notranslate"><span class="pre">shiny::checkboxGroupInput()</span></code>. (#395)</p></li>
+<li><p>Closed #382: Various fixes for using <code class="docutils literal notranslate"><span class="pre">shiny::checkboxInput()</span></code>, <code class="docutils literal notranslate"><span class="pre">shiny::checkboxGroupInput()</span></code>, and <code class="docutils literal notranslate"><span class="pre">shiny::radioButton()</span></code> with <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">5,</span> <span class="pre">bootswatch</span> <span class="pre">=</span> <span class="pre">&quot;sketchy&quot;)</span></code>. (#385)</p></li>
+<li><p>Closed #377: make sure <code class="docutils literal notranslate"><span class="pre">shiny::tabsetPanel(type</span> <span class="pre">=</span> <span class="pre">&quot;hidden&quot;)</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">bslib::navs_hidden()</span></code>) stays hidden when used with <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code>. (#379)</p></li>
+<li><p>Closed #424: fixed an issue with <code class="docutils literal notranslate"><span class="pre">nav_menu()</span></code> appearing first in a <code class="docutils literal notranslate"><span class="pre">navs_*()</span></code> container with Bootstrap 4+.</p></li>
+<li><p>Closed #431: Bootstrap 5 navbars no longer have an unwanted “Toggle Navigation” label when collapsed. (#432)</p></li>
+<li><p>Closed #400: <code class="docutils literal notranslate"><span class="pre">nav_menu(align=&quot;right&quot;)</span></code> now works with Bootstrap 5. (#401)</p></li>
+<li><p>Closed #390: using <code class="docutils literal notranslate"><span class="pre">bs_theme(bootswatch</span> <span class="pre">=</span> <span class="pre">&quot;paper&quot;,</span> <span class="pre">version</span> <span class="pre">=</span> <span class="pre">5)</span></code> or <code class="docutils literal notranslate"><span class="pre">bs_theme(bootswatch</span> <span class="pre">=</span> <span class="pre">&quot;readable&quot;,</span> <span class="pre">version</span> <span class="pre">=</span> <span class="pre">5)</span></code> no longer errors. (#391)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-3-1">
+<h1>bslib 0.3.1<a class="headerlink" href="#bslib-0-3-1" title="Link to this heading">#</a></h1>
+<section id="id20">
+<h2>New features<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Upgraded Bootstrap 5 (i.e., <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">5)</span></code>) from 5.0.2 to 5.1.0 (#365)</p></li>
+</ul>
+</section>
+<section id="id21">
+<h2>Bug fixes<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed rstudio/shiny#3519: <code class="docutils literal notranslate"><span class="pre">nav_menu()</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">shiny::navbarMenu()</span></code>) wasn’t producing an <code class="docutils literal notranslate"><span class="pre">.active</span></code> class on it’s <code class="docutils literal notranslate"><span class="pre">.dropdown</span></code> container properly. (#372)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-3-0">
+<h1>bslib 0.3.0<a class="headerlink" href="#bslib-0-3-0" title="Link to this heading">#</a></h1>
+<section id="id22">
+<h2>Breaking changes<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed rstudio/rmarkdown#2154: <code class="docutils literal notranslate"><span class="pre">{magrittr}</span></code>’s pipe operator (<code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code>) is no longer re-exported by <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code>. Either <code class="docutils literal notranslate"><span class="pre">library(magrittr)</span></code> to make <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> available and/or use use R 4.1’s pipe operator (<code class="docutils literal notranslate"><span class="pre">|&gt;</span></code>).</p></li>
+</ul>
+</section>
+<section id="id23">
+<h2>New features<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #82: Added support for Bootstrap 5 (via <code class="docutils literal notranslate"><span class="pre">bs_theme(version</span> <span class="pre">=</span> <span class="pre">5)</span></code>). Bootstrap 4 remains the default in this release, but the next release, the default will likely change to Bootstrap 5.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h2>Bug fixes<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #6: rmarkdown’s .tabset-fade class now works with Bootstrap 4+ since legacy use of .nav .fade is now officially supported in Bootstrap 4+. (#325)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-2-5-1">
+<h1>bslib 0.2.5.1<a class="headerlink" href="#bslib-0-2-5-1" title="Link to this heading">#</a></h1>
+<p>Small patch release to fix failing test on Solaris.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-2-5">
+<h1>bslib 0.2.5<a class="headerlink" href="#bslib-0-2-5" title="Link to this heading">#</a></h1>
+<section id="new-features-and-improvements">
+<h2>New features and improvements<a class="headerlink" href="#new-features-and-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #251: New <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code> options (<code class="docutils literal notranslate"><span class="pre">navbar-bg</span></code>, <code class="docutils literal notranslate"><span class="pre">navbar-light-bg</span></code>, and <code class="docutils literal notranslate"><span class="pre">navbar-dark-bg</span></code>) for more easily customizing the navbar’s background (and foreground) color (#253, #271).</p></li>
+<li><p>Closed #281: New <code class="docutils literal notranslate"><span class="pre">bs_theme()</span></code> argument (<code class="docutils literal notranslate"><span class="pre">font_scale</span></code>) for easier scaling of the base font size (#288).</p></li>
+<li><p>Closed #256 and #282: Font file importers (<code class="docutils literal notranslate"><span class="pre">font_google()</span></code>, <code class="docutils literal notranslate"><span class="pre">font_link()</span></code>, and <code class="docutils literal notranslate"><span class="pre">font_face()</span></code>) are now re-exported from the <code class="docutils literal notranslate"><span class="pre">{sass}</span></code> package. As a result, they may now be used with any Sass variable (e.g., <code class="docutils literal notranslate"><span class="pre">bs_theme(&quot;input-font-family&quot;</span> <span class="pre">=</span> <span class="pre">font_google(&quot;Pacifico&quot;))</span></code>) as well as inside Rmd yaml without <code class="docutils literal notranslate"><span class="pre">!expr</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">input-font-family:</span> <span class="pre">google:</span> <span class="pre">Pacifico</span></code> – see #256 for more details). A new <code class="docutils literal notranslate"><span class="pre">font_collection()</span></code> function was also added for a more convenient way to specify font fallbacks (#291).</p></li>
+<li><p>Closed #255: <code class="docutils literal notranslate"><span class="pre">bs_themer()</span></code> now emits sensible <code class="docutils literal notranslate"><span class="pre">yaml</span></code> front matter when used within an Rmd document (#288).</p></li>
+<li><p>Closed #227: <code class="docutils literal notranslate"><span class="pre">bs_themer()</span></code> now overlays a spinner during Sass compilation (#243).</p></li>
+<li><p>Closed #278: <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code> now includes <code class="docutils literal notranslate"><span class="pre">rmarkdown::html_document</span></code> templates demonstrating example usage with <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code> and <code class="docutils literal notranslate"><span class="pre">{thematic}</span></code> (#288).</p></li>
+<li><p>Closed #231: Upgraded from Bootstrap 4.5.3 to 4.6.0 (#254).</p></li>
+<li><p>Closed #237: <code class="docutils literal notranslate"><span class="pre">&lt;blockquote&gt;</span></code> tags now have border-left/padding styles with <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">4</span></code> (to mirror the <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">3</span></code> behavior) (#239).</p></li>
+<li><p>Closed #279: Warnings about low color contrasts are now suppressed by default, unless <code class="docutils literal notranslate"><span class="pre">shiny::devmode()</span></code> is enabled. To enable/disable these warnings, set the new <code class="docutils literal notranslate"><span class="pre">options(bslib.color_contrast_warnings</span> <span class="pre">=</span> <span class="pre">)</span></code> to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>/<code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (#287).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bs_theme_dependencies()</span></code> now includes Sass source maps when <code class="docutils literal notranslate"><span class="pre">shiny::devmode()</span></code> is enabled (#312).</p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">bs_add_functions()</span></code>/<code class="docutils literal notranslate"><span class="pre">bs_add_mixins()</span></code> and deprecated <code class="docutils literal notranslate"><span class="pre">bs_add_declarations()</span></code> to reflect <code class="docutils literal notranslate"><span class="pre">sass::sass_layer()</span></code>’s new ability to place <code class="docutils literal notranslate"><span class="pre">functions</span></code> <em>before</em> variable <code class="docutils literal notranslate"><span class="pre">defaults</span></code>. As a result, variable definitions may now use functions defined with <code class="docutils literal notranslate"><span class="pre">bs_add_functions()</span></code>. (#311)</p></li>
+</ul>
+</section>
+<section id="id25">
+<h2>Bug fixes<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #236, #230, #242, #187, #215, #250: Addressed various cosmetic issues with CSS (#249).</p></li>
+<li><p>Closed #289: collapsed navbar toggle now correctly floats to the right (#290).</p></li>
+<li><p>Closed <a class="reference external" href="https://github.com/rstudio/flexdashboard/issues/316">rstudio/flexdashboard#316</a>: fixed an issue with navbar nav spacing/alignment (#286).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bslib-0-2-4">
+<h1>bslib 0.2.4<a class="headerlink" href="#bslib-0-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial release of the package, see <a class="reference external" href="https://rstudio.github.io/bslib/">https://rstudio.github.io/bslib/</a></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\bslib"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">bslib 0.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements-and-bug-fixes">Improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-8-0">bslib 0.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-7-0">bslib 0.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-improvements">Changes &amp; improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-2">bslib 0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-1">bslib 0.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-6-0">bslib 0.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-5-1">bslib 0.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-5-0">bslib 0.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes-improvements">Breaking changes / improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-2">bslib 0.4.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potentially-breaking-changes">Potentially breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-1">bslib 0.4.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-4-0">bslib 0.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-3-1">bslib 0.3.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-3-0">bslib 0.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-5-1">bslib 0.2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-5">bslib 0.2.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-improvements">New features and improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bslib-0-2-4">bslib 0.2.4</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

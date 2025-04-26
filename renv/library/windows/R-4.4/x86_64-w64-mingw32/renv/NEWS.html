@@ -1,0 +1,2121 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>renv 1.1.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/renv/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>renv 1.1.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">renv 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-1-0">renv 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-fixes">Other Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-11">renv 1.0.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-10">renv 1.0.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-9">renv 1.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-8">renv 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-7">renv 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-6">renv 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-5">renv 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-4">renv 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-3">renv 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-2">renv 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-1">renv 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-0">renv 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-3">renv 0.17.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-2">renv 0.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-1">renv 0.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-0">renv 0.17.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-16-0">renv 0.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-5">renv 0.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-4">renv 0.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-3">renv 0.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-2">renv 0.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-1">renv 0.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-0">renv 0.15.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-14-0">renv 0.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-2">renv 0.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-1">renv 0.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-0">renv 0.13.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-5">renv 0.12.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-4">renv 0.12.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-3">renv 0.12.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-2">renv 0.12.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-1">renv 0.12.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-0">renv 0.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-11-0">renv 0.11.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-10-0">renv 0.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-3">renv 0.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-2">renv 0.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-1">renv 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-0">renv 0.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-3">renv 0.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-2">renv 0.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-1">renv 0.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-0">renv 0.8.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="renv-1-1-1">
+<h1>renv 1.1.1<a class="headerlink" href="#renv-1-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where very long lockfiles could be truncated on write. (#2089)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> inadvertently made web requests in
+tests during <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-1-0">
+<h1>renv 1.1.0<a class="headerlink" href="#renv-1-1-0" title="Link to this heading">#</a></h1>
+<section id="major-changes">
+<h2>Major Changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now includes additional package DESCRIPTION fields in the lockfile.
+This can be useful for validating the provenance of packages recorded in the
+lockfile, and also for applications using <code class="docutils literal notranslate"><span class="pre">renv</span></code> which would like to
+recompute the hash used for package caching from the lockfile itself.</p>
+<p>If needed, old-style lockfiles can be generated by setting the option
+<code class="docutils literal notranslate"><span class="pre">options(renv.lockfile.version</span> <span class="pre">=</span> <span class="pre">1)</span></code>. Note that this version of <code class="docutils literal notranslate"><span class="pre">renv</span></code>
+remains compatible both with the older (minimal) lockfiles, as well
+as with the newer lockfiles in this release. (#2057)</p>
+</li>
+</ul>
+</section>
+<section id="other-fixes">
+<h2>Other Fixes<a class="headerlink" href="#other-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">renv</span></code> sandbox is now unlocked on exit after a call to <code class="docutils literal notranslate"><span class="pre">renv::use()</span></code>.
+This should alleviate issues seen where R’s attempts to clean up the
+temporary directory could fail due to inadequate permissions on the
+sandbox directory. (#2076)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> did not respect the named repository
+within the lockfile when installing packages from the archives of the
+configured package repositories. (#2081)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> could fail if invoked within
+a project containing empty or invalid <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> files. (#2073)</p></li>
+<li><p>Fixed an issue where R package installation could fail if the project
+depended on a package whose current version available from the configured
+package repositories required on a newer version of R than what was currently
+installed, even if that package need not be updated. (#2071)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">RENV_CONFIG_EXTERNAL_LIBRARIES</span></code> was incorrectly
+split when using Windows paths. (#2069)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> failed to restore packages installed from
+r-universe when the associated lockfile record had no <code class="docutils literal notranslate"><span class="pre">RemoteRef</span></code> field.
+(#2068)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now detects dependencies from usages of <code class="docutils literal notranslate"><span class="pre">utils::citation()</span></code>. (#2047)</p></li>
+<li><p>Fixed an issue where packages installed from r-universe via an explicit
+URL remote could not be restored. (#2060)</p></li>
+<li><p>Fixed an issue where the repositories provided to <code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> were ignored
+when also initializing <code class="docutils literal notranslate"><span class="pre">renv</span></code> with a specific version of Bioconductor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">include</span></code> parameter, which can be useful when
+you’d like to install a subset of dependencies within a project while also
+respecting any declared remotes in that project’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file. (#2055)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could fail to check for updates for packages
+installed using <code class="docutils literal notranslate"><span class="pre">pak</span></code> without an explicit branch specified. (#2040)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::use()</span></code> no longer re-installs packages which are already installed
+and compatible with the requested packages. (#2044)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> could fail when using named remotes
+in a DESCRIPTION file’s <code class="docutils literal notranslate"><span class="pre">Remotes:</span></code> field. (#2055)</p></li>
+<li><p>Fixed an issue where ignore rules of the form <code class="docutils literal notranslate"><span class="pre">!*.*</span></code> were not parsed
+and handled correctly during dependency discovery. (#2052)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> erroneously reported that installed packages were
+cached when the cache was not writable. (#2041).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now supports updating of currently-installed packages via <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>
+when configured to use <code class="docutils literal notranslate"><span class="pre">pak</span></code>. (#2037)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> library paths were not properly reset following
+a suspend / resume in RStudio Server. (#2036)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::run()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">args</span></code> parameter, which can be used to pass command-line
+arguments to a script. (#2015)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now infers a dependency on <code class="docutils literal notranslate"><span class="pre">rmarkdown</span></code> and <code class="docutils literal notranslate"><span class="pre">knitr</span></code> for R scripts which
+include YAML front-matter. (#2023)</p></li>
+<li><p>The performance of <code class="docutils literal notranslate"><span class="pre">renv</span></code>’s built-in JSON reader has been improved. (#2021)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could erroneously create a binding called ‘object’
+in the global environment on startup. (#2017)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-11">
+<h1>renv 1.0.11<a class="headerlink" href="#renv-1-0-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where headers were not properly passed to <code class="docutils literal notranslate"><span class="pre">available.packages()</span></code>
+during <code class="docutils literal notranslate"><span class="pre">renv</span></code> bootstrap. (#1942)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now assumes that Artifactory package repositories will use a CRAN-like
+layout of packages for packages in the archive. (#1996)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now includes compiled extensions on Linux + macOS. These
+extensions are primarily used to improve the performance of
+<code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> and other static analysis code.
+Support for Windows may come in a future release.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> could fail if the project
+contained a call to <code class="docutils literal notranslate"><span class="pre">module()</span></code> with no arguments. (#2007)</p></li>
+<li><p>On Linux, <code class="docutils literal notranslate"><span class="pre">renv</span></code> now emits a message on load if the R temporary directory
+is within a folder that has been mounted as ‘noexec’. This message can be
+suppressed by setting the <code class="docutils literal notranslate"><span class="pre">RENV_TEMPDIR_NOEXEC_CHECK=FALSE</span></code> environment
+variable.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-10">
+<h1>renv 1.0.10<a class="headerlink" href="#renv-1-0-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a performance regression in <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code>. (#1999)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> tests could fail if the <code class="docutils literal notranslate"><span class="pre">parallel</span></code> package was
+loaded during test execution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now determines a package repository’s type through the HTTP headers
+provided when accessing <code class="docutils literal notranslate"><span class="pre">src/contrib/PACKAGES</span></code>. This is mainly relevant
+when detecting Nexus and Artifactory repositories.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-9">
+<h1>renv 1.0.9<a class="headerlink" href="#renv-1-0-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where repository URLs were inappropriately transformed into
+binary repository URLs on Linux. (#1991)</p></li>
+<li><p>Fixed an issue where code following <code class="docutils literal notranslate"><span class="pre">source(&quot;renv/activate.R&quot;)</span></code> in the project
+<code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> was not invoked for projects using RStudio. (#1990)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-8">
+<h1>renv 1.0.8<a class="headerlink" href="#renv-1-0-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now infers a dependency on the <code class="docutils literal notranslate"><span class="pre">ragg</span></code> package when the <code class="docutils literal notranslate"><span class="pre">ragg_png</span></code> device
+is used in R Markdown / Quarto documents, for documents using the code
+<code class="docutils literal notranslate"><span class="pre">knitr::opts_chunk$set(dev</span> <span class="pre">=</span> <span class="pre">&quot;ragg_png&quot;)</span></code>. (#1985)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now automatically generates a lockfile when loading a project containing
+a <code class="docutils literal notranslate"><span class="pre">manifest.json</span></code> file (typical for application bundles published to Posit Connect).
+(#1980, &#64;toph-allen)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now errs if an incompatible <code class="docutils literal notranslate"><span class="pre">type</span></code> argument is provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::checkout()</span></code> now also checks out the version of <code class="docutils literal notranslate"><span class="pre">renv</span></code> available
+and associated with the requested snapshot date. (#1966)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> did not hydrate packages which
+were also listed as dependencies within a project’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file.
+(#1970)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::checkout()</span></code> omitted some fields from lockfile
+records when using <code class="docutils literal notranslate"><span class="pre">actions</span> <span class="pre">=</span> <span class="pre">c(&quot;snapshot&quot;,</span> <span class="pre">&quot;restore&quot;)</span></code>. (#1969)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> gains the function <code class="docutils literal notranslate"><span class="pre">renv::retrieve()</span></code>, which can be used to download
+packages without installing them. This is primarily useful in CI / CD scenarios,
+where you might want to download packages in a single stage before attempting
+to install / restore them. (#1965)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now preserves <code class="docutils literal notranslate"><span class="pre">Remote</span></code> fields present on packages installed from
+public package repositories (e.g. <a class="reference external" href="https://r-universe.dev/">https://r-universe.dev/</a>). (#1961)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> could fail to load an alternate project
+when <code class="docutils literal notranslate"><span class="pre">options(renv.config.autoloader.enabled</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> was set. (#1959)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now emits clickable hyperlinks for runnable code snippets and help,
+for front-ends which support the <code class="docutils literal notranslate"><span class="pre">ide:run</span></code> and <code class="docutils literal notranslate"><span class="pre">ide:help</span></code> ANSI escapes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init(bioc</span> <span class="pre">=</span> <span class="pre">&quot;&lt;version&gt;&quot;)</span></code> now prompts the user in interactive sessions
+when requesting a version of Bioconductor which is not compatible with the
+current version of R. (#1943)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">transactional</span></code> argument, which can be
+used to control whether <code class="docutils literal notranslate"><span class="pre">renv</span></code> will allow successfully-installed
+packages remain in the project library even if a package fails
+to install during a later step. (#1109)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now infers a dependency on the <code class="docutils literal notranslate"><span class="pre">xml2</span></code> package for projects
+using the <code class="docutils literal notranslate"><span class="pre">testthat::JunitReporter</span></code> for tests. (#1936)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> could emit a warning
+when attempting to parse chunks using chunk options like
+<code class="docutils literal notranslate"><span class="pre">#|</span> <span class="pre">eval:</span> <span class="pre">c(1,</span> <span class="pre">2)</span></code>. (#1906)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now properly delegates the <code class="docutils literal notranslate"><span class="pre">type</span></code> and <code class="docutils literal notranslate"><span class="pre">rebuild</span></code>
+arguments to <code class="docutils literal notranslate"><span class="pre">pak</span></code> when <code class="docutils literal notranslate"><span class="pre">options(renv.config.pak.enabled</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>
+is set. (#1924)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now infers a dependency on the <code class="docutils literal notranslate"><span class="pre">svglite</span></code> package if it detects
+calls of the form <code class="docutils literal notranslate"><span class="pre">ggsave(filename</span> <span class="pre">=</span> <span class="pre">&quot;path.svg&quot;)</span></code>. (#1930)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now supports setting of GitHub authentication credentials via
+any of <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>, <code class="docutils literal notranslate"><span class="pre">GITHUB_PAT</span></code>, and <code class="docutils literal notranslate"><span class="pre">GH_TOKEN</span></code>. (#1937)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now also passes any custom headers available to
+<code class="docutils literal notranslate"><span class="pre">utils::available.packages()</span></code> during bootstrap. (#1942)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could fail during installation of packages
+stored within repository sub-directories, if that repository also
+contained a top-level DESCRIPTION file. (#1941)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now normalizes lockfile entries for Bioconductor packages installed
+via <code class="docutils literal notranslate"><span class="pre">pak::pkg_install()</span></code>, to help prevent spurious diffs being produced
+via <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code>. (#1920)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now respects the <code class="docutils literal notranslate"><span class="pre">prompt</span></code> parameter when <code class="docutils literal notranslate"><span class="pre">pak</span></code> is enabled,
+as via <code class="docutils literal notranslate"><span class="pre">options(renv.config.pak.enabled</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>. (#1907)</p></li>
+<li><p>Fixed an issue with <code class="docutils literal notranslate"><span class="pre">renv</span></code>’s <code class="docutils literal notranslate"><span class="pre">pak</span></code> integration where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could install the
+wrong version of a GitHub package during restore if
+<code class="docutils literal notranslate"><span class="pre">options(renv.config.pak.enabled</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> was set. (#1883)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> no longer interacts with the user during autoloading, which coincides
+with R startup. If the IDE offers a session init hook (RStudio does),
+loading is deferred until startup is complete and interaction is possible.
+Otherwise, any suggested renv actions, such as <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code>, are emitted
+as a message for the user to act on. (#1879, #1915).</p></li>
+<li><p>Fixed an issue where installation of packages from local sources, as via
+<code class="docutils literal notranslate"><span class="pre">install(&quot;&lt;package&gt;&quot;,</span> <span class="pre">repos</span> <span class="pre">=</span> <span class="pre">NULL,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;source&quot;)</span></code>, could fail. (#1880)</p></li>
+<li><p>A new function, <code class="docutils literal notranslate"><span class="pre">renv::lockfile_validate()</span></code>, can be used to validate your <code class="docutils literal notranslate"><span class="pre">renv.lock</span></code>
+against a default or custom schema. (#1889)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-7">
+<h1>renv 1.0.7<a class="headerlink" href="#renv-1-0-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code>’s activate script failed to report version
+conflict errors when starting up. (#1874)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-6">
+<h1>renv 1.0.6<a class="headerlink" href="#renv-1-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where downloads could fail with curl &gt;= 8.7.1. (#1869)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> did not properly normalize
+package records generated from packages installed using the <code class="docutils literal notranslate"><span class="pre">pak</span></code>
+package, e.g. via <code class="docutils literal notranslate"><span class="pre">pak::pkg_install(&quot;cran::&lt;package&gt;&quot;)</span></code>.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could incorrectly prompt the user to record
+a version of <code class="docutils literal notranslate"><span class="pre">renv</span></code> installed from GitHub in some cases. (#1857)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> now delegates to <code class="docutils literal notranslate"><span class="pre">base::load()</span></code> when it detects that the
+call was likely intended for <code class="docutils literal notranslate"><span class="pre">base::load()</span></code>, but <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> was used
+instead (e.g. because <code class="docutils literal notranslate"><span class="pre">base::load()</span></code> was masked by <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">lock</span></code> argument, which can be used to
+instruct <code class="docutils literal notranslate"><span class="pre">renv</span></code> to automatically update the lockfile after the requested
+packages have been updated. (#1849)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could fail to update the project autoloader
+after calling <code class="docutils literal notranslate"><span class="pre">renv::upgrade()</span></code>. (#1837)</p></li>
+<li><p>Fixed an issue where attempts to install binary packages from older
+PPM snapshots could fail. (#1839)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now uses a platform-specific prefix on Linux for library and
+cache paths by default with R (&gt;= 4.4.0). This is equivalent to setting
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_PREFIX_AUTO</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>. If necessary, this behavior can be
+disabled by setting <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_PREFIX_AUTO</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> in an appropriate
+R startup file. (#1211)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-5">
+<h1>renv 1.0.5<a class="headerlink" href="#renv-1-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now only writes a <code class="docutils literal notranslate"><span class="pre">.renvignore</span></code> file into the cache directory
+if the cache appears to be part of the current project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now reports missing system libraries as part of its ABI
+checks in <code class="docutils literal notranslate"><span class="pre">renv::diagnostics()</span></code>.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(lock</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> produced lockfiles
+containing records with extraneous data. (#1828)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-4">
+<h1>renv 1.0.4<a class="headerlink" href="#renv-1-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">lock</span></code> argument. When <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, the project
+lockfile will be updated after the requested packages have been
+successfully installed. (#1811)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv</span></code> now supports the use of GitHub Enterprise servers with the
+<code class="docutils literal notranslate"><span class="pre">gitcreds</span></code> package for authentication credentials. (#1814)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now treats <code class="docutils literal notranslate"><span class="pre">#|</span> <span class="pre">eval:</span> <span class="pre">!expr</span> <span class="pre">&lt;...&gt;</span></code> chunk options
+as truthy by default, implying that such chunks are scanned for their
+R package dependencies. (#1816)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now requires usages of the <a class="reference external" href="https://cran.r-project.org/package=import">import</a>
+package to be namespace-qualified in order to be handled via static
+analysis; that is, <code class="docutils literal notranslate"><span class="pre">import::from(&lt;pkg&gt;)</span></code> is parsed for dependencies,
+but <code class="docutils literal notranslate"><span class="pre">from(pkg)</span></code> is not. (#1815)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">profile</span></code> argument, allowing one to
+explicitly load a specific profile associated with an <code class="docutils literal notranslate"><span class="pre">renv</span></code> project.
+See <code class="docutils literal notranslate"><span class="pre">vignette(&quot;profiles&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;renv&quot;)</span></code> or
+<a class="reference external" href="https://rstudio.github.io/renv/articles/profiles.html">https://rstudio.github.io/renv/articles/profiles.html</a>
+for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> no longer includes <code class="docutils literal notranslate"><span class="pre">R</span></code> dependency versions
+declared from a <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file in its output. (#1806)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could fail to infer dependencies from
+R Markdown code chunks using engine ‘R’ (upper-case) rather than
+‘r’ (lower-case). (#1803)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> did not report out-of-sync packages when
+one or more packages used in the project were not installed. (#1788)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could over-aggressively activate P3M
+repositories when initializing a project. (#1782)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now notifies the user if the version of R recorded in
+the lockfile does not match the version of R currently in use. (#1779)</p></li>
+<li><p>Fixed an issue where packages could appear multiple times in the lockfile,
+if that package was installed into multiple library paths. (#1781)</p></li>
+<li><p>Installation of historical binaries of packages is once again enabled,
+now using the <a class="reference external" href="https://packagemanager.posit.co">Posit Public Package Manager (P3M)</a>
+service instead of Microsoft’s (now defunct) MRAN service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> now respects the <code class="docutils literal notranslate"><span class="pre">Remotes:</span></code> field declared in a project’s
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file, if any. (#1522)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::embed()</span></code> now supports Quarto Markdown (<code class="docutils literal notranslate"><span class="pre">.qmd</span></code>) files. (#1700)</p></li>
+<li><p>renv now sets the <code class="docutils literal notranslate"><span class="pre">R_INSTALL_TAR</span></code> environment variable to match the default
+<code class="docutils literal notranslate"><span class="pre">tar</span></code> executable (if any) when installing packages. (#1724)</p></li>
+<li><p>renv now uses <code class="docutils literal notranslate"><span class="pre">--ssl-revoke-best-effort</span></code> by default when downloading files
+using <code class="docutils literal notranslate"><span class="pre">curl</span></code> on Windows. (#1739)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> could fail to detect incompatible
+recursive package dependencies. (#1671)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now records remote information for packages installed from
+CRAN-like repositories, and uses that information when generating a lockfile
+and restoring those packages. This helps ensure that packages installed within
+an renv project via calls like <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;&lt;pkg&gt;&quot;,</span> <span class="pre">repos</span> <span class="pre">=</span> <span class="pre">&quot;&lt;repos&gt;&quot;)</span></code> can
+still be successfully restored in future sessions. (#1765)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now lazily resolves project remotes. (#1755)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> now respects Remotes declared within a project’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>
+file, if any.</p></li>
+<li><p>Calling <code class="docutils literal notranslate"><span class="pre">renv::activate()</span></code> without explicitly providing the <code class="docutils literal notranslate"><span class="pre">profile</span></code> argument
+now preserves the current profile, if any. Use <code class="docutils literal notranslate"><span class="pre">renv::activate(profile</span> <span class="pre">=</span> <span class="pre">&quot;default&quot;)</span></code>
+if you’d like to re-activate a project using the default profile. (#1217)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> would try to prompt for the installation of
+<code class="docutils literal notranslate"><span class="pre">BiocManager</span></code> when activating a project using Bioconductor. (#1754)</p></li>
+<li><p>Fixed an issue where directories containing a large number of files could
+cause <code class="docutils literal notranslate"><span class="pre">renv</span></code> to fail to activate a project. (#1733)</p></li>
+<li><p>Expanded the set of Linux distributions detected for automatic transformation
+of Posit Package Manager URLs to install binary packages. <code class="docutils literal notranslate"><span class="pre">renv</span></code> now correctly
+detects Red Hat Enterprise Linux 9, Rocky Linux 8 and 9, SLES 15 SP4 and SP5,
+Debian 11 and 12, AlmaLinux 8 and 9, and Amazon Linux 2. (#1720, #1721)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-3">
+<h1>renv 1.0.3<a class="headerlink" href="#renv-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv</span></code> could warn the project appeared to be out-of-sync
+when using packages installed without an explicit source recorded. (#1683)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument, which can be useful when
+installing a subset of project dependencies.</p></li>
+<li><p>Fixed an issue where PPM repositories were not appropriately transformed
+into the correct binary repository in <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> when using pak.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> no longer prompts the user for the intended action for
+projects containing a library with only renv installed. (#1668)</p></li>
+<li><p>Fixed an issue where non-interactive usages of <code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> could fail
+with projects containing a DESCRIPTION file. (#1663)</p></li>
+<li><p>Fixed an issue that could cause code within a project <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> to execute
+before the project had been loaded in RStudio. (#1650)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> and <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> gain the <code class="docutils literal notranslate"><span class="pre">dev</span></code> argument. This
+can be used when you’d like to capture package dependencies from
+the <em>Suggests</em> field of your package’s DESCRIPTION file. (#1019)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-2">
+<h1>renv 1.0.2<a class="headerlink" href="#renv-1-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now parses package <code class="docutils literal notranslate"><span class="pre">NAMESPACE</span></code> files for imported dependencies. (#1637)</p></li>
+<li><p>renv no longer locks the sandbox by default.</p></li>
+<li><p>Fixed an issue where renv used the wrong library paths when attempting
+to activate the watchdog. This could cause a 10 second delay when activating
+the sandbox.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-1">
+<h1>renv 1.0.1<a class="headerlink" href="#renv-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where authentication headers could be duplicated when
+using the <code class="docutils literal notranslate"><span class="pre">libcurl</span></code> download method. (#1605)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::use()</span></code> now defaults to setting <code class="docutils literal notranslate"><span class="pre">isolate</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> when <code class="docutils literal notranslate"><span class="pre">sandbox</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.</p></li>
+<li><p>Fixed an issue where the renv watchdog could fail to load, leading to slowness
+in activating the sandbox on startup. (#1617)</p></li>
+<li><p>Fixed an issue where renv did not display warnings / errors from <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>
+when <code class="docutils literal notranslate"><span class="pre">options(renv.verbose</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> was set. The display of these messages
+is now controlled via the <code class="docutils literal notranslate"><span class="pre">renv.caution.verbose</span></code> R option. (#1607, #1608)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> now notifies the user if the synchronization check took an
+excessive amount of time due to the number of files being scanned in the
+project. (#1573)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">load</span></code> argument, making it possible to initialize
+a project without explicitly loading it. (#1583)</p></li>
+<li><p>renv now uses a lock when synchronizing installed packages with the cache.
+This should help alleviate issues that can arise when multiple R processes
+are installing and caching packages concurrently. (#1571)</p></li>
+<li><p>Fixed a regression in parsing expressions within R Markdown chunk options. (#1558)</p></li>
+<li><p>Fixed an issue that prevented <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> from functioning
+when source-only repositories were included. (#1578)</p></li>
+<li><p>Fixed a logic error in reading <code class="docutils literal notranslate"><span class="pre">RENV_AUTOLOAD_ENABLED</span></code>. (#1580)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> no longer runs without prompting on load if the
+library is empty. (#1543)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::repair()</span></code> now checks for installed packages which lack a known
+remote source, and updates their <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> files if it can infer an
+appropriate remote source. This typically occurs when a package is installed
+from local sources, but appears to be maintained or published on a remote
+repository (e.g. GitHub). This was previously done in <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>, but
+we’ve rolled back that change as the prompting was over-aggressive. (#1574)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now first reports on uninstalled packages, before reporting on
+used &lt;-&gt; installed mismatches. (#1538)</p></li>
+<li><p>When the <code class="docutils literal notranslate"><span class="pre">RENV_STARTUP_DIAGNOSTICS</span></code> environment variable is set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>,
+renv now displays a short diagnostics report after a project’s autoloader
+has been run. This can be useful when diagnosing why renv is slow to load
+in certain projects. (#1557)</p></li>
+<li><p>renv now ensures the sandbox is activated on load, for R processes which
+are launched with the renv sandbox on the library paths. (#1565)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> no longer erroneously prompts when determining the packages
+which need to be installed. (#1544)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> now ensures the <code class="docutils literal notranslate"><span class="pre">prompt</span></code> parameter is properly respected
+during package installation. (#1540)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::activate()</span></code> no longer erroneously preserves the previous library
+paths after restarting the session within RStudio. (#1530)</p></li>
+<li><p>Use correct spelling of IRkernel package (#1528).</p></li>
+<li><p>Honor <code class="docutils literal notranslate"><span class="pre">R_LIBCURL_SSL_REVOKE_BEST_EFFORT</span></code> when using an external <code class="docutils literal notranslate"><span class="pre">curl.exe</span></code>
+binary to download files. (#1624)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-1-0-0">
+<h1>renv 1.0.0<a class="headerlink" href="#renv-1-0-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">renv::checkout()</span></code> installings the latest-available packages from a
+repository. For example, <code class="docutils literal notranslate"><span class="pre">renv::checkout(date</span> <span class="pre">=</span> <span class="pre">&quot;2023-02-08&quot;)</span></code> will install
+the packages available on 2023-02-08 from the Posit
+<a class="reference external" href="https://packagemanager.rstudio.com/">Package Manager</a> repository.
+The <code class="docutils literal notranslate"><span class="pre">actions</span></code> argument allows you choose whether a lockfile is generated from
+the provided repositories (“snapshot”), or whether packages are installed
+from the provided repositories (“restore”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::deactivate()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">clean</span></code> argument: when <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> it will delete
+all renv files/directories, leaving the project the way it was found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> now uses <a class="reference external" href="https://packagemanager.posit.co">Posit Public Package Manager</a>
+by default, for new projects where the repositories have not already been
+configured externally. See the options <code class="docutils literal notranslate"><span class="pre">renv.config.ppm.enabled</span></code>,
+<code class="docutils literal notranslate"><span class="pre">renv.config.ppm.default</span></code>, and <code class="docutils literal notranslate"><span class="pre">renv.config.ppm.url</span></code> in <code class="docutils literal notranslate"><span class="pre">?config</span></code> for more
+details (#430).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::lockfile_create()</span></code>, <code class="docutils literal notranslate"><span class="pre">renv::lockfile_read()</span></code>, <code class="docutils literal notranslate"><span class="pre">renv::lockfile_write()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">renv::lockfile_modify()</span></code> provide a small family of functions for
+interacting with renv lockfiles programmatically (#1438).</p></li>
+<li><p>Handling of development dependencies has been refined. <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> no longer track development dependencies, while
+<code class="docutils literal notranslate"><span class="pre">install()</span></code> continues to install them (#1019). <code class="docutils literal notranslate"><span class="pre">Suggested</span></code> packages listed in
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> files are declared as development dependencies regardless of
+whether or not they’re a “package” project.</p></li>
+<li><p>MRAN integration is now disabled by default, pending the upcoming shutdown
+of Microsoft’s MRAN service. Users who require binaries of older R packages
+on Windows + macOS can consider using the instance of CRAN mirrored by the
+<a class="reference external" href="https://packagemanager.posit.co">Posit Public Package Manager</a> (#1343).</p></li>
+</ul>
+</section>
+<section id="bug-fixes-and-minor-improvements">
+<h2>Bug fixes and minor improvements<a class="headerlink" href="#bug-fixes-and-minor-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Development versions of renv are now tracked using the Git SHA of the
+current commit, rather than a version number that’s incremented on every
+change (#1327). This shouldn’t have any user facing impact, but makes
+renv maintenance a little easier.</p></li>
+<li><p>Fixed an issue causing “restarting interrupted promise evaluation” warnings
+to be displayed when querying available packages failed. (#1260)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::activate()</span></code> uses a three option menu that hopefully make your choices
+more clear (#1372).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now discovers R package dependencies inside Jupyter
+notebooks (#929).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> includes packages used by user profile (<code class="docutils literal notranslate"><span class="pre">~/.Rprofile</span></code>)
+if <code class="docutils literal notranslate"><span class="pre">renv::config$user.profile()</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>. They are set as development
+dependencies, which means that they will be installed by <code class="docutils literal notranslate"><span class="pre">install()</span></code> but not
+recorded in the snapshot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> only extracts dependencies from text in YAML
+headers that looks like valid R code (#1288).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> no longer treats <code class="docutils literal notranslate"><span class="pre">box::use(module/file)</span></code> as using
+package <code class="docutils literal notranslate"><span class="pre">module</span></code> (#1377).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> now prompts the user to select a snapshot type if the project
+contains a top-level DESCRIPTION file (#1485).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install(type</span> <span class="pre">=</span> <span class="pre">&quot;source&quot;)</span></code> now ensures source repositories are used
+in projects using <a class="reference external" href="https://packagemanager.posit.co/">PPM</a>. (#927)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> activates Bioconductor repositories when installing a
+package from a remote (e.g. GitHub) which declares a Bioconductor dependency
+(via a non-empty ‘biocViews’ field) (#934).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> respects the project snapshot type, if set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now keeps source when installing packages from source (#522).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now validates that binary packages can be loaded after
+installation, in a manner similar to source packages (#1275).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now supports Bioconductor remotes of the form
+<code class="docutils literal notranslate"><span class="pre">bioc::&lt;BiocVersion&gt;/&lt;Package&gt;</span></code>, for installing packages from
+a particular version of Bioconductor. Aliases like ‘release’ and
+‘devel’ are also supported (#1195).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now requires interactive confirmation that you want to
+install packages (#587).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> gives a more informative message if a lockfile is present but
+no packages are installed (#353).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> no longer attempts to query package repositories when checking
+if a project is synchronized (#812).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> no longer duplicates entries on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable
+(#1095).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> can now use <code class="docutils literal notranslate"><span class="pre">pak::pkg_install()</span></code> to install packages
+when <code class="docutils literal notranslate"><span class="pre">pak</span></code> integration is enabled. Set <code class="docutils literal notranslate"><span class="pre">RENV_CONFIG_PAK_ENABLED</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>
+in your project’s <code class="docutils literal notranslate"><span class="pre">.Renviron</span></code> if you’d like to opt-in to this behavior.
+Note that this requires a nightly build of <code class="docutils literal notranslate"><span class="pre">pak</span></code> (&gt;= 0.4.0-9000);
+see <a class="reference external" href="https://pak.r-lib.org/dev/reference/install.html">https://pak.r-lib.org/dev/reference/install.html</a> for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> now emits an error if called within a project that
+does not contain a lockfile (#1474).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> correctly restores packages downloaded and installed
+from <a class="reference external" href="https://r-universe.dev/">r-universe</a> (#1359).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> now standardises pak metadata so CRAN packages installed via
+pak look the same as CRAN packages installed with renv or <code class="docutils literal notranslate"><span class="pre">install.packages()</span></code>
+(#1239).</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> finds missing packages, a new prompt allows you to
+install them before continuing (#1198).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> no longer requires confirmation when writing the first
+snapshot, since that’s an action that can easily be undone (by deleting
+<code class="docutils literal notranslate"><span class="pre">renv.lock</span></code>) (#1281).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> reports if the R version changes, even if no packages
+change (#962).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot(exclude</span> <span class="pre">=</span> <span class="pre">&lt;...&gt;)</span></code> no longer warns when attempting to exclude
+a package that is not installed (#1396).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now uses a more compact display when packages have some
+inconsistent combination of being installed, used, and recorded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now works more like <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> when package versions
+are different (#675).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> can now update packages installed from GitLab (#136) and
+BitBucket (#1194).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::settings$package.dependency.fields()</span></code> now only affects packages
+installed directly by the user, not downstream dependencies of those packages.</p></li>
+<li><p>renv functions give a clearer error if <code class="docutils literal notranslate"><span class="pre">renv.lock</span></code> has somehow become
+corrupted (#1027).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-17-3">
+<h1>renv 0.17.3<a class="headerlink" href="#renv-0-17-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;bioc::&lt;package&gt;&quot;)</span></code> could fail if
+<code class="docutils literal notranslate"><span class="pre">BiocManager</span></code> was not already installed. (#1184)</p></li>
+<li><p>Fixed an issue where package names were not included in the output
+of <code class="docutils literal notranslate"><span class="pre">renv::diagnostics()</span></code>. (#1182)</p></li>
+<li><p>The clarity of the message printed by <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> has been improved;
+in particular, renv should better report the recommended actions when
+a package required by the project is not installed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument, for explicitly
+excluding certain packages from the generated lockfile.</p></li>
+<li><p>Fixed an issue where renv was passing the wrong argument name to
+<code class="docutils literal notranslate"><span class="pre">installed.packages()</span></code>, causing usages of renv to fail with
+R (&lt;= 3.4.0). (#1173)</p></li>
+<li><p>renv now sets the <code class="docutils literal notranslate"><span class="pre">SDKROOT</span></code> environment variable on macOS if it detects
+that R was built using an LLVM build of <code class="docutils literal notranslate"><span class="pre">clang</span></code> on macOS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now parses the remotes included within, for example,
+a <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file’s <code class="docutils literal notranslate"><span class="pre">Config/Needs/...</span></code> field.</p></li>
+<li><p>renv now checks that the index directory is writable before attempting to
+use it, e.g. for the <code class="docutils literal notranslate"><span class="pre">R</span></code> available packages index maintained by renv. (#1171)</p></li>
+<li><p>renv now checks that the version of <code class="docutils literal notranslate"><span class="pre">curl</span></code> used for downloads appears to
+be functional, and reports a warning if it does not (for example, because
+a requisite system library is missing). The version of <code class="docutils literal notranslate"><span class="pre">curl</span></code> used for
+downloads can also be configured via the <code class="docutils literal notranslate"><span class="pre">RENV_CURL_EXECUTABLE</span></code> environment
+variable.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-17-2">
+<h1>renv 0.17.2<a class="headerlink" href="#renv-0-17-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a regression that caused package hashes to be computed incorrectly
+in some cases. This was a regression in the 0.17.1 release. (#1168)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-17-1">
+<h1>renv 0.17.1<a class="headerlink" href="#renv-0-17-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv gains the configuration option <code class="docutils literal notranslate"><span class="pre">install.remotes</span></code>, which can be used
+to control whether renv attempts to read and use the <code class="docutils literal notranslate"><span class="pre">Remotes:</span></code> field
+included with installed packages. This can be set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> if you’d
+like to ignore this field; e.g. because you know they will not be
+accessible. (#1133)</p></li>
+<li><p>General performance optimizations. In particular, <code class="docutils literal notranslate"><span class="pre">renv::update(check</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>
+should now execute much faster.</p></li>
+<li><p>renv now stores project settings within <code class="docutils literal notranslate"><span class="pre">renv/settings.json</span></code> rather than
+<code class="docutils literal notranslate"><span class="pre">renv/settings.dcf</span></code>. Old settings will be automatically migrated.</p></li>
+<li><p>The renv sandbox is now placed within the renv cache directory. (#1158)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> could erroneously report a project was
+out-of-sync when using explicit snapshots. (#1159)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> would print spurious warnings. (#1160)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now suggests running <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> if there are no
+packages installed in the project library. (#1060)</p></li>
+<li><p>Fixed an issue where renv would fail to query <a class="reference external" href="https://r-universe.dev/">r-universe</a>
+repositories. (#1156)</p></li>
+<li><p>renv no longer tries to set the <code class="docutils literal notranslate"><span class="pre">SDKROOT</span></code> environment variable on
+macOS for R (&gt;= 4.0.0).</p></li>
+<li><p>Fixed an issue where installation of Bioconductor packages could fail
+when <code class="docutils literal notranslate"><span class="pre">BiocManager</span></code> was not installed. (#1156, #1155)</p></li>
+<li><p>Fixed an issue where the amount of time elapsed reported by <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>
+failed to include the time spent retrieving packages.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-17-0">
+<h1>renv 0.17.0<a class="headerlink" href="#renv-0-17-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The performance of <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> has improved.</p></li>
+<li><p>renv now maintains an index of available packages, as retrieved from the
+active package repositories, that is shared across <code class="docutils literal notranslate"><span class="pre">R</span></code> sessions. This should
+improve renv’s performance when querying for available packages across
+multiple different <code class="docutils literal notranslate"><span class="pre">R</span></code> sessions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">prompt</span></code> parameter. When <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> (the default),
+renv will prompt for confirmation before attempting to hydrate the active
+library.</p></li>
+<li><p>Improved handling of package installation via SSH URLs with <code class="docutils literal notranslate"><span class="pre">git</span></code>. (#667)</p></li>
+<li><p>Improved handling of R version validation when using projects with
+Bioconductor. If you find renv is erroneously reporting that your version
+of R is incompatible with the version of Bioconductor you are using, you can
+set <code class="docutils literal notranslate"><span class="pre">options(renv.bioconductor.validate</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> to disable this validation
+behaviour. (#1148)</p></li>
+<li><p>Package names can now be associated with remotes in <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>; for
+example, you can use <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;igraph=igraph/rigraph&quot;)</span></code> to install
+the <code class="docutils literal notranslate"><span class="pre">igraph</span></code> package. This is mainly important when using the <code class="docutils literal notranslate"><span class="pre">renv.auth</span></code>
+authentication tools, where the package name of a remote needs to be
+declared explicitly. (#667)</p></li>
+<li><p>Fixed an issue that could prevent <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> from functioning when
+attempting to install packages which had been archived on CRAN. (#1141)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> argument, which behaves similarly
+to the equivalent argument in <code class="docutils literal notranslate"><span class="pre">remotes::install_*()</span></code>. In particular, this can
+be set to fields like <code class="docutils literal notranslate"><span class="pre">Config/Needs/dev</span></code> to tell renv to use custom
+DESCRIPTION fields for dependency resolution in installation.</p></li>
+<li><p>Fixed an issue where the function variant of the <code class="docutils literal notranslate"><span class="pre">renv.auth</span></code> option was not
+resolved correctly. (#667)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now supports remotes with a trailing slash – such slashes
+are now removed. (#1135)</p></li>
+<li><p>Integration with the RStudio (Posit) Package Manager is now disabled
+by default on aarch64 Linux instances.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RENV_CACHE_MODE</span></code> environment variable can now also be used
+to adjust the permissions set on downloaded package tarballs / binaries.
+(#988)</p></li>
+<li><p>Fixed an issue where fields of the form <code class="docutils literal notranslate"><span class="pre">Remotes.1</span></code> could
+enter lockfile records for older versions of R. (#736)</p></li>
+<li><p>Fixed the performance of <code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> in cases where
+integration with MRAN is enabled.</p></li>
+<li><p>Fixed an issue where package installation using <code class="docutils literal notranslate"><span class="pre">pak</span></code> could fail
+in some cases.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv_file_find()</span></code> can now scan up to the root directory in Docker
+containers. (#1115)</p></li>
+<li><p>renv no longer uses the R temporary directory on Windows for the
+sandbox. The sandbox directory can be customized via the
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_SANDBOX</span></code> environment variable if required. (#835)</p></li>
+<li><p>renv now reports the elapsed time when installing packages. (#1104)</p></li>
+<li><p>For projects using “explicit” snapshots, renv now reports if
+a package is required by the project, but the package is not
+currently installed. (#949)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> could fail to detect when
+no changes had been made to the lockfile.</p></li>
+<li><p>Fixed an issue where renv could emit JSON lockfiles which could not
+be parsed by external JSON readers. (#1102)</p></li>
+<li><p>renv now marks the sandbox as non-writable, which should hopefully
+alleviate issues where attempts to update installed packages would
+inadvertently install the updated package into the sandbox. (#1090)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::use()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">sandbox</span></code> argument, which allows one to control
+whether the system library is sandboxed after a call to <code class="docutils literal notranslate"><span class="pre">renv::use()</span></code>.
+(#1083)</p></li>
+<li><p>The path to the Conda <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file created by renv can
+now be customized via the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_CONDA_EXPORT</span></code> environment
+variable. We recommend setting this within your project-local
+<code class="docutils literal notranslate"><span class="pre">.Renviron</span></code> file as appropriate. (#1089)</p></li>
+<li><p>Fixed an issue where the renv sandbox location did not respect the
+active renv profile. (#1088)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-16-0">
+<h1>renv 0.16.0<a class="headerlink" href="#renv-0-16-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now supports installation of packages with remotes of the form
+<code class="docutils literal notranslate"><span class="pre">&lt;package&gt;=&lt;remote&gt;</span></code>. However, the provided package name is ignored
+and is instead parsed from the remote itself. (#1064)</p></li>
+<li><p>renv now passes along the headers produced by the <code class="docutils literal notranslate"><span class="pre">renv.download.headers</span></code>
+option when bootstrapping itself in the call to <code class="docutils literal notranslate"><span class="pre">utils::download.file()</span></code>.
+(#1084)</p></li>
+<li><p>renv now reports if <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> will change or update the
+version of R recorded in the lockfile. (#1069)</p></li>
+<li><p>renv now supports the <code class="docutils literal notranslate"><span class="pre">install.packages.check.source</span></code> R option, which
+is used to allow R to query source repositories even if the option
+<code class="docutils literal notranslate"><span class="pre">options(pkgType</span> <span class="pre">=</span> <span class="pre">&quot;binary&quot;)</span></code> is set. (#1074)</p></li>
+<li><p>renv better handles packages containing git submodules when installed
+from GitHub remotes. (#1075)</p></li>
+<li><p>renv now handles local sources within the current working directory. (#1079)</p></li>
+<li><p>The renv sandbox is once again enabled by default. On Unix, the sandbox
+is now created by default within the project’s <code class="docutils literal notranslate"><span class="pre">renv/sandbox</span></code> library.
+On Windows, the sandbox is created within the R session’s <code class="docutils literal notranslate"><span class="pre">tempdir()</span></code>.
+The path to the renv sandbox can be customized via the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_SANDBOX</span></code>
+environment variable if required.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> could report spurious changes when
+comparing packages installed using <code class="docutils literal notranslate"><span class="pre">pak</span></code> in some cases. (#1070)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> now also ensures the project activate script is updated
+after a successful restore. (#1066)</p></li>
+<li><p>Fixed an issue where renv could attempt to install a package from the
+repository archives even when <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;binary&quot;</span></code> was set. (#1046)</p></li>
+<li><p>Fixed an issue where package installation could fail when the R session
+is configured to use multiple repositories, some of which do not provide
+any information on available packages for certain binary arms of the
+repository. (#1045)</p></li>
+<li><p>renv now uses <code class="docutils literal notranslate"><span class="pre">jsonlite</span></code> for reading lockfiles when loaded. This should
+help ensure useful errors are provided for manually-edited lockfiles
+which contain a JSON parsing error. If the <code class="docutils literal notranslate"><span class="pre">jsonlite</span></code> package is not loaded,
+renv will fall back to its own internal JSON parser. (#1027)</p></li>
+<li><p>Fixed an issue that would cause renv to fail to source the user
+<code class="docutils literal notranslate"><span class="pre">~/.Rprofile</span></code> if it attempted to register global calling handlers,
+e.g. as <code class="docutils literal notranslate"><span class="pre">prompt::set_prompt()</span></code> does. (#1036)</p></li>
+<li><p>(Linux only) renv now resets ACLs on packages copied to the cache, to
+avoid persisting default ACLs that might have been inherited on packages
+installed into a local project library. If desired, this behavior can be
+disabled by setting the <code class="docutils literal notranslate"><span class="pre">RENV_CACHE_ACLS</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
+If you need finer control over ACLs set on packages moved into the cache,
+consider defining a custom callback via the <code class="docutils literal notranslate"><span class="pre">renv.cache.callback</span></code> R option.
+(#1025)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> inclusion rules for sub-directories were
+not parsed correctly by renv for dependency discovery. (#403)</p></li>
+<li><p>Fixed an issue where renv could report spurious diffs within <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code>
+when comparing package records installed from <code class="docutils literal notranslate"><span class="pre">pak</span></code> versus the default R
+package installer. (#998)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::use_python()</span></code> could cause the Requirements field
+for packages in the lockfile to be unintentionally dropped. (#974)</p></li>
+<li><p>The R option <code class="docutils literal notranslate"><span class="pre">renv.cache.callback</span></code> can now be set, to run a user-defined
+callback after a package has been copied into the cache. This can be useful
+if you’d like to take some action on the cached package’s contents after
+the package has been moved into the cache.</p></li>
+<li><p>(Unix only) The <code class="docutils literal notranslate"><span class="pre">RENV_CACHE_MODE</span></code> environment variable can now be used to
+change the access permissions of packages copied into the cache. When set,
+after a package is copied into the cache, renv will use <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">-Rf</span></code> to try
+and change the permissions of the cache entry to the requested permissions.</p></li>
+<li><p>(Unix only) The <code class="docutils literal notranslate"><span class="pre">RENV_CACHE_USER</span></code> environment variable can now be used to
+change the ownership of folders copied into the cache. When set, after a
+package is copied into the cache, renv will use <code class="docutils literal notranslate"><span class="pre">chown</span> <span class="pre">-Rf</span></code> to try and
+change the ownership of that cache entry to the requested user account.</p></li>
+<li><p>Fixed an issue where repositories containing multiple packages in
+sub-directories could fail to install. (#1016)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-5">
+<h1>renv 0.15.5<a class="headerlink" href="#renv-0-15-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where indexing of packages in the package cellar could
+be slow. (#1014)</p></li>
+<li><p>Fixed an issue where installation of packages from Bioconductor’s binary
+Linux package repositories could fail. (#1013)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> now supports restoration of packages installed from
+<a class="reference external" href="https://r-forge.r-project.org/">R-Forge</a>. (#671)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::init(bioconductor</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> would not update
+the version of Bioconductor used if a project setting had already been
+set.</p></li>
+<li><p>It is now possible to “update” an existing lockfile by using
+<code class="docutils literal notranslate"><span class="pre">renv::snapshot(update</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>. When set, any records existing in the
+old lockfile, but not the new lockfile, will be preserved. (#727)</p></li>
+<li><p>Fixed an issue where renv could fail to parse Git remotes for users
+whose username contains a number. (#1004)</p></li>
+<li><p>renv no longer infers a dependency on the “quarto” R package in projects
+containing a <code class="docutils literal notranslate"><span class="pre">_quarto.yml</span></code> file. (#995)</p></li>
+<li><p>Fixed an issue where renv could fail to download a package from MRAN if
+a compatible source package of the same version was available from the
+active R repositories. (#990)</p></li>
+<li><p>renv now reports permission errors during download more clearly. (#985)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT_ASIS</span></code> was not interpreted
+correctly. (#976)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::modify()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">changes</span></code> argument, which can be used to modify
+a project lockfile non-interactively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::clean()</span></code> now returns the project directory, as documented. (#922)</p></li>
+<li><p>Fixed an issue where renv could fail to parse embedded YAML chunk options
+in R Markdown documents. (#963)</p></li>
+<li><p>renv now sets default placeholder names for the <code class="docutils literal notranslate"><span class="pre">repos</span></code> R option, for
+any repository URLs which happen to be unnamed. (#964)</p></li>
+<li><p>Fixed an issue where renv didn’t respect the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> ordering when
+discovering Python installations via <code class="docutils literal notranslate"><span class="pre">renv_python_discover()</span></code>. (#961)</p></li>
+<li><p>Fixed an issue where renv could fail to install packages containing
+multibyte unicode characters in their DESCRIPTION file. (#956)</p></li>
+<li><p>Fixed detection of Rtools 4.2 (#1002)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-4">
+<h1>renv 0.15.4<a class="headerlink" href="#renv-0-15-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where package installation could fail when referencing the
+cache via a tilde-aliased path, e.g. <code class="docutils literal notranslate"><span class="pre">~/.local/share/renv</span></code>. (#953)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-3">
+<h1>renv 0.15.3<a class="headerlink" href="#renv-0-15-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>A variety of fixes for R CMD check.</p></li>
+<li><p>renv gains an experimental function, <code class="docutils literal notranslate"><span class="pre">renv::autoload()</span></code>, to be used as a
+helper for automatically loading a project for R processes launched within a
+sub-directory of that project. See <code class="docutils literal notranslate"><span class="pre">?renv::autoload</span></code> for more details.</p></li>
+<li><p>renv will now print a warning message when attempting to read a lockfile
+containing merge conflict markers (as from e.g. a git merge). (#945)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> could install into the wrong library
+path on Windows, if the R installation had a site-wide profile that mutated
+the library paths. (#941)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> would fail to find a package within
+the cache when using an abbreviated commit hash for installation. (#943)</p></li>
+<li><p>Fixed an issue where renv’s automatic snapshot was not run after calls to
+<code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> in some cases. (#939)</p></li>
+<li><p>Fixed an issue where renv would incorrectly copy a package from the cache,
+if the cached version of the package and the requested version of the package
+had the same package version, even if they were retrieved from different
+sources. (#938)</p></li>
+<li><p>The path to an renv tarball can now be set via the environment variable
+<code class="docutils literal notranslate"><span class="pre">RENV_BOOTSTRAP_TARBALL</span></code>, to be used to help renv bootstrap from local
+sources. This can either be the path to a directory containing renv
+source tarballs, or the path to the tarball itself.</p></li>
+<li><p>Fixed an issue where the R site library would not be appropriately masked
+for resumed RStudio sessions. (#936)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-2">
+<h1>renv 0.15.2<a class="headerlink" href="#renv-0-15-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issues encountered in R CMD check.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-1">
+<h1>renv 0.15.1<a class="headerlink" href="#renv-0-15-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where renv inadvertently inserted extra newlines into
+a <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file when adding <code class="docutils literal notranslate"><span class="pre">Remotes</span></code> fields after install. (#914)</p></li>
+<li><p>Fixed an issue where packages installed from a remote sub-directory would
+fail to install when later re-installed from the cache. (#913)</p></li>
+<li><p>renv now recognizes YAML chunk options of the form <code class="docutils literal notranslate"><span class="pre">#|</span> <span class="pre">key:</span> <span class="pre">value</span></code> when
+used in R Markdown documents. (#912)</p></li>
+<li><p>Fixed an issue where the R site library was visible in renv projects with
+the system library sandbox disabled.</p></li>
+<li><p>Fixed an issue where renv could update the wrong <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> in R
+processes launched by <code class="docutils literal notranslate"><span class="pre">callr</span></code> (e.g. in <code class="docutils literal notranslate"><span class="pre">devtools::install</span></code>). (#910)</p></li>
+<li><p>Fixed an issue where renv could fail to read mis-encoded
+DESCRIPTION files. (#908)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">config$cache.symlinks()</span></code> would report <code class="docutils literal notranslate"><span class="pre">NULL</span></code> when
+unset. (#906)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-15-0">
+<h1>renv 0.15.0<a class="headerlink" href="#renv-0-15-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The development branch for renv has moved from master to main.</p></li>
+<li><p>renv package records in the lockfile now include a <code class="docutils literal notranslate"><span class="pre">Requirements</span></code>
+entry, which gives a list of R packages this package depends on
+in some way. This is primarily for internal use by the <code class="docutils literal notranslate"><span class="pre">pak</span></code>
+package.</p></li>
+<li><p>Fixed an issue where packages containing DESCRIPTION files using
+a latin1 encoding would not be read correctly by renv.</p></li>
+<li><p>Fixed an issue that could cause <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> to fail
+when a malformed <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file was encountered. (#892)</p></li>
+<li><p>The path to the project-local renv folder can now be configured
+via the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_RENV</span></code> environment variable. This can be useful
+if you’d prefer to store your project’s renv resources within
+an alternate location in the project. (#472)</p></li>
+<li><p>renv now uses an external library by default for R package projects,
+with the library located within <code class="docutils literal notranslate"><span class="pre">tools::R_user_dir(&quot;renv&quot;,</span> <span class="pre">&quot;cache&quot;)</span></code>.
+This directory can be configured via the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT</span></code>
+environment variable if desired. See
+<code class="docutils literal notranslate"><span class="pre">vignette(&quot;packages&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;renv&quot;)</span></code> for more details. (#384)</p></li>
+<li><p>renv now uses the repositories as defined within the project lockfile
+(if any) when attempting to bootstrap itself in a project. (#820)</p></li>
+<li><p>The renv sandbox is now disabled by default – see #614 for more details.</p></li>
+<li><p>renv gains the function <code class="docutils literal notranslate"><span class="pre">repair()</span></code>, to be used to attempt to repair
+the project library when links into the global package cache appear to
+be broken. (#378)</p></li>
+<li><p>Fixed an issue where the staging library used during install could fail to
+inherit the same directory permissions as the target library itself. (#331)</p></li>
+<li><p>Fixed an regression which caused <code class="docutils literal notranslate"><span class="pre">renv::history()</span></code> to fail. (#886)</p></li>
+<li><p>renv gains experimental support for the <a class="reference external" href="https://pak.r-lib.org/">pak</a>
+package. Set <code class="docutils literal notranslate"><span class="pre">RENV_CONFIG_PAK_ENABLED</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> in an appropriate <code class="docutils literal notranslate"><span class="pre">.Renviron</span></code>
+file to enable <code class="docutils literal notranslate"><span class="pre">pak</span></code> integration. When enabled, calls to <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>
+will use <code class="docutils literal notranslate"><span class="pre">pak</span></code> to download and install packages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">bioconductor</span></code> argument, to be used to initialize
+a project with a particular Bioconductor release. You can also use
+<code class="docutils literal notranslate"><span class="pre">renv::init(bioconductor</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> to initialize with the latest-available
+release for the version of R being used.</p></li>
+<li><p>Project settings can now be overridden by setting an R option of the same
+name. For example, one could force a project to use Bioconductor 3.14 by
+setting <code class="docutils literal notranslate"><span class="pre">options(renv.settings.bioconductor.version</span> <span class="pre">=</span> <span class="pre">&quot;3.14&quot;)</span></code> within
+the project <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> (or similar startup R profile).</p></li>
+<li><p>The ad-hoc package repository called “local sources” has been renamed to
+the “package cellar”. In addition, the path to the cellar is now
+controlled by the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_CELLAR</span></code> environment variable, rather than
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LOCAL</span></code>. This change was made to reduce confusion between
+“local sources” of packages located somewhere on the filesystem, as
+opposed to packages explicitly placed in this ad-hoc repository.
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LOCAL</span></code> remains supported for backwards compatibility.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_CELLAR</span></code> environment variable can now be set to multiple
+paths. Use <code class="docutils literal notranslate"><span class="pre">;</span></code> as a separator between paths; for example,
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LOCAL=/path/to/sources/v1;/path/to/sources/v2</span></code>. (#550)</p></li>
+<li><p>Packages installed via e.g. <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;./path/to/package&quot;)</span></code>
+will now retain the relative path to that package within the lockfile.
+(#873)</p></li>
+<li><p>Fixed an issue where invalid <code class="docutils literal notranslate"><span class="pre">config</span></code> option values were not properly
+reported. (#773)</p></li>
+<li><p>renv now supports restoration of packages installed via one of the
+<a class="reference external" href="https://r-universe.dev/">r-universe</a> repositories.</p></li>
+<li><p>renv gains the <code class="docutils literal notranslate"><span class="pre">bioconductor.version</span></code> project setting, used to freeze
+the version of Bioconductor used in a particular project. When set, this
+will override any version that might be selected via the <code class="docutils literal notranslate"><span class="pre">BiocManager</span></code>
+package. (#864)</p></li>
+<li><p>renv now infers that parameterized R Markdown documents have a dependency
+on the <code class="docutils literal notranslate"><span class="pre">shiny</span></code> package. In addition, R code included within the <code class="docutils literal notranslate"><span class="pre">params:</span></code>
+list will be parsed for dependencies. (#859)</p></li>
+<li><p>renv now ignores hidden directories during dependency discovery by default.
+If you want to force a particular hidden directory to be included for
+discovery, you can use a <code class="docutils literal notranslate"><span class="pre">.renvignore</span></code> file with an explicit inclusion
+criteria; e.g. <code class="docutils literal notranslate"><span class="pre">!.hidden/</span></code>.</p></li>
+<li><p>renv now supports the <code class="docutils literal notranslate"><span class="pre">*release</span></code> remotes specifier for GitHub repositories,
+for requesting installation of the latest declared release of a package from
+GitHub. (#792)</p></li>
+<li><p>renv now handles packages stored within the sub-directory of a Git
+repository better. (#793)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::history()</span></code> would fail to resolve the correct
+lockfile path if the working directory was changed. (#834)</p></li>
+<li><p>Refined dependency discovery within <code class="docutils literal notranslate"><span class="pre">glue::glue()</span></code> expressions.</p></li>
+<li><p>renv now parses packages referenced via the <code class="docutils literal notranslate"><span class="pre">base_format</span></code> field within
+an R Markdown document’s YAML header. (#854)</p></li>
+<li><p>Fixed an issue where renv would fail to produce the appropriate binary
+repository URL for RSPM repositories built using Red Hat Enterprise Linux.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> could cause the environment name
+and / or path associated with a Python environment to be omitted from the
+lockfile. (#843)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> could fail to restore packages which
+referred to their source via an explicit path in the <code class="docutils literal notranslate"><span class="pre">Source</span></code> field. (#849)</p></li>
+<li><p>renv no longer requires explicit user consent when used within Singularity
+containers. (#824, &#64;kiwiroy)</p></li>
+<li><p>renv now respects the <code class="docutils literal notranslate"><span class="pre">R_PROFILE_USER</span></code> environment variable, in addition
+to the <code class="docutils literal notranslate"><span class="pre">user.profile</span></code> configuration option, when considering whether the
+user <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> should be examined for package dependencies. (#821)</p></li>
+<li><p>The renv auto-loader can now be disabled by setting the environment
+variable <code class="docutils literal notranslate"><span class="pre">RENV_AUTOLOADER_ENABLED</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>. This can be useful if you’d like
+to explicitly control how a project is loaded, e.g. by calling <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code>
+explicitly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">repos</span></code> argument, to be used to force
+the lockfile to be generated with the requested set of R repositories
+encoded within.</p></li>
+<li><p>renv now validates that the <code class="docutils literal notranslate"><span class="pre">repos</span></code> option, as used by <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>,
+is a named vector. (#811)</p></li>
+<li><p>Fixed an issue where renv’s shims, e.g. for <code class="docutils literal notranslate"><span class="pre">install.packages()</span></code>, failed
+to pass along other optional arguments to the shimmed function correctly.
+(#808)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-14-0">
+<h1>renv 0.14.0<a class="headerlink" href="#renv-0-14-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now uses <code class="docutils literal notranslate"><span class="pre">tools::R_user_dir()</span></code> to resolve the default path to the
+global renv cache, for R installations 4.0.0 or greater. If the renv
+cache still exists at the old location, that location will be used instead.
+This change should only affect brand new installations of renv on newer
+versions of <code class="docutils literal notranslate"><span class="pre">R</span></code>.</p></li>
+<li><p>Fixed an issue with renv tests failing with R (&gt;= 4.2.0).</p></li>
+<li><p>renv will no longer auto-activate itself within R processes launched via
+<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span></code>. This behavior can be controlled if necessary via the
+<code class="docutils literal notranslate"><span class="pre">RENV_ACTIVATE_PROJECT</span></code> environment variable – set this to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> to
+force the project in the current working directory to be activated, and
+<code class="docutils literal notranslate"><span class="pre">FALSE</span></code> to suppress the renv auto-loader altogether. (#804)</p></li>
+<li><p>Added dependency discovery support for R utility scripts identified by a
+shebang line instead of a file extension. (#801; &#64;klmr)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;&lt;package&gt;&quot;,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;both&quot;)</span></code> would attempt
+to install the package from sources, even if the current system did not have
+the requisite build tools available. (#800)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::scaffold()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">settings</span></code> argument, used to create a project
+scaffolding with some default project options set. (#791)</p></li>
+<li><p>renv now determines the default branch name for packages installed from
+GitLab without an explicit reference supplied; for example, as in
+<code class="docutils literal notranslate"><span class="pre">renv::install(&quot;gitlab::&lt;user&gt;/&lt;repo&gt;&quot;)</span></code>. (#795)</p></li>
+<li><p>renv now infers a dependency on the <code class="docutils literal notranslate"><span class="pre">bslib</span></code> package for R Markdown
+documents using custom themes. (#790)</p></li>
+<li><p>renv will now prompt users to activate the current project when calling
+<code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> or <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> from within a project that has not
+yet been activated. (#777)</p></li>
+<li><p>renv now has improved handling for <code class="docutils literal notranslate"><span class="pre">git</span></code> remotes. (#776; &#64;matthewstrasiotto)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument, used to exclude a subset of
+packages during restore. (#746)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> could fail to parse
+dependencies in calls to <code class="docutils literal notranslate"><span class="pre">glue::glue()</span></code> that used custom open
+and close delimiters. (#772)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::init(bare</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> would unnecessarily
+scour the project for R package dependencies. (#771)</p></li>
+<li><p>Fixed an issue where renv could fail to install packages located
+on GitHub within sub-subdirectories. (#759)</p></li>
+<li><p>renv gains the function <code class="docutils literal notranslate"><span class="pre">embed()</span></code>, used to embed a lockfile with an
+R document (via a call to <code class="docutils literal notranslate"><span class="pre">renv::use()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::use()</span></code> gains the lockfile argument. This can be useful for
+R Markdown documents and scripts that you’d like to run with the
+context for a particular lockfile applied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::rebuild()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">type</span></code> parameter, for parity with
+<code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>.</p></li>
+<li><p>Fixed an issue where renv could incorrectly copy an incompatible version
+of an R package from a site library into the project library during install.
+(#750)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> can now parse (some) usages of <code class="docutils literal notranslate"><span class="pre">parsnip::set_engine()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now has improved handling for piped expressions.</p></li>
+<li><p>Fixed crash during dependency discovery when encountering <code class="docutils literal notranslate"><span class="pre">box::use()</span></code>
+declarations that use a trailing comma, and no longer treat <code class="docutils literal notranslate"><span class="pre">.</span></code> and <code class="docutils literal notranslate"><span class="pre">..</span></code> as
+package names. (&#64;klmr)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::clean()</span></code> no longer attempts to clean the system library by default.
+(#737)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">install.packages()</span></code> could fail when used within an
+renv project to install a package from local sources. (#724)</p></li>
+<li><p>The chunk <code class="docutils literal notranslate"><span class="pre">renv.ignore</span></code> parameter can now be set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. When set,
+renv will explicitly parse dependencies from chunks even if other
+chunk metadata would have told renv to ignore it (e.g. because it
+was marked with <code class="docutils literal notranslate"><span class="pre">eval=F</span></code>). (#722)</p></li>
+<li><p>Fixed an issue where chunks with the chunk option <code class="docutils literal notranslate"><span class="pre">eval=F</span></code> would
+still be scanned for dependencies. (#421)</p></li>
+<li><p>In interactive sessions, <code class="docutils literal notranslate"><span class="pre">renv::use_python()</span></code> will now prompt for
+the version of Python to be used. Python installations in a set
+of common locations will be searched. See <code class="docutils literal notranslate"><span class="pre">?renv::use_python()</span></code>
+for more details.</p></li>
+<li><p>Fixed an issue where renv would fail to retrieve packages from the
+archives if the lockfile entry was tagged with a <code class="docutils literal notranslate"><span class="pre">RemoteSha</span></code> field.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> will now prefer restoring packages from the repository
+named in the <code class="docutils literal notranslate"><span class="pre">Repository</span></code> field if available. The name is matched against
+the repository names set in the R <code class="docutils literal notranslate"><span class="pre">repos</span></code> option, or as encoded in the
+renv lockfile. (#701)</p></li>
+<li><p>renv now supports the discovery of dependencies within interpolated strings
+as used by the <code class="docutils literal notranslate"><span class="pre">glue</span></code> package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RENV_CONFIG_EXTERNAL_LIBRARIES</span></code> can now be configured to use multiple
+library paths, delimited by either <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">;</span></code>, or <code class="docutils literal notranslate"><span class="pre">,</span></code>. (#700)</p></li>
+<li><p>renv gains the configuration option, <code class="docutils literal notranslate"><span class="pre">exported.functions</span></code>, controlling
+which functions and objects are placed on the R search path when renv
+is attached (e.g. via <code class="docutils literal notranslate"><span class="pre">library(renv)</span></code>). Set this to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> to instruct renv
+not to place any functions on the search path. This helps avoid issues with,
+for example, <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> masking <code class="docutils literal notranslate"><span class="pre">base::load()</span></code>. When set, all usages
+of renv APIs must be explicitly qualified with the <code class="docutils literal notranslate"><span class="pre">renv::</span></code> prefix.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-13-2">
+<h1>renv 0.13.2<a class="headerlink" href="#renv-0-13-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install(&quot;user/repo/subdir</span> <span class="pre">with</span> <span class="pre">spaces&quot;)</span></code> now works as expected. (#694)</p></li>
+<li><p>renv can now parse package dependencies declared by
+<code class="docutils literal notranslate"><span class="pre">targets::tar_option_set(packages</span> <span class="pre">=</span> <span class="pre">&lt;...&gt;)</span></code>. (#698)</p></li>
+<li><p>renv no longer performs an automatic snapshot following a user-canceled
+renv action – for example, if <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> is canceled, the next
+automatic snapshot will be suppressed. (#697)</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">vcs.ignore.local</span></code> project setting, to control whether the
+project’s <code class="docutils literal notranslate"><span class="pre">renv/local</span></code> folder is added to renv’s VCS ignore file
+(e.g. <code class="docutils literal notranslate"><span class="pre">renv/.gitignore</span></code>). (#696)</p></li>
+<li><p>Fixed an issue where renv’s bootstrapping code could inadvertently bootstrap
+with the wrong version of renv, if the source and binary versions of renv
+on CRAN were not in sync. (#695)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> could provide a misleading message
+for packages which are recorded in the lockfile, but not explicitly
+required by the project. (#684)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-13-1">
+<h1>renv 0.13.1<a class="headerlink" href="#renv-0-13-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::clean()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">actions</span></code> argument, allowing the caller to control
+which specific actions are taken during a <code class="docutils literal notranslate"><span class="pre">clean()</span></code> operation.</p></li>
+<li><p>renv no longer performs an automatic snapshot after a call to
+<code class="docutils literal notranslate"><span class="pre">renv::status()</span></code>. (#651)</p></li>
+<li><p>Fixed an issue where attempts to transform RSPM repository URLs could
+fail if the copy of R was installed without a local <code class="docutils literal notranslate"><span class="pre">CRAN_mirrors.csv</span></code>
+file.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> could fail when passed a relative
+path to a directory. (#673)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> would miss dependencies in
+R Markdown YAML headers containing multiple output formats. (#674)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now better respects the <code class="docutils literal notranslate"><span class="pre">Remotes</span></code> field in a project
+<code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file, if available. (#670)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RENV_DOWNLOAD_METHOD</span></code> is now treated as an alias for
+<code class="docutils literal notranslate"><span class="pre">RENV_DOWNLOAD_FILE_METHOD</span></code>.</p></li>
+<li><p>Fixed an issue where renv would fail to load if the <code class="docutils literal notranslate"><span class="pre">~/.Rprofile</span></code> existed
+but was an empty file.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-13-0">
+<h1>renv 0.13.0<a class="headerlink" href="#renv-0-13-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> no longer creates an <code class="docutils literal notranslate"><span class="pre">renv/activate.R</span></code> file in the project
+folder if one does not already exist. (#655)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> function gains the <code class="docutils literal notranslate"><span class="pre">update</span></code> argument, used to control
+whether <code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> chooses to update packages when invoked. When set
+to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, if the version of a package installed in the source library is
+newer than that of the project library, then renv will copy that version
+of the package into the project library. (#647)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_PREFIX_AUTO</span></code> environment variable can now be set to instruct
+renv to include an OS-specific component as part of the library and
+cache paths. This is primarily useful for Linux systems, where one might
+want to share a global cache with multiple different operating systems.
+The path component is constructed from the <code class="docutils literal notranslate"><span class="pre">ID</span></code> and <code class="docutils literal notranslate"><span class="pre">VERSION_CODENAME</span></code> /
+<code class="docutils literal notranslate"><span class="pre">VERSION_ID</span></code> components of the system’s <code class="docutils literal notranslate"><span class="pre">/etc/os-release</span></code> file.</p></li>
+<li><p>renv’s dependency discovery machinery now has preliminary support
+for packages imported via the <a class="reference external" href="https://github.com/klmr/box">box</a> package;
+e.g. <code class="docutils literal notranslate"><span class="pre">box::use(dplyr[...])</span></code>.</p></li>
+<li><p>Multiple cache paths can now be specified, with each cache path separated
+by either a <code class="docutils literal notranslate"><span class="pre">;</span></code> or <code class="docutils literal notranslate"><span class="pre">:</span></code>. This can be useful when you’d like to use multiple
+package caches within the same project; for example, because you’d like to
+share a read-only cache with a set of projects. (#653, &#64;vandenman)</p></li>
+<li><p>Fixed an issue where renv could fail to discover dependencies in directories
+with very large <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> or <code class="docutils literal notranslate"><span class="pre">.renvignore</span></code> files. (#652)</p></li>
+<li><p>renv gains a new configuration option, <code class="docutils literal notranslate"><span class="pre">install.shortcuts</span></code>. When enabled,
+if renv discovers that a package to be installed is already available in
+the user or site libraries, renv will instead install a copy of that package
+into the project library. (#636)</p></li>
+<li><p>renv gains a new function, <code class="docutils literal notranslate"><span class="pre">renv::use()</span></code>, used to download, install, and
+load a set of packages directly within an R script. <code class="docutils literal notranslate"><span class="pre">renv::use()</span></code> can make it
+easier to share a standalone R script, with the packages required to install
+that script embedded directly in the script. It is inspired in part by the
+<a class="reference external" href="https://groundhogr.com/">groundhog</a> package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install(&quot;.&quot;)</span></code> can now be used to install a package from sources within
+the current working directory. (#634)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> could fail if a package installed from
+GitHub was missing the <code class="docutils literal notranslate"><span class="pre">RemoteHost</span></code> field in its DESCRIPTION file. (#632)</p></li>
+<li><p>renv now has support for custom project profiles. Profiles can be used to
+activate different sets of project libraries + lockfiles for different workflows
+in a given project. See <code class="docutils literal notranslate"><span class="pre">vignette(&quot;profiles&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;renv&quot;)</span></code> for more
+details.</p></li>
+<li><p>Fixed an issue where attempts to initialize an renv project in a path
+containing non-ASCII characters could fail on Windows. (#629)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;&lt;package&gt;&quot;)</span></code> could fail if renv chose
+to install the package from MRAN rather than from one of the active package
+repositories. (#627)</p></li>
+<li><p>renv again defaults to using the project’s <code class="docutils literal notranslate"><span class="pre">renv/staging</span></code> folder for staged
+/ transactional installs. Use the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_STAGING</span></code> environment
+variable if more granular control over the staging library path is required.
+This fixes issues on Windows with creating junction points to the global
+package cache on Windows. (#584)</p></li>
+<li><p>renv no longer skips downloading a requested source package if an existing
+cached download exists and appears to be valid. This should help avoid issues
+when attempting to install a package whose associated tarball has changed
+remotely. (#504)</p></li>
+<li><p>During bootstrap, renv will now attempt to download and unpack a binary
+copy of renv if available from the specified package repositories.</p></li>
+<li><p>renv now always attempts to bootstrap itself from the R Project’s
+Cloud package repository, as a fallback in case no other repository
+is available. (#613)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::rebuild(&lt;package&gt;)</span></code> now uses the latest-available version of the
+requested package(s) if those packages are not currently installed.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::restore(library</span> <span class="pre">=</span> <span class="pre">&quot;/path/to/lib&quot;)</span></code> would fail to
+restore packages, if those packages were already installed on the active
+library paths (as reported by <code class="docutils literal notranslate"><span class="pre">.libPaths()</span></code>). (#612)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">reprex</span></code> argument. Set this to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if you’d
+like to embed an renv lockfile as part of a reproducible example, as
+generated by the <a class="reference external" href="https://www.tidyverse.org/help/#reprex-pkg"><code class="docutils literal notranslate"><span class="pre">reprex</span></code></a>
+package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now reports packages that are referenced in a project’s
+scripts, but are neither installed in the project library nor recorded in the
+lockfile. (#588)</p></li>
+<li><p>Fixed an issue where package installation could fail if the <code class="docutils literal notranslate"><span class="pre">configure.vars</span></code>
+option was set to be a named character, rather than a named list. (#609)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-5">
+<h1>renv 0.12.5<a class="headerlink" href="#renv-0-12-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where renv would fail to bootstrap. (#608)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-4">
+<h1>renv 0.12.4<a class="headerlink" href="#renv-0-12-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now invalidates the available packages cache if the <code class="docutils literal notranslate"><span class="pre">https_proxy</span></code>
+environment variable changes. (#579)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install(&lt;pkg&gt;)</span></code> will now install the latest-available version of
+that package from local sources, if that package is available and newer than
+any package available on the active package repositories. (#591)</p></li>
+<li><p>The configuration option <code class="docutils literal notranslate"><span class="pre">startup.quiet</span></code> has been added, allowing one to
+control whether renv will display the typical startup banner when a
+project is loaded.</p></li>
+<li><p>renv now better handles being unloaded and reloaded within the
+same R session. In particular, warnings related to a corrupted
+lazy-load database should no longer occur. (#600)</p></li>
+<li><p>renv no longer reinstalls packages that are already installed and
+up-to-date in bare calls to <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>.</p></li>
+<li><p>renv now uses the R temporary directory for staging, when performing
+transactional restores / installs. If you need to control the path used
+for staged installs, please set the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_STAGING</span></code> environment
+variable.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">install.verbose</span></code> configuration option has been added. When set to
+<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, renv will stream the output generated by R when performing a
+package installation. This can be helpful in some cases when diagnosing
+a failed restore / install. (#330)</p></li>
+<li><p>Fixed an issue where renv could fail to parse R Markdown chunk headers
+with an empty label. (#598)</p></li>
+<li><p>The environment variable <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT_ASIS</span></code> can now be used
+to control whether the project name should be used as-is when forming the
+library path within the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT</span></code> folder. Set this to
+<code class="docutils literal notranslate"><span class="pre">&quot;TRUE&quot;</span></code> if you would prefer renv did not append a unique identifier
+to your project’s library path. (#593)</p></li>
+<li><p>Fixed an issue where GitLab references were not URL encoded. (#590)</p></li>
+<li><p>renv no longer emits warnings when parsing multi-mode R files that make
+use of re-used knitr chunks (those specified as <code class="docutils literal notranslate"><span class="pre">&lt;&lt;label&gt;&gt;</span></code>). (#586)</p></li>
+<li><p>The library used for staged installs can now be configured via the
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_STAGING</span></code> environment variable. (#584)</p></li>
+<li><p>Fixed an issue where bootstrapping an older version of renv could
+fail if the R repositories had not been appropriately set.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-3">
+<h1>renv 0.12.3<a class="headerlink" href="#renv-0-12-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> could give an error if called
+with a <code class="docutils literal notranslate"><span class="pre">path</span></code> argument of length &gt; 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">rebuild</span></code> argument, allowing users to control
+whether packages should be rebuilt on <code class="docutils literal notranslate"><span class="pre">restore()</span></code> rather than installed
+via links or copies from the cache, or other sources providing
+already-installed packages.</p></li>
+<li><p>renv will now attempt to bootstrap itself from CRAN, in addition to any
+repositories declared via <code class="docutils literal notranslate"><span class="pre">getOption(&quot;repos&quot;)</span></code>. If you’d prefer to disable
+this behavior, you can set <code class="docutils literal notranslate"><span class="pre">options(renv.bootstrap.repos</span> <span class="pre">=</span> <span class="pre">character())</span></code>.</p></li>
+<li><p>The renv setting <code class="docutils literal notranslate"><span class="pre">r.version</span></code> has been added. This can be set if you’d like
+to associate a particular project with a specific version of R, independent
+of the version of R actually used when subsequent lockfiles are created via
+<code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>. For example, setting <code class="docutils literal notranslate"><span class="pre">renv::settings$r.version(&quot;4.0&quot;)</span></code>
+will ensure that R version <code class="docutils literal notranslate"><span class="pre">&quot;4.0&quot;</span></code> is encoded in the lockfile for future
+calls to <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> in a project. (#254)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now detects the usage of R packages within dotfiles;
+e.g. the project <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code>. (#569)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">cache</span></code> argument, used to control whether
+<code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> also performs diagnostics on the global package cache. (#570)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> would make an un-necessary call to
+<code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code>. (#570)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;bioc::&lt;package&gt;&quot;,</span> <span class="pre">rebuild</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> would
+fail to install the requested package. (#565)</p></li>
+<li><p>Fixed an issue where the repository name for a package installed from
+an R package repository was sometimes incorrect. (#402)</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT</span></code> is set, renv will now disambiguate library
+paths based on a hash of the project’s path. (#564)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-2">
+<h1>renv 0.12.2<a class="headerlink" href="#renv-0-12-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv no longer errs when running tests with <code class="docutils literal notranslate"><span class="pre">_R_CHECK_SUGGESTS_ONLY_=false</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-1">
+<h1>renv 0.12.1<a class="headerlink" href="#renv-0-12-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now ensures all of its dependencies are loaded eagerly when running
+tests, to avoid issues with missing + lazily-loaded packages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> now accepts library paths specified with a relative
+path. (#562)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> no longer excludes the project itself, for <code class="docutils literal notranslate"><span class="pre">R</span></code> package
+projects that use <a class="reference external" href="https://engineering-shiny.org/">golem</a>. (#538)</p></li>
+<li><p>The renv configuration option <code class="docutils literal notranslate"><span class="pre">cache.symlinks</span></code> can now be used to control
+whether renv used symlinks into the cache, as opposed to full package
+copies. Please see <code class="docutils literal notranslate"><span class="pre">?renv::config</span></code> for more details. (#556)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">packages</span></code> argument, to be used when creating a
+lockfile that captures a specific set of packages and their dependencies.
+renv will use the currently-installed versions of those packages when
+determining the package records to be written to the lockfile. (#554)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> now accepts an R function as the first argument,
+for finding the packages used by a particular function. Currently,
+package usages must be prefixed with <code class="docutils literal notranslate"><span class="pre">::</span></code> to be detected. (#554)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::record(&lt;package&gt;)</span></code> now ensures that the latest-available version of
+that package is recorded in the lockfile. Previously, a package record
+without any specified version was added instead. For existing records
+without a recorded version, the latest-available version on the package
+repositories will be used during <code class="docutils literal notranslate"><span class="pre">restore()</span></code> instead. (#540)</p></li>
+<li><p>renv now reads the default branch tagged for repositories created on GitHub,
+ensuring that calls of the form <code class="docutils literal notranslate"><span class="pre">renv::install(&quot;&lt;user&gt;/&lt;repo&gt;&quot;)</span></code> resolve to
+the declared default branch, rather than always defaulting to <code class="docutils literal notranslate"><span class="pre">&quot;master&quot;</span></code>.
+(#557)</p></li>
+<li><p>renv now only installs packages from sources if it detects that build tools
+are available. This determination is done by checking whether <code class="docutils literal notranslate"><span class="pre">make</span></code> is
+available on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. (#552)</p></li>
+<li><p>Warnings related to unknown sources can now be suppressed by setting
+<code class="docutils literal notranslate"><span class="pre">options(renv.warnings.unknown_sources</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code>. (#546)</p></li>
+<li><p>renv now ignores chunks with the parameter <code class="docutils literal notranslate"><span class="pre">exercise=TRUE</span></code> set, under the
+assumption that such chunks might contain errors and so otherwise be
+un-parsable.</p></li>
+<li><p>renv now warns if sandbox generation takes a long time (&gt; 30 seconds).</p></li>
+<li><p>renv now provides an optional locking mechanism, to help minimize the
+chance of interprocess conflicts when multiple R processes need to use the
+same renv project. The option is currently disabled by default; it can be
+enabled by setting <code class="docutils literal notranslate"><span class="pre">options(renv.config.locking.enabled</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> in an
+appropriate R startup file. (#525)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-12-0">
+<h1>renv 0.12.0<a class="headerlink" href="#renv-0-12-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv now uses R’s internal tar implementation by default on Windows. This is
+done to avoid issues that may occur when a version of <code class="docutils literal notranslate"><span class="pre">tar.exe</span></code> on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+exists, but does not accept Windows-style paths. The <code class="docutils literal notranslate"><span class="pre">TAR</span></code> environment
+variable can be set if one needs to explicitly force the use of a particular
+<code class="docutils literal notranslate"><span class="pre">tar.exe</span></code> executable. (#521)</p></li>
+<li><p>renv now prepends <code class="docutils literal notranslate"><span class="pre">renv</span> <span class="pre">(&lt;version&gt;)</span></code> to the user agent string. This should
+help ensure that package binaries are located when installing packages from
+RSPM outside of RStudio. (#520)</p></li>
+<li><p>renv now uses a task callback to detect mutations to the project library
+when the <code class="docutils literal notranslate"><span class="pre">auto.snapshot</span></code> configuration option is enabled. This will help
+ensure that automatic snapshots occur when packages are installed via a
+mechanism not explicitly understood by renv. (#501)</p></li>
+<li><p>renv now treats the user + site libraries as package sources during a
+restore. If renv sees that a package already installed in one of these
+libraries is compatible with the record requested via <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code>, that copy of the package will be copied and used. (#492)</p></li>
+<li><p>renv now performs a lighter-weight check as to whether the project lockfile
+is synchronized with the project library on load. The default value for the
+<code class="docutils literal notranslate"><span class="pre">synchronized.check</span></code> config option has been changed back to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>. (#496)</p></li>
+<li><p>renv now handles the <code class="docutils literal notranslate"><span class="pre">remotes</span></code> syntax for installing packages lying within
+the sub-directory of a GitHub repository; that is,
+<code class="docutils literal notranslate"><span class="pre">renv::install(&quot;user/repo/subdir&quot;)</span></code> should work as expected. (#497)</p></li>
+<li><p>Fixed an issue where renv did not construct the correct URL for packages to
+be installed from Bitbucket remotes. (#494)</p></li>
+<li><p>Fixed an issue where the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_PREFIX</span></code> environment variable was
+inappropriately normalized when renv was loaded. (#465)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-11-0">
+<h1>renv 0.11.0<a class="headerlink" href="#renv-0-11-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install(...,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;binary&quot;)</span></code> would
+still attempt to install packages from sources in some cases. (#461)</p></li>
+<li><p>renv now always writes <code class="docutils literal notranslate"><span class="pre">renv/.gitignore</span></code>, to ensure that the appropriate
+directories are ignored for projects which initialize <code class="docutils literal notranslate"><span class="pre">git</span></code> after renv
+itself is initialized. (#462)</p></li>
+<li><p>R Markdown documents with the <code class="docutils literal notranslate"><span class="pre">.Rmarkdown</span></code> file extension are now parsed for
+dependencies.</p></li>
+<li><p>Fixed an issue where setting the <code class="docutils literal notranslate"><span class="pre">external.libraries</span></code> configuration option
+would trigger a warning. (#452)</p></li>
+<li><p>Improved handling of unicode paths on Windows. (#451)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot(project</span> <span class="pre">=</span> <span class="pre">&lt;path&gt;)</span></code> now properly respects <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> /
+<code class="docutils literal notranslate"><span class="pre">.renvignore</span></code> files, even when that project has not yet been explicitly
+initialized yet. (#439)</p></li>
+<li><p>The default value of the <code class="docutils literal notranslate"><span class="pre">synchronized.check</span></code> option has been changed from
+TRUE to FALSE.</p></li>
+<li><p>Fixed an issue where packages downloaded from Bitbucket and GitLab did not
+record the associated commit hash.</p></li>
+<li><p>Fixed an issue where attempting to install packages from GitLab could fail
+to install the correct version of the package. (#436)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> now preserves records in a lockfile that are only
+available for a different operating system. This should make it easier
+to share lockfiles that make use of platform-specific packages. (#419)</p></li>
+<li><p>renv better handles files that are removed during an invocation to
+<code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code>. (#429)</p></li>
+<li><p>The configuration option <code class="docutils literal notranslate"><span class="pre">install.staged</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">install.transactional</span></code>, to better reflect its purpose. <code class="docutils literal notranslate"><span class="pre">install.staged</span></code>
+remains supported as a deprecated alias.</p></li>
+<li><p>Fixed an issue where renv could fail to parse non-ASCII content on Windows.
+(#421)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument, useful in cases where one
+would like to update all packages used in a project, except for a small
+subset of excluded packages. (#425)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> now respects the project <code class="docutils literal notranslate"><span class="pre">ignored.packages</span></code> setting. (#425)</p></li>
+<li><p>Fixed an issue where RSPM binary URL transformations could fail for
+Ubuntu Trusty. (#423)</p></li>
+<li><p>renv now records the <code class="docutils literal notranslate"><span class="pre">OS_type</span></code> reported in a package’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file
+(if any), and ignores packages incompatible with the current operating
+system during restore. (#394)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-10-0">
+<h1>renv 0.10.0<a class="headerlink" href="#renv-0-10-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">type</span></code> argument, used to control whether renv
+should attempt to install packages from sources (<code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>) or using
+binaries (<code class="docutils literal notranslate"><span class="pre">&quot;binary&quot;</span></code>).</p></li>
+<li><p>renv now knows how to find and activate Rtools40, for R 4.0.0 installations
+on Windows.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_PREFIX</span></code> environment variable can now be used to prepend an
+optional path component to the project library and global cache paths.
+This is primarily useful for users who want to share the renv cache across
+multiple operating systems on Linux, but need to disambigutate these paths
+according to the operating system in use. See <code class="docutils literal notranslate"><span class="pre">?renv::paths</span></code> for more details.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> could fail for packages from GitHub
+whose DESCRIPTION files contained Windows-style line endings. (#408)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::update()</span></code> now also checks and updates any Bioconductor packages
+used within a project. (#392)</p></li>
+<li><p>renv now properly parses negated entries within a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>; e.g.
+<code class="docutils literal notranslate"><span class="pre">!script.R</span></code> will indicate that renv should include <code class="docutils literal notranslate"><span class="pre">script.R</span></code> when
+parsing dependencies. (#403)</p></li>
+<li><p>Fixed an issue where packages which had only binaries available on a
+package repository were not detected as being from a package repository.
+(#402)</p></li>
+<li><p>Fixed an issue where calls of the form <code class="docutils literal notranslate"><span class="pre">p_load(char</span> <span class="pre">=</span> <span class="pre">&lt;vctr&gt;)</span></code> caused a
+failure when enumerating dependencies. (#401)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> could fail when multiple versions
+of a package are available from a single repository, but some versions of
+those packages are incompatible with the current version of R. (#252)</p></li>
+<li><p>Fixed an issue where downloads could fail when the associated pre-flight
+HEAD request failed as well. (#390)</p></li>
+<li><p>Fixed an issue where empty records within a DESCRIPTION file could cause
+<code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> to fail. (#382)</p></li>
+<li><p>renv will now download binaries of older packages from MRAN when possible.</p></li>
+<li><p>renv will now attempt to re-generate the system library sandbox if it is
+deleted while a session is active. (#361)</p></li>
+<li><p>Fixed an issue where Python packages referenced using <code class="docutils literal notranslate"><span class="pre">reticulate::import()</span></code>
+were incorrectly tagged as R package dependencies. Similarly, renv now only
+considers calls to <code class="docutils literal notranslate"><span class="pre">modules::import()</span></code> if those calls occur within a call to
+<code class="docutils literal notranslate"><span class="pre">modules::module()</span></code>. (#359)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::scaffold()</span></code> now also generates a lockfile when invoked. (#351)</p></li>
+<li><p>The argument <code class="docutils literal notranslate"><span class="pre">confirm</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">prompt</span></code> in all places where it
+is used. <code class="docutils literal notranslate"><span class="pre">confirm</span></code> remains supported for backwards compatibility, but is no
+longer explicitly documented. (#347)</p></li>
+<li><p>The continuous integration renv vignette now also contains a template for
+using renv together with GitLab CI. (#348, &#64;artemklevtsov)</p></li>
+<li><p>renv now properly resets the session library paths when calling
+<code class="docutils literal notranslate"><span class="pre">renv::deactivate()</span></code> from within RStudio. (#219)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::init()</span></code> now restores the associated project library when called in a
+project containing a lockfile but no project library nor any pre-existing
+project infrastructure.</p></li>
+<li><p>Fixed an issue on Windows where attempts to download packages from package
+repositories referenced with a <code class="docutils literal notranslate"><span class="pre">file://</span></code> scheme could fail.</p></li>
+<li><p>The configuration option <code class="docutils literal notranslate"><span class="pre">dependency.errors</span></code> has been added, controlling how
+errors are handled during dependency enumeration. This is used, for
+example, when enumerating dependencies during a call to <code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code>.
+By default, errors are reported, and (for interactive sessions) the user is
+prompted to continue. (#342)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> gains two new arguments: the <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument
+controls whether renv reports progress while enumerating dependencies,
+and <code class="docutils literal notranslate"><span class="pre">errors</span></code> controls how renv handles and reports errors encountered
+during dependency discovery. The <code class="docutils literal notranslate"><span class="pre">quiet</span></code> argument is now soft-deprecated,
+but continues to be supported for backwards compatibility. Specifying
+<code class="docutils literal notranslate"><span class="pre">quiet</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> is equivalent to specifying <code class="docutils literal notranslate"><span class="pre">progress</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> and
+<code class="docutils literal notranslate"><span class="pre">errors</span> <span class="pre">=</span> <span class="pre">&quot;ignored&quot;</span></code>. Please see the documentation in <code class="docutils literal notranslate"><span class="pre">?dependencies</span></code>
+for more details. (#342)</p></li>
+<li><p>The environment variable <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY_ROOT</span></code> can now be set, to
+instruct renv to use a particular directory as a host for any project
+libraries that are used by renv. This can be useful for certain cases
+where it is cumbersome to include the project library within the project
+itself; for example, when developing an R package. (#345)</p></li>
+<li><p>The code used to bootstrap renv (that is, the code used to install renv
+into a project) has been overhauled. (#344)</p></li>
+<li><p>renv no longer unsets an error handler set within the user profile when
+loading a project. (#343)</p></li>
+<li><p>renv gains the “explicit” snapshot type, wherein only packages explicitly
+listed as dependencies within the project <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file (and those
+package’s transitive dependencies) will enter the lockfile when
+<code class="docutils literal notranslate"><span class="pre">renv::snapshot()</span></code> is called. (#338)</p></li>
+<li><p>renv will now transform RSPM source URLs into binary URLs as appropriate,
+allowing renv to use RSPM’s binary repositories during restore. See
+<code class="docutils literal notranslate"><span class="pre">?config</span></code> for more details. (#124)</p></li>
+<li><p>renv will now infer a dependency on <code class="docutils literal notranslate"><span class="pre">hexbin</span></code> in projects that make
+use of the <code class="docutils literal notranslate"><span class="pre">ggplot2::geom_hex()</span></code> function.</p></li>
+<li><p>renv now tries to place Rtools on the PATH when a package is installed
+with the <code class="docutils literal notranslate"><span class="pre">install.packages()</span></code> hook active. (#335)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-9-3">
+<h1>renv 0.9.3<a class="headerlink" href="#renv-0-9-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue where attempts to specify <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_RTOOLS</span></code> would
+be ignored by renv. (#335)</p></li>
+<li><p>Fixed an issue where downloads could fail when using the <code class="docutils literal notranslate"><span class="pre">wininet</span></code>
+downloader, typically with a message of the form
+“InternetOpenUrl failed: ‘The requested header was not found’”.</p></li>
+<li><p>renv better handles projects containing special characters on Windows.
+(#334)</p></li>
+<li><p>renv better handles unnamed repositories. (#333)</p></li>
+<li><p>renv gains the config option <code class="docutils literal notranslate"><span class="pre">hydrate.libpaths</span></code>, allowing one to control
+the library paths used by default for <code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code>. (#329)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::hydrate()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">sources</span></code> argument, used to control the library
+paths used by renv when hydrating a project. (#329)</p></li>
+<li><p>renv now sandboxes the system library by default on Windows.</p></li>
+<li><p>renv now validates that the Xcode license has been accepted before
+attempting to install R packages from sources. (#296)</p></li>
+<li><p>The R option <code class="docutils literal notranslate"><span class="pre">renv.download.override</span></code> can now be used to override the
+machinery used by renv when downloading files. For example, setting
+<code class="docutils literal notranslate"><span class="pre">options(renv.download.override</span> <span class="pre">=</span> <span class="pre">utils::download.file)</span></code> would instruct
+renv to use R’s own downloader when downloading files from the internet.
+This can be useful when configuration of <code class="docutils literal notranslate"><span class="pre">curl</span></code> is challenging or
+intractable in your environment, or you’ve already configured the base
+R downloader suitably.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::use_python(&quot;~/path/to/python&quot;)</span></code> now works as expected.</p></li>
+<li><p>renv now properly expands <code class="docutils literal notranslate"><span class="pre">R_LIBS_SITE</span></code> and <code class="docutils literal notranslate"><span class="pre">R_LIBS_USER</span></code> when set within a
+startup <code class="docutils literal notranslate"><span class="pre">.Renviron</span></code> file. (#318)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">renv.download.headers</span></code> option can now be used to provide arbitrary HTTP
+headers when downloading files. See the <strong>Authentication</strong> section in
+<code class="docutils literal notranslate"><span class="pre">vignette(&quot;renv&quot;)</span></code> for more details. (#307)</p></li>
+<li><p>renv gains the project setting <code class="docutils literal notranslate"><span class="pre">package.dependency.fields</span></code>, for controlling
+which fields in an R package’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file are examined when
+discovering recursive package dependencies. This can be useful when you’d like
+to instruct renv to track, for example, the <code class="docutils literal notranslate"><span class="pre">Suggests</span></code> dependencies of the
+packages used in your project. (#315)</p></li>
+<li><p>renv now better handles repositories referenced using file URIs.</p></li>
+<li><p>Packages installed from GitHub using <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> will now also have
+<code class="docutils literal notranslate"><span class="pre">Github*</span></code> fields added, in addition to the default <code class="docutils literal notranslate"><span class="pre">Remote*</span></code> fields. This
+should help fix issues when attempting to deploy projects to RStudio Connect
+requiring packages installed by renv. (#397)</p></li>
+<li><p>renv now prefers using a RemoteType field (if any) when attempting to
+determine a package’s source. (#306)</p></li>
+<li><p>renv gains a new function <code class="docutils literal notranslate"><span class="pre">renv::scaffold()</span></code>, for generating renv project
+infrastructure without explicitly loading the project. (#303)</p></li>
+<li><p>renv now updates its local <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file, when part of a git repository
+whose git root lives in a parent directory. (#300)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-9-2">
+<h1>renv 0.9.2<a class="headerlink" href="#renv-0-9-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue in invoking <code class="docutils literal notranslate"><span class="pre">find</span></code> on Solaris.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-9-1">
+<h1>renv 0.9.1<a class="headerlink" href="#renv-0-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue in invoking <code class="docutils literal notranslate"><span class="pre">cp</span></code> on Solaris.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-9-0">
+<h1>renv 0.9.0<a class="headerlink" href="#renv-0-9-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>renv gains a new function <code class="docutils literal notranslate"><span class="pre">renv::record()</span></code>, for recording new packages
+within an existing lockfile. This can be useful when one or more of the
+recorded packages need to be modified for some reason.</p></li>
+<li><p>An empty <code class="docutils literal notranslate"><span class="pre">.renvignore</span></code> no longer erroneously ignores all files within a
+directory. (#286)</p></li>
+<li><p>renv now warns if the version of renv loaded within a project does not
+match the version declared within the renv autoloader. (#285)</p></li>
+<li><p>renv gains a new function <code class="docutils literal notranslate"><span class="pre">renv::run()</span></code>, for running R scripts within
+a particular project’s context inside an R subprocess. (#126)</p></li>
+<li><p>The algorithm used by renv for hashing packages has changed. Consider
+using <code class="docutils literal notranslate"><span class="pre">renv::rehash()</span></code> to migrate packages from the old renv cache to
+the new renv cache.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::status()</span></code> now reports packages which are referenced in your project
+code, but are not currently installed. (#271)</p></li>
+<li><p>renv is now able to restore packages with a recorded URL remote. (#272)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> can now parse R package dependencies used as custom
+site generator in an Rmd yaml header. (#269, &#64;cderv)</p></li>
+<li><p>renv now properly respects a downloader requested by the environment
+variable <code class="docutils literal notranslate"><span class="pre">RENV_DOWNLOAD_FILE_METHOD</span></code>.</p></li>
+<li><p>renv no longer sources the user profile (normally located at <code class="docutils literal notranslate"><span class="pre">~/.Rprofile</span></code>)
+by default. If you desire this behavior, you can opt-in by setting
+<code class="docutils literal notranslate"><span class="pre">RENV_CONFIG_USER_PROFILE</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>; e.g. within your project or user
+<code class="docutils literal notranslate"><span class="pre">.Renviron</span></code> file. (#261)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> gains the <code class="docutils literal notranslate"><span class="pre">packages</span></code> argument, to be used to restore
+a subset of packages recorded within the lockfile. (#260)</p></li>
+<li><p>renv now tries harder to preserve the existing structure in infrastructure
+files (e.g. the project <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code>) that it modifies. (#259)</p></li>
+<li><p>renv now warns if any Bioconductor packages used in the project appear
+to be from a different Bioconductor release than the one currently active
+and stored in the lockfile. (#244)</p></li>
+<li><p>renv now normalizes any paths set in the <code class="docutils literal notranslate"><span class="pre">RENV_PATHS_*</span></code> family of
+environment variables when renv is loaded.</p></li>
+<li><p>Fixed an issue where renv would not properly clean up after a failed
+attempt to call <code class="docutils literal notranslate"><span class="pre">Sys.junction()</span></code>. (#251)</p></li>
+<li><p>Fixed an issue where renv would, in some cases, copy rather than link from
+the package cache when the library path had been customized with the
+<code class="docutils literal notranslate"><span class="pre">RENV_PATHS_LIBRARY</span></code> environment variable. (#245)</p></li>
+<li><p>The method renv uses when copying directories can now be customized. When
+copying directories, renv now by default uses <code class="docutils literal notranslate"><span class="pre">robocopy</span></code> on Windows, and
+<code class="docutils literal notranslate"><span class="pre">cp</span></code> on Unix. This should improve robustness when attempting to copy files
+in some contexts; e.g. when copying across network shares.</p></li>
+<li><p>renv now tracks the version of Bioconductor used within a project
+(if applicable), and uses that when retrieving the set of repositories
+to be used during <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> can now parse R package dependencies declared and
+used by the <code class="docutils literal notranslate"><span class="pre">modules</span></code> package. (#238, &#64;labriola)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> could fail in Docker environments,
+usually with an error message like ‘Invalid cross-device link’. (#243)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> disables staged package install when running with the
+Windows Subsystem for Linux. (#239)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-8-3">
+<h1>renv 0.8.3<a class="headerlink" href="#renv-0-8-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> gains a new argument <code class="docutils literal notranslate"><span class="pre">dev</span></code>, indicating whether
+development dependencies should also be included in the set of discovered
+package dependencies. By default, only runtime dependencies will be reported.</p></li>
+<li><p>renv has gained the function <code class="docutils literal notranslate"><span class="pre">renv::diagnostics()</span></code>, which can occasionally
+be useful in understanding and diagnosing renv (mis)behaviors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::equip()</span></code> can now be used on macOS to install the R LLVM toolchain
+normally used when compiling packages from source. renv will also use
+this toolchain as appropriate when building packages from source.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now provides a custom Makevars when building packages on
+macOS with Apple Clang, to avoid issues due to the use of ‘-fopenmp’ during
+compilation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::install()</span></code> now respects explicit version requests when discovered
+in a project’s DESCRIPTION file. (#233)</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">renv:::actions()</span></code> would fail to report any actions if
+the project lockfile was empty. (#232)</p></li>
+<li><p>When using renv for R package development, renv will no longer attempt to
+write the package being developed to the lockfile. (#231)</p></li>
+<li><p>Fixes for checks run on CRAN.</p></li>
+<li><p>renv will now search for Rtools in more locations. (#225)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> now ensures that the version of renv associated with
+the loaded project is loaded when possible. In addition, experimental
+support for switching between projects with <code class="docutils literal notranslate"><span class="pre">renv::load()</span></code> has been
+implemented. (#229)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">renv::dependencies()</span></code> no longer treats folders named with the extension
+<code class="docutils literal notranslate"><span class="pre">.Rmd</span></code> as though they were regular files. (#228)</p></li>
+<li><p>It is now possible to install source packages contained within <code class="docutils literal notranslate"><span class="pre">.zip</span></code>
+archives using <code class="docutils literal notranslate"><span class="pre">renv::install()</span></code>.</p></li>
+<li><p>Fixed an issue where attempts to call <code class="docutils literal notranslate"><span class="pre">renv::restore()</span></code> with the path to the
+lockfile explicitly provided would fail. (#227)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-8-2">
+<h1>renv 0.8.2<a class="headerlink" href="#renv-0-8-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Further fixes for checks run on CRAN.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-8-1">
+<h1>renv 0.8.1<a class="headerlink" href="#renv-0-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixes for checks run on CRAN.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="renv-0-8-0">
+<h1>renv 0.8.0<a class="headerlink" href="#renv-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial CRAN release.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\renv"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">renv 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-1-0">renv 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-fixes">Other Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-11">renv 1.0.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-10">renv 1.0.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-9">renv 1.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-8">renv 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-7">renv 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-6">renv 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-5">renv 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-4">renv 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-3">renv 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-2">renv 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-1">renv 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-1-0-0">renv 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-3">renv 0.17.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-2">renv 0.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-1">renv 0.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-17-0">renv 0.17.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-16-0">renv 0.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-5">renv 0.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-4">renv 0.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-3">renv 0.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-2">renv 0.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-1">renv 0.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-15-0">renv 0.15.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-14-0">renv 0.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-2">renv 0.13.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-1">renv 0.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-13-0">renv 0.13.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-5">renv 0.12.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-4">renv 0.12.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-3">renv 0.12.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-2">renv 0.12.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-1">renv 0.12.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-12-0">renv 0.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-11-0">renv 0.11.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-10-0">renv 0.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-3">renv 0.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-2">renv 0.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-1">renv 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-9-0">renv 0.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-3">renv 0.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-2">renv 0.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-1">renv 0.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#renv-0-8-0">renv 0.8.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

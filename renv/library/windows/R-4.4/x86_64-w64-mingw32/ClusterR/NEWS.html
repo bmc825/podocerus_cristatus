@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cluster 1.3.3 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/ClusterR/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/ClusterR/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cluster 1.3.3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Cluster 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-2">Cluster 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-1">Cluster 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-0">Cluster 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-9">Cluster 1.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-8">Cluster 1.2.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-7">Cluster 1.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-6">ClusterR 1.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-5">ClusterR 1.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-4">ClusterR 1.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-3">ClusterR 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-2">ClusterR 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-1">ClusterR 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-0">ClusterR 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-9">ClusterR 1.1.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-8">ClusterR 1.1.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-7">ClusterR 1.1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-6">ClusterR 1.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-5">ClusterR 1.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-4">ClusterR 1.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-3">ClusterR 1.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-2">ClusterR 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-1">ClusterR 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-0">ClusterR 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-9">ClusterR 1.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-8">ClusterR 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-7">ClusterR 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-6">ClusterR 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-5">ClusterR 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-4">ClusterR 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-3">ClusterR 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-2">ClusterR 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-1">ClusterR 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-0">ClusterR 1.0.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cluster-1-3-3">
+<h1>Cluster 1.3.3<a class="headerlink" href="#cluster-1-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed an issue related to the <em>R_NilValue</em> of the <em>‘KMEANS_rcpp()’</em> Rcpp function in the <em>src/export_inst_folder_headers.cpp</em> file. I mistakenly used as input the <em>R_NilValue</em> whereas I should have used the <em>CENTROIDS</em> argument (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/54">mlampros/ClusterR#54</a>)</p></li>
+</ul>
+</section>
+<section id="cluster-1-3-2">
+<h1>Cluster 1.3.2<a class="headerlink" href="#cluster-1-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I’ve fixed the CRAN <em>warning: format specifies type ‘double’ but the argument has type ‘int’’</em> in the following files &amp; lines by replacing the <code class="docutils literal notranslate"><span class="pre">%g</span></code> expression with <code class="docutils literal notranslate"><span class="pre">%d</span></code>:</p>
+<ul>
+<li><p>/inst/include/affinity_propagation.h:474:37 <em>and</em> 476:58</p></li>
+</ul>
+</li>
+<li><p>I removed the <code class="docutils literal notranslate"><span class="pre">-mthreads</span></code> compilation option from the “Makevars.win” file</p></li>
+</ul>
+</section>
+<section id="cluster-1-3-1">
+<h1>Cluster 1.3.1<a class="headerlink" href="#cluster-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed a mistake related to a potential warning of the <em>‘Optimal_Clusters_GMM()’</em> function (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/45">mlampros/ClusterR#45</a>)</p></li>
+<li><p>I modified the <em>‘GMM()’</em> function by adding the <em>‘full_covariance_matrices’</em> parameter (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/48">mlampros/ClusterR#48</a>)</p></li>
+<li><p>I modified slightly the <em>‘predict_medoids()’</em> function in case the <em>‘fuzzy’</em> parameter is set to TRUE</p></li>
+<li><p>I modified the <em>‘validate_centroids()’</em> Rcpp function and the <em>‘predict_KMeans()’</em> R function and now they take also the ‘fuzzy’ and ‘eps’ parameters (the latter is only included in the Rcpp function). I added tests for these cases.</p></li>
+<li><p>I added a ‘predict()’ function for mini-batch-kmeans</p></li>
+<li><p>I removed the “CXX_STD = CXX11” from the “Makevars” files, and the “[[Rcpp::plugins(cpp11)]]” from the “export_inst_folder_headers.cpp” file due to the following NOTE from CRAN, “NOTE Specified C++11: please drop specification unless essential” (see also: <a class="reference external" href="https://www.tidyverse.org/blog/2023/03/cran-checks-compiled-code/#note-regarding-systemrequirements-c11">https://www.tidyverse.org/blog/2023/03/cran-checks-compiled-code/#note-regarding-systemrequirements-c11</a>)</p></li>
+<li><p>I added a deprecation warning in the <em>‘predict_MBatchKMeans()’</em> function because starting from version 1.4.0, if the ‘fuzzy’ parameter is TRUE then the function will return only the probabilities, whereas currently it also returns the hard clusters. Moreover, I added the ‘updated_output’ parameter which shows the new output format when set to TRUE.</p></li>
+</ul>
+</section>
+<section id="cluster-1-3-0">
+<h1>Cluster 1.3.0<a class="headerlink" href="#cluster-1-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I updated the documentation of the <em>‘Optimal_Clusters_KMeans()’</em> function related to the <em>‘silhouette’</em> metric (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/42">mlampros/ClusterR#42</a>)</p></li>
+<li><p>I added the R <em>‘silhouette_of_clusters()’</em> and Rcpp <em>‘silhouette_clusters()’</em> functions which return the clusters, intra_cluster_dissimilarity and silhouette width for pre-computed clusters</p></li>
+<li><p>I added a test case for the R <em>‘silhouette_of_clusters()’</em> function in the ‘test-kmeans.R’ file</p></li>
+<li><p>I modified the <em>‘Optimal_Clusters_KMeans()’</em> function for the case when criterion is set to <em>“silhouette”</em> (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/42">mlampros/ClusterR#42</a>)</p></li>
+<li><p>I added the <em>‘PERMUTATIONS_2D()’</em> Rcpp function which replaces the call to <em>Rcpp::Environment gtools(“package:gtools”)</em></p></li>
+<li><p>I removed the <em>gtools</em> R package as a dependency of the <em>ClusterR</em> package</p></li>
+</ul>
+</section>
+<section id="cluster-1-2-9">
+<h1>Cluster 1.2.9<a class="headerlink" href="#cluster-1-2-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The pull request #41 removed the class <em>‘Gaussian Mixture Models’</em> from the <em>‘Optimal_Clusters_GMM()’</em> function and I adjusted the tests related to the <em>‘Optimal_Clusters_GMM()’</em> function so that no errors are raised (see issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/40">mlampros/ClusterR#40</a>)</p></li>
+</ul>
+</section>
+<section id="cluster-1-2-8">
+<h1>Cluster 1.2.8<a class="headerlink" href="#cluster-1-2-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added the <em>cost_clusters_from_dissim_medoids()</em> function</p></li>
+<li><p>I added an alternative ‘build’ phase Rcpp function that corresponds to the exact algorithm for comparison purposes (see the function <em>‘updated_BUILD()’</em> in the ‘inst/include/ClusterRHeader.h’ file). I didn’t see any differences compared to the existing ‘build’ phase in the <em>‘Cluster_Medoids()’</em> function.</p></li>
+<li><p>I updated the documentation of the <em>‘Cluster_Medoids()’</em> function by mentioning that it is an approximate and not the exact <em>‘partition around medoids’</em> function</p></li>
+</ul>
+</section>
+<section id="cluster-1-2-7">
+<h1>Cluster 1.2.7<a class="headerlink" href="#cluster-1-2-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I updated the references weblink of the <em>Optimal_Clusters_KMeans()</em> function (github issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/27">mlampros/ClusterR#27</a>)</p></li>
+<li><p>I added a deprecation warning to the <em>‘seed’</em> parameter of the <em>‘Cluster_Medoids()’</em> function (github issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/33">mlampros/ClusterR#33</a>). This parameter will be removed in version <em>‘1.4.0’</em></p></li>
+<li><p>I replaced the <em>‘ARMA_DONT_PRINT_ERRORS’</em> on the top of the <em>‘/src/export_inst_folder_headers.cpp’</em> file with <em>‘ARMA_WARN_LEVEL 0’</em> because support for <em>‘ARMA_DONT_PRINT_ERRORS’</em> has been removed</p></li>
+<li><p>I fixed a bug in the <em>‘ClaraMedoids()’</em> Rcpp function (<em>/inst/ClusterRHeader.h</em> file) related to the <em>‘seed’</em> parameter (github issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/35">mlampros/ClusterR#35</a>)</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-6">
+<h1>ClusterR 1.2.6<a class="headerlink" href="#clusterr-1-2-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mlampros/ClusterR/pull/24">#24</a> Add S3 classes to ClusteR objects (KMeansCluster, MedoidsCluster and GMMCluster) and add generic <code class="docutils literal notranslate"><span class="pre">predict()</span></code> and <code class="docutils literal notranslate"><span class="pre">print()</span></code> methods.</p></li>
+<li><p>I fixed the issue related to the duplicated centroids of the internal <em>kmeans_pp_init()</em> function (see the Github issue: <a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/25">mlampros/ClusterR#25</a>)</p></li>
+<li><p>I added a test case to check for duplicated centroids related to the <em>kmeans_pp_init()</em> function</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-5">
+<h1>ClusterR 1.2.5<a class="headerlink" href="#clusterr-1-2-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed the Error of the CRAN results due to mistakes in creation of a matrix in the <em>test-kmeans.R</em> file</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-4">
+<h1>ClusterR 1.2.4<a class="headerlink" href="#clusterr-1-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed an error in the <em>CITATION</em> file</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-3">
+<h1>ClusterR 1.2.3<a class="headerlink" href="#clusterr-1-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I’ve added the value of 1 to the output clusters of the <em>predict_GMM()</em> function to account for the difference in indexing between R and C++</p></li>
+<li><p>I’ve added the <em>CITATION</em> file in the <em>inst</em> directory listing all papers and software used in the <em>ClusterR</em> package</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-2">
+<h1>ClusterR 1.2.2<a class="headerlink" href="#clusterr-1-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I’ve added the vectorized version of clusters to the output of the Affinity Propagation algorithm</p></li>
+<li><p>I’ve added the <em>threads</em> parameter to the <em>predict_KMeans()</em> function to return the k-means clusters in parallel  (useful especially for high dimensional data, see: <a class="reference external" href="https://stackoverflow.com/q/61551071/8302386">https://stackoverflow.com/q/61551071/8302386</a>)</p></li>
+<li><p>I’ve added a check-duplicated <em>CENTROIDS</em> if-condition in the <em>predict_KMeans()</em> function similar to the base kmeans function (see: <a class="reference external" href="https://stackoverflow.com/q/61551071/8302386">https://stackoverflow.com/q/61551071/8302386</a>). Due to the fact that the <em>CENTROIDS</em> output matrix is of class <em>“k-means clustering”</em> the base R function <em>duplicated()</em> performs a check column-wise rather than row-wise. Therefore before checking for duplicates I have to set the class to NULL.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-1">
+<h1>ClusterR 1.2.1<a class="headerlink" href="#clusterr-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added a dockerfile in the root of the package directory and instructions in the <a class="reference external" href="http://README.md">README.md</a> file on how to build and run the docker image  (<a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/17">mlampros/ClusterR#17</a>)</p></li>
+<li><p>I fixed a documentation and Vignette mistake regarding the <em>KMeans_rcpp</em> function (<a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/19">mlampros/ClusterR#19</a>)</p></li>
+<li><p>I fixed the <em>“failure: the condition has length &gt; 1”</em> CRAN error which appeared mainly due to the misuse of the base <em>class()</em> function in multiple code snippets in the package (for more info on this matter see: <a class="reference external" href="https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html">https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again/index.html</a>)</p></li>
+</ul>
+</section>
+<section id="clusterr-1-2-0">
+<h1>ClusterR 1.2.0<a class="headerlink" href="#clusterr-1-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added the ‘cosine’ distance to the following functions: ‘Cluster_Medoids’, ‘Clara_Medoids’, ‘predict_Medoids’, ‘Optimal_Clusters_Medoids’ and ‘distance_matrix’.</p></li>
+<li><p>I fixed an error case in the .pdf manual of the package (<a class="github reference external" href="https://github.com/mlampros/ClusterR/issues/16">mlampros/ClusterR#16</a>)</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-9">
+<h1>ClusterR 1.1.9<a class="headerlink" href="#clusterr-1-1-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added parallelization for the <em>exact</em> method of the <em>AP_preferenceRange</em> function which is more computationally intensive as the <em>bound</em> method</p></li>
+<li><p>I modified the <em>Optimal_Clusters_KMeans</em>, <em>Optimal_Clusters_GMM</em> and <em>Optimal_Clusters_Medoids</em> to accept also a contiguous or non-contiguous vector besides single values as a <em>max_clusters</em> parameter. However, the limitation currently is that the user won’t be in place to plot the clusters but only to receive the ouput data ( this can be changed in the future however the plotting function for the contiguous and non-contiguous vectors must be a separate plotting function outside of the existing one).  Moreover, the <em>distortion_fK</em> criterion can’t be computed in the <em>Optimal_Clusters_KMeans</em> function if the <em>max_clusters</em> parameter is a contiguous or non-continguous vector ( the <em>distortion_fK</em> criterion requires consecutive clusters ). The same applies also to the <em>Adjusted_Rsquared</em> criterion which returns incorrect output. For this feature request see the following <a class="reference external" href="https://github.com/mlampros/ClusterR/issues/15">Github issue</a>.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-8">
+<h1>ClusterR 1.1.8<a class="headerlink" href="#clusterr-1-1-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I moved the <em>OpenImageR</em> dependency in the DESCRIPTION file from ‘Imports’ to ‘Suggests’, as it appears only in the Vignette file.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-7">
+<h1>ClusterR 1.1.7<a class="headerlink" href="#clusterr-1-1-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed the <em>clang-UBSAN</em> errors</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-6">
+<h1>ClusterR 1.1.6<a class="headerlink" href="#clusterr-1-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I updated the <a class="reference external" href="http://README.md">README.md</a> file (I removed unnecessary calls of ClusterR in DESCRIPTION and NAMESPACE files)</p></li>
+<li><p>I renamed the <em>export_inst_header.cpp</em> file in the src folder to <em>export_inst_folder_headers.cpp</em></p></li>
+<li><p>I modified the <em>Predict_mini_batch_kmeans()</em> function to accept an armadillo matrix rather than an Rcpp Numeric matrix. The function appers both in <em>ClusterRHeader.h</em> file ( ‘inst’ folder ) and in <em>export_inst_folder_headers.cpp</em> file ( ‘src’ folder )</p></li>
+<li><p>I added the <em>mini_batch_params</em> parameter to the <em>Optimal_Clusters_KMeans</em> function. Now, the optimal number of clusters can be found also based on the min-batch-kmeans algorithm (except for the <em>variance_explained</em> criterion)</p></li>
+<li><p>I changed the license from MIT to GPL-3</p></li>
+<li><p>I added the <em>affinity propagation algorithm</em> (<span></span><a class="reference external" href="http://www.psi.toronto.edu/index.php?q=affinity%20propagation">www.psi.toronto.edu/index.php?q=affinity propagation</a>). Especially, I converted the matlab files <em>apcluster.m</em> and <em>referenceRange.m</em>.</p></li>
+<li><p>I modified the minimum version of RcppArmadillo in the DESCRIPTION file to 0.9.1 because the Affinity Propagation algorithm requires the <em>.is_symmetric()</em> function, which was included in version 0.9.1</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-5">
+<h1>ClusterR 1.1.5<a class="headerlink" href="#clusterr-1-1-5" title="Link to this heading">#</a></h1>
+<p>As of version 1.1.5 the ClusterR functions can take <a class="reference external" href="https://tibble.tidyverse.org/">tibble</a> objects as input too.</p>
+</section>
+<section id="clusterr-1-1-4">
+<h1>ClusterR 1.1.4<a class="headerlink" href="#clusterr-1-1-4" title="Link to this heading">#</a></h1>
+<p>I modified the ClusterR package to a cpp-header-only package to allow linking of cpp code between Rcpp packages. See the update of the <a class="reference external" href="http://README.md">README.md</a> file (16-08-2018) for more information.</p>
+</section>
+<section id="clusterr-1-1-3">
+<h1>ClusterR 1.1.3<a class="headerlink" href="#clusterr-1-1-3" title="Link to this heading">#</a></h1>
+<p>I updated the example section of the documentation by replacing the <em>optimal_init</em> with the <em>kmeans++</em> initializer</p>
+</section>
+<section id="clusterr-1-1-2">
+<h1>ClusterR 1.1.2<a class="headerlink" href="#clusterr-1-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I fixed an <a class="reference external" href="https://github.com/mlampros/ClusterR/issues/8">Issue</a> related to <em>NAs produced by integer overflow</em> of the <em>external_validation</em> function. See, the commented line of the <em>Clustering_functions.R</em> file (line 1830).</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-1">
+<h1>ClusterR 1.1.1<a class="headerlink" href="#clusterr-1-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added a <em>tryCatch</em> in <em>Optimal_Clusters_Medoids()</em> function to account for the error described in <a class="reference external" href="https://github.com/mlampros/ClusterR/issues/5">Error in Optimal_Clusters_Medoids function#5</a> issue</p></li>
+</ul>
+</section>
+<section id="clusterr-1-1-0">
+<h1>ClusterR 1.1.0<a class="headerlink" href="#clusterr-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I added the <em>DARMA_64BIT_WORD</em> flag in the Makevars file to allow the package processing big datasets</p></li>
+<li><p>I modified the <em>kmeans_miniBatchKmeans_GMM_Medoids.cpp</em> file and especially all <em>Rcpp::List::create()</em> objects to addrress the clang-ASAN errors.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-0-9">
+<h1>ClusterR 1.0.9<a class="headerlink" href="#clusterr-1-0-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I modified the <em>Optimal_Clusters_KMeans</em> function to return a vector with the <em>distortion_fK</em> values if criterion is <em>distortion_fK</em> (instead of the <em>WCSSE</em> values).</p></li>
+<li><p>I added the ‘Moore-Penrose pseudo-inverse’ for the case of the ‘mahalanobis’ distance calculation.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-0-8">
+<h1>ClusterR 1.0.8<a class="headerlink" href="#clusterr-1-0-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I modified the <em>OpenMP</em> clauses of the .cpp files to address the ASAN errors.</p></li>
+<li><p>I removed the <em>threads</em> parameter from the <em>KMeans_rcpp</em> function, to address the ASAN errors ( negligible performance difference between threaded and non-threaded version especially if the <em>num_init</em> parameter is less than 10 ). The <em>threads</em> parameter was removed also from the <em>Optimal_Clusters_KMeans</em> function as it utilizes the <em>KMeans_rcpp</em> function to find the optimal clusters for the various methods.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-0-7">
+<h1>ClusterR 1.0.7<a class="headerlink" href="#clusterr-1-0-7" title="Link to this heading">#</a></h1>
+<p>I modified the <em>kmeans_miniBatchKmeans_GMM_Medoids.cpp</em> file in the following lines in order to fix the clang-ASAN errors (without loss in performance):</p>
+<ul class="simple">
+<li><p>lines 1156-1160 : I commented the second OpenMp parallel-loop and I replaced the <em>k</em> variable with the <em>i</em> variable in the second for-loop [in the <em>dissim_mat()</em> function]</p></li>
+<li><p>lines 1739-1741 : I commented the second OpenMp parallel-loop [in the <em>silhouette_matrix()</em> function]</p></li>
+<li><p>I replaced (all) the <em>silhouette_matrix</em> (arma::mat) variable names with <em>Silhouette_matrix</em>, because the name overlapped with the name of the Rcpp function [in the <em>silhouette_matrix</em> function]</p></li>
+<li><p>I replaced all <em>sorted_medoids.n_elem</em> with the variable <em>unsigned int sorted_medoids_elem</em> [in the <em>silhouette_matrix</em> function]</p></li>
+</ul>
+<p>I modified the following <em>functions</em> in the <em>clustering_functions.R</em> file:</p>
+<ul class="simple">
+<li><p><em>KMeans_rcpp()</em> : I added an <em>experimental</em> note in the details for the <em>optimal_init</em> and <em>quantile_init</em> initializers.</p></li>
+<li><p><em>Optimal_Clusters_KMeans()</em> : I added an <em>experimental</em> note in the details for the <em>optimal_init</em> and <em>quantile_init</em> initializers.</p></li>
+<li><p><em>MiniBatchKmeans()</em> : I added an <em>experimental</em> note in the details for the <em>optimal_init</em> and <em>quantile_init</em> initializers.</p></li>
+</ul>
+</section>
+<section id="clusterr-1-0-6">
+<h1>ClusterR 1.0.6<a class="headerlink" href="#clusterr-1-0-6" title="Link to this heading">#</a></h1>
+<p>The <em>normalized variation of information</em> was added in the <em>external_validation</em> function (<a class="github reference external" href="https://github.com/mlampros/ClusterR/pull/1">mlampros/ClusterR#1</a>)</p>
+</section>
+<section id="clusterr-1-0-5">
+<h1>ClusterR 1.0.5<a class="headerlink" href="#clusterr-1-0-5" title="Link to this heading">#</a></h1>
+<p>I fixed the valgrind memory errors</p>
+</section>
+<section id="clusterr-1-0-4">
+<h1>ClusterR 1.0.4<a class="headerlink" href="#clusterr-1-0-4" title="Link to this heading">#</a></h1>
+<p>I removed the warnings, which occured during compilation.
+I corrected the UBSAN memory errors which occured due to a mistake in the <em>check_medoids()</em> function of the <em>utils_rcpp.cpp</em> file.
+I also modified the <em>quantile_init_rcpp()</em> function of the <em>utils_rcpp.cpp</em> file to print a warning if duplicates are present in the initial centroid matrix.</p>
+</section>
+<section id="clusterr-1-0-3">
+<h1>ClusterR 1.0.3<a class="headerlink" href="#clusterr-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I updated the dissimilarity functions to accept data with missing values.</p></li>
+<li><p>I added an error exception in the predict_GMM() function in case that the determinant is equal to zero. The latter is possible if the data includes highly correlated variables or variables with low variance.</p></li>
+<li><p>I replaced all unsigned int’s in the rcpp files with int data types</p></li>
+</ul>
+</section>
+<section id="clusterr-1-0-2">
+<h1>ClusterR 1.0.2<a class="headerlink" href="#clusterr-1-0-2" title="Link to this heading">#</a></h1>
+<p>I modified the RcppArmadillo functions so that ClusterR passes the Windows and OSX OS package check results</p>
+</section>
+<section id="clusterr-1-0-1">
+<h1>ClusterR 1.0.1<a class="headerlink" href="#clusterr-1-0-1" title="Link to this heading">#</a></h1>
+<p>I modified the RcppArmadillo functions so that ClusterR passes the Windows and OSX OS package check results</p>
+</section>
+<section id="clusterr-1-0-0">
+<h1>ClusterR 1.0.0<a class="headerlink" href="#clusterr-1-0-0" title="Link to this heading">#</a></h1>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\ClusterR"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Cluster 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-2">Cluster 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-1">Cluster 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-3-0">Cluster 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-9">Cluster 1.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-8">Cluster 1.2.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-1-2-7">Cluster 1.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-6">ClusterR 1.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-5">ClusterR 1.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-4">ClusterR 1.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-3">ClusterR 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-2">ClusterR 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-1">ClusterR 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-2-0">ClusterR 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-9">ClusterR 1.1.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-8">ClusterR 1.1.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-7">ClusterR 1.1.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-6">ClusterR 1.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-5">ClusterR 1.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-4">ClusterR 1.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-3">ClusterR 1.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-2">ClusterR 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-1">ClusterR 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-1-0">ClusterR 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-9">ClusterR 1.0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-8">ClusterR 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-7">ClusterR 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-6">ClusterR 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-5">ClusterR 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-4">ClusterR 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-3">ClusterR 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-2">ClusterR 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-1">ClusterR 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#clusterr-1-0-0">ClusterR 1.0.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

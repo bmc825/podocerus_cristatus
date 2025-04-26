@@ -1,0 +1,902 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>httpuv 1.6.15 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/httpuv/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/httpuv/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>httpuv 1.6.15</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">httpuv 1.6.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-14">httpuv 1.6.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-13">httpuv 1.6.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-12">httpuv 1.6.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-11">httpuv 1.6.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-10">httpuv 1.6.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-9">httpuv 1.6.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-8">httpuv 1.6.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-7">httpuv 1.6.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-6">httpuv 1.6.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-5">httpuv 1.6.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-4">httpuv 1.6.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-3">httpuv 1.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-2">httpuv 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-1">httpuv 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-0">httpuv 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-5">httpuv 1.5.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-4">httpuv 1.5.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-3-1">httpuv 1.5.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-2">httpuv 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-1">httpuv 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-0">httpuv 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-5-1">httpuv 1.4.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-5">httpuv 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4-2">httpuv 1.4.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4-1">httpuv 1.4.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4">httpuv 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-3">httpuv 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-2">httpuv 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-1">httpuv 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-0">httpuv 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-5">httpuv 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-3">httpuv 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-2">httpuv 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-1">httpuv 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-0">httpuv 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-3">httpuv 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-2">httpuv 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-1">httpuv 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-0">httpuv 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-1-0">httpuv 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-3">httpuv 1.0.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-2">httpuv 1.0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-1">httpuv 1.0.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6">httpuv 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-5">httpuv 1.0.5</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-15">
+<h1>httpuv 1.6.15<a class="headerlink" href="#httpuv-1-6-15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">runStaticServer()</span></code> no longer fails if <code class="docutils literal notranslate"><span class="pre">browse</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> but <code class="docutils literal notranslate"><span class="pre">utils::browseURL()</span></code> is unable to open the server. (#395)</p></li>
+<li><p>Improved testing of <code class="docutils literal notranslate"><span class="pre">runStaticServer()</span></code> to accurately test that <code class="docutils literal notranslate"><span class="pre">runStaticServer()</span></code> throws an error when a requested port is not available on FreeBSD. (#396)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-14">
+<h1>httpuv 1.6.14<a class="headerlink" href="#httpuv-1-6-14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated Makevars.ucrt for upcoming release of Rtools (thanks to Tomas Kalibera).</p></li>
+<li><p>Fixed linking to zlib on macOS (thanks to &#64;jeroen). (#387)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-13">
+<h1>httpuv 1.6.13<a class="headerlink" href="#httpuv-1-6-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #388: Fix R CMD check warning re error() format strings (for r-devel). (#389)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-12">
+<h1>httpuv 1.6.12<a class="headerlink" href="#httpuv-1-6-12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">runStaticServer()</span></code> provides a convenient interface for serving a directory of static files. (#380)</p></li>
+<li><p>Remove a workaround to support <code class="docutils literal notranslate"><span class="pre">shiny</span></code> older than version 1.0.6 (#378)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-11">
+<h1>httpuv 1.6.11<a class="headerlink" href="#httpuv-1-6-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix race condition introduced in 1.6.10. (#363)</p></li>
+<li><p>Hygiene and metadata improvements requested by CRAN. (#366, #369, #370)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-10">
+<h1>httpuv 1.6.10<a class="headerlink" href="#httpuv-1-6-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>WebSocket connections now send Ping frames to the client every 20 seconds. This is only intended to serve as a keepalive for proxies that might be sitting in front of us; we don’t pay attention to whether a Pong response is received in a timely manner. (#359)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-9">
+<h1>httpuv 1.6.9<a class="headerlink" href="#httpuv-1-6-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #354: The incorrect method was called to clear a <code class="docutils literal notranslate"><span class="pre">vector</span></code>. (#355)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">src/Makevars</span></code> file no longer sets <code class="docutils literal notranslate"><span class="pre">CXX_STD=CXX11</span></code>, and the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file no longer lists <code class="docutils literal notranslate"><span class="pre">SystemRequirements:</span> <span class="pre">C++11</span></code>, because newer R versions always support C++11. (#356, #357)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-8">
+<h1>httpuv 1.6.8<a class="headerlink" href="#httpuv-1-6-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #351: A race condition could cause httpuv to crash when starting the background thread for I/O. (#352)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-7">
+<h1>httpuv 1.6.7<a class="headerlink" href="#httpuv-1-6-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed rstudio/shiny#3741: The <code class="docutils literal notranslate"><span class="pre">TZ</span></code> environment variable could get unset in some cases. (#346)</p></li>
+<li><p>Closed #302: Fixed potential thread-safety issues with <code class="docutils literal notranslate"><span class="pre">timegm2</span></code> implementation. (#346)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-6">
+<h1>httpuv 1.6.6<a class="headerlink" href="#httpuv-1-6-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update docs for CRAN (#343)</p></li>
+<li><p>Updated to libuv 1.43.0. (#328)</p></li>
+<li><p>Fixed #336: <code class="docutils literal notranslate"><span class="pre">encodeURI()</span></code> and <code class="docutils literal notranslate"><span class="pre">encodeURIComponent()</span></code> printed a space instead of a leading zero, as in <code class="docutils literal notranslate"><span class="pre">&quot;%</span> <span class="pre">A&quot;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;%0A&quot;</span></code>. (#337)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-5">
+<h1>httpuv 1.6.5<a class="headerlink" href="#httpuv-1-6-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added support for R on Windows UCRT. (#324)</p></li>
+<li><p>When using a system-wide copy of libuv, httpuv will now compile using the system-wide headers for libuv, instead of the local copy of the libuv headers. (#327)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-4">
+<h1>httpuv 1.6.4<a class="headerlink" href="#httpuv-1-6-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added zlib to SystemRequirements in DESCRIPTION file. (#315)</p></li>
+<li><p>Closed #280: Fix builds on Alpine Linux (and other versions which have automake &gt;1.16.1). (#319)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-3">
+<h1>httpuv 1.6.3<a class="headerlink" href="#httpuv-1-6-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Increased required version of Rcpp to 1.0.7, to work around an incompatibility between Rcpp 1.0.6 and packages compiled with Rcpp 1.0.7.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-2">
+<h1>httpuv 1.6.2<a class="headerlink" href="#httpuv-1-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #282: <code class="docutils literal notranslate"><span class="pre">startPipeServer()</span></code> failed with “invalid argument” error after update to libuv 1.37.0. (#283)</p></li>
+<li><p>Fixed #303: Don’t return Content-Length header when the HTTP status is “101 Switching Protocols”. (#305)</p></li>
+<li><p>Added support for gzip-compressed HTTP responses. (#305)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-1">
+<h1>httpuv 1.6.1<a class="headerlink" href="#httpuv-1-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">timegm()</span></code> function is a non-standard GNU extension, so it has been replaced with an internal <code class="docutils literal notranslate"><span class="pre">timegm2()</span></code> function. (#300)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-6-0">
+<h1>httpuv 1.6.0<a class="headerlink" href="#httpuv-1-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Remove BH dependency. httpuv now requires a compiler which supports C++11. (#297)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-5">
+<h1>httpuv 1.5.5<a class="headerlink" href="#httpuv-1-5-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix SHA1 calculation, and thus WebSocket server handshakes, on big-endian systems. (#284)</p></li>
+<li><p>Fixed #195: Responses required <code class="docutils literal notranslate"><span class="pre">headers</span></code> to be a named list. Now it can also be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, an empty unnamed list, or it can be unset. (#289)</p></li>
+<li><p>Allow responses to omit <code class="docutils literal notranslate"><span class="pre">body</span></code> (or set it as <code class="docutils literal notranslate"><span class="pre">NULL</span></code>) to avoid sending a body or setting the <code class="docutils literal notranslate"><span class="pre">Content-Length</span></code> header. This is intended for use with HTTP 204/304 responses. (#288)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-4">
+<h1>httpuv 1.5.4<a class="headerlink" href="#httpuv-1-5-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #275: Large HTTP request headers could get truncated if they spanned more than one TCP message. (#277)</p></li>
+<li><p>Fixed build for Solaris. (#271)</p></li>
+<li><p>Fixed a test that had incorrect logic. (#272)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-3-1">
+<h1>httpuv 1.5.3.1<a class="headerlink" href="#httpuv-1-5-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated libuv to version 1.37.0. (#266)</p></li>
+<li><p>Fixed #204: On UBSAN builds of R, there were warnings about unaligned memory access. (#246)</p></li>
+<li><p>Avoid creating a new Rook error stream object for each request. This should improve performance. (#245)</p></li>
+<li><p>Resolved #247: httpuv no longer returns a HTTP 400 code for static files when the “Content-Length” header is 0. This Content-Length header is inserted by some proxies even for messages without payloads. (#248)</p></li>
+<li><p>Resolved #253: Setting the FRAMEWORK environment variable would break compilation.  This change removes any dependency on that variable. (#254)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-2">
+<h1>httpuv 1.5.2<a class="headerlink" href="#httpuv-1-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>In the static file-serving code path, httpuv previously looked for a <code class="docutils literal notranslate"><span class="pre">Connection:</span> <span class="pre">upgrade</span></code> header; if it found this header, it would not try to serve a static file, and it would instead forward the HTTP request to the R code path. However, some proxies are configured to always set this header, even when the connection is not actually meant to be upgraded. Now, instead of looking for a <code class="docutils literal notranslate"><span class="pre">Connection:</span> <span class="pre">upgrade</span></code> header, httpuv looks for the presence of an <code class="docutils literal notranslate"><span class="pre">Upgrade</span></code> header (with any value), and should be more robust to incorrectly-configured proxies. (#215)</p></li>
+<li><p>Fixed handling of messages without payloads: (#219)</p></li>
+<li><p>Fixed #224: Static file serving on Windows did not work correctly if it was from a path that contained non-ASCII characters. (#227)</p></li>
+<li><p>Resolved #194, #233: Added a <code class="docutils literal notranslate"><span class="pre">quiet</span></code> option to <code class="docutils literal notranslate"><span class="pre">startServer</span></code>, which suppresses startup error messages that are normally printed to console (and can’t be intercepted with <code class="docutils literal notranslate"><span class="pre">capture.output()</span></code>). (#234)</p></li>
+<li><p>Added a new function <code class="docutils literal notranslate"><span class="pre">randomPort()</span></code>, which returns a random available port for listening on. (#234)</p></li>
+<li><p>Added a new (unexported) function <code class="docutils literal notranslate"><span class="pre">logLevel()</span></code>, for controlling debugging information that will be printed to the console. Previously, httpuv occasionally printed messages like <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">[uv_write]</span> <span class="pre">broken</span> <span class="pre">pipe</span></code> and <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">[uv_write]</span> <span class="pre">bad</span> <span class="pre">file</span> <span class="pre">descriptor</span></code> by default. This happened when the server tried to write to a pipe that was already closed, but the situation was not harmful, and was already being handled correctly. Now these messages are printed only if the log level is set to <code class="docutils literal notranslate"><span class="pre">INFO</span></code> or <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>. (#223)</p></li>
+<li><p>If an application’s <code class="docutils literal notranslate"><span class="pre">$call()</span></code> method is missing, it will now give a 404 response instead of a 500 response. (#237)</p></li>
+<li><p>Disallowed backslash in static path, to prevent path traversal attacks. (#235)</p></li>
+<li><p>Static file serving on Windows could fail if multiple requests accessed the same file simultaneously. (#239)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-1">
+<h1>httpuv 1.5.1<a class="headerlink" href="#httpuv-1-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issues for compilers that didn’t support C++11, notably on RHEL and Centos 6. (#210)</p></li>
+<li><p>Fixed #208: In some cases, a race condition could cause the R process to exit when starting a new server. (#211)</p></li>
+<li><p>Updated to libuv 1.27.0. This fixed fixed #213: Valgrind reported an error about a pointer pointing to uninitialized memory. (#214)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-5-0">
+<h1>httpuv 1.5.0<a class="headerlink" href="#httpuv-1-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added support for serving static files from the background I/O thread. Files can now be served from the filesystem without involving the main R thread, which means that these operations won’t block or be blocked by code that runs in the main R thread. (#177)</p></li>
+<li><p>Running httpuv applications are now represented by R6 objects of class <code class="docutils literal notranslate"><span class="pre">WebServer</span></code> and <code class="docutils literal notranslate"><span class="pre">PipeServer</span></code>. These objects have methods to query and update the application. (#177)</p></li>
+<li><p>Converted existing reference classes (<code class="docutils literal notranslate"><span class="pre">InputStream</span></code>, <code class="docutils literal notranslate"><span class="pre">NullInputStream</span></code>, <code class="docutils literal notranslate"><span class="pre">ErrorStream</span></code>, <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code>, and <code class="docutils literal notranslate"><span class="pre">WebSocket</span></code>) to R6 classes. (#178)</p></li>
+<li><p>Fixed #168: A SIGPIPE signal on the httpuv background thread could cause the process to quit. This can happen in some instances when the server is under heavy load. (#169)</p></li>
+<li><p>Fixed #122: <code class="docutils literal notranslate"><span class="pre">decodeURI()</span></code> and <code class="docutils literal notranslate"><span class="pre">decodeURIComponent()</span></code> previously returned strings encoded with the system’s native encoding; they now return UTF-8 encoded strings. (#185, #192)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">encodeURI()</span></code> and <code class="docutils literal notranslate"><span class="pre">encodeURIComponent()</span></code>, now convert their inputs to UTF-8 before URL-encoding. (#192)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">encodeURI()</span></code>, <code class="docutils literal notranslate"><span class="pre">encodeURIComponent()</span></code>, <code class="docutils literal notranslate"><span class="pre">decodeURI()</span></code>, and <code class="docutils literal notranslate"><span class="pre">decodeURIComponent()</span></code> now handle <code class="docutils literal notranslate"><span class="pre">NA</span></code>s correctly. (#192)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">service()</span></code> now executes a single <code class="docutils literal notranslate"><span class="pre">later</span></code> callback, rather than all eligible callbacks. This gives callers more opportunities to perform their own housekeeping when multiple expensive callbacks queue up. (#176)</p></li>
+<li><p>Fixed #173: The source code is now compiled with <code class="docutils literal notranslate"><span class="pre">-DSTRICT_R_HEADERS</span></code>, which eliminates the need to undefine the <code class="docutils literal notranslate"><span class="pre">Realloc</span></code> and <code class="docutils literal notranslate"><span class="pre">Free</span></code> macros.</p></li>
+<li><p>Updated to libuv 1.23.1. (#174)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-5-1">
+<h1>httpuv 1.4.5.1<a class="headerlink" href="#httpuv-1-4-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Moved the <code class="docutils literal notranslate"><span class="pre">C_VISIBILITY</span></code> from <code class="docutils literal notranslate"><span class="pre">PKG_CPPFLAGS</span></code> to <code class="docutils literal notranslate"><span class="pre">PKG_CFLAGS</span></code>, and added <code class="docutils literal notranslate"><span class="pre">CXX_VISIBILITY</span></code> to <code class="docutils literal notranslate"><span class="pre">PKG_CXXFLAGS</span></code>, as requested by the CRAN maintainers.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-5">
+<h1>httpuv 1.4.5<a class="headerlink" href="#httpuv-1-4-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #161: An HTTP connection could get upgraded to a WebSocket too early, which sometimes resulted in closed connections. (#162)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-4-2">
+<h1>httpuv 1.4.4.2<a class="headerlink" href="#httpuv-1-4-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changed compiler flags to work with gcc 8.10 on Windows, so that httpuv will build with the new versions of Rtools. (#160)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-4-1">
+<h1>httpuv 1.4.4.1<a class="headerlink" href="#httpuv-1-4-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">_GLIBCXX_ASSERTIONS</span></code> compile flag, which caused CRAN checks to fail on gcc 7.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-4">
+<h1>httpuv 1.4.4<a class="headerlink" href="#httpuv-1-4-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #144: Before closing a handle, make sure that it is not already closing. (#145)</p></li>
+<li><p>Exported <code class="docutils literal notranslate"><span class="pre">ipFamily()</span></code> function, which tests whether a string represents an IPv4 address, IPv6 address, or neither. (#142)</p></li>
+<li><p>Templated C++ code with the format <code class="docutils literal notranslate"><span class="pre">A&lt;B&lt;C&gt;&gt;</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">A&lt;B&lt;C&gt;</span> <span class="pre">&gt;</span></code>. Allowing consecutive <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> is a feature of C++11.</p></li>
+<li><p>httpuv is now compiled with <code class="docutils literal notranslate"><span class="pre">_GLIBCXX_ASSERTIONS</span></code>, to help catch bugs. (#137)</p></li>
+<li><p>The Rook <code class="docutils literal notranslate"><span class="pre">req</span></code> environment now includes an item <code class="docutils literal notranslate"><span class="pre">req$HEADERS</span></code>, which is a named character vector of request headers. (#143)</p></li>
+<li><p>Fixed #101: If server creation fails, report reason why. (#146, #149)</p></li>
+<li><p>Fixed #147: Santizer complained when starting app with <code class="docutils literal notranslate"><span class="pre">startPipeServer</span></code> after a failed app start. (#149)</p></li>
+<li><p>Fixed #150, #151: On some platforms, httpuv would fail to install from a zip file because R’s <code class="docutils literal notranslate"><span class="pre">unzip()</span></code> function did not preserve the executable permission for <code class="docutils literal notranslate"><span class="pre">src/libuv/configure</span></code>. (#152)</p></li>
+<li><p>Worked around an issue where Shiny apps couldn’t be viewed when launched from RStudio Server using Firefox. (#153)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-3">
+<h1>httpuv 1.4.3<a class="headerlink" href="#httpuv-1-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #127: Compilation failed on some platforms because <code class="docutils literal notranslate"><span class="pre">NULL</span></code> was used instead of an <code class="docutils literal notranslate"><span class="pre">Rcpp::List</span></code>. (#131)</p></li>
+<li><p>Fixed #133: Assertion failures when running on Fedora 28. (#136)</p></li>
+<li><p>Fixed #134: Sanitizer complains when starting app after a failed app start. (#138)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-2">
+<h1>httpuv 1.4.2<a class="headerlink" href="#httpuv-1-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #126: The Makevars.win file had a line with spaces instead of a tab. This caused problems when installing with the <code class="docutils literal notranslate"><span class="pre">--clean</span></code> flag.</p></li>
+<li><p>Fixed #128: It was possible in rare cases for a segfault to occur when httpuv tried to close a connection twice. (#129)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-1">
+<h1>httpuv 1.4.1<a class="headerlink" href="#httpuv-1-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Addressed #123: <code class="docutils literal notranslate"><span class="pre">service()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
+<li><p>Fixed #124: On some CRAN build machines, the build was failing because of issues with the timestamps of input and output files for autotools in libuv/.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-4-0">
+<h1>httpuv 1.4.0<a class="headerlink" href="#httpuv-1-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changed license from GPL 3 to GPL &gt;= 2. (#109)</p></li>
+<li><p>Added IPv6 support. (#115)</p></li>
+<li><p>httpuv now does I/O on a background thread, which should allow for much better performance under load. (#106)</p></li>
+<li><p>httpuv can now handle request callbacks asynchronously. (#80, (#97))</p></li>
+<li><p>Fixed #72: httpuv previously did not close connections that had the <code class="docutils literal notranslate"><span class="pre">Connection:</span> <span class="pre">close</span></code> header, or were HTTP 1.0 (without <code class="docutils literal notranslate"><span class="pre">Connection:</span> <span class="pre">keep-alive</span></code>). (#99)</p></li>
+<li><p>Fixed #71: In some cases, compiling httpuv would use system copies of library headers, but use local copies of libraries for linking. (#121)</p></li>
+<li><p>Let Rcpp handle symbol registration. (#85)</p></li>
+<li><p>Hide internal symbols from shared library on supported platforms. This reduces the risk of conflicts with other packages bundling libuv. (#85)</p></li>
+<li><p>Fixed #86: <code class="docutils literal notranslate"><span class="pre">encodeURI()</span></code> gave incorrect output for non-ASCII characters. (#87)</p></li>
+<li><p>Fixed #49: Some information was shared across separate requests.</p></li>
+<li><p>Upgraded to libuv 1.15.0. (#91)</p></li>
+<li><p>Upgraded to http-parser 2.7.1. (#93)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-3-5">
+<h1>httpuv 1.3.5<a class="headerlink" href="#httpuv-1-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added function <code class="docutils literal notranslate"><span class="pre">getRNGState</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-3-3">
+<h1>httpuv 1.3.3<a class="headerlink" href="#httpuv-1-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Error messages are now sent as UTF-8.</p></li>
+<li><p>httpuv no longer adds a Content-Length header if one has already been provided. This is for Shiny issue #876.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-3-2">
+<h1>httpuv 1.3.2<a class="headerlink" href="#httpuv-1-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">encodeURI</span></code>, <code class="docutils literal notranslate"><span class="pre">encodeURIComponent</span></code>, <code class="docutils literal notranslate"><span class="pre">decodeURI</span></code>, and <code class="docutils literal notranslate"><span class="pre">decodeURIComponent</span></code> functions.</p></li>
+<li><p>Compatibility with Rook middleware reference classes.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-3-1">
+<h1>httpuv 1.3.1<a class="headerlink" href="#httpuv-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix bug where websocket headers split over multiple packets would cause the payload to be parsed incorrectly.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-3-0">
+<h1>httpuv 1.3.0<a class="headerlink" href="#httpuv-1-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add experimental support for running httpuv servers in the background (see <code class="docutils literal notranslate"><span class="pre">?startDaemonizedServer</span></code> and <code class="docutils literal notranslate"><span class="pre">?stopDaemonizedServer</span></code>). Many thanks to Héctor Corrada Bravo for the contribution!</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-2-3">
+<h1>httpuv 1.2.3<a class="headerlink" href="#httpuv-1-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Require Rcpp 0.11.0. The absence of this requirement made it too easy for Windows and Mac users with Rcpp 0.10 already installed to grab httpuv 1.2.2 binaries from CRAN, which are built against Rcpp 0.11, causing bad crashes due to Rcpp’s linkage changes.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-2-2">
+<h1>httpuv 1.2.2<a class="headerlink" href="#httpuv-1-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Export base64 encoding function <code class="docutils literal notranslate"><span class="pre">rawToBase64</span></code>.</p></li>
+<li><p>Compatibility work for Rcpp 0.11.0.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-2-1">
+<h1>httpuv 1.2.1<a class="headerlink" href="#httpuv-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Solaris 10 compatibility fixes (courtesy of Dr. Brian Ripley).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-2-0">
+<h1>httpuv 1.2.0<a class="headerlink" href="#httpuv-1-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix IE10 websocket handshake failure.</p></li>
+<li><p>Implement hixie-76 version of WebSocket protocol, for Safari 4 and QtWebKit.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-1-0">
+<h1>httpuv 1.1.0<a class="headerlink" href="#httpuv-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix issue #8: Bug in concurrent uploads.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">interrupt()</span></code> function for stopping the runloop.</p></li>
+<li><p>Add REMOTE_ADDR and REMOTE_PORT to request environment.</p></li>
+<li><p>Switch from git submodules to git subtree; much easier installation of development builds.</p></li>
+<li><p>Upgrade to libuv v0.10.13.</p></li>
+<li><p>Fix issue #13: Segfault on successful retry of server creation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-0-6-3">
+<h1>httpuv 1.0.6.3<a class="headerlink" href="#httpuv-1-0-6-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Greatly improved stability under heavy load by ignoring SIGPIPE.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-0-6-2">
+<h1>httpuv 1.0.6.2<a class="headerlink" href="#httpuv-1-0-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Work properly with <code class="docutils literal notranslate"><span class="pre">body=c(file=&quot;foo&quot;)</span></code>. Previously this only worked if body was a list, not a character vector.</p></li>
+<li><p>R CMD INSTALL will do <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--init</span></code> if necessary.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">onHeaders()</span></code> callback returned a body, httpuv was not properly short-circuiting the request.</p></li>
+<li><p>Ignore SIGPIPE permanently. This was still causing crashes under heavy real-world traffic.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-0-6-1">
+<h1>httpuv 1.0.6.1<a class="headerlink" href="#httpuv-1-0-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Make request available on websocket object.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-0-6">
+<h1>httpuv 1.0.6<a class="headerlink" href="#httpuv-1-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support listening on pipes (Unix domain sockets have been tested, Windows named pipes have not been tested but may work).</p></li>
+<li><p>Fix crash on CentOS 6.4 due to weird interaction with OpenSSL.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httpuv-1-0-5">
+<h1>httpuv 1.0.5<a class="headerlink" href="#httpuv-1-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial release.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\httpuv"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">httpuv 1.6.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-14">httpuv 1.6.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-13">httpuv 1.6.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-12">httpuv 1.6.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-11">httpuv 1.6.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-10">httpuv 1.6.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-9">httpuv 1.6.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-8">httpuv 1.6.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-7">httpuv 1.6.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-6">httpuv 1.6.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-5">httpuv 1.6.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-4">httpuv 1.6.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-3">httpuv 1.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-2">httpuv 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-1">httpuv 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-6-0">httpuv 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-5">httpuv 1.5.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-4">httpuv 1.5.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-3-1">httpuv 1.5.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-2">httpuv 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-1">httpuv 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-5-0">httpuv 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-5-1">httpuv 1.4.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-5">httpuv 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4-2">httpuv 1.4.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4-1">httpuv 1.4.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-4">httpuv 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-3">httpuv 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-2">httpuv 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-1">httpuv 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-4-0">httpuv 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-5">httpuv 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-3">httpuv 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-2">httpuv 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-1">httpuv 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-3-0">httpuv 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-3">httpuv 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-2">httpuv 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-1">httpuv 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-2-0">httpuv 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-1-0">httpuv 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-3">httpuv 1.0.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-2">httpuv 1.0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6-1">httpuv 1.0.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-6">httpuv 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httpuv-1-0-5">httpuv 1.0.5</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

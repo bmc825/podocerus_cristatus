@@ -1,0 +1,878 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>loo 2.8.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/loo/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/loo/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>loo 2.8.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">loo 2.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-7-0">loo 2.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-6-0">loo 2.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-5-1">loo 2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-5-0">loo 2.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-4-1">loo 2.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-4-0">loo 2.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-3-1">loo 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-3-0">loo 2.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-2-0">loo 2.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-1-0">loo 2.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-0-0">loo 2.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-1-1-0">loo 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-1-0-0">loo 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-6">loo 0.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-5">loo 0.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-4">loo 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-3">loo 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-2">loo 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-1">loo 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-0">loo 0.1.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="loo-2-8-0">
+<h1>loo 2.8.0<a class="headerlink" href="#loo-2-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>make E_loo Pareto-k diagnostic more robust by &#64;avehtari in #251</p></li>
+<li><p>update psis paper reference by &#64;avehtari in #252</p></li>
+<li><p>update PSIS references in vignettes by &#64;jgabry in #254</p></li>
+<li><p>fix loo_moment_match p_loo computation by &#64;avehtari in #257</p></li>
+<li><p>fix loo_moment_matching NaN issue by &#64;avehtari in #259</p></li>
+<li><p>catch Stan log_prob exceptions inside moment matching by &#64;avehtari in #262</p></li>
+<li><p>Fix E_loo_khat error when posterior::pareto_khat returns NA by &#64;jgabry in #264</p></li>
+<li><p>update psis ref + some minor typo fixes by &#64;avehtari in #266</p></li>
+<li><p>update PSIS ref + link to Nabiximols study for Jacobian correction by &#64;avehtari in #267</p></li>
+<li><p>Fix issue with pareto_khat output no longer being a list by &#64;n-kall in #269</p></li>
+<li><p>fix equations in loo-glossary by &#64;avehtari in #268</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-7-0">
+<h1>loo 2.7.0<a class="headerlink" href="#loo-2-7-0" title="Link to this heading">#</a></h1>
+<section id="major-changes">
+<h2>Major changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>New sample size specific diagnostic threshold for Pareto <code class="docutils literal notranslate"><span class="pre">k</span></code></strong>. The pre-2022 version
+of the <a class="reference external" href="https://arxiv.org/abs/1507.02646">PSIS paper</a> recommended diagnostic
+thresholds of
+<code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">0.5</span> <span class="pre">&quot;good&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">0.5</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">0.7</span> <span class="pre">&quot;ok&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">0.7</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">1</span> <span class="pre">&quot;bad&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">k&gt;=1</span> <span class="pre">&quot;very</span> <span class="pre">bad&quot;</span></code>.
+The 2022 revision of the PSIS paper now recommends
+<code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">min(1</span> <span class="pre">-</span> <span class="pre">1/log10(S),</span> <span class="pre">0.7)</span> <span class="pre">&quot;good&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">min(1</span> <span class="pre">-</span> <span class="pre">1/log10(S),</span> <span class="pre">0.7)</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">1</span> <span class="pre">&quot;bad&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&gt;</span> <span class="pre">1</span> <span class="pre">&quot;very</span> <span class="pre">bad&quot;</span></code>, where <code class="docutils literal notranslate"><span class="pre">S</span></code> is the sample size.
+There is now one fewer diagnostic threshold (<code class="docutils literal notranslate"><span class="pre">&quot;ok&quot;</span></code> has been removed), and the
+most important threshold now depends on the sample size <code class="docutils literal notranslate"><span class="pre">S</span></code>. With sample sizes
+<code class="docutils literal notranslate"><span class="pre">100</span></code>, <code class="docutils literal notranslate"><span class="pre">320</span></code>, <code class="docutils literal notranslate"><span class="pre">1000</span></code>, <code class="docutils literal notranslate"><span class="pre">2200</span></code>, <code class="docutils literal notranslate"><span class="pre">10000</span></code> the sample size specific part
+<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">1/log10(S)</span></code> corresponds to thresholds of <code class="docutils literal notranslate"><span class="pre">0.5</span></code>, <code class="docutils literal notranslate"><span class="pre">0.6</span></code>, <code class="docutils literal notranslate"><span class="pre">0.67</span></code>, <code class="docutils literal notranslate"><span class="pre">0.7</span></code>, <code class="docutils literal notranslate"><span class="pre">0.75</span></code>.
+Even if the sample size grows, the bias in the PSIS estimate dominates if
+<code class="docutils literal notranslate"><span class="pre">0.7</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>, and thus the diagnostic threshold for good is capped at
+<code class="docutils literal notranslate"><span class="pre">0.7</span></code> (if <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>, the mean does not exist and bias is not a valid measure).
+The new recommended thresholds are based on more careful bias-variance analysis
+of PSIS based on truncated Pareto sums theory. For those who use the Stan
+default 4000 posterior draws, the <code class="docutils literal notranslate"><span class="pre">0.7</span></code> threshold will be roughly the same, but
+there will be fewer warnings as there will be no diagnostic message for <code class="docutils literal notranslate"><span class="pre">0.5</span> <span class="pre">&lt;=</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">0.7</span></code>. Those who use smaller sample sizes may see diagnostic messages with a
+threshold less than <code class="docutils literal notranslate"><span class="pre">0.7</span></code>, and they can simply increase the sample size to about
+<code class="docutils literal notranslate"><span class="pre">2200</span></code> to get the threshold to <code class="docutils literal notranslate"><span class="pre">0.7</span></code>.</p></li>
+<li><p><strong>No more warnings if the <code class="docutils literal notranslate"><span class="pre">r_eff</span></code> argument is not provided</strong>, and the
+default is now <code class="docutils literal notranslate"><span class="pre">r_eff</span> <span class="pre">=</span> <span class="pre">1</span></code>. The summary print output showing MCSE and ESS now
+shows diagnostic information on the range of <code class="docutils literal notranslate"><span class="pre">r_eff</span></code>. The change was made to
+reduce unnecessary warnings. The use of <code class="docutils literal notranslate"><span class="pre">r_eff</span></code> does not change the expected
+value of <code class="docutils literal notranslate"><span class="pre">elpd_loo</span></code>, <code class="docutils literal notranslate"><span class="pre">p_loo</span></code>, and Pareto <code class="docutils literal notranslate"><span class="pre">k</span></code>, and is needed only to estimate
+MCSE and ESS. Thus it is better to show the diagnostic information about <code class="docutils literal notranslate"><span class="pre">r_eff</span></code>
+only when MCSE and ESS values are shown.</p></li>
+</ul>
+</section>
+<section id="other-changes">
+<h2>Other changes<a class="headerlink" href="#other-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Make Pareto <code class="docutils literal notranslate"><span class="pre">k</span></code> Inf if it is NA by &#64;topipa in #224</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">E_loo()</span></code> when type is variance by &#64;jgabry in #226</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">E_loo()</span></code> now allows <code class="docutils literal notranslate"><span class="pre">type=&quot;sd&quot;</span></code> by &#64;jgabry in #226</p></li>
+<li><p>update array syntax in vignettes by &#64;jgabry in #229</p></li>
+<li><p>Fix unbalanced knitr backticks by &#64;jgabry in #232</p></li>
+<li><p>include cc-by 4.0 license for documentation  by &#64;jgabry in #216</p></li>
+<li><p>Add order statistic warning by &#64;yannmclatchie in #230</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pointwise()</span></code> convenience function for extracting pointwise estimates by &#64;jgabry in #241</p></li>
+<li><p>use new <code class="docutils literal notranslate"><span class="pre">k</span></code> threshold by &#64;avehtari in #235</p></li>
+<li><p>simplify <code class="docutils literal notranslate"><span class="pre">mcse_elpd</span></code> using log-normal approximation by &#64;avehtari in #246</p></li>
+<li><p>show NA for <code class="docutils literal notranslate"><span class="pre">n_eff/ESS</span></code> if <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&gt;</span> <span class="pre">k_threshold</span></code> by &#64;avehtari in #248</p></li>
+<li><p>improved <code class="docutils literal notranslate"><span class="pre">E_loo()</span></code> Pareto-k diagnostics by &#64;avehtari in #247</p></li>
+<li><p>Doc improvement in <code class="docutils literal notranslate"><span class="pre">loo_subsample.R</span></code> by &#64;avehtari in #238</p></li>
+<li><p>Fix typo and deprecations in LFO vignette by &#64;jgabry in #244</p></li>
+<li><p>Register internal S3 methods by &#64;jgabry in #239</p></li>
+<li><p>Avoid R cmd check NOTEs about some internal functions by &#64;jgabry in #240</p></li>
+<li><p>fix R cmd check note due to importance_sampling roxygen template by &#64;jgabry in #233</p></li>
+<li><p>fix R cmd check notes by &#64;jgabry in #242</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-6-0">
+<h1>loo 2.6.0<a class="headerlink" href="#loo-2-6-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">loo_predictive_metric()</span></code> function for computing estimates of leave-one-out
+predictive metrics: mean absolute error, mean squared error and root mean
+squared error for continuous predictions, and accuracy and balanced accuracy for
+binary classification. (#202, &#64;LeeviLindgren)</p></li>
+<li><p>New functions <code class="docutils literal notranslate"><span class="pre">crps()</span></code>, <code class="docutils literal notranslate"><span class="pre">scrps()</span></code>, <code class="docutils literal notranslate"><span class="pre">loo_crps()</span></code>, and <code class="docutils literal notranslate"><span class="pre">loo_scrps()</span></code> for
+computing the (scaled) continuously ranked probability score. (#203, &#64;LeeviLindgren)</p></li>
+<li><p>New vignette “Mixture IS leave-one-out cross-validation for high-dimensional Bayesian models.” This is a demonstration of the mixture estimators proposed by <a class="reference external" href="https://arxiv.org/abs/2209.09190">Silva and Zanella (2022)</a>. (#210)</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor fix to model names displayed by <code class="docutils literal notranslate"><span class="pre">loo_model_weights()</span></code> to make them consistent with <code class="docutils literal notranslate"><span class="pre">loo_compare()</span></code>. (#217)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-5-1">
+<h1>loo 2.5.1<a class="headerlink" href="#loo-2-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix R CMD check error on M1 Mac</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-5-0">
+<h1>loo 2.5.0<a class="headerlink" href="#loo-2-5-0" title="Link to this heading">#</a></h1>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <a class="reference external" href="https://mc-stan.org/loo/articles/online-only/faq.html">Frequently Asked Questions page</a> on the package website. (#143)</p></li>
+<li><p>Speed improvement from simplifying the normalization when fitting the
+generalized Pareto distribution. (#187, &#64;sethaxen)</p></li>
+<li><p>Added parallel likelihood computation to speedup <code class="docutils literal notranslate"><span class="pre">loo_subsample()</span></code> when using posterior approximations. (#171, &#64;kdubovikov)</p></li>
+<li><p>Switch unit tests from Travis to GitHub Actions. (#164)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Bug fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug causing the normalizing constant of the PSIS (log) weights not
+to get updated when performing moment matching with <code class="docutils literal notranslate"><span class="pre">save_psis</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (#166, &#64;fweber144).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-4-1">
+<h1>loo 2.4.1<a class="headerlink" href="#loo-2-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed issue reported by CRAN where one of the vignettes errored on an M1 Mac
+due to RStan’s dependency on V8.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-4-0">
+<h1>loo 2.4.0<a class="headerlink" href="#loo-2-4-0" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>Bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">relative_eff.function()</span></code> that caused an error on Windows when
+using multiple cores. (#152)</p></li>
+<li><p>Fixed a potential numerical issue in <code class="docutils literal notranslate"><span class="pre">loo_moment_match()</span></code> with <code class="docutils literal notranslate"><span class="pre">split=TRUE</span></code>. (#153)</p></li>
+<li><p>Fixed potential integer overflow with <code class="docutils literal notranslate"><span class="pre">loo_moment_match()</span></code>. (#155, &#64;ecmerkle)</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">relative_eff()</span></code> when used with a <code class="docutils literal notranslate"><span class="pre">posterior::draws_array</span></code>. (#161, &#64;rok-cesnovar)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>New features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New generic function <code class="docutils literal notranslate"><span class="pre">elpd()</span></code> (and methods for matrices and arrays) for
+computing expected log predictive density of new data or log predictive density
+of observed data. A new vignette demonstrates using this function when doing
+K-fold CV with rstan. (#159, &#64;bnicenboim)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-3-1">
+<h1>loo 2.3.1<a class="headerlink" href="#loo-2-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">loo_moment_match()</span></code> that prevented <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments from being
+used correctly. (#149)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-3-0">
+<h1>loo 2.3.0<a class="headerlink" href="#loo-2-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added Topi Paananen and Paul Bürkner as coauthors.</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">loo_moment_match()</span></code> (and new vignette), which can be used to
+update a <code class="docutils literal notranslate"><span class="pre">loo</span></code> object when Pareto k estimates are large. (#130)</p></li>
+<li><p>The log weights provided by the importance sampling functions <code class="docutils literal notranslate"><span class="pre">psis()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">tis()</span></code>, and <code class="docutils literal notranslate"><span class="pre">sis()</span></code> no longer have the largest log ratio subtracted from them
+when returned to the user. This should be less confusing for anyone using
+the <code class="docutils literal notranslate"><span class="pre">weights()</span></code> method to make an importance sampler. (#112, #146)</p></li>
+<li><p>MCSE calculation is now deterministic (#116, #147)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-2-0">
+<h1>loo 2.2.0<a class="headerlink" href="#loo-2-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added Mans Magnusson as a coauthor.</p></li>
+<li><p>New functions <code class="docutils literal notranslate"><span class="pre">loo_subsample()</span></code> and <code class="docutils literal notranslate"><span class="pre">loo_approximate_posterior()</span></code> (and new
+vignette) for doing PSIS-LOO with large data. (#113)</p></li>
+<li><p>Added support for standard importance sampling and truncated importance
+sampling (functions <code class="docutils literal notranslate"><span class="pre">sis()</span></code> and <code class="docutils literal notranslate"><span class="pre">tis()</span></code>). (#125)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compare()</span></code> now throws a deprecation warning suggesting <code class="docutils literal notranslate"><span class="pre">loo_compare()</span></code>. (#93)</p></li>
+<li><p>A smaller threshold is used when checking the uniqueness of tail values. (#124)</p></li>
+<li><p>For WAIC, warnings are only thrown when running <code class="docutils literal notranslate"><span class="pre">waic()</span></code> and not when printing
+a <code class="docutils literal notranslate"><span class="pre">waic</span></code> object. (#117, &#64;mcol)</p></li>
+<li><p>Use markdown syntax in roxygen documentation wherever possible. (#108)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-1-0">
+<h1>loo 2.1.0<a class="headerlink" href="#loo-2-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">loo_compare()</span></code> for model comparison that will eventually replace
+the existing <code class="docutils literal notranslate"><span class="pre">compare()</span></code> function. (#93)</p></li>
+<li><p>New vignette on LOO for non-factorizable joint Gaussian models. (#75)</p></li>
+<li><p>New vignette on “leave-future-out” cross-validation for time series models. (#90)</p></li>
+<li><p>New glossary page (use <code class="docutils literal notranslate"><span class="pre">help(&quot;loo-glossary&quot;)</span></code>) with definitions of key terms. (#81)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">se_diff</span></code> column in model comparison results. (#78)</p></li>
+<li><p>Improved stability of <code class="docutils literal notranslate"><span class="pre">psis()</span></code> when <code class="docutils literal notranslate"><span class="pre">log_ratios</span></code> are very small. (#74)</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">r_eff=NA</span></code> to suppress warning when specifying <code class="docutils literal notranslate"><span class="pre">r_eff</span></code> is not applicable
+(i.e., draws not from MCMC). (#72)</p></li>
+<li><p>Update effective sample size calculations to match RStan’s version. (#85)</p></li>
+<li><p>Naming of k-fold helper functions now matches scikit-learn. (#96)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-2-0-0">
+<h1>loo 2.0.0<a class="headerlink" href="#loo-2-0-0" title="Link to this heading">#</a></h1>
+<p>This is a major release with many changes. Whenever possible we have opted to
+deprecate rather than remove old functionality, but it is possible that old code
+that accesses elements inside loo objects by position rather than name may
+error.</p>
+<ul class="simple">
+<li><p>New package documentation website <a class="reference external" href="http://mc-stan.org/loo/">http://mc-stan.org/loo/</a> with vignettes,
+function reference, news.</p></li>
+<li><p>Updated existing vignette and added two new vignettes demonstrating how to use
+the package.</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">psis()</span></code> replaces <code class="docutils literal notranslate"><span class="pre">psislw()</span></code> (now deprecated). This version
+implements the improvements to the PSIS algorithm described in the latest
+version of <a class="reference external" href="https://arxiv.org/abs/1507.02646">https://arxiv.org/abs/1507.02646</a>. Additional diagnostic
+information is now also provided, including PSIS effective sample sizes.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">weights()</span></code> method for extracting smoothed weights from a <code class="docutils literal notranslate"><span class="pre">psis</span></code> object.
+Arguments <code class="docutils literal notranslate"><span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">normalize</span></code> control whether the weights are returned on the
+log scale and whether they are normalized.</p></li>
+<li><p>Updated the interface for the <code class="docutils literal notranslate"><span class="pre">loo()</span></code> methods to integrate nicely with the new
+PSIS algorithm. Methods for log-likelihood arrays, matrices, and functions
+are provided. Several arguments have changed, particularly for the
+<code class="docutils literal notranslate"><span class="pre">loo.function</span></code> method. The documentation at <code class="docutils literal notranslate"><span class="pre">help(&quot;loo&quot;)</span></code> has been updated to
+describe the new behavior.</p></li>
+<li><p>The structure of the objects returned by the <code class="docutils literal notranslate"><span class="pre">loo()</span></code> function has also changed
+slightly, as described in the <strong>Value</strong> section at <code class="docutils literal notranslate"><span class="pre">help(&quot;loo&quot;,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;loo&quot;)</span></code>.</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">loo_model_weights()</span></code> computes weights for model averaging as
+described in <a class="reference external" href="https://arxiv.org/abs/1704.02030">https://arxiv.org/abs/1704.02030</a>. Implemented methods include
+stacking of predictive distributions, pseudo-BMA weighting or pseudo-BMA+
+weighting with the Bayesian bootstrap.</p></li>
+<li><p>Setting <code class="docutils literal notranslate"><span class="pre">options(loo.cores=...)</span></code> is now deprecated in favor of
+<code class="docutils literal notranslate"><span class="pre">options(mc.cores=...)</span></code>. For now, if both the <code class="docutils literal notranslate"><span class="pre">loo.cores</span></code> and <code class="docutils literal notranslate"><span class="pre">mc.cores</span></code> options
+have been set, preference will be given to <code class="docutils literal notranslate"><span class="pre">loo.cores</span></code> until it is removed in a
+future release. (thanks to &#64;cfhammill)</p></li>
+<li><p>New functions <code class="docutils literal notranslate"><span class="pre">example_loglik_array()</span></code> and <code class="docutils literal notranslate"><span class="pre">example_loglik_matrix()</span></code> that
+provide objects to use in examples and tests.</p></li>
+<li><p>When comparing more than two models with <code class="docutils literal notranslate"><span class="pre">compare()</span></code>, the first column of the
+output is now the <code class="docutils literal notranslate"><span class="pre">elpd</span></code> difference from the model in the first row.</p></li>
+<li><p>New helper functions for splitting observations for K-fold CV:
+<code class="docutils literal notranslate"><span class="pre">kfold_split_random()</span></code>, <code class="docutils literal notranslate"><span class="pre">kfold_split_balanced()</span></code>, <code class="docutils literal notranslate"><span class="pre">kfold_split_stratified()</span></code>.
+Additional helper functions for implementing K-fold CV will be included in
+future releases.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-1-1-0">
+<h1>loo 1.1.0<a class="headerlink" href="#loo-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Introduce the <code class="docutils literal notranslate"><span class="pre">E_loo()</span></code> function for computing weighted expectations (means,
+variances, quantiles).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-1-0-0">
+<h1>loo 1.0.0<a class="headerlink" href="#loo-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pareto_k_table()</span></code> and <code class="docutils literal notranslate"><span class="pre">pareto_k_ids()</span></code> convenience functions for quickly
+identifying problematic observations</p></li>
+<li><p>pareto k values now grouped into <code class="docutils literal notranslate"><span class="pre">(-Inf,</span> <span class="pre">0.5]</span></code>, <code class="docutils literal notranslate"><span class="pre">(0.5,</span> <span class="pre">0.7]</span></code>, <code class="docutils literal notranslate"><span class="pre">(0.7,</span> <span class="pre">1]</span></code>,
+<code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">Inf)</span></code> (didn’t used to include 0.7)</p></li>
+<li><p>warning messages are now issued by <code class="docutils literal notranslate"><span class="pre">psislw()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">print.loo</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print.loo()</span></code> shows a table of pareto k estimates (if any k &gt; 0.7)</p></li>
+<li><p>Add argument to <code class="docutils literal notranslate"><span class="pre">compare()</span></code> to allow loo objects to be provided in a list
+rather than in <code class="docutils literal notranslate"><span class="pre">'...'</span></code></p></li>
+<li><p>Update references to point to published paper</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-6">
+<h1>loo 0.1.6<a class="headerlink" href="#loo-0-1-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>GitHub repository moved from &#64;jgabry to &#64;stan-dev</p></li>
+<li><p>Better error messages from <code class="docutils literal notranslate"><span class="pre">extract_log_lik()</span></code></p></li>
+<li><p>Fix example code in vignette (thanks to GitHub user &#64;krz)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-5">
+<h1>loo 0.1.5<a class="headerlink" href="#loo-0-1-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add warnings if any p_waic estimates are greather than 0.4</p></li>
+<li><p>Improve line coverage of tests to 100%</p></li>
+<li><p>Update references in documentation</p></li>
+<li><p>Remove model weights from <code class="docutils literal notranslate"><span class="pre">compare()</span></code>. In previous versions of <strong>loo</strong> model
+weights were also reported by <code class="docutils literal notranslate"><span class="pre">compare()</span></code>. We have removed the weights because
+they were based only on the point estimate of the elpd values ignoring the
+uncertainty. We are currently working on something similar to these weights that
+also accounts for uncertainty, which will be included in future versions of
+<strong>loo</strong>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-4">
+<h1>loo 0.1.4<a class="headerlink" href="#loo-0-1-4" title="Link to this heading">#</a></h1>
+<p>This update makes it easier for other package authors using <strong>loo</strong> to write
+tests that involve running the <code class="docutils literal notranslate"><span class="pre">loo</span></code> function. It also includes minor bug
+fixes and additional unit tests. Highlights:</p>
+<ul class="simple">
+<li><p>Don’t call functions from <strong>parallel</strong> package if <code class="docutils literal notranslate"><span class="pre">cores=1</span></code>.</p></li>
+<li><p>Return entire vector/matrix of smoothed weights rather than a summary
+statistic when <code class="docutils literal notranslate"><span class="pre">psislw</span></code> function is called in an interactive session.</p></li>
+<li><p>Test coverage &gt; 80%</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-3">
+<h1>loo 0.1.3<a class="headerlink" href="#loo-0-1-3" title="Link to this heading">#</a></h1>
+<p>This update provides several important improvements, most notably an alternative
+method for specifying the pointwise log-likelihood that reduces memory usage
+and allows for <strong>loo</strong> to be used with larger datasets. This update also makes
+it easier to to incorporate <strong>loo</strong>’s functionality into other packages.</p>
+<ul class="simple">
+<li><p>Add Ben Goodrich as contributor</p></li>
+<li><p>S3 generics and <code class="docutils literal notranslate"><span class="pre">matrix</span></code> and <code class="docutils literal notranslate"><span class="pre">function</span></code> methods for both <code class="docutils literal notranslate"><span class="pre">loo()</span></code> and <code class="docutils literal notranslate"><span class="pre">waic()</span></code>.
+The matrix method provide the same functionality as in previous versions of
+<strong>loo</strong> (taking a log-likelihood matrix as the input). The function method
+allows the user to provide a function for computing the log-likelihood from
+the data and posterior draws (which are also provided by the user). The function
+method is less memory intensive and should make it possible to use <strong>loo</strong> for
+models fit to larger amounts of data than before.</p></li>
+<li><p>Separate <code class="docutils literal notranslate"><span class="pre">plot</span></code> and <code class="docutils literal notranslate"><span class="pre">print</span></code> methods. <code class="docutils literal notranslate"><span class="pre">plot</span></code> also provides <code class="docutils literal notranslate"><span class="pre">label_points</span></code>
+argument, which, if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, will label any Pareto <code class="docutils literal notranslate"><span class="pre">k</span></code> points greater than
+1/2 by the index number of the corresponding observation. The plot method
+also now warns about <code class="docutils literal notranslate"><span class="pre">Inf</span></code>/<code class="docutils literal notranslate"><span class="pre">NA</span></code>/<code class="docutils literal notranslate"><span class="pre">NaN</span></code> values of <code class="docutils literal notranslate"><span class="pre">k</span></code> that are not shown in
+the plot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compare</span></code> now returns model weights and accepts more than two inputs.</p></li>
+<li><p>Allow setting number of cores using <code class="docutils literal notranslate"><span class="pre">options(loo.cores</span> <span class="pre">=</span> <span class="pre">NUMBER)</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-2">
+<h1>loo 0.1.2<a class="headerlink" href="#loo-0-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updates names in package to reflect name changes in the accompanying paper.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-1">
+<h1>loo 0.1.1<a class="headerlink" href="#loo-0-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Better handling of special cases</p></li>
+<li><p>Deprecates <code class="docutils literal notranslate"><span class="pre">loo_and_waic</span></code> function in favor of separate functions <code class="docutils literal notranslate"><span class="pre">loo</span></code> and
+<code class="docutils literal notranslate"><span class="pre">waic</span></code></p></li>
+<li><p>Deprecates <code class="docutils literal notranslate"><span class="pre">loo_and_waic_diff</span></code>. Use <code class="docutils literal notranslate"><span class="pre">compare</span></code> instead.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loo-0-1-0">
+<h1>loo 0.1.0<a class="headerlink" href="#loo-0-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial release</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\loo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">loo 2.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-7-0">loo 2.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-6-0">loo 2.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-5-1">loo 2.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-5-0">loo 2.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-4-1">loo 2.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-4-0">loo 2.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-3-1">loo 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-3-0">loo 2.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-2-0">loo 2.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-1-0">loo 2.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-2-0-0">loo 2.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-1-1-0">loo 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-1-0-0">loo 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-6">loo 0.1.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-5">loo 0.1.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-4">loo 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-3">loo 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-2">loo 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-1">loo 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loo-0-1-0">loo 0.1.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

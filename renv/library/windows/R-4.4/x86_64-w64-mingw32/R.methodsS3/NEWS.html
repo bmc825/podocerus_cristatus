@@ -1,0 +1,1072 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Version 1.8.2 [2022-06-13] &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/R.methodsS3/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/R.methodsS3/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Version 1.8.2 [2022-06-13]</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Version 1.8.2 [2022-06-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecated-defunct">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-1-2020-08-24">Version 1.8.1 [2020-08-24]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-0-2020-02-13">Version 1.8.0 [2020-02-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significant-changes">Significant Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-quality">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-1-2016-02-15">Version 1.7.1 [2016-02-15]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Significant Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-0-2015-02-19">Version 1.7.0 [2015-02-19]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-2-2014-05-04">Version 1.6.2 [2014-05-04]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-1-2014-01-04">Version 1.6.1 [2014-01-04]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-0-2013-11-12">Version 1.6.0 [2013-11-12]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-3-2013-11-05">Version 1.5.3 [2013-11-05]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2-2013-10-06">Version 1.5.2 [2013-10-06]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-1-2013-09-15">Version 1.5.1 [2013-09-15]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-0-2013-08-29">Version 1.5.0 [2013-08-29]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-5-2013-08-23">Version 1.4.5 [2013-08-23]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-4-2013-05-19">Version 1.4.4 [2013-05-19]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-3-2013-03-08">Version 1.4.3 [2013-03-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-2-2012-06-22">Version 1.4.2 [2012-06-22]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-1-2012-06-20">Version 1.4.1 [2012-06-20]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-0-2012-04-20">Version 1.4.0 [2012-04-20]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-0-2012-04-16">Version 1.3.0 [2012-04-16]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Significant Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-3-2012-03-08">Version 1.2.3 [2012-03-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-2-2011-11-17">Version 1.2.2 [2011-11-17]</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-1-2010-09-18">Version 1.2.1 [2010-09-18]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-0-2010-03-13">Version 1.2.0 [2010-03-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-0-2010-01-02">Version 1.1.0 [2010-01-02]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-3-2008-07-02">Version 1.0.3 [2008-07-02]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2-2008-05-08">Version 1.0.2 [2008-05-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1-2008-03-06">Version 1.0.1 [2008-03-06]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0-2007-09-17">Version 1.0.0 [2007-09-17]</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="version-1-8-2-2022-06-13">
+<h1>Version 1.8.2 [2022-06-13]<a class="headerlink" href="#version-1-8-2-2022-06-13" title="Link to this heading">#</a></h1>
+<section id="deprecated-defunct">
+<h2>Deprecated &amp; Defunct<a class="headerlink" href="#deprecated-defunct" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Very old, deprecated argument <code class="docutils literal notranslate"><span class="pre">enforceRCC</span></code> for <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> is now defunct in favor of argument <code class="docutils literal notranslate"><span class="pre">validators</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-1-2020-08-24">
+<h1>Version 1.8.1 [2020-08-24]<a class="headerlink" href="#version-1-8-1-2020-08-24" title="Link to this heading">#</a></h1>
+<section id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>R.methodsS3</strong> would produce “Warning: partial match of ‘Date’ to
+‘Date/Publication’” when attached if
+<code class="docutils literal notranslate"><span class="pre">options(warnPartialMatchDollar</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-8-0-2020-02-13">
+<h1>Version 1.8.0 [2020-02-13]<a class="headerlink" href="#version-1-8-0-2020-02-13" title="Link to this heading">#</a></h1>
+<section id="significant-changes">
+<h2>Significant Changes<a class="headerlink" href="#significant-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> produces an error if it can not turn an
+existing function into a “default” function and create a new
+generic function.  Previously, it produced a warning.</p></li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> sets the <code class="docutils literal notranslate"><span class="pre">S3class</span></code> attribute on any “default”
+methods it creates, if any.</p></li>
+<li><p>Add internal function <code class="docutils literal notranslate"><span class="pre">R.methodsS3:::makeNamespace(pkg)</span></code> for
+producing <code class="docutils literal notranslate"><span class="pre">S3method()</span></code> statements to be put in a package’s
+NAMESPACE file.</p></li>
+</ul>
+</section>
+<section id="code-quality">
+<h2>Code Quality<a class="headerlink" href="#code-quality" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now formally suggesting <strong>codetools</strong>.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Bug Fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R.methodsS3::setMethodS3()</span></code> could produce ‘Error in appendVarArgs(
+…R.oo.definition) : could not find function “appendVarArgs”’ if
+the <strong>R.methodsS3</strong> package is not attached.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> failed to detect names
+<code class="docutils literal notranslate"><span class="pre">NA_real_</span></code>, etc.  as R keywords due to an 11 year old bug.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Deprecated &amp; Defunct<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R.methodsS3::throw()</span></code> is deprecated.  Use <code class="docutils literal notranslate"><span class="pre">base::stop()</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">R.oo::throw()</span></code>, instead.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-7-1-2016-02-15">
+<h1>Version 1.7.1 [2016-02-15]<a class="headerlink" href="#version-1-7-1-2016-02-15" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>Significant Changes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CLEANUP: Package now requires R (&gt;= 2.13.0) (April 2011).  If
+really needed on earlier version of R, it only takes a minor tweak,
+but I won’t do that unless really really needed.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Code Quality<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Explicit namespace imports also from <strong>utils</strong> package.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-7-0-2015-02-19">
+<h1>Version 1.7.0 [2015-02-19]<a class="headerlink" href="#version-1-7-0-2015-02-19" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>New Features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CONSISTENCY: Now <code class="docutils literal notranslate"><span class="pre">isGenericS4()</span></code> returns FALSE for non-existing
+functions, just as <code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> does.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>Code Quality<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ROBUSTNESS: Added several package tests.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Bug Fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> on a function gave error “object ‘Math’ of mode
+‘function’ was not found” when the <strong>methods</strong> package was not
+loaded, e.g.  <code class="docutils literal notranslate"><span class="pre">Rscript</span> <span class="pre">-e</span> <span class="pre">&quot;R.methodsS3::isGenericS3(function(...)</span> <span class="pre">NULL)&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">findDispatchMethodsS3()</span></code> could in rare cases return an extra set
+of false functions in R (&lt; 3.1.2).  This was due to a bug in R (&lt;
+3.1.2) where the output of <code class="docutils literal notranslate"><span class="pre">getAnywhere()</span></code> contained garbage
+results, e.g.  <code class="docutils literal notranslate"><span class="pre">getAnywhere(&quot;.Options&quot;)$objs</span></code>.  For backward
+compatibility, <code class="docutils literal notranslate"><span class="pre">findDispatchMethodsS3()</span></code> now detects this case and
+works around it.  This bug was only detected after adding an
+explicit package test for <code class="docutils literal notranslate"><span class="pre">findDispatchMethodsS3()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-6-2-2014-05-04">
+<h1>Version 1.6.2 [2014-05-04]<a class="headerlink" href="#version-1-6-2-2014-05-04" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>Code Quality<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CLEANUP: Internal directory restructuring.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-6-1-2014-01-04">
+<h1>Version 1.6.1 [2014-01-04]<a class="headerlink" href="#version-1-6-1-2014-01-04" title="Link to this heading">#</a></h1>
+<section id="id9">
+<h2>Code Quality<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CLEANUP: Dropped obsolete argument <code class="docutils literal notranslate"><span class="pre">ellipsesOnly</span></code> from
+<code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code>.  It was not used.  Thanks Antonio Piccolboni for
+reporting on this.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-6-0-2013-11-12">
+<h1>Version 1.6.0 [2013-11-12]<a class="headerlink" href="#version-1-6-0-2013-11-12" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>Bug Fixes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Generic function created by <code class="docutils literal notranslate"><span class="pre">setGenericS3(&quot;foo&lt;-&quot;)</span></code> would not have
+a last argument name <code class="docutils literal notranslate"><span class="pre">value</span></code>, which <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> complains about.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-3-2013-11-05">
+<h1>Version 1.5.3 [2013-11-05]<a class="headerlink" href="#version-1-5-3-2013-11-05" title="Link to this heading">#</a></h1>
+<section id="id11">
+<h2>New Features<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ROBUSTNESS: Now <code class="docutils literal notranslate"><span class="pre">setMethodS3(name,</span> <span class="pre">class,</span> <span class="pre">...)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setGenericS3(name,</span> <span class="pre">...)</span></code> assert that arguments <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">class</span></code>
+are non-empty.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-2-2013-10-06">
+<h1>Version 1.5.2 [2013-10-06]<a class="headerlink" href="#version-1-5-2-2013-10-06" title="Link to this heading">#</a></h1>
+<section id="id12">
+<h2>New Features<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>BETA: Added an in-official option to make <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setMethodsS3()</span></code> look for existing (generic) functions also in
+imported namespaces.  This will eventually become the default.</p></li>
+<li><p>ROBUSTNESS: Now <code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> also compares to known generic
+functions in the <strong>base</strong> package.  It also does a better job on
+checking whether the function calls <code class="docutils literal notranslate"><span class="pre">UseMethod()</span></code> or not.</p></li>
+<li><p>Added argument ‘inherits’ to getGenericS3().</p></li>
+<li><p>The above improvement of <code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> means that
+<code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code> does a better job to decided whether a generic
+function should be created or not, which in turn means
+<code class="docutils literal notranslate"><span class="pre">createGeneric</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> is needed much less in <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-1-2013-09-15">
+<h1>Version 1.5.1 [2013-09-15]<a class="headerlink" href="#version-1-5-1-2013-09-15" title="Link to this heading">#</a></h1>
+<section id="id13">
+<h2>Bug Fixes<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Forgot to explicitly import <code class="docutils literal notranslate"><span class="pre">capture.output()</span></code> from <strong>utils</strong> which
+could give an error on ‘function “capture.output” not available
+when setMethodS3() was used to define a “replacement” function’.
+This was only observed on the R v3.0.1 release version but not with
+the more recent patched or devel versions. In addition, two other
+<strong>utils</strong> functions are now explicitly imported.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-5-0-2013-08-29">
+<h1>Version 1.5.0 [2013-08-29]<a class="headerlink" href="#version-1-5-0-2013-08-29" title="Link to this heading">#</a></h1>
+<section id="id14">
+<h2>New Features<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">pkgStartupMessage()</span></code> which acknowledges <code class="docutils literal notranslate"><span class="pre">library(...,</span> <span class="pre">quietly</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-5-2013-08-23">
+<h1>Version 1.4.5 [2013-08-23]<a class="headerlink" href="#version-1-4-5-2013-08-23" title="Link to this heading">#</a></h1>
+<section id="id15">
+<h2>Code Quality<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CLEANUP: No longer utilizing <code class="docutils literal notranslate"><span class="pre">:::</span></code> for “self”
+(i.e. <strong>R.methodsS3</strong>) methods.</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>Deprecated &amp; Defunct<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CLEANUP: Dropped deprecated inst/HOWTOSITE replaced by
+inst/CITATION.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-4-2013-05-19">
+<h1>Version 1.4.4 [2013-05-19]<a class="headerlink" href="#version-1-4-4-2013-05-19" title="Link to this heading">#</a></h1>
+<section id="id17">
+<h2>Code Quality<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>CRAN POLICY: Now all Rd <code class="docutils literal notranslate"><span class="pre">\usage{}</span></code> lines are at most 90 characters
+long.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-3-2013-03-08">
+<h1>Version 1.4.3 [2013-03-08]<a class="headerlink" href="#version-1-4-3-2013-03-08" title="Link to this heading">#</a></h1>
+<section id="id18">
+<h2>Code Quality<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added an <code class="docutils literal notranslate"><span class="pre">Authors&#64;R</span></code> field to the DESCRIPTION.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-2-2012-06-22">
+<h1>Version 1.4.2 [2012-06-22]<a class="headerlink" href="#version-1-4-2-2012-06-22" title="Link to this heading">#</a></h1>
+<section id="id19">
+<h2>New Features<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">setMethodS3(...,</span> <span class="pre">appendVarArgs</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> ignores
+<code class="docutils literal notranslate"><span class="pre">appendVarArgs</span></code> if the method name is <code class="docutils literal notranslate"><span class="pre">&quot;==&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;+&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;-&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;^&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;%%&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;%/%&quot;</span></code>, (in addition to <code class="docutils literal notranslate"><span class="pre">&quot;$&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;$&lt;-&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;[[&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;[[&lt;-&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;[&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;[&lt;-&quot;</span></code>).  It will also ignore it if the
+name matches regular expressions <code class="docutils literal notranslate"><span class="pre">&quot;&lt;-$&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;^%[^%]*%$&quot;</span></code>.  The
+built in RCC validators were updated accordingly.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-1-2012-06-20">
+<h1>Version 1.4.1 [2012-06-20]<a class="headerlink" href="#version-1-4-1-2012-06-20" title="Link to this heading">#</a></h1>
+<section id="id20">
+<h2>New Features<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added argument <code class="docutils literal notranslate"><span class="pre">overwrite</span></code> to <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-4-0-2012-04-20">
+<h1>Version 1.4.0 [2012-04-20]<a class="headerlink" href="#version-1-4-0-2012-04-20" title="Link to this heading">#</a></h1>
+<section id="id21">
+<h2>New Features<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> sets attribute <code class="docutils literal notranslate"><span class="pre">S3class</span></code> to the class.</p></li>
+<li><p>Added argument <code class="docutils literal notranslate"><span class="pre">export</span></code> to <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code>,
+which sets attribute <code class="docutils literal notranslate"><span class="pre">export</span></code> to the same value.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-3-0-2012-04-16">
+<h1>Version 1.3.0 [2012-04-16]<a class="headerlink" href="#version-1-3-0-2012-04-16" title="Link to this heading">#</a></h1>
+<section id="id22">
+<h2>Significant Changes<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now only generic funcions are exported, and not all of them.</p></li>
+<li><p>Now all S3 methods are properly declared in NAMESPACE.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-3-2012-03-08">
+<h1>Version 1.2.3 [2012-03-08]<a class="headerlink" href="#version-1-2-3-2012-03-08" title="Link to this heading">#</a></h1>
+<section id="id23">
+<h2>New Features<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now arguments <code class="docutils literal notranslate"><span class="pre">...</span></code> of <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> are passed to
+<code class="docutils literal notranslate"><span class="pre">setGenericS3()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-2-2011-11-17">
+<h1>Version 1.2.2 [2011-11-17]<a class="headerlink" href="#version-1-2-2-2011-11-17" title="Link to this heading">#</a></h1>
+<p>DOCUMENTATION:</p>
+<ul class="simple">
+<li><p>CLEANUP: Dropped <code class="docutils literal notranslate"><span class="pre">example(getMethodS3)</span></code>, which was for
+<code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-1-2010-09-18">
+<h1>Version 1.2.1 [2010-09-18]<a class="headerlink" href="#version-1-2-1-2010-09-18" title="Link to this heading">#</a></h1>
+<section id="id24">
+<h2>Bug Fixes<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code>, <code class="docutils literal notranslate"><span class="pre">isGenericS4()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGenericS3()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">getMethodS3()</span></code> failed to locate functions created in the global
+environment while there exist a function with the same name in the
+<strong>base</strong> package. The problem only affected the above functions and
+nothing else and it did not exist prior to <strong>R.methodsS3</strong> v1.2.0
+when the package did not yet have a namespace.  Thanks John
+Oleynick for reporting on this problem.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">isGenericS4()</span></code> did not support specifying the
+function by name as a character string, despite it was documented
+to do so.  Thanks John Oleynick for reporting on this.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-2-0-2010-03-13">
+<h1>Version 1.2.0 [2010-03-13]<a class="headerlink" href="#version-1-2-0-2010-03-13" title="Link to this heading">#</a></h1>
+<section id="id25">
+<h2>Code Quality<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a NAMESPACE.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-1-0-2010-01-02">
+<h1>Version 1.1.0 [2010-01-02]<a class="headerlink" href="#version-1-1-0-2010-01-02" title="Link to this heading">#</a></h1>
+<section id="id26">
+<h2>New Features<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">getDispatchMethodS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">findDispatchMethodsS3()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-3-2008-07-02">
+<h1>Version 1.0.3 [2008-07-02]<a class="headerlink" href="#version-1-0-3-2008-07-02" title="Link to this heading">#</a></h1>
+<section id="id27">
+<h2>Code Quality<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Renamed HISTORY file to NEWS.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-2-2008-05-08">
+<h1>Version 1.0.2 [2008-05-08]<a class="headerlink" href="#version-1-0-2-2008-05-08" title="Link to this heading">#</a></h1>
+<section id="id28">
+<h2>New Features<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">getMethodS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGenericS3()</span></code>.</p></li>
+</ul>
+</section>
+<section id="id29">
+<h2>Bug Fixes<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isGenericS3()</span></code> and <code class="docutils literal notranslate"><span class="pre">isGenericS4()</span></code> gave an error if a function was
+passed.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-1-2008-03-06">
+<h1>Version 1.0.1 [2008-03-06]<a class="headerlink" href="#version-1-0-1-2008-03-06" title="Link to this heading">#</a></h1>
+<p>DOCUMENTATION:</p>
+<ul class="simple">
+<li><p>Added paper to <code class="docutils literal notranslate"><span class="pre">citation(&quot;R.methodsS3&quot;)</span></code>.</p></li>
+</ul>
+<section id="id30">
+<h2>Bug Fixes<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Regular expression pattern <code class="docutils literal notranslate"><span class="pre">a-Z</span></code> is illegal on (at least) some
+locale, e.g.  ‘C’ (where <code class="docutils literal notranslate"><span class="pre">A-z</span></code> works). The only way to specify the
+ASCII alphabet is to list all characters explicitly, which we now
+do in all methods of the package.  See the r-devel thread “invalid
+regular expression ‘[a-Z]’” on 2008-03-05 for details.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-1-0-0-2007-09-17">
+<h1>Version 1.0.0 [2007-09-17]<a class="headerlink" href="#version-1-0-0-2007-09-17" title="Link to this heading">#</a></h1>
+<p>SIGNIFICANTLY CHANGES:</p>
+<ul class="simple">
+<li><p>Created by extracting <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code> and related methods from the
+<strong>R.oo</strong> package.  The purpose is to provide <code class="docutils literal notranslate"><span class="pre">setMethodS3()</span></code>
+without having to load (the already lightweight) <strong>R.oo</strong> package.
+For previous history related to the methods in this package, please
+see the history of the <strong>R.oo</strong> package.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\R.methodsS3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Version 1.8.2 [2022-06-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecated-defunct">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-1-2020-08-24">Version 1.8.1 [2020-08-24]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-8-0-2020-02-13">Version 1.8.0 [2020-02-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significant-changes">Significant Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-quality">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bug Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-1-2016-02-15">Version 1.7.1 [2016-02-15]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Significant Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-7-0-2015-02-19">Version 1.7.0 [2015-02-19]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-2-2014-05-04">Version 1.6.2 [2014-05-04]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-1-2014-01-04">Version 1.6.1 [2014-01-04]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-0-2013-11-12">Version 1.6.0 [2013-11-12]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-3-2013-11-05">Version 1.5.3 [2013-11-05]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-2-2013-10-06">Version 1.5.2 [2013-10-06]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-1-2013-09-15">Version 1.5.1 [2013-09-15]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5-0-2013-08-29">Version 1.5.0 [2013-08-29]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-5-2013-08-23">Version 1.4.5 [2013-08-23]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Code Quality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Deprecated &amp; Defunct</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-4-2013-05-19">Version 1.4.4 [2013-05-19]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-3-2013-03-08">Version 1.4.3 [2013-03-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-2-2012-06-22">Version 1.4.2 [2012-06-22]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-1-2012-06-20">Version 1.4.1 [2012-06-20]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4-0-2012-04-20">Version 1.4.0 [2012-04-20]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-0-2012-04-16">Version 1.3.0 [2012-04-16]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Significant Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-3-2012-03-08">Version 1.2.3 [2012-03-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-2-2011-11-17">Version 1.2.2 [2011-11-17]</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-1-2010-09-18">Version 1.2.1 [2010-09-18]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-0-2010-03-13">Version 1.2.0 [2010-03-13]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-0-2010-01-02">Version 1.1.0 [2010-01-02]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">New Features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-3-2008-07-02">Version 1.0.3 [2008-07-02]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Code Quality</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-2-2008-05-08">Version 1.0.2 [2008-05-08]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1-2008-03-06">Version 1.0.1 [2008-03-06]</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0-2007-09-17">Version 1.0.0 [2007-09-17]</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

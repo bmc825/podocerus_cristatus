@@ -1,0 +1,747 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ggforce 0.4.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/ggforce/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/ggforce/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ggforce 0.4.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggforce 0.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-4-1">ggforce 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-4-0">ggforce 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-4">ggforce 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-2">ggforce 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-1">ggforce 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-0">ggforce 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-2">ggforce 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-1">ggforce 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-0">ggforce 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-1-1">ggforce 0.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-1-0">ggforce 0.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-0-1">ggforce 0.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-4-2">
+<h1>ggforce 0.4.2<a class="headerlink" href="#ggforce-0-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix a documentation issue reported by CRAN</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-4-1">
+<h1>ggforce 0.4.1<a class="headerlink" href="#ggforce-0-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a sanitizer error in the decent calculations used for the mark geoms</p></li>
+<li><p>Fixed a typo bug in the vctrs implementations</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-4-0">
+<h1>ggforce 0.4.0<a class="headerlink" href="#ggforce-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Moved to vctrs internally</p></li>
+<li><p>Updated error messaging to use cli</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_diagonal()</span></code>, <code class="docutils literal notranslate"><span class="pre">geom_diagonal_wide()</span></code>, <code class="docutils literal notranslate"><span class="pre">geom_parallel_sets()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">geom_sina()</span></code> are now bidirectional in the style of ggplot2</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_mark_*()</span></code> now works correctly in the presence of <code class="docutils literal notranslate"><span class="pre">NA</span></code> values in <code class="docutils literal notranslate"><span class="pre">x</span></code> and
+<code class="docutils literal notranslate"><span class="pre">y</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">zoom</span></code>, <code class="docutils literal notranslate"><span class="pre">zoom.x</span></code>, and <code class="docutils literal notranslate"><span class="pre">zoom.y</span></code> elements now uses proper registration of
+theme elements, inheriting from <code class="docutils literal notranslate"><span class="pre">strip.background</span></code>.</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">geom_sina()</span></code> when groups contained less than 3 points</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">geom_parallel_sets()</span></code> that erroneously removed grouping
+information in some configurations</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">jitter_y</span></code> argument to <code class="docutils literal notranslate"><span class="pre">geom_sina()</span></code> to control whether y jittering is
+performed on integerish y values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom()</span></code> now works with patchwork</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">geom_mark_ellipse()</span></code> that caused wrong orientation of ellipses
+with groups of two.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gather_set_data()</span></code> now supports tidyselect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">position_jitternormal()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">seed</span></code> argument in parallel to
+<code class="docutils literal notranslate"><span class="pre">ggplot2::position_jitter()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_sina()</span></code> now works when the group only have a single unique y value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom()</span></code> now works correctly with transformed scales</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_wrap_paginate()</span></code> now works correctly with <code class="docutils literal notranslate"><span class="pre">dir</span> <span class="pre">=</span> <span class="pre">'v'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_matrix()</span></code> now supports a labeller</p></li>
+<li><p>fix a bug in <code class="docutils literal notranslate"><span class="pre">geom_parallel_sets_axes()</span></code> that prevented coloring of axis fill</p></li>
+<li><p>fix a bug in <code class="docutils literal notranslate"><span class="pre">stat_circle()</span></code> if the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> aesthetics were inherited from
+the global mapping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom()</span></code> now works even when limits are set by the scales</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-3-4">
+<h1>ggforce 0.3.4<a class="headerlink" href="#ggforce-0-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changed documentation to comply with new units package</p></li>
+<li><p>Fixed unintentional re-ordering of shapes (#224)</p></li>
+<li><p>Deprecate <code class="docutils literal notranslate"><span class="pre">scale_[x|y]_unit</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">units::scale_[x|y]_units</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-3-2">
+<h1>ggforce 0.3.2<a class="headerlink" href="#ggforce-0-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changes to comply with latest ggplot2 release</p></li>
+<li><p>Make sure ggforce pass test even if concaveman is not available</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-3-1">
+<h1>ggforce 0.3.1<a class="headerlink" href="#ggforce-0-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Better fix for gganimate compatibility (#157)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-3-0">
+<h1>ggforce 0.3.0<a class="headerlink" href="#ggforce-0-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">facet_matrix()</span></code> in order to facet different data columns into different
+rows and columns in a grid, in order to make e.g. scatterplot matrices and
+pairs plot</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">geom_autopoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">position_auto()</span></code> to jitter points based on the
+type of positional scales in the panel</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">geom_autohistogram()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_autodensity()</span></code> for facilitating
+distribution plots along the diagonal in a <code class="docutils literal notranslate"><span class="pre">facet_matrix()</span></code> plot.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">facet_row()</span></code> and <code class="docutils literal notranslate"><span class="pre">facet_col</span></code> to have one-dimensional <code class="docutils literal notranslate"><span class="pre">facet_wrap()</span></code>
+with possibility of variable sizing.</p></li>
+<li><p>Stats should now always keep the old group variable (potentially with
+something added), making them work with gganimate</p></li>
+<li><p>Removed the <em>Visual Guide</em> vignette to reduce compilation time. See the
+website for an overview of all functionality with compiled examples
+(<a class="reference external" href="https://ggforce.data-imaginist.com">https://ggforce.data-imaginist.com</a>)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-2-2">
+<h1>ggforce 0.2.2<a class="headerlink" href="#ggforce-0-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a regression in <code class="docutils literal notranslate"><span class="pre">geom_sina()</span></code> where the computation would fail with a
+warning due to <code class="docutils literal notranslate"><span class="pre">tolower()</span></code> being masked (#134, #135).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-2-1">
+<h1>ggforce 0.2.1<a class="headerlink" href="#ggforce-0-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug in the calculation of open and closed b-splines, where the
+interval would exceed the defined region and result in an out-of-bounds memory
+error</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-2-0">
+<h1>ggforce 0.2.0<a class="headerlink" href="#ggforce-0-2-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">linear_trans</span></code> for composing linear transformation using <code class="docutils literal notranslate"><span class="pre">rotate</span></code>, <code class="docutils literal notranslate"><span class="pre">stretch</span></code>,
+<code class="docutils literal notranslate"><span class="pre">shear</span></code>, <code class="docutils literal notranslate"><span class="pre">reflect</span></code>, and <code class="docutils literal notranslate"><span class="pre">translate</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_stereo</span></code> added for creating stereographic projections</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_voronoi_[tile|segment]</span></code>, <code class="docutils literal notranslate"><span class="pre">geom_delaunay_[tile|segment|segment2]</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">stat_delvor_summary</span></code> has been added for tesselation and triangulation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_spiro</span></code> has been added for drawing spirographs</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_ellipse</span></code> for drawing regular and superellipses</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_regon</span></code> for drawing regular polygons</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_diagonal</span></code>, <code class="docutils literal notranslate"><span class="pre">geom_diagonal_wide</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_parallel_sets</span></code> for drawing
+parallel sets diagrams and other visualizations based on diagonals.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_shape</span></code> for drawing polygons with rounded corners and
+expanded/contracted sides. <code class="docutils literal notranslate"><span class="pre">geom_shape</span></code> replaces all <code class="docutils literal notranslate"><span class="pre">geom_polygon</span></code>
+internally.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">geom_bspline_closed</span></code> to draw polygons defined as b-splines</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_mark_[rect|circle|ellipse|hull]</span></code> to encircle a group of points and
+optionally add textual annotation to it</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">position_jitternormal</span></code> to jitter points based on a normal distribution
+(&#64;andrewheiss)</p></li>
+</ul>
+</section>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_[wrap|grid]_paginate</span></code> will now try to make panels on the last page the
+same size as on full pages (#7)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> now gains <code class="docutils literal notranslate"><span class="pre">xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim</span></code> arguments to control zoom range
+directly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> now gains <code class="docutils literal notranslate"><span class="pre">zoom.data</span></code> to control which data gets plotted in which
+panel</p></li>
+<li><p>Slimmed down the dependencies for the package. <code class="docutils literal notranslate"><span class="pre">plyr</span></code>, <code class="docutils literal notranslate"><span class="pre">lazyeval</span></code> and <code class="docutils literal notranslate"><span class="pre">dplyr</span></code>
+has all been removed</p></li>
+<li><p>Rewrite <code class="docutils literal notranslate"><span class="pre">geom_sina</span></code> to match <code class="docutils literal notranslate"><span class="pre">geom_violin</span></code> and allow for dodging</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">open</span></code>/<code class="docutils literal notranslate"><span class="pre">clamped</span></code> option to `geom_bspline</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix interpolation of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> values in <code class="docutils literal notranslate"><span class="pre">geom_link2</span></code> (&#64;thomasp85 and
+&#64;lepennec)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat_link</span></code> no longer replicates the group column</p></li>
+<li><p>arcs and links no longer rename aesthetics when only one aesthetic is present
+(<code class="docutils literal notranslate"><span class="pre">drop</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat_bezier0</span></code> and <code class="docutils literal notranslate"><span class="pre">stat_bezier2</span></code> now return data in the expected format</p></li>
+<li><p>Fix bug with <code class="docutils literal notranslate"><span class="pre">n_pages</span></code> due to internal changes in ggplot2</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> in combination with secondary y-axis where the space for
+the y-axis would become huge</p></li>
+<li><p>Correctly detect and error out when scales and coords does not work with
+<code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code></p></li>
+<li><p>The *2 versions of line geoms no longer adds an <code class="docutils literal notranslate"><span class="pre">NA</span></code> to guides.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-1-1">
+<h1>ggforce 0.1.1<a class="headerlink" href="#ggforce-0-1-1" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>New features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Zoom indicator styling can now be specified separetely for x and y zoom using
+<code class="docutils literal notranslate"><span class="pre">zoom.x</span></code> and <code class="docutils literal notranslate"><span class="pre">zoom.y</span></code> in theme (inherits from <code class="docutils literal notranslate"><span class="pre">zoom</span></code> that inherits from
+<code class="docutils literal notranslate"><span class="pre">strip.background</span></code>)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">facet_wrap_paginate</span></code> that threw errors when using it with free
+scales (#19)</p></li>
+<li><p>Fixes bug in <code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> where y-axis would be incorrectly displayed when
+zooming on both axes without splitting the view (#23)</p></li>
+<li><p>Fixes bug in <code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> where scale expansion where not taken into account
+when drawing the indicator area (#22)</p></li>
+<li><p>Fixes a bug in <code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> that would throw errors with layers not containing
+the column that is zoomed by (#21)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-1-0">
+<h1>ggforce 0.1.0<a class="headerlink" href="#ggforce-0-1-0" title="Link to this heading">#</a></h1>
+<section id="major-changes">
+<h2>Major changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_edge_bundle</span></code> has been renamed <code class="docutils literal notranslate"><span class="pre">geom_bspline</span></code> and lost the tension
+argument. True edge bundle functionality has been moved to <code class="docutils literal notranslate"><span class="pre">ggraph</span></code></p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>New features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_bezier</span></code> for drawing quadratic and cubic beziers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_link</span></code> for augmented segment/path drawing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_sina</span></code> as an alternative to <code class="docutils literal notranslate"><span class="pre">geom_violin</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_beeswarm</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale_[x|y]_unit</span></code> for using units vectors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_[wrap|grid]_paginate</span></code> to split facetting into multiple pages</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_zoom</span></code> for contextual zooming</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggforce-0-0-1">
+<h1>ggforce 0.0.1<a class="headerlink" href="#ggforce-0-0-1" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>Major changes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>First commit</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>New features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_arc</span></code> / <code class="docutils literal notranslate"><span class="pre">stat_arc</span></code> for drawing circle segments</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_edge_bundle</span></code> / <code class="docutils literal notranslate"><span class="pre">stat_edge_bundle</span></code> for drawing edge bundles based on
+control points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_arc_bar</span></code> /<code class="docutils literal notranslate"><span class="pre">stat_arc_bar</span></code> / <code class="docutils literal notranslate"><span class="pre">stat_pie</span></code> for drawing arcs and wedges with
+fill</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_circle</span></code> / <code class="docutils literal notranslate"><span class="pre">stat_circle</span></code> for drawing circles with radius based on
+coordinate system scale</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">power_trans</span></code> for creating power transformations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">radial_trans</span></code> for creating transformation between radial and cartesian
+coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trans_reverser</span></code> for reversing a trans object</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\ggforce"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggforce 0.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-4-1">ggforce 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-4-0">ggforce 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-4">ggforce 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-2">ggforce 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-1">ggforce 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-3-0">ggforce 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-2">ggforce 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-1">ggforce 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-2-0">ggforce 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-1-1">ggforce 0.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-1-0">ggforce 0.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggforce-0-0-1">ggforce 0.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

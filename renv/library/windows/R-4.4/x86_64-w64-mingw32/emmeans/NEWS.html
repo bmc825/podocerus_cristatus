@@ -1,0 +1,1948 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>emmeans 1.10-7 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/emmeans/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/emmeans/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>emmeans 1.10-7</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">emmeans 1.10-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-6">emmeans 1.10.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-5">emmeans 1.10.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-4">emmeans 1.10.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-3">emmeans 1.10.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-2">emmeans 1.10.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-1">emmeans 1.10.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-0">emmeans 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-9-0">emmeans 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-9">emmeans 1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-8">emmeans 1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-7">emmeans 1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-6">emmeans 1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-5">emmeans 1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-4">emmeans 1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-3">emmeans 1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-2">emmeans 1.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-1">emmeans 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-0">emmeans 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-5">emmeans 1.7.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-4">emmeans 1.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-3">emmeans 1.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-2">emmeans 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-1">emmeans 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-0">emmeans 1.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notable-changes">Notable changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-tweaks">Bug fixes and tweaks</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-3">emmeans 1.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-2">emmeans 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-1">emmeans 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-0">emmeans 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-5">emmeans 1.5.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-4">emmeans 1.5.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-3">emmeans 1.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-2">emmeans 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-1">emmeans 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-0">emmeans 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-8">emmeans 1.4.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-7">emmeans 1.4.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-6">emmeans 1.4.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-5">emmeans 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-4">emmeans 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-3-01">emmeans 1.4.3.01</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-3">emmeans 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-2">emmeans 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-1">emmeans 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4">emmeans 1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-5-1">emmeans 1.3.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-5">emmeans 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-4">emmeans 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-3">emmeans 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-2">emmeans 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-1">emmeans 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-0">emmeans 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-4">emmeans 1.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-3">emmeans 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-2">emmeans 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-1">emmeans 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2">emmeans 1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1-3">emmeans 1.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1-2">emmeans 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1">emmeans 1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-0">emmeans 1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-0-9-1">emmeans 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-0-9">emmeans 0.9</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-emmeans-is-a-continuation-of-the-lsmeans-package">NOTE: <strong>emmeans</strong> is a continuation of the <strong>lsmeans</strong> package.</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="emmeans-1-10-7">
+<h1>emmeans 1.10-7<a class="headerlink" href="#emmeans-1-10-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Spelling changes in several vignettes</p></li>
+<li><p>We have completely revamped the design of reference grids involving
+counterfactuals. Now, if we specify counterfactuals <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>, the
+reference grid comprises combinations of <code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">actual_A</span></code>, and <code class="docutils literal notranslate"><span class="pre">actual_B</span></code>
+the latter two used to track the original settings of <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> in the dataset.
+We always average over combinations of these factors. The previous code was
+a memory hog, and we have made it much more efficient for large datasets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> has also been revised to do special handling of counterfactual
+reference grids. Whenever we average over a counterfactual <code class="docutils literal notranslate"><span class="pre">B</span></code>, we only
+use the cases where <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">==</span> <span class="pre">actual_B</span></code>, thus obtaining the same results as
+would be obtained when <code class="docutils literal notranslate"><span class="pre">B</span></code> is not regarded as a counterfactual.</p></li>
+<li><p>Tweaks to <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> to create <code class="docutils literal notranslate"><span class="pre">&#64;post.beta</span></code> slot correctly when there are
+non-estimable cases.</p></li>
+<li><p>Bug fix for scoping in <code class="docutils literal notranslate"><span class="pre">subset.emmGrid()</span></code> (#518)</p></li>
+<li><p>Changed <code class="docutils literal notranslate"><span class="pre">print.emmGrid()</span></code> so that it calls <code class="docutils literal notranslate"><span class="pre">show()</span></code> unless <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.
+This change was made because I noticed that <strong>pkgdown</strong> uses <code class="docutils literal notranslate"><span class="pre">print()</span></code> rather
+than <code class="docutils literal notranslate"><span class="pre">show()</span></code> to display example results.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-6">
+<h1>emmeans 1.10.6<a class="headerlink" href="#emmeans-1-10-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">add_submodels()</span></code> function that allows for comparison od estimates
+from different submodels (when supported)</p></li>
+<li><p>Additional notes for <code class="docutils literal notranslate"><span class="pre">eff_size()</span></code>. Also, a questionable example was deleted.
+It is so easy to misuse this function, and I don’t even buy into the idea
+of standardized effect sizes except in the simplest of cases. So I am
+considering deprecating <code class="docutils literal notranslate"><span class="pre">eff_size()</span></code> and letting some other package
+be to blame for unsuitable or misleading results.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-5">
+<h1>emmeans 1.10.5<a class="headerlink" href="#emmeans-1-10-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix for long-standing <code class="docutils literal notranslate"><span class="pre">weights</span></code> bug in <code class="docutils literal notranslate"><span class="pre">lme()</span></code> (#356)</p></li>
+<li><p>Fix for inconsistent contrasts in case of missing levels (#508, #509)</p></li>
+<li><p>Fix for using nuisance variables with proportional weights (#510)</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">with_emm_options()</span></code> to run code with options temporarily set</p></li>
+<li><p>Tweak to optimal-digits output that shows <code class="docutils literal notranslate"><span class="pre">SE</span></code> to 3 significant digits</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-4">
+<h1>emmeans 1.10.4<a class="headerlink" href="#emmeans-1-10-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Refinements in tracking static offsets</p></li>
+<li><p>Made d.f. consistent for <code class="docutils literal notranslate"><span class="pre">geeglm</span></code> and <code class="docutils literal notranslate"><span class="pre">glmgee</span></code> (#496)</p></li>
+<li><p>Fixed suggestion for installing from GitHub (#497)</p></li>
+<li><p>Change that allows factors to have <code class="docutils literal notranslate"><span class="pre">NA</span></code> levels (#500). This
+was previously not allowed, and we added an <code class="docutils literal notranslate"><span class="pre">&quot;allow.na.levs&quot;</span></code> option
+(defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>) just in case we broke anything that used to work.</p></li>
+<li><p>Better default contrasts in <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> (#501)</p></li>
+<li><p>Bug fix for nuisance factors when we have a multivariate response (#503)</p></li>
+<li><p>Improved auto-detection of response transformation (#504)</p></li>
+<li><p>Bug fix for detecting cases where we can’t use <code class="docutils literal notranslate"><span class="pre">nuisance</span></code> (#503)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">mvregrid()</span></code> function for multivariate response transformations
+such as a compositional response.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-3">
+<h1>emmeans 1.10.3<a class="headerlink" href="#emmeans-1-10-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">mice::mira</span></code> support to use Barnard-Rubin adjusted d.f. (#494)</p></li>
+<li><p>Fix to MuMIn support so a response transformation is auto-detected</p></li>
+<li><p>Bug fix in <code class="docutils literal notranslate"><span class="pre">gls</span></code> support code (#495)</p></li>
+<li><p>I am trying to be clearer that some model-support
+modes cause implied re-gridding, making the link function no longer operable.
+A new subsection discussing this was added to the “Transformations” vignette,
+and I also added indications of this to the “models” vignette.</p></li>
+<li><p>Don’t think too hard about which recent updates (since 1.8.9) are more
+major than others. I’ll try to be more rational about this going forward.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-2">
+<h1>emmeans 1.10.2<a class="headerlink" href="#emmeans-1-10-2" title="Link to this heading">#</a></h1>
+<p>This update is focused mostly on trying to clear up confusion with some users
+on the distinction between <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects and their summaries, since they
+display identically; and on encouraging users not to bypass important
+annotations.</p>
+<ul class="simple">
+<li><p>Added a startup message and <code class="docutils literal notranslate"><span class="pre">help(untidy)</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">rbind</span></code> method for <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> objects (#480).
+Note that <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> objects already have estimates, P-values, etc.
+computed, so <code class="docutils literal notranslate"><span class="pre">rbind</span></code>ing them preserves those results. On the other hand,
+<code class="docutils literal notranslate"><span class="pre">rbind</span></code>ing <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> or <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> objects produce new <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects
+which have <em>not</em> yet been summarized and any <code class="docutils literal notranslate"><span class="pre">adjust</span></code> methods are applied
+to the whole result.</p></li>
+<li><p>Created <a class="reference external" href="https://rvlenth.github.io/emmeans/"><strong>pkgdown</strong> site</a></p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-1">
+<h1>emmeans 1.10.1<a class="headerlink" href="#emmeans-1-10-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>With <code class="docutils literal notranslate"><span class="pre">gls</span></code> or <code class="docutils literal notranslate"><span class="pre">lme</span></code> models, <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">&quot;satterthwaite&quot;</span></code>
+and <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span>&#160; <span class="pre">&quot;appx-satterthwaite&quot;</span></code> failed when model was fitted with no
+explicit <code class="docutils literal notranslate"><span class="pre">data</span></code> argument (#465)</p></li>
+<li><p>We decided to export the <code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions, just to make it easier to
+see and use them</p></li>
+<li><p>Added a new contrast function <code class="docutils literal notranslate"><span class="pre">wtcon.emmc(levs,</span> <span class="pre">wts,</span> <span class="pre">cmtype,</span> <span class="pre">...)</span></code> which
+generates contrasts via <code class="docutils literal notranslate"><span class="pre">multcomp::contrMat(wts,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">cmtype,</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contrast()</span></code> gains a new argument <code class="docutils literal notranslate"><span class="pre">wts</span></code> which can be passed to some
+<code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions including <code class="docutils literal notranslate"><span class="pre">eff.emmc</span></code>, <code class="docutils literal notranslate"><span class="pre">del.eff.emmc</span></code>, and <code class="docutils literal notranslate"><span class="pre">wtcon.emmc</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">wts</span></code> is left missing, we pass equal weights of <code class="docutils literal notranslate"><span class="pre">.</span> <span class="pre">If</span> <span class="pre">we</span> <span class="pre">specify</span> </code>wts = NA<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">we</span> <span class="pre">retrieve</span> <span class="pre">weights</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">object</span> <span class="pre">(potentially</span> <span class="pre">different</span> <span class="pre">in</span> <span class="pre">each</span> </code>by<code class="docutils literal notranslate"><span class="pre">group).</span> <span class="pre">Otherwise,</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">fixed</span></code>wts` are used in each group.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">weights()</span></code> method for <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects</p></li>
+<li><p>Modification to <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> to play along if <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> changes the
+<code class="docutils literal notranslate"><span class="pre">by</span></code> variable via <code class="docutils literal notranslate"><span class="pre">options</span></code> (#472)</p></li>
+<li><p>After some wiggling around, we now allow <code class="docutils literal notranslate"><span class="pre">strata()</span></code> factors to be included in
+the reference grid for <strong>survival</strong> models. It is up to the user to decide
+what is sensible. (#429, #473)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-10-0">
+<h1>emmeans 1.10.0<a class="headerlink" href="#emmeans-1-10-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Restored <code class="docutils literal notranslate"><span class="pre">tau</span></code> argument (now optional) for rq models (#458)</p></li>
+<li><p>Fixed issue where a multivariate factor having numeric levels may
+mismatch a level in <code class="docutils literal notranslate"><span class="pre">at</span></code> even when apparently valid (#458)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">cross.adjust</span></code> to legal arguments that can be passed via <code class="docutils literal notranslate"><span class="pre">misc</span></code> slot</p></li>
+<li><p>Robustified code for <code class="docutils literal notranslate"><span class="pre">cross.adjust</span></code></p></li>
+<li><p>Fixed masking of <code class="docutils literal notranslate"><span class="pre">vcov.</span></code> in <code class="docutils literal notranslate"><span class="pre">glmgee</span></code> support (#460)</p></li>
+<li><p>Fixed an error in <code class="docutils literal notranslate"><span class="pre">xtable()</span></code> method for <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> objects</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">inner</span></code> argument to <code class="docutils literal notranslate"><span class="pre">make.tran()</span></code> to allow for compound transform;
+e.g., <code class="docutils literal notranslate"><span class="pre">make.tran(&quot;inverse&quot;,</span> <span class="pre">inner</span> <span class="pre">=</span> <span class="pre">&quot;sqrt&quot;)</span></code> is reciprocal sqrt (#462)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-9-0">
+<h1>emmeans 1.9.0<a class="headerlink" href="#emmeans-1-9-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Warning message about prior weights was sometimes unnecessary.
+We now suppress it when all the prior weights are equal.</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">MuMIn</span></code> support with <code class="docutils literal notranslate"><span class="pre">subset</span></code> argument (#455)</p></li>
+<li><p>Repair to coding error for nested models (#457)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">glmtoolbox::glmgee</span></code> support (#454)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> modified such that we often don’t need to specify <code class="docutils literal notranslate"><span class="pre">data</span></code> when
+<code class="docutils literal notranslate"><span class="pre">object</span></code> is specified.</p></li>
+<li><p>Support for for <code class="docutils literal notranslate"><span class="pre">rq</span></code>, <code class="docutils literal notranslate"><span class="pre">rqs</span></code> now incorporates all <code class="docutils literal notranslate"><span class="pre">tau</span></code> values in the model
+as a pseudofactor (#458). The <code class="docutils literal notranslate"><span class="pre">tau</span></code> argument itself is deprecated and ignored
+if specified.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-9">
+<h1>emmeans 1.8.9<a class="headerlink" href="#emmeans-1-8-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added functions <code class="docutils literal notranslate"><span class="pre">make.meanint()</span></code> and <code class="docutils literal notranslate"><span class="pre">make.symmint()</span></code> that return functions
+that compute symmetric intervals. The old <code class="docutils literal notranslate"><span class="pre">meanint()</span></code> and <code class="docutils literal notranslate"><span class="pre">symmint()</span></code> functions
+that return symmetric intervals of width <code class="docutils literal notranslate"><span class="pre">2</span></code> are retained for back-compatibility</p></li>
+<li><p>Small repairs to <code class="docutils literal notranslate"><span class="pre">multinom</span></code> support so it works with a model where the
+response is a matrix of counts (#439)</p></li>
+<li><p>Enhancements/fixes for <code class="docutils literal notranslate"><span class="pre">MuMIn</span></code> support (#442)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> has replaced its <code class="docutils literal notranslate"><span class="pre">ordinal.dim</span></code> argument with <code class="docutils literal notranslate"><span class="pre">ordinal</span></code>, a list with
+elements <code class="docutils literal notranslate"><span class="pre">dim</span></code> and <code class="docutils literal notranslate"><span class="pre">mode</span></code> – which now fully supports all the modes available
+for ordinal models (#444). (<code class="docutils literal notranslate"><span class="pre">ordinal.dim</span></code> still works for backward compatibility.)</p></li>
+<li><p>Fix to bookkeeping bug in <code class="docutils literal notranslate"><span class="pre">emtrends</span></code> (#448)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">averaging</span></code> support with certain predictor function calls (#449)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-8">
+<h1>emmeans 1.8.8<a class="headerlink" href="#emmeans-1-8-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug correction in <code class="docutils literal notranslate"><span class="pre">contrast</span></code> when <code class="docutils literal notranslate"><span class="pre">tran</span></code> is a <code class="docutils literal notranslate"><span class="pre">list</span></code> (#428)</p></li>
+<li><p>Bug correction to suppress a nuisance warning when the number of
+prior weights is 0 or 1 (which indeed doesn’t match the number of rows of data, but
+also isn’t really an issue) (Commit d921152 for <strong>easystats</strong>)</p></li>
+<li><p>Bug correction for <code class="docutils literal notranslate"><span class="pre">strata()</span></code> terms in <strong>survival</strong> models (#429)</p></li>
+<li><p>Added a risk-ratio and a probit example to the Transformations vignette.</p></li>
+<li><p>Multivariate levels were mishandled when specified  out of order in <code class="docutils literal notranslate"><span class="pre">at</span></code> (#430)</p></li>
+<li><p>Fix to flow error in <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> where we didn’t always get <code class="docutils literal notranslate"><span class="pre">V</span></code> right</p></li>
+<li><p>Change to adjustment methods when there are non-estimable cases.
+Now we always adapt the family size to include only the estimable ones. This may
+change some adjusted P values or confidence limits obtained in past versions,
+when the model is rank-deficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vcov.emmGrid()</span></code> now only returns elements where <code class="docutils literal notranslate"><span class="pre">object&#64;misc$display</span> <span class="pre">==</span> <span class="pre">TRUE</span></code>.
+We also label the dimensions and provide a <code class="docutils literal notranslate"><span class="pre">sep</span></code> argument for creating labels.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-7">
+<h1>emmeans 1.8.7<a class="headerlink" href="#emmeans-1-8-7" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>Correction to a bug introduced in version 1.8.4, where we tried to provide for
+an <code class="docutils literal notranslate"><span class="pre">offset</span></code> <em>argument</em> in the same way as an <code class="docutils literal notranslate"><span class="pre">offset()</span></code> <em>term</em> in the model formula.
+Unfortunately, that change also caused
+wrong estimates to be computed when the offset involves a nonlinear function such as
+<code class="docutils literal notranslate"><span class="pre">log()</span></code>, and made for whopping inconsistencies in the narrative about offsets
+in the <code class="docutils literal notranslate"><span class="pre">&quot;sophisticated&quot;</span></code> vignette; I apologize for these embarrassing errors.</p>
+<p>We now provide for both kinds of offset specifications, but in different ways
+as explained in a new section in the <code class="docutils literal notranslate"><span class="pre">&quot;xplanations&quot;</span></code> vignette.
+The “subtle difference” mentioned
+in the NEWS for 1.8.4 no longer applies.</p>
+</li>
+<li><p>Change in <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code>. If <code class="docutils literal notranslate"><span class="pre">object</span></code> is specified, default for <code class="docutils literal notranslate"><span class="pre">df</span></code> is <code class="docutils literal notranslate"><span class="pre">df.residual(object)</span></code>
+rather than <code class="docutils literal notranslate"><span class="pre">object$df.residual</span></code>, since <code class="docutils literal notranslate"><span class="pre">df.residual()</span></code> is a standard method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.mcmc()</span></code> now uses <code class="docutils literal notranslate"><span class="pre">get_emm_option(&quot;sep&quot;)</span></code> in labeling factor combinations (#425).</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-6">
+<h1>emmeans 1.8.6<a class="headerlink" href="#emmeans-1-8-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Major fix to <code class="docutils literal notranslate"><span class="pre">emm_basis.averaging</span></code> to take care of quirks in these
+models (#402, #409)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">decreasing</span></code> argument to <code class="docutils literal notranslate"><span class="pre">cld.emmGrid()</span></code> for compatibility with
+<code class="docutils literal notranslate"><span class="pre">multcomp::cld.glht()</span></code> and others.</p></li>
+<li><p>Fix to bug in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> when <code class="docutils literal notranslate"><span class="pre">data</span></code> is specified (<strong>semTools</strong> issue 119)
+… and related tune-up to <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> to avoid issues with repeat calls (#413)</p></li>
+<li><p>Tweak to <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> methods to make them more user-friendly (#417)</p></li>
+<li><p>We added a <code class="docutils literal notranslate"><span class="pre">pwts</span></code> argument to <code class="docutils literal notranslate"><span class="pre">recover_data.call()</span></code>, needed because
+prior weights did not always come through. This provides a reliable way
+of passing prior weights in a <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code> method</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-5">
+<h1>emmeans 1.8.5<a class="headerlink" href="#emmeans-1-8-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>passing scale info to <code class="docutils literal notranslate"><span class="pre">emmip_ggplot()</span></code> (#397)</p></li>
+<li><p>Changes to <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> behavior. It has been made more forceful in
+preserving annotations (i.e., <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> behavior) so that users don’t
+blind themselves to potentially important information. Also, some users
+seem to force display of the data frame in order to see more digits; so we
+now are taking a compromise approach: showing more digits but still as a
+<code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> object with annotations also displayed.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">Chisq</span></code> value to results of <code class="docutils literal notranslate"><span class="pre">test(...,</span> <span class="pre">joint</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> and <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code>
+when <code class="docutils literal notranslate"><span class="pre">df2</span></code> is infinite (per request in #400)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">basics</span></code> vignette has undergone a major revision that I hope helps
+more in getting users oriented. It starts by discussing the fact that
+EMMs’ underpinnings are more in experiments than observational data, and
+emphasizes more the process of first getting a good model.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">confidence-intervals</span></code> vignette has been updated to reflect the same
+example with <code class="docutils literal notranslate"><span class="pre">pigs</span></code> as is used in <code class="docutils literal notranslate"><span class="pre">basics</span></code></p></li>
+<li><p>Following Issue #403 on GitHub, we are taking a much stricter approach with anything involving the <code class="docutils literal notranslate"><span class="pre">sigma</span></code>
+value in the <code class="docutils literal notranslate"><span class="pre">&#64;misc</span></code> slot. For any models that are not in the <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code>
+family, <code class="docutils literal notranslate"><span class="pre">sigma</span></code> is initialized to <code class="docutils literal notranslate"><span class="pre">NA</span></code> and this has some implications:</p>
+<ul>
+<li><p><em>Bias adjustment</em>: Bias adjustment is disabled by default for all non-Gaussian
+family models, and a warning is issued. You can enable bias adjustment by
+providing a valid <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value; however, for generalized linear models
+the value of <code class="docutils literal notranslate"><span class="pre">sigma(model)</span></code> *is often inappropriate for bias adjustment,
+and in fact  anyway. <em>you should not do that</em>, and for mixed models,
+you should calculate <code class="docutils literal notranslate"><span class="pre">sigma</span></code> based on the random effects. See the vignette
+on transformations.</p></li>
+<li><p><em>Prediction intervals</em>: With non-Gaussian models, <code class="docutils literal notranslate"><span class="pre">predict(...,</span> <span class="pre">interval</span> <span class="pre">=</span> <span class="pre">&quot;prediction&quot;)</span></code>
+will refuse to work, with no option to override. Same with specifying <code class="docutils literal notranslate"><span class="pre">PIs</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>
+in <code class="docutils literal notranslate"><span class="pre">plot()</span></code> or <code class="docutils literal notranslate"><span class="pre">emmip()</span></code>. The calculations done for prediction intervals
+are only valid for Gaussian models. You may do predictions for non-Gaussian models
+via simulating a posterior predictive distribution with Bayesian approach;
+see an illustration in the “sophisticated” vignette.</p></li>
+<li><p>The above changes will help reduce the incidence of users using the package incorrectly
+with GLMs, GLMMs, and GEEs. But there’s still the issue that Gaussian mixed models
+will often have a <em>wrong</em> default <code class="docutils literal notranslate"><span class="pre">sigma</span></code> value associated with them, resulting in
+incorrect PIs and incorrect bias adjustments.
+I have not figured out how I might help prevent that, but it probably will involve
+making tedious modifications to these models’ <code class="docutils literal notranslate"><span class="pre">emm_basis</span></code> methods. Maybe some future
+improvements to be made.</p></li>
+</ul>
+</li>
+<li><p>Bug fix for matching terms in <code class="docutils literal notranslate"><span class="pre">averaging</span></code> objects (#402)</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">mira</span></code> objects when <code class="docutils literal notranslate"><span class="pre">data</span></code> is required (#406)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-4">
+<h1>emmeans 1.8.4<a class="headerlink" href="#emmeans-1-8-4" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">scale()</span></code> response transformation when either <code class="docutils literal notranslate"><span class="pre">center</span></code> or <code class="docutils literal notranslate"><span class="pre">scale</span></code>
+is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. I also added support for <code class="docutils literal notranslate"><span class="pre">center()</span></code> and <code class="docutils literal notranslate"><span class="pre">standardize()</span></code> from
+the <strong>datawizard</strong> package as response transformations, though these are
+mapped to <code class="docutils literal notranslate"><span class="pre">scale()</span></code>.</p></li>
+<li><p>Citation correction (#391)</p></li>
+<li><p>Removed a message about contrasting transformed objects that even confuses me!
+(I added a topic in the FAQs vignette instead)</p></li>
+<li><p>Added new exported function <code class="docutils literal notranslate"><span class="pre">inverse</span></code> available as a response transformation</p></li>
+<li><p>I have quietly deprecated the previous <code class="docutils literal notranslate"><span class="pre">I_bet()</span></code> function, because it
+produced a message that was confusing to inexperienced users. Instead, we
+have tweaked some functions/methods so they seem to work the same way
+with an <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> object (using its first element) as an <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> object.</p></li>
+<li><p>We have removed the functions <code class="docutils literal notranslate"><span class="pre">convert_workspace()</span></code> and <code class="docutils literal notranslate"><span class="pre">convert_scripts()</span></code>
+that were intended to clean up existing code and objects for the ancient
+version of <strong>lsmeans</strong>. We also completely removed several old functions
+from the codebase. Previously, we just ignored them.</p></li>
+<li><p>More reliable dispatching of <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code> and <code class="docutils literal notranslate"><span class="pre">emm_basis()</span></code> methods (#392)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">permute_levels()</span></code> function to change the order of levels of a factor (#393)</p></li>
+<li><p><strong>This may alter results of existing code for models involving offsets:</strong>
+A user discovered an issue whereby offsets specified in an <code class="docutils literal notranslate"><span class="pre">offset()</span></code> model
+term are accounted for, but those specified in an <code class="docutils literal notranslate"><span class="pre">offset</span> <span class="pre">=</span> <span class="pre">...</span></code> argument
+are ignored. We have revised the <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code> and <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> code so
+that offsets specified either way (or even both) are treated the same way
+(which is to <em>include</em> them in predictions unless overridden by
+an <code class="docutils literal notranslate"><span class="pre">offset</span></code> argument in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> or <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code>).</p>
+<p>This change creates a subtle difference in cases where you want offsets to
+depend on other predictors: In a model with formula <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">~</span> <span class="pre">trt</span> <span class="pre">+</span> <span class="pre">offset(off)</span></code>,
+if you used to specify <code class="docutils literal notranslate"><span class="pre">cov.reduce</span> <span class="pre">=</span> <span class="pre">off</span> <span class="pre">~</span> <span class="pre">trt</span></code>, now you need <code class="docutils literal notranslate"><span class="pre">cov.reduce</span> <span class="pre">=</span> <span class="pre">.offset.</span> <span class="pre">~</span> <span class="pre">trt</span></code>. The latter will work the same with the model <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">~</span> <span class="pre">trt,</span> <span class="pre">offset</span> <span class="pre">=</span> <span class="pre">off</span></code>.</p>
+</li>
+<li><p>Recoded some portions of the support functions for <code class="docutils literal notranslate"><span class="pre">zeroinfl</span></code> and <code class="docutils literal notranslate"><span class="pre">hurdle</span></code>
+objects. We now use numerical differentiation to do the delta method,
+and this comes out a lot cleaner.</p></li>
+<li><p>Per the improved count-model support, we are now exporting and have documented
+two new functions <code class="docutils literal notranslate"><span class="pre">hurdle.support()</span></code> and <code class="docutils literal notranslate"><span class="pre">zi.support()</span></code> that may be useful in
+providing comparable support in other packages that offer zero-inflated
+models.</p></li>
+<li><p>Efficiency improvements: Several places in the code where we multiply
+a matrix by a diagonal matrix, we replace this by equivalent code using
+the <code class="docutils literal notranslate"><span class="pre">sweep()</span></code> function.</p></li>
+<li><p>Over time, too many users have latched on to the idea that
+<code class="docutils literal notranslate"><span class="pre">emmeans(model,</span> <span class="pre">pairwise</span> <span class="pre">~</span> <span class="pre">treatment(s))</span></code> as <em>the</em> recipe for using <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>.
+It works okay when you have just one factor, but
+when you have three factors, say, <code class="docutils literal notranslate"><span class="pre">pairwise</span> <span class="pre">~</span> <span class="pre">fac1*fac2*fac3</span></code> gives you
+every possible comparison among cell means; often, this creates an
+intractable amount of output (e.g., 378 comparisons in a 3x3x3 case) – most
+of which are diagonal comparisons.</p>
+<p>So now, if a user is in interactive mode, specifies contrasts in a <em>direct</em>
+<code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> call (i.e., <code class="docutils literal notranslate"><span class="pre">sys.parent()</span> <span class="pre">==</span> <span class="pre">0</span></code>), there is more than one
+<em>primary</em> factor (not including <code class="docutils literal notranslate"><span class="pre">by</span></code> factors), and there are more than 21
+contrasts as a result (e.g. more than 7 levels compared pairwise), we issue
+an advisory warning message: “You may have generated more contrasts than you
+really wanted…”. Because of the restrictions on when this warning is
+issued, it should not affect reverse-dependent package checks at all.</p>
+</li>
+</ul>
+</section>
+<section id="emmeans-1-8-3">
+<h1>emmeans 1.8.3<a class="headerlink" href="#emmeans-1-8-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix to logic error in <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> (#287, revisited)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">nbasis</span></code> calculation in ordinal models (#387)</p></li>
+<li><p>Bias-adjustment example added when we have random slopes</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">addl.vars</span></code> argument allows including variables (say, for
+random slopes) in the reference grid.</p></li>
+<li><p>Removed dependence on <strong>xtable</strong> package. The <code class="docutils literal notranslate"><span class="pre">xtable</span></code> methods are now
+dynamically registered. This reduces the number of package dependencies
+from 8 to 7 (as of this version).</p></li>
+<li><p>Added alt text to all pictures in vignettes (#389). This makes
+the materials more accessible per guidelines from the
+<a class="reference external" href="https://www.a11yproject.com/">A11Y project</a>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;atanh&quot;</span></code> to the options in <code class="docutils literal notranslate"><span class="pre">make.tran()</span></code> and to the
+“named” response transformations that are auto-detected</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make.tran()</span></code> replaces <code class="docutils literal notranslate"><span class="pre">param</span></code> argument with <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code>
+(<code class="docutils literal notranslate"><span class="pre">param</span></code> is still supported for backward compatibility)
+and documentation has been revised in hopes of making everything clearer</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-2">
+<h1>emmeans 1.8.2<a class="headerlink" href="#emmeans-1-8-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Extended <code class="docutils literal notranslate"><span class="pre">cld()</span></code> so it can show findings rather than non-findings,
+in two different ways: Using <code class="docutils literal notranslate"><span class="pre">delta</span></code>, groupings are based on actual
+tests of equivalence with threshold <code class="docutils literal notranslate"><span class="pre">delta</span></code>; or setting <code class="docutils literal notranslate"><span class="pre">signif.sets</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>,
+means that have the same letter are significantly <em>different</em>.
+We also added a vignette on “Re-engineering CLDs”.</p></li>
+<li><p>Bug fix for subtle error in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> (#133)</p></li>
+<li><p>Improved customization of <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> so that we can specify <code class="docutils literal notranslate"><span class="pre">color</span></code>,
+<code class="docutils literal notranslate"><span class="pre">linetype</span></code>, and <code class="docutils literal notranslate"><span class="pre">symbol</span></code> are all associated with groupings; and addition of
+an example to produce a black-and-white plot. Note: While the default appearance
+of plots is unchanged, plots from your existing code may be altered if
+you have used <code class="docutils literal notranslate"><span class="pre">linearg</span></code>, <code class="docutils literal notranslate"><span class="pre">dotarg</span></code>, etc.</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">vcov.</span></code> to be coercible to a matrix, or a function that yields
+a result coercible to a matrix (#383)</p></li>
+<li><p>Robustness improvement for <code class="docutils literal notranslate"><span class="pre">&quot;appx-satterthwaite&quot;</span></code> method (#384)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">counterfactuals</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code>, setting up a reference
+grid consisting of the stated factors and a constructed factor, <code class="docutils literal notranslate"><span class="pre">.obs.no.</span></code>.
+We then (by default) average this grid over the covariate distribution.
+This facilitates G-computation under the exchangeability assumption for
+counterfactuals.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-1">
+<h1>emmeans 1.8.1<a class="headerlink" href="#emmeans-1-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed new bug in <code class="docutils literal notranslate"><span class="pre">summary()</span></code> introduced in #359 and reported in #364</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">as.data.frame.emm_list()</span></code> so it preserves annotations like
+in <code class="docutils literal notranslate"><span class="pre">as.data.frame.emmGrid()</span></code></p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">mgcv::gam</span></code> support to accommodate fancier smoothers
+and more accurately detect random terms (#365, #366, #369)</p></li>
+<li><p>Fix in call to <code class="docutils literal notranslate"><span class="pre">summary()</span></code> from inside a function (#367)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">delta</span></code> argument to <code class="docutils literal notranslate"><span class="pre">hpd.summary()</span></code>, thus allowing a way to
+assess equivalence with Bayesian estimates (#370)</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">stanreg</span></code> estimability code when <code class="docutils literal notranslate"><span class="pre">subset</span></code> was used in model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emmip()</span></code> and <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> now do appropriate things if <code class="docutils literal notranslate"><span class="pre">point.est</span></code>
+or <code class="docutils literal notranslate"><span class="pre">frequentist</span></code> appear among the <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments, when we have Bayesian
+models (note also, <code class="docutils literal notranslate"><span class="pre">frequentist</span></code> was removed from the visible arguments for
+<code class="docutils literal notranslate"><span class="pre">plot.emmGrid</span></code>).</p></li>
+<li><p>With Bayesian models, <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> plotted intervals regardless of <code class="docutils literal notranslate"><span class="pre">CIs</span></code>;
+this has been corrected</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code> methods for <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">[.summary_emm()</span></code>, we changed the default to <code class="docutils literal notranslate"><span class="pre">as.df</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> so that
+annotations are still visible by default. This also preserves annotations
+in <code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code> for summaries</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">emm_example()</span></code> function used to tidy-up certain help-file examples
+when they are conditional on an external package</p></li>
+<li><p>Continued efforts to prevent users from hiding annotations they need to
+see. The functions/methods <code class="docutils literal notranslate"><span class="pre">summary()</span></code>, <code class="docutils literal notranslate"><span class="pre">confint()</span></code>, <code class="docutils literal notranslate"><span class="pre">test()</span></code>, and <code class="docutils literal notranslate"><span class="pre">as.data.frame()</span></code>
+all produce data frames with annotations intact and visible. Additional
+wrapping in <code class="docutils literal notranslate"><span class="pre">data.frame()</span></code>, <code class="docutils literal notranslate"><span class="pre">as.data.frame()</span></code>, etc. is completely unnecessary,
+and if you send questions or bug reports with such code, I will regard
+it as willful ignorance and will refuse to respond. See also the news for
+version 1.8.0.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-8-0">
+<h1>emmeans 1.8.0<a class="headerlink" href="#emmeans-1-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed minor bug in <code class="docutils literal notranslate"><span class="pre">lme</span></code> support (#356)</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">svyolr</span></code> objects from the <strong>survey</strong> package (#350)</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">mgcv::gam</span></code> support. Previously, random smoothers were
+included. Thanks for Maarten Jung for observing this and helping to
+identify them.</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">test(...,</span> <span class="pre">joint</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> and <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code>…</p>
+<ul>
+<li><p>Sometimes did incorrect computations with rank deficient models</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;est.fcns&quot;</span></code> attribute is actually estimable</p></li>
+<li><p>Results for <code class="docutils literal notranslate"><span class="pre">(confounded)</span></code> entry in <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> is now much
+better formulated and more robust.</p></li>
+<li><p>Added section related to this in <code class="docutils literal notranslate"><span class="pre">xplanations</span></code> vignette</p></li>
+<li><p>Version dependency for <code class="docutils literal notranslate"><span class="pre">estimability</span> <span class="pre">(&gt;=</span> <span class="pre">1.4.1)</span></code> due to
+a bug in version 1.4</p></li>
+</ul>
+</li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code>, we changed the default from <code class="docutils literal notranslate"><span class="pre">cov.reduce</span> <span class="pre">=</span> <span class="pre">range</span></code>
+to <code class="docutils literal notranslate"><span class="pre">cov.reduce</span> <span class="pre">=</span> <span class="pre">meanint</span></code>, where <code class="docutils literal notranslate"><span class="pre">meanint(x)</span></code> returns <code class="docutils literal notranslate"><span class="pre">mean(x)</span> <span class="pre">+</span> <span class="pre">c(-1,</span> <span class="pre">1)</span></code>.
+This centers the covariate values around their means, rather than their
+midranges, and is more in line with the default of
+<code class="docutils literal notranslate"><span class="pre">ref_grid(...,</span> <span class="pre">cov.reduce</span> <span class="pre">=</span> <span class="pre">mean)</span></code>. However, this change in default
+will change the results of <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> from past experiences with
+models having covariates that interact with factors or other covariates.
+We also added a section on covariates to the help for <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code>,
+and added another function <code class="docutils literal notranslate"><span class="pre">symmint()</span></code> for use in <code class="docutils literal notranslate"><span class="pre">cov.reduce</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print.summary_emm()</span></code> now puts <code class="docutils literal notranslate"><span class="pre">by</span></code> groups in correct order rather
+than in order of appearance.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> method has a new argument <code class="docutils literal notranslate"><span class="pre">destroy.annotations</span></code>, which
+defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> – in which case it returns a <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code> object
+(which inherits from <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>). I see that many users routinely wrap
+their results in <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> because they want to access displayed results
+in later steps. But in doing so they have missed potentially useful
+annotations. Users who have used <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> to see results with
+lots of digits should instead use <code class="docutils literal notranslate"><span class="pre">emm_options(opt.digits</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code>.</p></li>
+<li><p>New R version dependency <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">4.1.0</span></code>, allowing freedom to use the forward pipe
+operator <code class="docutils literal notranslate"><span class="pre">|&gt;</span></code> and other features.</p></li>
+<li><p><em>Housecleaning:</em> We removed completely the <code class="docutils literal notranslate"><span class="pre">trend</span></code> argument in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>,
+which has long since been deprecated. We removed wrappers that implement
+<code class="docutils literal notranslate"><span class="pre">pmmeans()</span></code>, <code class="docutils literal notranslate"><span class="pre">pmtrends()</span></code>, etc. – which I believe nobody ever used.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-5">
+<h1>emmeans 1.7.5<a class="headerlink" href="#emmeans-1-7-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Modified the defaults for several methods for class <code class="docutils literal notranslate"><span class="pre">emm_list</span></code>,
+and added more complete documentation. We also added hidden
+<code class="docutils literal notranslate"><span class="pre">emm_list</span></code> support to several functions like
+<code class="docutils literal notranslate"><span class="pre">add_grouping()</span></code>, <code class="docutils literal notranslate"><span class="pre">emmip()</span></code>, and <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> itself.
+These changes, we hope, help in situations where users create
+objects like <code class="docutils literal notranslate"><span class="pre">emm</span> <span class="pre">&lt;-</span> <span class="pre">emmeans(model,</span> <span class="pre">pairwise</span> <span class="pre">~</span> <span class="pre">treatment)</span></code> but are
+not experienced or attuned to the distinction between <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> and
+<code class="docutils literal notranslate"><span class="pre">emm_list</span></code> objects. The mechanism for this is to provide a
+default of \code{I_bet(1)} for which element of the <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> to
+use. A message is shown that specifies which element was selected
+and encourages the user to specify it explicitly in the future
+via either <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">]]</span></code> or a <code class="docutils literal notranslate"><span class="pre">which</span></code> argument; for example, <code class="docutils literal notranslate"><span class="pre">plot(emm[[1]])</span></code>
+or <code class="docutils literal notranslate"><span class="pre">plot(emm,</span> <span class="pre">which</span> <span class="pre">=</span> <span class="pre">1)</span></code>.</p></li>
+<li><p>The object returned by <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> and <code class="docutils literal notranslate"><span class="pre">test(...,</span> <span class="pre">joint</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> now has
+an <code class="docutils literal notranslate"><span class="pre">&quot;est.fcns&quot;</span></code> attribute, which is a list of the linear functions associated
+with the joint test(s).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> results now possibly include a <code class="docutils literal notranslate"><span class="pre">(confounded)</span></code> entry for
+effects not purely explained  by a model term.f</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">cross.adjust</span></code> argument in <code class="docutils literal notranslate"><span class="pre">summary.emmGrid()</span></code> allows for additional
+<em>P</em>-value adjustment across <code class="docutils literal notranslate"><span class="pre">by</span></code> groups.</p></li>
+<li><p>Apparently, <code class="docutils literal notranslate"><span class="pre">glm.nb</span></code> support no longer requires <code class="docutils literal notranslate"><span class="pre">data</span></code> (#355) so
+the documentation was updated.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-4">
+<h1>emmeans 1.7.4<a class="headerlink" href="#emmeans-1-7-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added an argument <code class="docutils literal notranslate"><span class="pre">enhance.levels</span></code> to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> that allows
+better labeling of the levels being contrasted. For example, now
+(by default) if a factor <code class="docutils literal notranslate"><span class="pre">treat</span></code> has numeric levels, then comparisons
+will have levels like <code class="docutils literal notranslate"><span class="pre">treat1</span> <span class="pre">-</span> <span class="pre">treat2</span></code> rather than <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">2</span></code>. We can
+request similar behavior with non-numeric levels, but only if we
+specify which factors.</p></li>
+<li><p>Two new functions <code class="docutils literal notranslate"><span class="pre">comb_facs()</span></code> and <code class="docutils literal notranslate"><span class="pre">split_fac()</span></code> for manipulating
+the factors in an <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>.</p></li>
+<li><p>Added an argument <code class="docutils literal notranslate"><span class="pre">wts</span></code> to <code class="docutils literal notranslate"><span class="pre">eff.emmc</span></code> and <code class="docutils literal notranslate"><span class="pre">del.eff.emmc</span></code>, which
+allows for weighted versions of effect-style contrasts (#346)</p></li>
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> more robust in accommodating various manifestations
+of rank-deficient models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> now always uses <code class="docutils literal notranslate"><span class="pre">df</span></code> if provided. Previously forced <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">Inf</span></code>
+when a link function was provided.</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">df.error</span></code> calculation with <code class="docutils literal notranslate"><span class="pre">gls</span></code> (#347)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-3">
+<h1>emmeans 1.7.3<a class="headerlink" href="#emmeans-1-7-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>argument change</strong> <code class="docutils literal notranslate"><span class="pre">ref_grid(...,</span> <span class="pre">transform</span> <span class="pre">=</span> <span class="pre">...)</span></code> now should
+be <code class="docutils literal notranslate"><span class="pre">ref_grid(...,</span> <span class="pre">regrid</span> <span class="pre">=</span> <span class="pre">...)</span></code> to avoid confusing <code class="docutils literal notranslate"><span class="pre">transform</span></code>
+with the <code class="docutils literal notranslate"><span class="pre">tran</span></code> option (which kind of does the opposite). If we match
+<code class="docutils literal notranslate"><span class="pre">transform</span></code> and don’t match <code class="docutils literal notranslate"><span class="pre">tran</span></code>, it will still work, but a
+message is displayed with advice to use <code class="docutils literal notranslate"><span class="pre">regrid</span></code> instead.</p></li>
+<li><p>Repairs to <code class="docutils literal notranslate"><span class="pre">averaging</span></code> support (#324).
+Previous versions were potentially dead wrong except for models
+created by <code class="docutils literal notranslate"><span class="pre">lm()</span></code> (and maybe some of those were bad too)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">which</span></code> argument to <code class="docutils literal notranslate"><span class="pre">emm()</span></code> to select which list elements
+to pass to <code class="docutils literal notranslate"><span class="pre">multcomp::glht()</span></code></p></li>
+<li><p>Support for rank-deficient <code class="docutils literal notranslate"><span class="pre">gls</span></code> models (note that <strong>nlme</strong>
+allows such models with <code class="docutils literal notranslate"><span class="pre">gls</span></code>, but not <code class="docutils literal notranslate"><span class="pre">lme</span></code>)</p></li>
+<li><p>Bug in <code class="docutils literal notranslate"><span class="pre">lqm</span></code> / <code class="docutils literal notranslate"><span class="pre">lqmm</span></code> support (#340)</p></li>
+<li><p>Other minor corrections (e.g. #334)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-2">
+<h1>emmeans 1.7.2<a class="headerlink" href="#emmeans-1-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">averaging</span></code> support (#319)</p></li>
+<li><p>Fixed bug in comparison arrows when <code class="docutils literal notranslate"><span class="pre">by</span> <span class="pre">=</span> <span class="pre">NULL</span></code> (#321)
+(this bug was a subtle byproduct of the name-checking in #305)
+Note this fixes visible errors in the vignettes for ver 1.7.1-1</p></li>
+<li><p>Patch for <code class="docutils literal notranslate"><span class="pre">gamlss</span></code> support (#323)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">withAutoprint()</span></code> to documentation examples with <code class="docutils literal notranslate"><span class="pre">require()</span></code>
+clauses, so we see interactive-style results</p></li>
+<li><p>Correction to a logic error in adjustment corrections in
+<code class="docutils literal notranslate"><span class="pre">summary.emmGrid</span></code> (#31)</p></li>
+<li><p>Revised <code class="docutils literal notranslate"><span class="pre">summary.emmGrid()</span></code> so that if we have both a response
+transformation and a link function, then both transformations
+are followed through with <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;</span></code>. Previously, I took
+the lazy way out and used
+<code class="docutils literal notranslate"><span class="pre">summary(regrid(object,</span> <span class="pre">transform</span> <span class="pre">=</span> <span class="pre">&quot;unlink&quot;),</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;)</span></code>
+(see #325)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">force_regular()</span></code> which caused an unintended warning (#326)</p></li>
+<li><p>Fixes to issues in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> (#327)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-1">
+<h1>emmeans 1.7.1<a class="headerlink" href="#emmeans-1-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support from multinomial models in mgcv::gam (#303) thanks to Hannes Riebl</p></li>
+<li><p>Bug fix for spaces in <code class="docutils literal notranslate"><span class="pre">by</span></code> variable names (#305). Related to this are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> now forces all names to be syntactically valid</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">as.data.frame.emmGrid()</span></code>, we changed the <code class="docutils literal notranslate"><span class="pre">optional</span></code> argument
+to <code class="docutils literal notranslate"><span class="pre">check.names</span></code> (defaulting to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>), and it actually has an effect.
+So by default, the result will have syntactically valid names; this is
+a change, but only because <code class="docutils literal notranslate"><span class="pre">optional</span></code> did not work right (because
+it is an argument for `as.data.frame.list()).</p></li>
+</ul>
+</li>
+<li><p>Fix for missing column names in <code class="docutils literal notranslate"><span class="pre">linfct</span></code> from <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> (#308)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">gnls</span></code> support (#313, #314, thanks to Fernando Miguez)</p></li>
+<li><p>Modified <code class="docutils literal notranslate"><span class="pre">glm</span></code> support so that <code class="docutils literal notranslate"><span class="pre">df.residual</span></code> is used when the
+family is gaussian or gamma. Thus, e.g., we match <code class="docutils literal notranslate"><span class="pre">lm</span></code> results
+when the model is fitted with a Gaussian family. Previously we ignored
+the d.f. for all <code class="docutils literal notranslate"><span class="pre">glm</span></code> objects.</p></li>
+<li><p>New vignette example with percentage differences</p></li>
+<li><p>More graceful handling of comparisons when there is only one mean;
+and a related FAQ</p></li>
+</ul>
+</section>
+<section id="emmeans-1-7-0">
+<h1>emmeans 1.7.0<a class="headerlink" href="#emmeans-1-7-0" title="Link to this heading">#</a></h1>
+<section id="notable-changes">
+<h2>Notable changes<a class="headerlink" href="#notable-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">rg.limit</span></code> option (and argument for <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code>) to limit the number
+of rows in the reference grid (#282, #292). <strong>This change could affect
+existing code that used to work</strong> – but only in fairly extreme situations.
+Some users report extreme performance issues that can be traced to the size
+of the reference grid being in the billions, causing memory to be paged,
+etc. So providing this limit really is necessary. The default is 10,000
+rows. I hope that most existing users don’t bump up against that too often.
+The <code class="docutils literal notranslate"><span class="pre">nuisance</span></code> (or <code class="docutils literal notranslate"><span class="pre">non.nuisance</span></code>) argument in <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> (see below) can
+help work around this limit.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">nuisance</span></code> option in <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code>, by which we can specify names of
+factors to exclude from the reference grid (accommodating them by averaging)
+(#282, #292). These must be factors that don’t interact with anything, even
+other nuisance factors. This provides a remedy for excessive grid sizes.</p></li>
+<li><p>Improvements to and broadening of <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code>:</p>
+<ul>
+<li><p>Changed the order of arguments in to something a bit more natural</p></li>
+<li><p>Default for <code class="docutils literal notranslate"><span class="pre">contrasts</span></code> now <code class="docutils literal notranslate"><span class="pre">object$contrasts</span></code> when <code class="docutils literal notranslate"><span class="pre">object</span></code> is specified</p></li>
+<li><p>Detection of multivariate situations</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ordinal.dim</span></code> argument to support ordinal models</p></li>
+</ul>
+</li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">force_regular()</span></code> function adds invisible rows to an irregular <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>
+to make it regular (i.e., covers all factor combinations)</p></li>
+</ul>
+</section>
+<section id="bug-fixes-and-tweaks">
+<h2>Bug fixes and tweaks<a class="headerlink" href="#bug-fixes-and-tweaks" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Removed dependency on <strong>plyr</strong> package (#298)</p></li>
+<li><p>Fix to bug in <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> with nested structures (#287)</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">rbind()</span></code> which mishandled <code class="docutils literal notranslate"><span class="pre">&#64;grid$.offset.</span></code></p></li>
+<li><p>Major repairs to <code class="docutils literal notranslate"><span class="pre">clm</span></code> and <code class="docutils literal notranslate"><span class="pre">clmm</span></code> support to fix issues related to
+rank deficiency and nested models, particularly with <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">&quot;prob&quot;</span></code> (#300)</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">type</span></code> to be passed in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> when <code class="docutils literal notranslate"><span class="pre">object</span></code> is already an <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>
+(incidentally noticed in #287)</p></li>
+<li><p>Code to prevent a warning when an existing factor is coerced to a factor
+in the model formula – see <a class="reference external" href="https://stackoverflow.com/questions/68969384">SO question</a></p></li>
+<li><p>Add documentation note for <code class="docutils literal notranslate"><span class="pre">add_grouping</span></code> with multiple reference factors (#291)</p></li>
+</ul>
+</section>
+</section>
+<section id="emmeans-1-6-3">
+<h1>emmeans 1.6.3<a class="headerlink" href="#emmeans-1-6-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Clarification of documentation of <code class="docutils literal notranslate"><span class="pre">ref_grid(object,</span> <span class="pre">vcov.</span> <span class="pre">=</span> <span class="pre">...)</span></code> (#283)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">emmtrends()</span></code> with covariate formulas (#284)</p></li>
+<li><p>Improved parts of “Basics” vignette - removed “back story”,
+revised guidance on <span class="math notranslate nohighlight">\(P\)</span> values and models</p></li>
+<li><p>Allow for &gt; 1 reference factor in <code class="docutils literal notranslate"><span class="pre">add_grouping()</span></code> (#286)</p></li>
+<li><p>Repairs to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> to avoid all-<code class="docutils literal notranslate"><span class="pre">nonEst</span></code> results in irregular
+nested structures</p></li>
+</ul>
+</section>
+<section id="emmeans-1-6-2">
+<h1>emmeans 1.6.2<a class="headerlink" href="#emmeans-1-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed navigation error in vignette index</p></li>
+<li><p>Discouraging message added to <code class="docutils literal notranslate"><span class="pre">cld()</span></code> results.
+Also am providing an <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> method for <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> objects.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">mvcontrast()</span></code> function (#281) and assoc vignette material</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">update.summary_emm()</span></code></p></li>
+</ul>
+</section>
+<section id="emmeans-1-6-1">
+<h1>emmeans 1.6.1<a class="headerlink" href="#emmeans-1-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug in parsing a response transformation (#274)</p></li>
+<li><p>Changed handling of <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> so that <code class="docutils literal notranslate"><span class="pre">log2</span></code> and <code class="docutils literal notranslate"><span class="pre">log10</span></code> transformations
+are handled just like <code class="docutils literal notranslate"><span class="pre">log</span></code>. (#273) Also disabled making ratios with
+<code class="docutils literal notranslate"><span class="pre">genlog</span></code> as it seems ill-advised.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">log1p</span></code> transformation</p></li>
+<li><p>Improved detection of cases where Tukey adjustment is [in]appropriate (#275)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;scale&quot;</span></code> argument to <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> and <code class="docutils literal notranslate"><span class="pre">emmip()</span></code>. This
+is the same as <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;</span></code> except the scale itself is transformed
+(i.e., a log scale if the log transformation was used). Since the same
+transformation is used, the appearance of the plot will be the same as with
+<code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;lp&quot;</span></code>, but with an altered axis scale. Currently this is implemented
+only with <code class="docutils literal notranslate"><span class="pre">engine</span> <span class="pre">=</span> <span class="pre">&quot;ggplot&quot;</span></code>.</p></li>
+<li><p>Fixed bug whereby Scheffe is ignored when there is only one contrast, even
+though <code class="docutils literal notranslate"><span class="pre">scheffe.rank</span></code> &gt; 1 was specified. (#171)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">subset()</span></code> method for <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects</p></li>
+<li><p>Bug fixes for <code class="docutils literal notranslate"><span class="pre">mcmc</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc.list</span></code> objects (#278, #279)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test()</span></code> shows <code class="docutils literal notranslate"><span class="pre">null</span></code> whenever it is nonzero on the chosen scale (#280)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-6-0">
+<h1>emmeans 1.6.0<a class="headerlink" href="#emmeans-1-6-0" title="Link to this heading">#</a></h1>
+<p>This version has some changes that affect all users, e.g., not saving
+<code class="docutils literal notranslate"><span class="pre">.Last.ref_grid</span></code>, so we incremented the sub-version number.</p>
+<ul class="simple">
+<li><p>Changed handling of logit transformations in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code>, so that the
+odds-ratio transformation persists into subsequent <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> calls
+e.g., interaction contrasts.</p></li>
+<li><p>We also made <code class="docutils literal notranslate"><span class="pre">contrast(...,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">...)</span></code> work correctly</p></li>
+<li><p>Bug fix so that all <code class="docutils literal notranslate"><span class="pre">p.adjust.methods</span></code> work (#267)</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">mblogit</span></code> extended to work with <code class="docutils literal notranslate"><span class="pre">mmblogit</span></code> models (#268)
+(However, since, <strong>mclogit</strong> pkg incorporates its own interface)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">export</span></code> option in <code class="docutils literal notranslate"><span class="pre">print.emmGrid()</span></code> and <code class="docutils literal notranslate"><span class="pre">print.emm_summary()</span></code></p></li>
+<li><p>Changed default for <code class="docutils literal notranslate"><span class="pre">emm_options(save.ref_grid</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code>. Years ago, it
+seemed potentially useful to save the last reference grid, but this is
+extra overhead, and writes in the user’s global environment.
+The option remains if you want it.</p></li>
+<li><p>Added a note advising against using <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> (because we lose
+potentially important annotations), and information/example on how to
+see more digits (which I guess is why I’m seeing users do this).</p></li>
+<li><p>Further refinement to nesting detection. A model like <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">~</span> <span class="pre">A:B</span></code> detected
+<code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">%in%</span> <span class="pre">B</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">%in%</span> <span class="pre">A</span></code>, and hence <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">%in%</span> <span class="pre">A*B</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">%in%</span> <span class="pre">A*B</span></code>
+due to a change in 1.4.6. Now we omit cases where factors are nested in themselves!</p></li>
+<li><p>Expansion of <code class="docutils literal notranslate"><span class="pre">cov.reduce</span></code> formulas to allow use of custom models for
+predicting mediating covariates</p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-5">
+<h1>emmeans 1.5.5<a class="headerlink" href="#emmeans-1-5-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">multinom</span></code> “correction” in version 1.5.4 was actually an
+“incorrection.” It was right before, and I made it wrong!
+<strong>If analyzing <code class="docutils literal notranslate"><span class="pre">multinom</span></code> models, use a version <em>other</em> than 1.5.4</strong></p></li>
+<li><p>Repairs to support for <code class="docutils literal notranslate"><span class="pre">mblogit</span></code> models</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">survreg</span></code> support (#258) – <code class="docutils literal notranslate"><span class="pre">survreg()</span></code> doesn’t handle missing
+factor levels the same way as <code class="docutils literal notranslate"><span class="pre">lm()</span></code>. This also affects results from
+<code class="docutils literal notranslate"><span class="pre">coxph()</span></code>, <code class="docutils literal notranslate"><span class="pre">AER::tobit()</span></code>, …</p></li>
+<li><p>Addition of a note in help <code class="docutils literal notranslate"><span class="pre">auto.noise</span></code> dataset, and changing that
+example and vignette example to have <code class="docutils literal notranslate"><span class="pre">noise/10</span></code> as the response variable.
+(Thanks to speech and hearing professor Stuart Rosen for pointing
+out this issue in an e-mail comment.)</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">appx-satterthwaite</span></code> mode in <code class="docutils literal notranslate"><span class="pre">gls</span></code>/<code class="docutils literal notranslate"><span class="pre">lme</span></code> models (#263)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">&quot;asymptotic&quot;</span></code> for <code class="docutils literal notranslate"><span class="pre">gls</span></code>/<code class="docutils literal notranslate"><span class="pre">lme</span></code> models.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">facetlab</span></code> argument to <code class="docutils literal notranslate"><span class="pre">emmip_ggplot()</span></code> so user can control how
+facets are labeled (#261)</p></li>
+<li><p>Efficiency improvements in <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> (#265)</p></li>
+<li><p>Bug fixes in <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> and interaction contrasts for nested models (#266)</p></li>
+<li><p>Improvement to <code class="docutils literal notranslate"><span class="pre">multinom</span></code> support suggested by this <a class="reference external" href="https://stackoverflow.com/questions/66675697">SO question</a></p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-4">
+<h1>emmeans 1.5.4<a class="headerlink" href="#emmeans-1-5-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix to bug in <code class="docutils literal notranslate"><span class="pre">rbind.emm_list()</span></code> to default for <code class="docutils literal notranslate"><span class="pre">which</span></code></p></li>
+<li><p>Fix for a glitch in recovering data for <code class="docutils literal notranslate"><span class="pre">gee</span></code> models (#249)</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">svyglm</span></code> objects (#248)</p></li>
+<li><p>Better support for <code class="docutils literal notranslate"><span class="pre">lqm</span></code>, <code class="docutils literal notranslate"><span class="pre">lqmm</span></code>, and added support for <code class="docutils literal notranslate"><span class="pre">rq</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">rqs</span></code>
+objects (<strong>quantreg</strong> package). User may pass <code class="docutils literal notranslate"><span class="pre">summary</span></code> or
+<code class="docutils literal notranslate"><span class="pre">boot</span></code> arguments such as <code class="docutils literal notranslate"><span class="pre">method</span></code>, <code class="docutils literal notranslate"><span class="pre">se</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code>, … (#250)</p></li>
+<li><p>Correction to <code class="docutils literal notranslate"><span class="pre">multinom</span></code> objects (SEs were previously incorrect)
+and addition of support for related <code class="docutils literal notranslate"><span class="pre">mclogit::mblogit</span></code> objects.
+If at all possible, users should re-run any pre-1.5.4 analyses of
+multinomial models<br>
+<strong>Note: This correction was wrong!</strong> If using multinomial models,
+you should use some version <em>other than</em> 1.5.4!</p></li>
+<li><p>Change to less misleading messages and documentation related to the
+<code class="docutils literal notranslate"><span class="pre">N.sim</span></code> argument of <code class="docutils literal notranslate"><span class="pre">regrid()</span></code>. We are no longer calling this a posterior
+sample because this is not really a Bayesian method, it is just a simulated
+set of regression coefficients.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-3">
+<h1>emmeans 1.5.3<a class="headerlink" href="#emmeans-1-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Per long-time threats, we really are removing <code class="docutils literal notranslate"><span class="pre">CLD()</span></code> once and for all.
+We tried in version 1.5.0, but forced to cave due to downstream problems.</p></li>
+<li><p>Addition of <code class="docutils literal notranslate"><span class="pre">levels&lt;-</span></code> method that maps to <code class="docutils literal notranslate"><span class="pre">update(...</span> <span class="pre">levels</span> <span class="pre">=)</span></code> (#237)</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">cld()</span></code> so it works with nested cases (#239)</p></li>
+<li><p>Enable <code class="docutils literal notranslate"><span class="pre">coef()</span></code> method to work with contrasts of nested models.
+This makes it possible for <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> to work (#239)</p></li>
+<li><p>Fixed a coding error in <code class="docutils literal notranslate"><span class="pre">plot()</span></code> that occurs if we use `type = “response”
+but there is in fact no transformation
+(<a class="reference external" href="https://stackoverflow.com/questions/64962094">reported on StackOverflow</a>)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;log10&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;log2&quot;</span></code> as legal transformations in <code class="docutils literal notranslate"><span class="pre">regrid()</span></code></p></li>
+<li><p>Revised vignette example for MCMC models, added example with <strong>bayestestR</strong></p></li>
+<li><p>Expanded support for ordinal models to all link functions available in
+<strong>ordinal</strong> (errors-out if <strong>ordinal</strong> not installed and link not
+available in <code class="docutils literal notranslate"><span class="pre">stats::make.link()</span></code>)</p></li>
+<li><p>Cleaned-up <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> to route plot output to rendering functions
+<code class="docutils literal notranslate"><span class="pre">emmip_ggplot()</span></code> and <code class="docutils literal notranslate"><span class="pre">emmip_lattice()</span></code>. These functions allow more customization
+to the plot and can also be called independently.
+(To do later, maybe next update: the same for <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code>.
+What to name rendering functions?? – suggestions?)</p></li>
+<li><p>Cleaned up code for <code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions so that parenthesization of levels
+does not get in the way of <code class="docutils literal notranslate"><span class="pre">ref</span></code>, <code class="docutils literal notranslate"><span class="pre">exclude</span></code>, or <code class="docutils literal notranslate"><span class="pre">include</span></code> arguments (#246)</p></li>
+<li><p>Fix to bug in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> when <code class="docutils literal notranslate"><span class="pre">data</span></code> is specified (#247)</p></li>
+<li><p>Tries harder to recover original data when available in the object (#247).
+In particular, sometimes this is available, e.g., in <code class="docutils literal notranslate"><span class="pre">$model</span></code> slot in
+a <code class="docutils literal notranslate"><span class="pre">lm</span></code> object, <em>as long as there are no predictor transformations</em>. This
+provides a little bit more safety in cases the data have been removed
+or altered.</p></li>
+<li><p>Tweaks to <code class="docutils literal notranslate"><span class="pre">rbind.emm_list()</span></code> to allow subsetting. (Also documentation &amp; example)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-2">
+<h1>emmeans 1.5.2<a class="headerlink" href="#emmeans-1-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Change to <code class="docutils literal notranslate"><span class="pre">plot.emmGrid(...</span> <span class="pre">comparisons</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> where we determine arrow
+bounds and unnecessary-arrow deletions <em>separately</em> in each <code class="docutils literal notranslate"><span class="pre">by</span></code> group.
+See also <a class="reference external" href="https://stackoverflow.com/questions/63713439">Stack Overflow posting</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> with contrasts specified ignores <code class="docutils literal notranslate"><span class="pre">adjust</span></code> and passes to
+<code class="docutils literal notranslate"><span class="pre">contrast()</span></code> instead. Associated documentation improved (I hope)</p></li>
+<li><p>Bug-fix for missing cases in <code class="docutils literal notranslate"><span class="pre">plot(...,</span> <span class="pre">comparisons</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> (#228)</p></li>
+<li><p>Robustified <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> so that comparison arrows work correctly
+with back-transformations. (Previously we used <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> in that case,
+causing different CIs and PIs depending on <code class="docutils literal notranslate"><span class="pre">comparisons</span></code>) (#230)</p></li>
+<li><p>Bug fixes in support for <code class="docutils literal notranslate"><span class="pre">stan_polr</span></code> models.</p></li>
+<li><p>Bug fix for incorrect (and relatively harmless) warning in several models (#234)</p></li>
+<li><p>Lower object size via removing unnecessary environment deps (#232)</p></li>
+<li><p>Repairs to <code class="docutils literal notranslate"><span class="pre">as.list()</span></code> and <code class="docutils literal notranslate"><span class="pre">as.emmGrid()</span></code> to fully support nesting and submodels.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-1">
+<h1>emmeans 1.5.1<a class="headerlink" href="#emmeans-1-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Additional checking for potential errors (e.g. memory overload) connected
+with <code class="docutils literal notranslate"><span class="pre">submodel</span></code> support. Also, much more memory-efficient code therein
+(#218, #219)</p></li>
+<li><p>A new option <code class="docutils literal notranslate"><span class="pre">enable.submodel</span></code> so user
+can switch off <code class="docutils literal notranslate"><span class="pre">submodel</span></code> support when unwanted or to save memory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multinom</span></code> support for <code class="docutils literal notranslate"><span class="pre">N.sim</span></code> option</p></li>
+<li><p>Modification to internal dispatching of <code class="docutils literal notranslate"><span class="pre">recover_data</span></code> and <code class="docutils literal notranslate"><span class="pre">emm_basis</span></code>
+so that an external package’s methods are always found and given priority
+whether or not they are registered (#220)</p></li>
+<li><p>Patches to <code class="docutils literal notranslate"><span class="pre">gamlss</span></code> support. Smoothers are not supported but other aspects
+are more reliable. See <a class="reference external" href="https://stats.stackexchange.com/questions/484886">CV posting</a></p></li>
+<li><p>Improvement to auto-detection of transformations (#223)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">aes</span></code> argument in <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> for more control over rendering (#178)</p></li>
+<li><p>Fix to a situation in <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> where ordering of factor levels
+could change depending on <code class="docutils literal notranslate"><span class="pre">CIs</span></code> and <code class="docutils literal notranslate"><span class="pre">PIs</span></code> (#225)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-5-0">
+<h1>emmeans 1.5.0<a class="headerlink" href="#emmeans-1-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changed help page for <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> to reflect <code class="docutils literal notranslate"><span class="pre">cov.keep</span></code> (ver. 1.4.2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emm_options()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">disable</span></code> argument to use for setting aside
+any existing options. Useful for reproducible bug reporting.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> with a <code class="docutils literal notranslate"><span class="pre">contr</span></code> argument or two-sided formula, we now suppress
+several particular <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments from being passed on to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code>
+when they should apply only to the construction of the EMMs (#214)</p></li>
+<li><p>More control of what <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments are passed to methods</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CLD()</span></code> was deprecated in version 1.3.4. THIS IS THE LAST VERSION where it
+will continue to be available. Users should use <code class="docutils literal notranslate"><span class="pre">multcomp::cld()</span></code> instead,
+for which an <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>  method will continue to exist.</p></li>
+<li><p>Experimental <code class="docutils literal notranslate"><span class="pre">submodel</span></code> option</p>
+<ul>
+<li><p>Bug fix therein (#217)</p></li>
+</ul>
+</li>
+<li><p>Enhancements to <code class="docutils literal notranslate"><span class="pre">mgcv::gam</span></code> support (#216)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">ubds</span></code> dataset for testing with messy situations</p></li>
+<li><p>Added minimal support for <code class="docutils literal notranslate"><span class="pre">lqm</span></code> and <code class="docutils literal notranslate"><span class="pre">lqmm</span></code> models (#213)</p></li>
+<li><p>Interim support for user-supplied contrasts for <code class="docutils literal notranslate"><span class="pre">stanreg</span></code> models (#212)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-8">
+<h1>emmeans 1.4.8<a class="headerlink" href="#emmeans-1-4-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fix and smoother support for <code class="docutils literal notranslate"><span class="pre">stanreg</span></code> objects (#202)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> to be consistent between one curve and several,
+in whether points are displayed (<code class="docutils literal notranslate"><span class="pre">style</span></code> option)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;scale&quot;</span></code> option to <code class="docutils literal notranslate"><span class="pre">make.tran()</span></code></p></li>
+<li><p>Auto-detection of standardized response transformation</p></li>
+<li><p>Fix to a scoping issue in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> (#201)</p></li>
+<li><p>Bug fix for #197 created a new issue #206. Both now fixed.</p></li>
+<li><p>Non-existent reference levels in <code class="docutils literal notranslate"><span class="pre">trt.vs.ctrl.emmc()</span></code> now
+throws an error (#208)</p></li>
+<li><p>Added a default for <code class="docutils literal notranslate"><span class="pre">linfct</span></code> (the identity) to <code class="docutils literal notranslate"><span class="pre">emmobj</span></code></p></li>
+<li><p>Provisions for more flexible and consistent labeling/naming of results.
+This includes added <code class="docutils literal notranslate"><span class="pre">emm_options</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;sep&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;parens&quot;</span></code>,
+and a <code class="docutils literal notranslate"><span class="pre">parens</span></code> argument in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code>.
+<code class="docutils literal notranslate"><span class="pre">sep</span></code> controls how factor levels are combined when ploted or contrasted,
+and <code class="docutils literal notranslate"><span class="pre">parens</span></code> sets whether, what, and how labels are parenthesized
+in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code>. In constructing contrasts of contrasts, for example,
+labels like <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">-</span> <span class="pre">B</span> <span class="pre">-</span> <span class="pre">C</span> <span class="pre">-</span> <span class="pre">D</span></code> are now <code class="docutils literal notranslate"><span class="pre">(A</span> <span class="pre">-</span> <span class="pre">B)</span> <span class="pre">-</span> <span class="pre">(C</span> <span class="pre">-</span> <span class="pre">D)</span></code>, by default.
+To reproduce old labeling, do `emm_options(sep = “,”, parens = “a^”)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-7">
+<h1>emmeans 1.4.7<a class="headerlink" href="#emmeans-1-4-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Repairs to <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> so it plays nice with nonestimable cases</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;xplanations&quot;</span></code> vignette with additional documentation on
+methods used. (comparison arrows, for starters)</p></li>
+<li><p>Touch-ups to <code class="docutils literal notranslate"><span class="pre">plot()</span></code>, especially regarding comparison arrows</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">stanreg</span></code> models (#196)</p></li>
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">emmeans(obj,</span> <span class="pre">&quot;1&quot;,</span> <span class="pre">by</span> <span class="pre">=</span> <span class="pre">&quot;something&quot;)</span></code> (#197)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eff_size()</span></code> now supports <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> objects with a <code class="docutils literal notranslate"><span class="pre">$contrasts</span></code>
+component, using those contrasts. This helps those who
+specify <code class="docutils literal notranslate"><span class="pre">pairwise</span> <span class="pre">~</span> <span class="pre">treatment</span></code>.</p></li>
+<li><p>Labels in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> for factor combinations with <code class="docutils literal notranslate"><span class="pre">by</span></code> groups
+were wacky (#199)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> screwed up with multivariate models (#200).</p></li>
+<li><p>Added a new argument <code class="docutils literal notranslate"><span class="pre">calc</span></code> to <code class="docutils literal notranslate"><span class="pre">summary()</span></code>. For example,
+<code class="docutils literal notranslate"><span class="pre">calc</span> <span class="pre">=</span> <span class="pre">c(n</span> <span class="pre">=</span> <span class="pre">~.wgt.)</span></code> will add a column of sample sizes to
+the summary.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-6">
+<h1>emmeans 1.4.6<a class="headerlink" href="#emmeans-1-4-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">coxph</span></code> support for models with strata</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> with <code class="docutils literal notranslate"><span class="pre">specs</span></code> of class <code class="docutils literal notranslate"><span class="pre">list</span></code> now passes any <code class="docutils literal notranslate"><span class="pre">offset</span></code>
+and <code class="docutils literal notranslate"><span class="pre">trend</span></code> arguments (#179)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">plim</span></code> argument to <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> to allow controlling the scale</p></li>
+<li><p>More documentation on using <code class="docutils literal notranslate"><span class="pre">params</span></code> (#180)</p></li>
+<li><p>Robustified support for <code class="docutils literal notranslate"><span class="pre">gls</span></code> objects when data are incomplete (#181)</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> and <code class="docutils literal notranslate"><span class="pre">test(...,</span> <span class="pre">joint</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> that
+can occur with nontrivial <code class="docutils literal notranslate"><span class="pre">&#64;dffun()</span></code> slots (#184)</p></li>
+<li><p>Improved support for Satterthwaite-based methods in <code class="docutils literal notranslate"><span class="pre">gls</span></code> (#185)
+and renamed <code class="docutils literal notranslate"><span class="pre">boot-satterthwaite</span></code> to <code class="docutils literal notranslate"><span class="pre">appx-satterthwaite</span></code> (#176)</p></li>
+<li><p>Further repairs to nesting-related code (#186)</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">transform</span></code> argument in <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> so it is same as
+in <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> (#188)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">pwpm()</span></code> function for displaying estimates, pairwise
+comparisons, and <em>P</em> values in matrix form</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-5">
+<h1>emmeans 1.4.5<a class="headerlink" href="#emmeans-1-4-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Change to <code class="docutils literal notranslate"><span class="pre">.all.vars()</span></code> that addresses #170</p></li>
+<li><p>Addition of hidden argument <code class="docutils literal notranslate"><span class="pre">scheffe.rank</span></code> in <code class="docutils literal notranslate"><span class="pre">summary.emmGrid()</span></code>
+to manually specify the desired dimensionality of a Scheffe
+adjustment (#171)</p></li>
+<li><p>Provided for <code class="docutils literal notranslate"><span class="pre">...</span></code> to be included in <code class="docutils literal notranslate"><span class="pre">options</span></code> in calls to
+<code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> and <code class="docutils literal notranslate"><span class="pre">contrast()</span></code>. This allows passing any <code class="docutils literal notranslate"><span class="pre">summary()</span></code>
+argument more easily, e.g.,
+<code class="docutils literal notranslate"><span class="pre">emmeans(...,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;,</span> <span class="pre">bias.adjust</span> <span class="pre">=</span> <span class="pre">TRUE,</span> <span class="pre">infer</span> <span class="pre">=</span> <span class="pre">c(TRUE,</span> <span class="pre">TRUE))</span></code>
+(Before, we would have had to wrap this in <code class="docutils literal notranslate"><span class="pre">summary()</span></code>)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">plotit</span></code> argument to <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> that works similarly to
+that in <code class="docutils literal notranslate"><span class="pre">emmip()</span></code>.</p></li>
+<li><p>Removed startup message for behavior change in 1.4.2; it’s been long enough.</p></li>
+<li><p>Fixed bug with <code class="docutils literal notranslate"><span class="pre">character</span> <span class="pre">predictors</span> <span class="pre">in</span> </code>at` (#175)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-4">
+<h1>emmeans 1.4.4<a class="headerlink" href="#emmeans-1-4-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> associated with non-factors such as <code class="docutils literal notranslate"><span class="pre">Date</span></code> (#162)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">nesting.order</span></code> option to <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> (#163)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">style</span></code> argument for <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> allows plotting on a numeric scale</p></li>
+<li><p>More robust detection of response transformations (#166)</p></li>
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> has tick marks on P-value axis (#167)</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> for error when estimates exceed bounds</p></li>
+<li><p>Bug fix in auto-detecting nesting (#169) to make it less “enthusiastic”</p></li>
+<li><p>Fixes to formula operations needed because <code class="docutils literal notranslate"><span class="pre">formula.tools:::as.character.formula</span></code>
+messes me up (thanks to Berwin Turloch, UWA, for alerting me)</p></li>
+<li><p>Making <code class="docutils literal notranslate"><span class="pre">dqrg()</span></code> more visible in the documentation (because it’s often useful)</p></li>
+<li><p>Added more methods for <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> objects, e.g. <code class="docutils literal notranslate"><span class="pre">rbind()</span></code> and <code class="docutils literal notranslate"><span class="pre">as.data.frame()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">as.list()</span></code>, and <code class="docutils literal notranslate"><span class="pre">as.emm_list()</span></code></p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-3-01">
+<h1>emmeans 1.4.3.01<a class="headerlink" href="#emmeans-1-4-3-01" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bug in post-grid support that affects, e.g., the <strong>ggeffects</strong> package (#161)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-3">
+<h1>emmeans 1.4.3<a class="headerlink" href="#emmeans-1-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;bcnPower&quot;</span></code> option to <code class="docutils literal notranslate"><span class="pre">make.tran()</span></code> (per <code class="docutils literal notranslate"><span class="pre">car::bcnPower()</span></code>)</p></li>
+<li><p>Scoping correction for <code class="docutils literal notranslate"><span class="pre">emmtrends()</span></code> (#153)</p></li>
+<li><p>Allow passing <code class="docutils literal notranslate"><span class="pre">...</span></code> to hook functions (need exposed by #154)</p></li>
+<li><p>Addition to <code class="docutils literal notranslate"><span class="pre">regrid()</span></code> whereby we can fake any response transformation
+– not just <code class="docutils literal notranslate"><span class="pre">&quot;log&quot;</span></code> (again inspired by #154)</p></li>
+<li><p>Informative message when <strong>pbkrtest</strong> or <strong>lmerTest</strong> is not found
+(affects <code class="docutils literal notranslate"><span class="pre">merMod</span></code> objects) (#157)</p></li>
+<li><p>Change in <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> to make extremely small P values more distinguishable</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-2">
+<h1>emmeans 1.4.2<a class="headerlink" href="#emmeans-1-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>First argument of <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> is now <code class="docutils literal notranslate"><span class="pre">object</span></code>, not <code class="docutils literal notranslate"><span class="pre">model</span></code>, to avoid
+potential mis-matching of the latter with optional <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> now uses more robust and efficient code whereby a single
+reference grid is constructed containing all needed values of <code class="docutils literal notranslate"><span class="pre">var</span></code>. The old
+version could fail, e.g., in cases where the reference grid involves
+post-processing. (#145)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">scale</span></code> argument to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code></p></li>
+<li><p>Added new <code class="docutils literal notranslate"><span class="pre">&quot;identity&quot;</span></code> contrast method</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">eff_size()</span></code> function for Cohen effect sizes</p></li>
+<li><p>Expanded capabilities for interaction contrasts (#146)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">cov.keep</span></code> argument in <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> for specifying covariates
+to be treated just like factors (#148). A side effect is that the
+system default for indicator variables as covariates is to treat
+them like 2-level factors. <em>This could change the results obtained from
+some analyses using earlier versions</em>. To replicate old analyses,
+set <code class="docutils literal notranslate"><span class="pre">emm_options(cov.keep</span> <span class="pre">=</span> <span class="pre">character(0))</span></code>.</p></li>
+<li><p>Added merMod-related options as convenience arguments (#150)</p></li>
+<li><p>Bug fixes: <code class="docutils literal notranslate"><span class="pre">regrid</span></code> ignored offsets with Bayesian models; <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> did
+not supply <code class="docutils literal notranslate"><span class="pre">options</span></code> and <code class="docutils literal notranslate"><span class="pre">misc</span></code> arguments to <code class="docutils literal notranslate"><span class="pre">emm_basis()</span></code> (#143)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4-1">
+<h1>emmeans 1.4.1<a class="headerlink" href="#emmeans-1-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added non-estimability infrastructure for Bayesian models, <code class="docutils literal notranslate"><span class="pre">stanreg</span></code>
+in particular (#114)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">max.degree</span></code> argument in <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code> making it possible to
+obtain higher-order trends (#133). Plus minor tuneups, e.g., smaller
+default increment for difference quotients</p></li>
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> more forgiving with ‘by<code class="docutils literal notranslate"><span class="pre">variables;</span> <span class="pre">e.g.,</span></code>emmeans(model, ~ dose | treat, by = “route”)<code class="docutils literal notranslate"><span class="pre">will</span> <span class="pre">find</span> <span class="pre">both</span></code>by<code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">whereas</span> <span class="pre">previously</span></code>”route”` would be ignored.</p></li>
+<li><p>Temporary fix for glitch in gls support where Satterthwaite isn’t
+always right.</p></li>
+<li><p>Attempt to make annotations clearer and more consistent regarding
+degrees-of-freedom methods.</p></li>
+<li><p>Provisions whereby externally provided <code class="docutils literal notranslate"><span class="pre">emm_basis()</span></code> and <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code>
+methods are used in preference to internal ones - so package developers
+can provide improvements over what I’ve cobbled together.</p></li>
+<li><p>Tried to produce more informative message when <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code> fails</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> in identifying true contrasts (#134)</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">plot.summary_emm()</span></code> regarding <code class="docutils literal notranslate"><span class="pre">CIs</span></code> and <code class="docutils literal notranslate"><span class="pre">intervals</span></code> (#137)</p></li>
+<li><p>Improved support for response transformations. Models with formulas like
+like <code class="docutils literal notranslate"><span class="pre">log(y</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">~</span> <span class="pre">...</span></code> and <code class="docutils literal notranslate"><span class="pre">2*sqrt(y</span> <span class="pre">+</span> <span class="pre">0.5)</span> <span class="pre">~</span> <span class="pre">...</span></code> are now auto-detected.
+[This may cause discrepancies with examples in past usages, but if so, that
+would be because the response transformation was previously incorrectly
+interpreted.]</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">ratios</span></code> argument to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> to decide how to handle <code class="docutils literal notranslate"><span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">logit</span></code></p></li>
+<li><p>Added message/annotation when contrasts are summarized with <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;</span></code>
+but there is no way to back-transform them (or we opted out with <code class="docutils literal notranslate"><span class="pre">ratios</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-4">
+<h1>emmeans 1.4<a class="headerlink" href="#emmeans-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a courtesy function <code class="docutils literal notranslate"><span class="pre">.emm_register()</span></code> to make it easier for other
+packages to register their <strong>emmeans</strong> support methods</p></li>
+<li><p>Clarified the “confidence intervals” vignette discussion of <code class="docutils literal notranslate"><span class="pre">infer</span></code>,
+explaining that Bayesian models are handled differently (#128)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">PIs</span></code> option to <code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code> and <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> (#131). Also, in
+<code class="docutils literal notranslate"><span class="pre">plot.emmGrid()</span></code>, the <code class="docutils literal notranslate"><span class="pre">intervals</span></code> argument has been changed to <code class="docutils literal notranslate"><span class="pre">CIs</span></code>
+for sake of consistency and less confusion; <code class="docutils literal notranslate"><span class="pre">intervals</span></code> is still
+supported for backaward compatibility.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.emmGrid</span></code> gains a <code class="docutils literal notranslate"><span class="pre">colors</span></code> argument so we can customize colors used.</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">glht</span></code> support (#132 contributed by Balsz Banfai)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">regrid</span></code> gains <code class="docutils literal notranslate"><span class="pre">sim</span></code> and <code class="docutils literal notranslate"><span class="pre">N.sim</span></code> arguments whereby we can generate a
+fake posterior sample from a frequentist model.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-5-1">
+<h1>emmeans 1.3.5.1<a class="headerlink" href="#emmeans-1-3-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">gls</span></code> objects with non-matrix <code class="docutils literal notranslate"><span class="pre">apVar</span></code> member (#119)</p></li>
+<li><p>Repairs faulty links in 1.3.5 vignettes</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-5">
+<h1>emmeans 1.3.5<a class="headerlink" href="#emmeans-1-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>First steps to take prediction seriously. This includes</p>
+<ul>
+<li><p>Addition of a <code class="docutils literal notranslate"><span class="pre">sigma</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> (defaults to
+<code class="docutils literal notranslate"><span class="pre">sigma(object)</span></code> if available)</p></li>
+<li><p>Addition of an <code class="docutils literal notranslate"><span class="pre">interval</span></code> argument in <code class="docutils literal notranslate"><span class="pre">predict.emmGrid()</span></code></p></li>
+<li><p>Addition of a <code class="docutils literal notranslate"><span class="pre">likelihood</span></code> argument in <code class="docutils literal notranslate"><span class="pre">as.mcmc</span></code> to allow
+for simulating from the posterior predictive distribution</p></li>
+<li><p>Crude provisions for bias adjustment when back-transforming. This
+is not really prediction, but it is made possible by availability
+of <code class="docutils literal notranslate"><span class="pre">sigma</span></code> in object</p></li>
+</ul>
+</li>
+<li><p>Further steps to lower the profile of <code class="docutils literal notranslate"><span class="pre">cld()</span></code> and <code class="docutils literal notranslate"><span class="pre">CLD()</span></code></p></li>
+<li><p>Family size for Tukey adjustment was wrong when using <code class="docutils literal notranslate"><span class="pre">exclude</span></code> (#107)</p></li>
+<li><p>Provided for direct passing of info from <code class="docutils literal notranslate"><span class="pre">recover_data</span></code> to <code class="docutils literal notranslate"><span class="pre">emm_basis</span></code></p></li>
+<li><p>Attempts to broaden <code class="docutils literal notranslate"><span class="pre">MCMCglmm</span></code> support</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-4">
+<h1>emmeans 1.3.4<a class="headerlink" href="#emmeans-1-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Un-naming a lot of arguments in <code class="docutils literal notranslate"><span class="pre">do.call(paste,</span> <span class="pre">...)</span></code> and <code class="docutils literal notranslate"><span class="pre">do.call(order,</span> <span class="pre">...)</span></code>,
+to prevent problems with factor names like <code class="docutils literal notranslate"><span class="pre">method</span></code> that are argument names
+for these functions (#94)</p></li>
+<li><p>Fix to a logic error in <code class="docutils literal notranslate"><span class="pre">summary.emmGrid()</span></code> whereby transformations of class
+<code class="docutils literal notranslate"><span class="pre">list</span></code> were ignored.</p></li>
+<li><p>Enhancement to <code class="docutils literal notranslate"><span class="pre">update.emmGrid(...,</span> <span class="pre">levels</span> <span class="pre">=</span> <span class="pre">levs)</span></code> whereby we can easily
+relabel the reference grid and ensure that the <code class="docutils literal notranslate"><span class="pre">grid</span></code> and <code class="docutils literal notranslate"><span class="pre">roles</span></code> slots
+stay consistent. Added vignette example.</p></li>
+<li><p>Clarified ordering rules used by <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>. We now ensure that the
+original order of the reference grid is preserved. Previously, the grid
+was re-ordered if any numeric or character levels occurred out of order,
+per <code class="docutils literal notranslate"><span class="pre">order()</span></code></p></li>
+<li><p>Curbing use of “statistical significance” language. This includes
+additional vignette material and plans to deprecate <code class="docutils literal notranslate"><span class="pre">CLD()</span></code> due to its
+misleading display of pairwise-comparison tests.</p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">betareg</span></code> objects, where the wrong <code class="docutils literal notranslate"><span class="pre">terms</span></code> component was
+sometimes used.</p></li>
+<li><p>Correction to logic error that affected multiplicity adjustments when
+<code class="docutils literal notranslate"><span class="pre">by</span></code> variables are present (#98).</p></li>
+<li><p>Addition of <code class="docutils literal notranslate"><span class="pre">pwpp()</span></code> function to plot <em>P</em> values of comparisons</p></li>
+<li><p>Improvement to <code class="docutils literal notranslate"><span class="pre">summary(...,</span> <span class="pre">adjust</span> <span class="pre">=</span> <span class="pre">&quot;scheffe&quot;)</span></code>. We now actually
+compute and use the rank of the matrix of linear functions to obtain
+the <em>F</em> numerator d.f., rather than trying to guess the likely correct
+value.</p></li>
+<li><p>Removal of vignette on transitioning from <strong>lsmeans</strong> –
+it’s been a long enough time now.</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-3">
+<h1>emmeans 1.3.3<a class="headerlink" href="#emmeans-1-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix to unintended consequence of #71 that caused incorrect ordering
+of <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> results if they are later used by <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>.
+This was first noticed with ordinal models in <code class="docutils literal notranslate"><span class="pre">prob</span></code> mode (#83).</p></li>
+<li><p>Improved checking of conformability of parameters – for models
+with rank deficiency not handled same way as lm()’s NA convention</p></li>
+<li><p>Added basic support for <code class="docutils literal notranslate"><span class="pre">sommer::mmer</span></code>, <code class="docutils literal notranslate"><span class="pre">MuMIn::averaging</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">mice::mira</span></code> objects</p></li>
+<li><p>Fix in <code class="docutils literal notranslate"><span class="pre">nnet::multinom</span></code> support when there are 2 outcomes (#19)</p></li>
+<li><p>Added Satterthwaite d.f. to <code class="docutils literal notranslate"><span class="pre">gls</span></code> objects</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">famSize</span></code> now correct when <code class="docutils literal notranslate"><span class="pre">exclude</span></code> or <code class="docutils literal notranslate"><span class="pre">include</span></code> is used in
+a contrast function (see #68)</p></li>
+<li><p>Stronger warnings of possible bias with <code class="docutils literal notranslate"><span class="pre">aovList</span></code> objects, in part
+due to the popularity of <code class="docutils literal notranslate"><span class="pre">afex::aov_ez()</span></code> which uses these models.</p></li>
+<li><p>Updates to FAQs vignette</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-2">
+<h1>emmeans 1.3.2<a class="headerlink" href="#emmeans-1-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>I decided to enable “optimal digits” display by default. In summaries,
+we try to show enough—but not too much—precision in estimates and
+confidence intervals. If you don’t like this and want to revert
+to the old (exaggerated precision) behavior, do
+<code class="docutils literal notranslate"><span class="pre">emm_options(opt.digits</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">include</span></code> argument to most <code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions (#67)</p></li>
+<li><p>Now allow character values for <code class="docutils literal notranslate"><span class="pre">ref</span></code>, <code class="docutils literal notranslate"><span class="pre">exclude</span></code>, and <code class="docutils literal notranslate"><span class="pre">include</span></code> in
+<code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions (#68)</p></li>
+<li><p>Better handling of matrix predictors (#66)</p></li>
+<li><p>Fixed over-zealous choice to not pass <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>
+when two-sided formulas are present</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">clm</span></code> support when model is rank-deficient</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">regrid(...,</span> <span class="pre">transform</span> <span class="pre">=</span> <span class="pre">&quot;log&quot;)</span></code> error when there are
+existing non-estimable cases (issue #65)</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">brmsfit</span></code> support (#43)</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">mgcv::gam</span></code> and <code class="docutils literal notranslate"><span class="pre">mgcv::gamm</span></code> models</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.my.vcov()</span></code> now passes <code class="docutils literal notranslate"><span class="pre">...</span></code> to clients</p></li>
+<li><p>Removed <strong>glmmADMB</strong> support. This package appears to be dormant</p></li>
+<li><p>Fixed ordering bug for nested models (#71)</p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">manova</span></code> object no longer requires <code class="docutils literal notranslate"><span class="pre">data</span></code> keyword (#72)</p></li>
+<li><p>Added support for multivariate response in <code class="docutils literal notranslate"><span class="pre">aovlist</span></code> models (#73)</p></li>
+<li><p>Documentation clarification (#76)</p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">CLD</span></code> fatal error when <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (#77)</p></li>
+<li><p>Fix to issue with weights and incomplete cases with <code class="docutils literal notranslate"><span class="pre">lme</span></code> objects (#75)</p></li>
+<li><p>Nested fixed-effects yielded NonEsts when two factors are nested
+in the same factor(s) (#79)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-1">
+<h1>emmeans 1.3.1<a class="headerlink" href="#emmeans-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;mvt&quot;</span></code> adjustment ignored <code class="docutils literal notranslate"><span class="pre">by</span></code> grouping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contrast()</span></code> mis-labeled estimates when levels varied among <code class="docutils literal notranslate"><span class="pre">by</span></code> groups
+(most prominently this happened in <code class="docutils literal notranslate"><span class="pre">CLD(...,</span> <span class="pre">details</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>)</p></li>
+<li><p>Changed <code class="docutils literal notranslate"><span class="pre">aovlist</span></code> support so it re-fits the model when non-sum-to-zero
+contrasts were used</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print.summary_emm()</span></code> now cleans up numeric columns with <code class="docutils literal notranslate"><span class="pre">zapsmall()</span></code></p></li>
+<li><p>More robust handling of <code class="docutils literal notranslate"><span class="pre">nesting</span></code> in <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code>,
+and addition of <code class="docutils literal notranslate"><span class="pre">covnest</span></code> argument for whether to include covariates
+when auto-detecting nesting</p></li>
+<li><p>Revision of some vignettes</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">hpd.summary()</span></code> and handoff to it from <code class="docutils literal notranslate"><span class="pre">summary()</span></code></p></li>
+<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> ignored <code class="docutils literal notranslate"><span class="pre">mult.levs</span></code></p></li>
+<li><p>Fixes in emmeans where it passes <code class="docutils literal notranslate"><span class="pre">...</span></code> where it shouldn’t</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CLD()</span></code> now works for MCMC models (uses frequentist summary)</p></li>
+<li><p>Addition of <code class="docutils literal notranslate"><span class="pre">opt.digits</span></code> option</p></li>
+</ul>
+</section>
+<section id="emmeans-1-3-0">
+<h1>emmeans 1.3.0<a class="headerlink" href="#emmeans-1-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Deprecated functions like <code class="docutils literal notranslate"><span class="pre">ref.grid()</span></code> put to final rest, and we no
+longer support packages that provide <code class="docutils literal notranslate"><span class="pre">recover.data</span></code> or <code class="docutils literal notranslate"><span class="pre">lsm.basis</span></code> methods</p></li>
+<li><p>Courtesy exports <code class="docutils literal notranslate"><span class="pre">.recover_data()</span></code> and <code class="docutils literal notranslate"><span class="pre">.emm_basis()</span></code> to provide
+access for extension developers to all available methods</p></li>
+<li><p>Streamlining of a stored example in <code class="docutils literal notranslate"><span class="pre">inst/extdata</span></code></p></li>
+<li><p>Fix to <code class="docutils literal notranslate"><span class="pre">.all.vars()</span></code> that could cause errors when response variable
+has a function call with character constants.</p></li>
+<li><p>Relabeling of differences as ratios when appropriate in <code class="docutils literal notranslate"><span class="pre">regrid()</span></code>
+(so results match <code class="docutils literal notranslate"><span class="pre">summary()</span></code> labeling with <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.emmGrid(...,</span> <span class="pre">comparisons</span> <span class="pre">=</span> <span class="pre">TRUE,</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&quot;response&quot;)</span></code>
+produced incorrect comparison arrows; now fixed</p></li>
+</ul>
+</section>
+<section id="emmeans-1-2-4">
+<h1>emmeans 1.2.4<a class="headerlink" href="#emmeans-1-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support for model formulas such as <code class="docutils literal notranslate"><span class="pre">df$y</span> <span class="pre">~</span> <span class="pre">df$treat</span> <span class="pre">+</span> <span class="pre">df[[&quot;cov&quot;]]</span></code>. This had
+failed previously for two obscure reasons, but now works correctly.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">simplify.names</span></code> option for above types of models</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emm_options()</span></code> with no arguments now returns all options in force,
+including the defaults. This makes it more consistent with <code class="docutils literal notranslate"><span class="pre">options()</span></code></p></li>
+<li><p>Bug fix for <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code>; produced incorrect results in models with offsets.</p></li>
+<li><p>Separated the help pages for <code class="docutils literal notranslate"><span class="pre">update.emmGrid()</span></code> and <code class="docutils literal notranslate"><span class="pre">emm_options()</span></code></p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">qdrg()</span></code> function (quick and dirty reference grid) for help with
+unsupported model objects</p></li>
+</ul>
+</section>
+<section id="emmeans-1-2-3">
+<h1>emmeans 1.2.3<a class="headerlink" href="#emmeans-1-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>S3 methods involving packages <strong>multcomp</strong> and <strong>coda</strong> are now
+dynamically registered, not merely exported as functions.
+This passes checks when S3 methods are required to be registered.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cld()</span></code> has been deprecated in favor of <code class="docutils literal notranslate"><span class="pre">CLD()</span></code>. This had been a
+headache. <strong>multcomp</strong> is the wrong place for the generic to be;
+it is too fancy a dance to export <code class="docutils literal notranslate"><span class="pre">cld</span></code> with or without having
+<strong>multcomp</strong> installed.</p></li>
+<li><p>Added vignette caution regarding interdependent covariates</p></li>
+<li><p>Improved <strong>glmmADMB</strong> support to recover contrasts correctly</p></li>
+</ul>
+</section>
+<section id="emmeans-1-2-2">
+<h1>emmeans 1.2.2<a class="headerlink" href="#emmeans-1-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Removed ggplot2, multcomp, and coda to Suggests – thus vastly
+reducing dependencies</p></li>
+<li><p>Added a FAQ to the FAQs vignette</p></li>
+<li><p>Modified advice in <code class="docutils literal notranslate"><span class="pre">xtending.Rmd</span></code> vignette on how to export methods</p></li>
+<li><p>Fixes to <code class="docutils literal notranslate"><span class="pre">revpairwise.emmc</span></code> and <code class="docutils literal notranslate"><span class="pre">cld</span></code> regarding comparing only 1 EMM</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cld.emm_list</span></code> now returns results only for <code class="docutils literal notranslate"><span class="pre">object[[</span> <span class="pre">which[1]</span> <span class="pre">]]</span></code>,
+along with a warning message.</p></li>
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">emmeans</span></code> specs like <code class="docutils literal notranslate"><span class="pre">cld</span> <span class="pre">~</span> <span class="pre">group</span></code>, a vestige of <strong>lsmeans</strong>
+as it did not work correctly (and was already undocumented)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-2-1">
+<h1>emmeans 1.2.1<a class="headerlink" href="#emmeans-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Moved <strong>brms</strong> to <code class="docutils literal notranslate"><span class="pre">Suggests</span></code> (dozens and dozens fewer dependencies)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-2">
+<h1>emmeans 1.2<a class="headerlink" href="#emmeans-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Index of vignette topics added</p></li>
+<li><p>New, improved (to my taste) vignette formats</p></li>
+<li><p>Fixed df bug in regrid (#29)</p></li>
+<li><p>Fixed annotation bug for nested models (#30)</p></li>
+<li><p>Better documentation for <code class="docutils literal notranslate"><span class="pre">lme</span></code> models in “models” vignette</p></li>
+<li><p>Additional fixes for arguments passed to <code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions (#22)</p></li>
+<li><p>Support added for logical predictors (who knew we could have those? not me)</p></li>
+<li><p>Replaced tex/pdf “Extending” vignette with Rmd/html</p></li>
+<li><p>Overhauled the faulty logic for df methods in emm_basis.merMod</p></li>
+<li><p>Added Henrik to contributors list (long-standing oversight)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument to most <code class="docutils literal notranslate"><span class="pre">.emmc</span></code> functions: allows
+user to omit certain levels when computing contrasts</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">hpd.summary()</span></code> function for Bayesian models to show HPD intervals
+rather than frequentist summary. Note: <code class="docutils literal notranslate"><span class="pre">summary()</span></code> automatically
+reroutes to it. Also <code class="docutils literal notranslate"><span class="pre">plot()</span></code> and <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> play along.</p></li>
+<li><p>Rudimentary support for <strong>brms</strong> package</p></li>
+<li><p><em>Ad hoc</em> Satterthwaite method for <code class="docutils literal notranslate"><span class="pre">nlme::lme</span></code> models</p></li>
+</ul>
+</section>
+<section id="emmeans-1-1-3">
+<h1>emmeans 1.1.3<a class="headerlink" href="#emmeans-1-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Formatting corrections in documentation</p></li>
+<li><p>Fixed bug for survival models where <code class="docutils literal notranslate"><span class="pre">Surv()</span></code> was interpreted
+as a response transformation.</p></li>
+<li><p>Fixed bug (issue #19) in multinom support</p></li>
+<li><p>Fixed bug (issue #22) in optional arguments with
+interaction contrasts</p></li>
+<li><p>Fixed bug (issue #23) in weighting with character predictors</p></li>
+<li><p>Clarifying message when <code class="docutils literal notranslate"><span class="pre">cld()</span></code> is applied to an <code class="docutils literal notranslate"><span class="pre">emm_list</span></code> (issue #24)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">offset</span></code> argument to <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> (scalar offset only) and to
+<code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> (vector offset allowed) – (issue #18)</p></li>
+<li><p>New optional argument for <code class="docutils literal notranslate"><span class="pre">[.summary_emm</span></code> to choose whether to
+retain its class or coerce to a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> (relates to issue #14)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">reverse</span></code> option for <code class="docutils literal notranslate"><span class="pre">trt.vs.ctrl</span></code> and relatives (#27)</p></li>
+</ul>
+</section>
+<section id="emmeans-1-1-2">
+<h1>emmeans 1.1.2<a class="headerlink" href="#emmeans-1-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Changed the way <code class="docutils literal notranslate"><span class="pre">terms</span></code> is accessed with <code class="docutils literal notranslate"><span class="pre">lme</span></code> objects to make
+it more robust</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emmeans:::convert_scripts()</span></code> renames output file more simply</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">[</span></code> method for class <code class="docutils literal notranslate"><span class="pre">summary_emm</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">simple</span></code> argument for <code class="docutils literal notranslate"><span class="pre">contrast</span></code> - essentially the complement of <code class="docutils literal notranslate"><span class="pre">by</span></code></p></li>
+<li><p>Improved estimability handling in <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code></p></li>
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">ref_grid()</span></code> accept <code class="docutils literal notranslate"><span class="pre">ylevs</span></code> list of length &gt; 1;
+also slight argument change: <code class="docutils literal notranslate"><span class="pre">mult.name</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">mult.names</span></code></p></li>
+<li><p>Various bug fixes, bullet-proofing</p></li>
+<li><p>Fixes to make Markdown files render better</p></li>
+</ul>
+</section>
+<section id="emmeans-1-1">
+<h1>emmeans 1.1<a class="headerlink" href="#emmeans-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> wherein <code class="docutils literal notranslate"><span class="pre">weights</span></code> was ignored
+when <code class="docutils literal notranslate"><span class="pre">specs</span></code> is a <code class="docutils literal notranslate"><span class="pre">list</span></code></p></li>
+<li><p>Coerce <code class="docutils literal notranslate"><span class="pre">data</span></code> argument, if supplied to a data.frame
+(<code class="docutils literal notranslate"><span class="pre">recover_data()</span></code> doesn’t like tibbles…)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">as.data.frame</span></code> method for <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code> objects, making it
+often possible to pass it directly to other functions as a <code class="docutils literal notranslate"><span class="pre">data</span></code>
+argument.</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">contrast()</span></code> where <code class="docutils literal notranslate"><span class="pre">by</span></code> was ignored for
+interaction contrasts</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">as.glht()</span></code> where it choked on <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">Inf</span></code></p></li>
+<li><p>Fixed bug occurring when a model call has no <code class="docutils literal notranslate"><span class="pre">data</span></code> or <code class="docutils literal notranslate"><span class="pre">subset</span></code></p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">joint_tests()</span></code> function tests all [interaction] contrasts</p></li>
+</ul>
+</section>
+<section id="emmeans-1-0">
+<h1>emmeans 1.0<a class="headerlink" href="#emmeans-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added preliminary support for <code class="docutils literal notranslate"><span class="pre">gamlss</span></code> objects (but doesn’t support
+smoothing). Additional argument is <code class="docutils literal notranslate"><span class="pre">what</span> <span class="pre">=</span> <span class="pre">c(&quot;mu&quot;,</span> <span class="pre">&quot;sigma&quot;,</span> <span class="pre">&quot;nu&quot;,</span> <span class="pre">&quot;tau&quot;)</span></code>
+It seems to be flaky when the model of interest is just <code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">1</span></code>.</p></li>
+<li><p>Improved support for models with fancy variable names
+(containing spaces and such)</p></li>
+<li><p>Fixed a bug whereby <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code> might pass <code class="docutils literal notranslate"><span class="pre">data</span></code> to <code class="docutils literal notranslate"><span class="pre">contrast()</span></code></p></li>
+<li><p>Added some missing documentation for <code class="docutils literal notranslate"><span class="pre">summary.emmGrid()</span></code></p></li>
+<li><p>Repaired handling of <code class="docutils literal notranslate"><span class="pre">emm_options(summary</span> <span class="pre">=</span> <span class="pre">...)</span></code> to work as
+advertised.</p></li>
+<li><p>Changed many object names in examples and vignettes from xxx.emmGrid
+to xxx.emm (result of overdoing the renaming the object class itself)</p></li>
+<li><p>Changed <code class="docutils literal notranslate"><span class="pre">emmGrid()</span></code> function to <code class="docutils literal notranslate"><span class="pre">emm()</span></code> as had been intended
+as alternative to <code class="docutils literal notranslate"><span class="pre">mcp()</span></code> in <code class="docutils literal notranslate"><span class="pre">multcomp::glht()</span></code> (result of ditto).</p></li>
+<li><p>Fixed error in exporting <code class="docutils literal notranslate"><span class="pre">cld.emm_list()</span></code></p></li>
+<li><p>Fixed a bug whereby all CIs were computed using the first estimate’s
+degrees of freedom.</p></li>
+<li><p>Now using <code class="docutils literal notranslate"><span class="pre">Inf</span></code> to display d.f. for asymptotic (z) tests. (<code class="docutils literal notranslate"><span class="pre">NA</span></code> will
+still work too but <code class="docutils literal notranslate"><span class="pre">Inf</span></code> is a better choice for consistency and meaning.)</p></li>
+<li><p>Bug fix in nesting-detection code when model has only an intercept</p></li>
+</ul>
+</section>
+<section id="emmeans-0-9-1">
+<h1>emmeans 0.9.1<a class="headerlink" href="#emmeans-0-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Documentation corrections (broken links, misspellings, mistakes)</p></li>
+<li><p>More sophisticated check for randomized data in <code class="docutils literal notranslate"><span class="pre">recover_data()</span></code>
+now throws an error when it finds recovered data not reproducible</p></li>
+<li><p>Added support for gam::gam objects</p></li>
+<li><p>Fixes to <code class="docutils literal notranslate"><span class="pre">vcov()</span></code> calls to comply with recent R-devel changes</p></li>
+</ul>
+</section>
+<section id="emmeans-0-9">
+<h1>emmeans 0.9<a class="headerlink" href="#emmeans-0-9" title="Link to this heading">#</a></h1>
+<p>This is the initial major version that replaces the <strong>lsmeans</strong> package.
+Changes shown below are changes made to the last real release of <strong>lsmeans</strong>
+(version 2.27-2). <strong>lsmeans</strong> versions greater than that are transitional
+to that package being retired.</p>
+<ul class="simple">
+<li><p>We now emphasize the terminology “estimated marginal means” rather
+than “least-squares means”</p></li>
+<li><p>The flagship functions are now <code class="docutils literal notranslate"><span class="pre">emmeans()</span></code>, <code class="docutils literal notranslate"><span class="pre">emtrends()</span></code>, <code class="docutils literal notranslate"><span class="pre">emmip()</span></code>, etc.
+But <code class="docutils literal notranslate"><span class="pre">lsmeans()</span></code>, <code class="docutils literal notranslate"><span class="pre">lstrends()</span></code>, etc. as well as <code class="docutils literal notranslate"><span class="pre">pmmeans()</span></code> etc. are
+mapped to their corresponding <code class="docutils literal notranslate"><span class="pre">emxxxx()</span></code> functions.</p></li>
+<li><p>In addition, we are trying to avoid names that could get confused as
+S3 methods. So, <code class="docutils literal notranslate"><span class="pre">ref.grid</span> <span class="pre">-&gt;</span> <span class="pre">ref_grid</span></code>, <code class="docutils literal notranslate"><span class="pre">lsm.options</span> <span class="pre">-&gt;</span> <span class="pre">emm_options</span></code>, etc.</p></li>
+<li><p>Classes <code class="docutils literal notranslate"><span class="pre">ref.grid</span></code> and <code class="docutils literal notranslate"><span class="pre">lsmobj</span></code> are gone.
+Both are replaced by class <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>. An <code class="docutils literal notranslate"><span class="pre">as.emmGrid()</span></code> function
+is provided to convert old objects to class <code class="docutils literal notranslate"><span class="pre">emmGrid</span></code>.</p></li>
+<li><p>I decided to revert back to “kenward-roger” as the default degrees-of-freedom
+method for <code class="docutils literal notranslate"><span class="pre">lmerMod</span> <span class="pre">models</span></code>. Also added options <code class="docutils literal notranslate"><span class="pre">disable.lmerTest</span></code>
+and <code class="docutils literal notranslate"><span class="pre">lmerTest.limit</span></code>, similar to those for <strong>pbkrtest</strong>.</p></li>
+<li><p>Documentation and NAMESPACE are now “ROxygenated”</p></li>
+<li><p>Additional <code class="docutils literal notranslate"><span class="pre">neuralgia</span></code> and <code class="docutils literal notranslate"><span class="pre">pigs</span></code> datasets</p></li>
+<li><p>Dispatching of <code class="docutils literal notranslate"><span class="pre">emmmeans()</span></code> methods is now top-down rather than convoluted
+intermingling of S3 methods</p></li>
+<li><p>Improved display of back-transformed contrasts when log or logit
+transformation was used: We change any <code class="docutils literal notranslate"><span class="pre">-</span></code>s in labels to <code class="docutils literal notranslate"><span class="pre">/</span></code>s
+to emphasize that thnese results are ratios.</p></li>
+<li><p>A message is now displayed when nesting is auto-detected in <code class="docutils literal notranslate"><span class="pre">ref_grid</span></code>.
+(Can be disabled via <code class="docutils literal notranslate"><span class="pre">emm_options()</span></code>)</p></li>
+<li><p>Options were added for several messages that users may want to suppress,
+e.g., ones about interactions and nesting.</p></li>
+<li><p>Greatly overhauled help page for models. It is now a vignette,
+with a quick reference chart linked to details, and is
+organized by similarities instead of packages.</p></li>
+<li><p>Support for ‘mer’ objects (lme4.0 package) removed.</p></li>
+<li><p>A large number of smaller interlinked vignettes replaces the one
+big one on using the package. Several vignettes are linked in the
+help pages.</p></li>
+<li><p>Graphics methods <code class="docutils literal notranslate"><span class="pre">plot()</span></code> and <code class="docutils literal notranslate"><span class="pre">emmip()</span></code> are now <strong>ggplot2</strong>-based.
+Old <strong>lattice</strong>-based functionality is still available too,
+and there is a <code class="docutils literal notranslate"><span class="pre">graphics.engine</span></code> option to choose the default.</p></li>
+<li><p>Non-exported utilities convert_workspace() and convert_scripts() to
+help with transition</p></li>
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">Suggests</span></code> pkgs to <code class="docutils literal notranslate"><span class="pre">Enhances</span></code> when not needed for
+building/testing</p></li>
+</ul>
+<section id="note-emmeans-is-a-continuation-of-the-lsmeans-package">
+<h2>NOTE: <strong>emmeans</strong> is a continuation of the <strong>lsmeans</strong> package.<a class="headerlink" href="#note-emmeans-is-a-continuation-of-the-lsmeans-package" title="Link to this heading">#</a></h2>
+<p>New developments will take place in <strong>emmeans</strong>, and <strong>lsmeans</strong>
+will remain static and eventually will be archived.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\emmeans"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">emmeans 1.10-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-6">emmeans 1.10.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-5">emmeans 1.10.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-4">emmeans 1.10.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-3">emmeans 1.10.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-2">emmeans 1.10.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-1">emmeans 1.10.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-10-0">emmeans 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-9-0">emmeans 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-9">emmeans 1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-8">emmeans 1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-7">emmeans 1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-6">emmeans 1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-5">emmeans 1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-4">emmeans 1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-3">emmeans 1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-2">emmeans 1.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-1">emmeans 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-8-0">emmeans 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-5">emmeans 1.7.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-4">emmeans 1.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-3">emmeans 1.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-2">emmeans 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-1">emmeans 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-7-0">emmeans 1.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notable-changes">Notable changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-tweaks">Bug fixes and tweaks</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-3">emmeans 1.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-2">emmeans 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-1">emmeans 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-6-0">emmeans 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-5">emmeans 1.5.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-4">emmeans 1.5.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-3">emmeans 1.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-2">emmeans 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-1">emmeans 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-5-0">emmeans 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-8">emmeans 1.4.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-7">emmeans 1.4.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-6">emmeans 1.4.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-5">emmeans 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-4">emmeans 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-3-01">emmeans 1.4.3.01</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-3">emmeans 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-2">emmeans 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4-1">emmeans 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-4">emmeans 1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-5-1">emmeans 1.3.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-5">emmeans 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-4">emmeans 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-3">emmeans 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-2">emmeans 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-1">emmeans 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-3-0">emmeans 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-4">emmeans 1.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-3">emmeans 1.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-2">emmeans 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2-1">emmeans 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-2">emmeans 1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1-3">emmeans 1.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1-2">emmeans 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-1">emmeans 1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-1-0">emmeans 1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-0-9-1">emmeans 0.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#emmeans-0-9">emmeans 0.9</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-emmeans-is-a-continuation-of-the-lsmeans-package">NOTE: <strong>emmeans</strong> is a continuation of the <strong>lsmeans</strong> package.</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

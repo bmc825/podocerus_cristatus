@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>languageserver 0.3.16 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/languageserver/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/languageserver/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>languageserver 0.3.16</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">languageserver 0.3.16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-15">languageserver 0.3.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-14">languageserver 0.3.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-13">languageserver 0.3.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-12">languageserver 0.3.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-11">languageserver 0.3.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-10">languageserver 0.3.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-9">languageserver 0.3.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-8">languageserver 0.3.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-7">languageserver 0.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-6">languageserver 0.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-5">languageserver 0.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-4">languageserver 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-3">languageserver 0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-2">languageserver 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-1">languageserver 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-0">languageserver 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-6">languageserver 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-5">languageserver 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-4">languageserver 0.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-3">languageserver 0.2.3</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-16">
+<h1>languageserver 0.3.16<a class="headerlink" href="#languageserver-0-3-16" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>Error in Neovim: “attempt to compare string with number” (#609)</p></li>
+<li><p>On-type formatter adds extra indentations after pipes (#607)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Handle vscode-notebook-cell in <code class="docutils literal notranslate"><span class="pre">path_from_uri</span></code> (#610)</p></li>
+<li><p>Skip incomplete lines in on-type-formatting (#615)</p></li>
+<li><p>Enable the folding of binary operations (#613)</p></li>
+<li><p>make sure column is defined (#614)</p></li>
+<li><p>Use code and codeDescription in diagnostic (#611)</p></li>
+<li><p>Fix path_from_uri (#612)</p></li>
+<li><p>Fix regex pattern to match chunk label after comma (#608)</p></li>
+<li><p>Include pacman Suggests dependency in DESCRIPTION (#604)</p></li>
+<li><p>Add link to R-Nova extension for Nova (#598)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-15">
+<h1>languageserver 0.3.15<a class="headerlink" href="#languageserver-0-3-15" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>package::function() autocompletion doesn’t include re-exported functions (#590)</p></li>
+<li><p>Server failed to start probably due to hard-coded installation path ERROR (#579)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Include all exports in namespace objects (#591)</p></li>
+<li><p>Disable linters actions (#589)</p></li>
+<li><p>Avoid emitting a negative activeSignature (#586)</p></li>
+<li><p>fix CRAN check warnings (#583)</p></li>
+<li><p>Ignore error on checking is.function of namespace objects (#582)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-14">
+<h1>languageserver 0.3.14<a class="headerlink" href="#languageserver-0-3-14" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>NA introduced into position when opening curly braces (#564)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html-to-markdown.lua</span></code> error: attempt to call a nil value (#555)</p></li>
+<li><p>R6Class finalize() method is public, but it should be private as of R6 2.4.0 (#551)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Drop diagnostics on callback if disabled (#577)</p></li>
+<li><p>Bump styfle/cancel-workflow-action from 0.10.1 to 0.11.0 (#576)</p></li>
+<li><p>Bump styfle/cancel-workflow-action from 0.10.0 to 0.10.1 (#573)</p></li>
+<li><p>Provide package symbols before lint in diagnostics (#568)</p></li>
+<li><p>Support completion item labelDetails (#571)</p></li>
+<li><p>Enable multiple-level fold section of R document like RStudio (#566)</p></li>
+<li><p>fix NA introduced into position (#565)</p></li>
+<li><p>Requires lintr 3.0.0 (#562)</p></li>
+<li><p>Bump styfle/cancel-workflow-action from 0.9.1 to 0.10.0 (#560)</p></li>
+<li><p>Use lua-filter when pandoc_version &gt;= 2.11 (#556)</p></li>
+<li><p>Update link to the lintr package (#554)</p></li>
+<li><p>Use private finalizers for R6 classes (#553)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-13">
+<h1>languageserver 0.3.13<a class="headerlink" href="#languageserver-0-3-13" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>Language Server crashing sporadically (#368)</p></li>
+<li><p>Why not set up r-universe? (#536)</p></li>
+<li><p>Signature help not show up in if-else branch (#530)</p></li>
+<li><p>Some of the tables of arguments are too complex to be represented by GFM (#533)</p></li>
+<li><p>Rmd detection ignores front matter (#507)</p></li>
+<li><p>Range formatting and onTypeFormatting are performed in Rmd non-code content (#224)</p></li>
+<li><p>Respect document language specified from editor (#510)</p></li>
+<li><p>“No newline at end of file” after formatting file in VS Code (#462)</p></li>
+<li><p>completionItem/resolve result may not be null (#504)</p></li>
+<li><p>Disabling linting has no effect (#497)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>R 4.2 supports Unicode on Windows (#549)</p></li>
+<li><p>read may return -1 on error (#548)</p></li>
+<li><p>R universe (#542)</p></li>
+<li><p>do not pop the unbalance brackets in the current row (#541)</p></li>
+<li><p>Update GItHub Actions version (#537)</p></li>
+<li><p>Bump actions/upload-artifact from 1 to 3 (#540)</p></li>
+<li><p>Bump styfle/cancel-workflow-action from 0.9.0 to 0.9.1 (#539)</p></li>
+<li><p>Bump actions/cache from 2 to 3 (#538)</p></li>
+<li><p>convert the table of arguments to the sections of arguments with Lua filter (#534, thanks &#64;atusy))</p></li>
+<li><p>Added an entry for BBEdit (#532)</p></li>
+<li><p>Support arg completion for primitive functions (#526)</p></li>
+<li><p>Check rmd scope in on type formatting (#525)</p></li>
+<li><p>Respect document <code class="docutils literal notranslate"><span class="pre">languageId</span></code> (#511)</p></li>
+<li><p>Document formatting ensures trailing empty line (#509)</p></li>
+<li><p>Only call <code class="docutils literal notranslate"><span class="pre">fs::path_abs</span></code> with existing files (#506)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">completionItem/resolve</span></code> always returns <code class="docutils literal notranslate"><span class="pre">completionItem</span></code> (#505)</p></li>
+<li><p>Unpublish diagnostics when disabled (#498)</p></li>
+<li><p>add whitespace to <a class="reference external" href="http://NEWS.md">NEWS.md</a> (#490)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-12">
+<h1>languageserver 0.3.12<a class="headerlink" href="#languageserver-0-3-12" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>Documentation not working with R 4.1.1 (#468)</p></li>
+<li><p>Clean up dependencies (#470)</p></li>
+<li><p>Documentation for functions assigned with <code class="docutils literal notranslate"><span class="pre">=</span></code> differs from functions assigned with <code class="docutils literal notranslate"><span class="pre">&lt;-</span></code> (#466)</p></li>
+<li><p>Bug when hovering variables (#463)</p></li>
+<li><p>Null workspace folder not working with untitled documents (#460)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Add installation steps of OS-specific dependencies (#247)</p></li>
+<li><p>Use internal <code class="docutils literal notranslate"><span class="pre">get_help</span></code> instead of repr (#469)</p></li>
+<li><p>Remove desc from imports (#471)</p></li>
+<li><p>Fix hover on function defined with <code class="docutils literal notranslate"><span class="pre">EQ_ASSIGN</span></code> (#467)</p></li>
+<li><p>Fix several bugs (#464)</p></li>
+<li><p>Fix handling null workspace folder and untitled document (#461)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-11">
+<h1>languageserver 0.3.11<a class="headerlink" href="#languageserver-0-3-11" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>documentation only loaded for packages named in a library() call, not with p_load() (#257)</p></li>
+<li><p>Minimal {styler} version requirement (#457)</p></li>
+<li><p>If load package via pacman::p_load(), the autocompletion will be not able to work well (#426)</p></li>
+<li><p>If I wrap library call in suppressPackageStartUpLanguages, autocompletion won’t work (#451)</p></li>
+<li><p>Handle <code class="docutils literal notranslate"><span class="pre">workspace/didChangeWatchedFiles</span></code> (#446)</p></li>
+<li><p>Environment variable LANG (#435)</p></li>
+<li><p>Support lambda as function (#427)</p></li>
+<li><p>Support pipe operator in onTypeFormatting (#430)</p></li>
+<li><p>Exclusions in .lintr not working (#282)</p></li>
+<li><p>Packages not loaded prior to linting with coc-r-lsp (#238)</p></li>
+<li><p>Provide diagnostics on non-installed packages (#80)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Require styler &gt;= 1.5.1 (#458)</p></li>
+<li><p>Support unscoped functions and library functions (#452)</p></li>
+<li><p>Handle <code class="docutils literal notranslate"><span class="pre">workspace/didChangeWatchedFiles</span></code> (#447)</p></li>
+<li><p>Add code action to disable linters (#408)</p></li>
+<li><p>Improve handling configuration settings (#439)</p></li>
+<li><p>check if lintr is new enough (#437)</p></li>
+<li><p>Use lint text if supported (#284)</p></li>
+<li><p>output text as is (#436)</p></li>
+<li><p>consolidate github action jobs (#434)</p></li>
+<li><p>Lambda support (#428)</p></li>
+<li><p>Use a function call as the completer in on-type-formatting (#431)</p></li>
+<li><p>support trace in InitializeParams (#423)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-10">
+<h1>languageserver 0.3.10<a class="headerlink" href="#languageserver-0-3-10" title="Link to this heading">#</a></h1>
+<p><strong>Closed issues:</strong></p>
+<ul class="simple">
+<li><p>definitionProvider should work with file path (#415)</p></li>
+<li><p>Null value in documentation does not trigger signature (#417)</p></li>
+<li><p>Improve completion performance (#412)</p></li>
+<li><p>Completion not working before close parenthesis (#410)</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">styler::style_text(base_indention=)</span></code> for <code class="docutils literal notranslate"><span class="pre">styler</span> <span class="pre">&gt;</span> <span class="pre">1.4.0</span></code> (#400)</p></li>
+<li><p>Segfault on incorrect coordinates (#395)</p></li>
+<li><p>Case-insensitive and fuzzy match in completion (#401)</p></li>
+<li><p>Non-interactive setup of persistent {R.cache} cache for {styler} (#402)</p></li>
+<li><p>Document link should work with limited file extensions or file size (#391)</p></li>
+<li><p>get_document_symbol_kind error (#390)</p></li>
+<li><p>Support Call Hierarchy (#361)</p></li>
+<li><p>[FR] Display promise / active-binding objects in the OUTLINE (#362)</p></li>
+</ul>
+<p><strong>Merged pull requests:</strong></p>
+<ul class="simple">
+<li><p>Definition provider works with file path (#416)</p></li>
+<li><p>Fix null doc_string in signature (#418)</p></li>
+<li><p>Faster completion (#413)</p></li>
+<li><p>fix raw string detection (#411)</p></li>
+<li><p>Use styler base_indention (#404)</p></li>
+<li><p>support R 4.0 raw string search (#276)</p></li>
+<li><p>fix a segfault issue (#407)</p></li>
+<li><p>Remove symbols starting with <code class="docutils literal notranslate"><span class="pre">._</span></code> from namespace (#406)</p></li>
+<li><p>Provide case-insensitive completion (#405)</p></li>
+<li><p>Update <a class="reference external" href="http://README.md">README.md</a> (#403)</p></li>
+<li><p>fix missing whitespace (#399)</p></li>
+<li><p>Limit link file size (#393)</p></li>
+<li><p>Full testthat v3 compatibility (#394)</p></li>
+<li><p>Make headers in help hover look prettier (#392)</p></li>
+<li><p>Options completion (#389)</p></li>
+<li><p>Improve hover for function docs (#387)</p></li>
+<li><p>Implement Call Hierarchy provider (#373)</p></li>
+<li><p>Remove ‘(’ from completion trigger chars (#374)</p></li>
+<li><p>Improve token completion (#372)</p></li>
+<li><p>Preserve argument order in argument completion (#370)</p></li>
+<li><p>Add ‘(’ to completion trigger characters (#369)</p></li>
+<li><p>Use empty string instead of NULL as default signature doc (#371)</p></li>
+<li><p>Add hover to function symbol formals (#367)</p></li>
+<li><p>Implement selectionRangeProvider (#366)</p></li>
+<li><p>Recognize symbols created by delayedAssign / assign / makeActiveBinding (#364)</p></li>
+<li><p>use expect_setequal() may fit better (#363)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-9">
+<h1>languageserver 0.3.9<a class="headerlink" href="#languageserver-0-3-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>skip tests on solaris</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-8">
+<h1>languageserver 0.3.8<a class="headerlink" href="#languageserver-0-3-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>When closing a file, “Problems” should be removed (#348)</p></li>
+<li><p>Implement renameProvider (#337)</p></li>
+<li><p>Hover on symbol in a function with functional argument causes parse error (#345)</p></li>
+<li><p>Hover on non-function symbol in other document should show definition and - documentation (#343)</p></li>
+<li><p>Check if symbol on rhs of assignment in definition (#341)</p></li>
+<li><p>Implement referencesProvider (#336)</p></li>
+<li><p>Add comment of notice above temp code of definition (#353)</p></li>
+<li><p>Implement renameProvider (#339)</p></li>
+<li><p>Fix tests (#351)</p></li>
+<li><p>Update coc help in README (#350)</p></li>
+<li><p>Remove diagnostics of closed files in non-package workspace (#349)</p></li>
+<li><p>Fix hover func arg (#346)</p></li>
+<li><p>Fix hover on non-function symbol (#344)</p></li>
+<li><p>Fix checking symbol on rhs of assignment expression (#342)</p></li>
+<li><p>Implement referencesProvider (#338)</p></li>
+<li><p>Do not load sysdata.rda (#347)</p></li>
+<li><p>release v0.3.7 (#335)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-7">
+<h1>languageserver 0.3.7<a class="headerlink" href="#languageserver-0-3-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Local function support (#330)</p></li>
+<li><p>Update xpaths to adapt to token change in parse data in R 4.0 (#328)</p></li>
+<li><p>Exclude existing completion items in token_completion (#326)</p></li>
+<li><p>Add token completion (#324)</p></li>
+<li><p>Only provide imported completions without package (#323)</p></li>
+<li><p>Improve folding (#317)</p></li>
+<li><p>More robust rmd chunk pattern (#318)</p></li>
+<li><p>Limit string length to provide color and link (#314)</p></li>
+<li><p>Minor improvements (#312)</p></li>
+<li><p>Improve xpath to work with cursor on token ending (#311)</p></li>
+<li><p>Support folding ranges for comments (#309)</p></li>
+<li><p>fix covr test (#310)</p></li>
+<li><p>Not trigger on-type-formatting on comment line (#308)</p></li>
+<li><p>Convert roxygen comments to documentation (#305)</p></li>
+<li><p>Support all symbols in definitions (#295)</p></li>
+<li><p>Use isf=FALSE (#303)</p></li>
+<li><p>Support startup library specified in profile (#302)</p></li>
+<li><p>Fix rmd chunk pattern (#297)</p></li>
+<li><p>Try parsing string in link and color (#300)</p></li>
+<li><p>Implement foldingRangeProvider (#294)</p></li>
+<li><p>Check uri in diagnostics_callback (#292)</p></li>
+<li><p>Fix for #283 - “unexpected ‘/’” on save (#291)</p></li>
+<li><p>use mac.binary instead of mac.binary.el-capitan (#293)</p></li>
+<li><p>Change dev version download script in the README (#287)</p></li>
+<li><p>Use sortText in completions (#286)</p></li>
+<li><p>Rmd chunk symbol (#280)</p></li>
+<li><p>make sure the path is UTF-8 (#278)</p></li>
+<li><p>make sure process is alive (#275)</p></li>
+<li><p>Fix handling raw string in link and color (#274)</p></li>
+<li><p>Indent all elements except braces in apply_initial_indention (#271)</p></li>
+<li><p>Use old behavior if formatting scope &lt; indention (#269)</p></li>
+<li><p>Fix range formatting handling initial indentation (#268)</p></li>
+<li><p>Use more conservative pool_size (#267)</p></li>
+<li><p>add session pool for task manager (#265)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-6">
+<h1>languageserver 0.3.6<a class="headerlink" href="#languageserver-0-3-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Show error message when diagnostics failed</p></li>
+<li><p>fix enclosed_by_quotes</p></li>
+<li><p>fix a bug in returning NA locations</p></li>
+<li><p>requires collections 0.3.0</p></li>
+<li><p>Run tasks with delay to reduce CPU usage on input</p></li>
+<li><p>Refine args (Merge 9fd102b)</p></li>
+<li><p>respect NAMESPACE file</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-5">
+<h1>languageserver 0.3.5<a class="headerlink" href="#languageserver-0-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Remove dependency on readr</p></li>
+<li><p>Use stringi to replace stringr</p></li>
+<li><p>Respect snippetSupport</p></li>
+<li><p>Respect linter_file in diagnostics</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-4">
+<h1>languageserver 0.3.4<a class="headerlink" href="#languageserver-0-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>on-type-formatting</p></li>
+<li><p>documentLinkProvider</p></li>
+<li><p>textDocument/documentColor</p></li>
+<li><p>use writeLines to write raw data in Windows</p></li>
+<li><p>Support section/subsection in document symbols</p></li>
+<li><p>make sure the output are UTF8</p></li>
+<li><p>set O_BINARY for stdin/stdout</p></li>
+<li><p>allows user to override ServerCapabilities</p></li>
+<li><p>Incremental resolving packages</p></li>
+<li><p>Disable lintr for temp files</p></li>
+<li><p>and a lot of minor fixes and improvements</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-3">
+<h1>languageserver 0.3.3<a class="headerlink" href="#languageserver-0-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>xml based parsing which provides more information on hovering, definitions and completions</p></li>
+<li><p>a bug fix in reading stdin</p></li>
+<li><p>unicode support improvement</p></li>
+<li><p>some internal refactoring</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-2">
+<h1>languageserver 0.3.2<a class="headerlink" href="#languageserver-0-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>read other header fields</p></li>
+<li><p>require newer version of collections</p></li>
+<li><p>allow colon to trigger completion</p></li>
+<li><p>specify kind for non exported package objects</p></li>
+<li><p>Only provide package exported objects at :: (#84)</p></li>
+<li><p>run tests on github actions</p></li>
+<li><p>implementation of scope completion using xpath</p></li>
+<li><p>Allow user customizable formatting style</p></li>
+<li><p>use readr’s read_lines and write_lines</p></li>
+<li><p>use a better function name</p></li>
+<li><p>Provide completion for language constants</p></li>
+<li><p>bump lintr to 2.0.0</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-1">
+<h1>languageserver 0.3.1<a class="headerlink" href="#languageserver-0-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Recursive parsing (#56)</p></li>
+<li><p>improve way to check if process becomes orphan</p></li>
+<li><p>unicode support</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-3-0">
+<h1>languageserver 0.3.0<a class="headerlink" href="#languageserver-0-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added symbol definitions</p></li>
+<li><p>added document and workspace symbols</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-2-6">
+<h1>languageserver 0.2.6<a class="headerlink" href="#languageserver-0-2-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix a bug in completion items</p></li>
+<li><p>lower bound lintr to 1.0.3</p></li>
+<li><p>fix a bug in desc_get_deps</p></li>
+<li><p>better support vscode settings</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-2-5">
+<h1>languageserver 0.2.5<a class="headerlink" href="#languageserver-0-2-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>deprecate languageserver.default_linters</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-2-4">
+<h1>languageserver 0.2.4<a class="headerlink" href="#languageserver-0-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>require latest styler release</p></li>
+<li><p>handle windows crlf</p></li>
+<li><p>disable homedir config until lintr is released</p></li>
+<li><p>concat multiple lines in signature</p></li>
+<li><p>Allow package name to contain dots (e.g. data.table)</p></li>
+<li><p>completing variables defined in document</p></li>
+<li><p>support completions and function signatures from documents</p></li>
+<li><p>improve worksync consistency</p></li>
+<li><p>sync all R files of a package</p></li>
+<li><p>load packages in Depends field</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="languageserver-0-2-3">
+<h1>languageserver 0.2.3<a class="headerlink" href="#languageserver-0-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>ensure unicode documentation</p></li>
+<li><p>use * as itemBullet for hover help</p></li>
+<li><p>check if rootUri is NULL</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\languageserver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">languageserver 0.3.16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-15">languageserver 0.3.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-14">languageserver 0.3.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-13">languageserver 0.3.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-12">languageserver 0.3.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-11">languageserver 0.3.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-10">languageserver 0.3.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-9">languageserver 0.3.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-8">languageserver 0.3.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-7">languageserver 0.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-6">languageserver 0.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-5">languageserver 0.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-4">languageserver 0.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-3">languageserver 0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-2">languageserver 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-1">languageserver 0.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-3-0">languageserver 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-6">languageserver 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-5">languageserver 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-4">languageserver 0.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#languageserver-0-2-3">languageserver 0.2.3</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

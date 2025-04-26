@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dtplyr 1.3.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/dtplyr/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/dtplyr/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>dtplyr 1.3.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">dtplyr 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-3-0">dtplyr 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-improvements">Performance improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-2">dtplyr 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-1">dtplyr 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-0">dtplyr 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-authors">New authors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-1-0">dtplyr 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translation-improvements">Translation improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-0-1">dtplyr 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-0-0">dtplyr 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-3">dtplyr 0.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-2">dtplyr 0.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-1">dtplyr 0.0.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-3-1">
+<h1>dtplyr 1.3.1<a class="headerlink" href="#dtplyr-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix for failing R CMD check.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtplyr</span></code> no longer directly depends on <code class="docutils literal notranslate"><span class="pre">crayon</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-3-0">
+<h1>dtplyr 1.3.0<a class="headerlink" href="#dtplyr-1-3-0" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>dplyr and tidyr verbs no longer dispatch to dtplyr translations when used
+directly on data.table objects. <code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code> must now explicitly be called by
+the user (#312).</p></li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">across()</span></code> output can now be used as a data frame (#341).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.by</span></code>/<code class="docutils literal notranslate"><span class="pre">by</span></code> has been implemented for <code class="docutils literal notranslate"><span class="pre">mutate()</span></code>, <code class="docutils literal notranslate"><span class="pre">summarise()</span></code>, <code class="docutils literal notranslate"><span class="pre">filter()</span></code>,
+and the <code class="docutils literal notranslate"><span class="pre">slice()</span></code> family (#399).</p></li>
+<li><p>New translations for <code class="docutils literal notranslate"><span class="pre">add_count()</span></code>, <code class="docutils literal notranslate"><span class="pre">pick()</span></code> (#341), and <code class="docutils literal notranslate"><span class="pre">unite()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_rank()</span></code>, <code class="docutils literal notranslate"><span class="pre">dense_rank()</span></code>, <code class="docutils literal notranslate"><span class="pre">percent_rank()</span></code>, &amp; <code class="docutils literal notranslate"><span class="pre">cume_dist()</span></code> are now mapped
+to their <code class="docutils literal notranslate"><span class="pre">data.table</span></code> equivalents (#396).</p></li>
+</ul>
+</section>
+<section id="performance-improvements">
+<h2>Performance improvements<a class="headerlink" href="#performance-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">arrange()</span></code> now utilizes <code class="docutils literal notranslate"><span class="pre">setorder()</span></code> when possible for improved performance
+(#364).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">select()</span></code> now drops columns by reference when possible for improved
+performance (#367).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slice()</span></code> uses an intermediate variable to reduce computation time of row
+selection (#377).</p></li>
+</ul>
+</section>
+<section id="minor-improvements-and-bug-fixes">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#minor-improvements-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>dtplyr no longer directly depends on <code class="docutils literal notranslate"><span class="pre">ellipsis</span></code>.</p></li>
+<li><p>Chained operations properly prevent modify-by-reference (#210).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">across()</span></code>, <code class="docutils literal notranslate"><span class="pre">if_any()</span></code>, and <code class="docutils literal notranslate"><span class="pre">if_all()</span></code> evaluate the <code class="docutils literal notranslate"><span class="pre">.cols</span></code> argument
+in the environment from which the function was called.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count()</span></code> properly handles grouping variables (#356).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">desc()</span></code> now supports use of <code class="docutils literal notranslate"><span class="pre">.data</span></code> pronoun inside in <code class="docutils literal notranslate"><span class="pre">arrange()</span></code> (#346).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">full_join()</span></code> now produces output with correctly named columns when a
+non-default value for <code class="docutils literal notranslate"><span class="pre">suffix</span></code> is supplied. Previously the <code class="docutils literal notranslate"><span class="pre">suffix</span></code> argument
+was ignored (#382).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if_any()</span></code> and <code class="docutils literal notranslate"><span class="pre">if_all()</span></code> now work without specifying the <code class="docutils literal notranslate"><span class="pre">.fns</span></code> argument
+(&#64;mgirlich, #325) and for a list of functions specified in the
+(&#64;mgirlich, #335).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pivot_wider()</span></code>’s <code class="docutils literal notranslate"><span class="pre">names_glue</span></code> now works even when <code class="docutils literal notranslate"><span class="pre">names_from</span></code> contains
+<code class="docutils literal notranslate"><span class="pre">NA</span></code>s (#394).</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">semi_join()</span></code> the <code class="docutils literal notranslate"><span class="pre">y</span></code> table is again coerced to a lazy table if
+<code class="docutils literal notranslate"><span class="pre">copy</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (&#64;mgirlich, #322).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code> can now use <code class="docutils literal notranslate"><span class="pre">.keep</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code>/<code class="docutils literal notranslate"><span class="pre">summarize()</span></code> correctly translates anonymous functions (#362).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code>/<code class="docutils literal notranslate"><span class="pre">transmute()</span></code> now supports <code class="docutils literal notranslate"><span class="pre">glue::glue()</span></code> and <code class="docutils literal notranslate"><span class="pre">stringr::str_glue()</span></code>
+without specifying  <code class="docutils literal notranslate"><span class="pre">.envir</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">where()</span></code> now clearly errors because dtplyr doesn’t support selection
+by predicate (#271).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-2-2">
+<h1>dtplyr 1.2.2<a class="headerlink" href="#dtplyr-1-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Hot patch release to resolve R CMD check failures.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-2-1">
+<h1>dtplyr 1.2.1<a class="headerlink" href="#dtplyr-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix for upcoming rlang release.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-2-0">
+<h1>dtplyr 1.2.0<a class="headerlink" href="#dtplyr-1-2-0" title="Link to this heading">#</a></h1>
+<section id="new-authors">
+<h2>New authors<a class="headerlink" href="#new-authors" title="Link to this heading">#</a></h2>
+<p>&#64;markfairbanks, &#64;mgirlich, and &#64;eutwt are now dtplyr authors in recognition of their significant and sustained contributions. Along with &#64;eutwt, they supplied the bulk of the improvements in this release!</p>
+</section>
+<section id="id1">
+<h2>New features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>dtplyr gains translations for many more tidyr verbs:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop_na()</span></code> (&#64;markfairbanks, #194)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">complete()</span></code> (&#64;markfairbanks, #225)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expand()</span></code> (&#64;markfairbanks, #225)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fill()</span></code> (&#64;markfairbanks, #197)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pivot_longer()</span></code> (&#64;markfairbanks, #204)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replace_na()</span></code> (&#64;markfairbanks, #202)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nest()</span></code> (&#64;mgirlich, #251)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">separate()</span></code> (&#64;markfairbanks, #269)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tally()</span></code> gains a translation (&#64;mgirlich, #201).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ifelse()</span></code> is mapped to <code class="docutils literal notranslate"><span class="pre">fifelse()</span></code> (&#64;markfairbanks, #220).</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">slice()</span></code> helpers (<code class="docutils literal notranslate"><span class="pre">slice_head()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_tail()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_min()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_max()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">slice_sample()</span></code>) now accept negative values for <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">prop</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">across()</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">everything()</span></code> when <code class="docutils literal notranslate"><span class="pre">.cols</span></code> isn’t provided
+(&#64;markfairbanks, #231), and handles named selections (&#64;eutwt #293).
+It ˜ow handles <code class="docutils literal notranslate"><span class="pre">.fns</span></code> arguments in more forms (&#64;eutwt #288):</p>
+<ul>
+<li><p>Anonymous functions, such as <code class="docutils literal notranslate"><span class="pre">function(x)</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code></p></li>
+<li><p>Formulas which don’t require a function call, such as <code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">1</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arrange(dt,</span> <span class="pre">desc(col))</span></code> is translated to <code class="docutils literal notranslate"><span class="pre">dt[order(-col)]</span></code> in order to
+take advantage of data.table’s fast order (&#64;markfairbanks, #227).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count()</span></code> applied to data.tables no longer breaks when dtplyr is loaded
+(&#64;mgirlich, #201).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">case_when()</span></code> supports use of <code class="docutils literal notranslate"><span class="pre">T</span></code> to specify the default (#272).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filter()</span></code> errors for named input, e.g. <code class="docutils literal notranslate"><span class="pre">filter(dt,</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">1)</span></code>
+(&#64;mgirlich, #267) and works for negated logical columns (&#64;mgirlich, &#64;211).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_by()</span></code> ungroups when no grouping variables are specified
+(&#64;mgirlich, #248), and supports inline mutation like <code class="docutils literal notranslate"><span class="pre">group_by(dt,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">x)</span></code>
+(&#64;mgirlich, #246).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if_else()</span></code> named arguments are translated to the correct arguments in
+<code class="docutils literal notranslate"><span class="pre">data.table::fifelse()</span></code> (&#64;markfairbanks, #234). <code class="docutils literal notranslate"><span class="pre">if_else()</span></code>
+supports <code class="docutils literal notranslate"><span class="pre">.data</span></code> and <code class="docutils literal notranslate"><span class="pre">.env</span></code> pronouns (&#64;markfairbanks, #220).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if_any()</span></code> and <code class="docutils literal notranslate"><span class="pre">if_all()</span></code> default to <code class="docutils literal notranslate"><span class="pre">everything()</span></code> when <code class="docutils literal notranslate"><span class="pre">.cols</span></code> isn’t
+provided (&#64;eutwt, #294).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intersect()</span></code>/<code class="docutils literal notranslate"><span class="pre">union()</span></code>/<code class="docutils literal notranslate"><span class="pre">union_all()</span></code>/<code class="docutils literal notranslate"><span class="pre">setdiff()</span></code> convert data.table inputs
+to <code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code> (#278).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lag()</span></code>/<code class="docutils literal notranslate"><span class="pre">lead()</span></code> are translated to <code class="docutils literal notranslate"><span class="pre">shift()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code> keeps groups (&#64;mgirlich, #206).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_join()</span></code> produces the same column order as dplyr
+(&#64;markfairbanks, #139).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_join()</span></code>, <code class="docutils literal notranslate"><span class="pre">right_join()</span></code>, <code class="docutils literal notranslate"><span class="pre">full_join()</span></code>, and <code class="docutils literal notranslate"><span class="pre">inner_join()</span></code> perform a
+cross join for <code class="docutils literal notranslate"><span class="pre">by</span> <span class="pre">=</span> <span class="pre">character()</span></code> (&#64;mgirlich, #242).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_join()</span></code>, <code class="docutils literal notranslate"><span class="pre">right_join()</span></code>, and <code class="docutils literal notranslate"><span class="pre">inner_join()</span></code> are always translated to
+the <code class="docutils literal notranslate"><span class="pre">[.data.table</span></code> equivalent. For simple merges the translation gets a bit
+longer but thanks to the simpler code base it helps to better handle
+names in <code class="docutils literal notranslate"><span class="pre">by</span></code> and duplicated variables names produced in the data.table join
+(&#64;mgirlich, #222).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code> and <code class="docutils literal notranslate"><span class="pre">transmute()</span></code> work when called without variables
+(&#64;mgirlich, #248).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code> gains new experimental arguments <code class="docutils literal notranslate"><span class="pre">.before</span></code> and <code class="docutils literal notranslate"><span class="pre">.after</span></code> that allow
+you to control where the new columns are placed (to match dplyr 1.0.0)
+(&#64;eutwt #291).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code> can modify grouping columns (instead of creating another
+column with the same name) (&#64;mgirlich, #246).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_distinct()</span></code> is translated to <code class="docutils literal notranslate"><span class="pre">uniqueN()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tally()</span></code> and <code class="docutils literal notranslate"><span class="pre">count()</span></code> follow the dplyr convention of creating a unique
+name if the default output <code class="docutils literal notranslate"><span class="pre">name</span></code> (n) already exists (&#64;eutwt, #295).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pivot_wider()</span></code> names the columns correctly when <code class="docutils literal notranslate"><span class="pre">names_from</span></code> is a
+numeric column (&#64;mgirlich, #214).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pull()</span></code> supports the <code class="docutils literal notranslate"><span class="pre">name</span></code> argument (&#64;mgirlich, #263).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slice()</span></code> no longer returns excess rows (#10).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slice_*()</span></code> functions after <code class="docutils literal notranslate"><span class="pre">group_by()</span></code> are faster (&#64;mgirlich, #216).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slice_max()</span></code> works when ordering by a character column (&#64;mgirlich, #218).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise()</span></code> supports the <code class="docutils literal notranslate"><span class="pre">.groups</span></code> argument (&#64;mgirlich, #245).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarise()</span></code>, <code class="docutils literal notranslate"><span class="pre">tally()</span></code>, and <code class="docutils literal notranslate"><span class="pre">count()</span></code> can change the value of a grouping
+variables (&#64;eutwt, #295).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transmute()</span></code> doesn’t produce duplicate columns when assigning to the same
+variable (&#64;mgirlich, #249). It correctly flags grouping variables so they
+selected (&#64;mgirlich, #246).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ungroup()</span></code> removes variables in <code class="docutils literal notranslate"><span class="pre">...</span></code> from grouping (&#64;mgirlich, #253).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-1-0">
+<h1>dtplyr 1.1.0<a class="headerlink" href="#dtplyr-1-1-0" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>New features<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>All verbs now have (very basic) documentation pointing back to the
+dplyr generic, and providing a (very rough) description of the translation
+accompanied with a few examples.</p></li>
+<li><p>Passing a data.table to a dplyr generic now converts it to a <code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code>,
+making it a little easier to move between data.table and dplyr syntax.</p></li>
+<li><p>dtplyr has been bought up to compatibility with dplyr 1.0.0. This includes
+new translations for:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">across()</span></code>, <code class="docutils literal notranslate"><span class="pre">if_any()</span></code>, <code class="docutils literal notranslate"><span class="pre">if_all()</span></code> (#154).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count()</span></code> (#159).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relocate()</span></code> (&#64;smingerson, #162).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rename_with()</span></code> (#160)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slice_min()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_max()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_head()</span></code>, <code class="docutils literal notranslate"><span class="pre">slice_tail()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">slice_sample()</span></code> (#174).</p></li>
+</ul>
+<p>And <code class="docutils literal notranslate"><span class="pre">rename()</span></code> and <code class="docutils literal notranslate"><span class="pre">select()</span></code> now support dplyr 1.0.0 tidyselect syntax
+(apart from predicate functions which can’t easily work on lazily evaluated
+data tables).</p>
+</li>
+<li><p>We have begun the process of adding translations for tidyr verbs beginning
+with <code class="docutils literal notranslate"><span class="pre">pivot_wider()</span></code> (&#64;markfairbanks, #189).</p></li>
+</ul>
+</section>
+<section id="translation-improvements">
+<h2>Translation improvements<a class="headerlink" href="#translation-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compute()</span></code> now creates an intermediate assignment within the translation.
+This will generally have little impact on performance but it allows you to
+use intermediate variables to simplify complex translations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">case_when()</span></code> is now translated to <code class="docutils literal notranslate"><span class="pre">fcase()</span></code> (#190).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cur_data()</span></code> (<code class="docutils literal notranslate"><span class="pre">.SD</span></code>), <code class="docutils literal notranslate"><span class="pre">cur_group()</span></code> (<code class="docutils literal notranslate"><span class="pre">.BY</span></code>), <code class="docutils literal notranslate"><span class="pre">cur_group_id()</span></code> (<code class="docutils literal notranslate"><span class="pre">.GRP</span></code>),
+and <code class="docutils literal notranslate"><span class="pre">cur_group_rows()</span> <span class="pre">(</span></code>.I`) are now tranlsated to their data.table
+equivalents (#166).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filter()</span></code> on grouped data nows use a much faster translation using on <code class="docutils literal notranslate"><span class="pre">.I</span></code>
+rather than <code class="docutils literal notranslate"><span class="pre">.SD</span></code> (and requiring an intermediate assignment) (#176). Thanks
+to suggestion from &#64;myoung3 and &#64;ColeMiller1.</p></li>
+<li><p>Translation of individual expressions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x[[1]]</span></code> is now translated correctly.</p></li>
+<li><p>Anonymous functions are now preserved (&#64;smingerson, #155)</p></li>
+<li><p>Environment variables used in the <code class="docutils literal notranslate"><span class="pre">i</span></code> argument of <code class="docutils literal notranslate"><span class="pre">[.data.table</span></code> are
+now correctly inlined when not in the global environment (#164).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code> and <code class="docutils literal notranslate"><span class="pre">F</span></code> are correctly translated to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (#140).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Grouped filter, mutate, and slice no longer affect ordering of output (#178).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_tibble()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">.name_repair</span></code> argument (&#64;markfairbanks).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.data.table()</span></code> always calls <code class="docutils literal notranslate"><span class="pre">[]</span></code> so that the result will print (#146).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print.lazy_dt()</span></code> shows total rows, and grouping, if present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_map()</span></code> and <code class="docutils literal notranslate"><span class="pre">group_walk()</span></code> are now translated (#108).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-0-1">
+<h1>dtplyr 1.0.1<a class="headerlink" href="#dtplyr-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Better handling for <code class="docutils literal notranslate"><span class="pre">.data</span></code> and <code class="docutils literal notranslate"><span class="pre">.env</span></code> pronouns (#138).</p></li>
+<li><p>dplyr verbs now work with <code class="docutils literal notranslate"><span class="pre">NULL</span></code> inputs (#129).</p></li>
+<li><p>joins do better job at determining output variables in the presence of
+duplicated outputs (#128). When joining based on different variables in <code class="docutils literal notranslate"><span class="pre">x</span></code>
+and <code class="docutils literal notranslate"><span class="pre">y</span></code>, joins consistently preserve column from <code class="docutils literal notranslate"><span class="pre">x</span></code>, not <code class="docutils literal notranslate"><span class="pre">y</span></code> (#137).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code> objects now have a useful <code class="docutils literal notranslate"><span class="pre">glimpse()</span></code> method (#132).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_by()</span></code> now has an <code class="docutils literal notranslate"><span class="pre">arrange</span></code> parameter which, if set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, sets
+the data.table translation to use <code class="docutils literal notranslate"><span class="pre">by</span></code> rather than <code class="docutils literal notranslate"><span class="pre">keyby</span></code> (#85).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rename()</span></code> now works without <code class="docutils literal notranslate"><span class="pre">data.table</span></code> attached, as intended
+(&#64;michaelchirico, #123).</p></li>
+<li><p>dtplyr has been re-licensed as MIT (#165).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-1-0-0">
+<h1>dtplyr 1.0.0<a class="headerlink" href="#dtplyr-1-0-0" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>Converted from eager approach to lazy approach. You now must use <code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code>
+to begin a translation pipeline, and must use <code class="docutils literal notranslate"><span class="pre">collect()</span></code>, <code class="docutils literal notranslate"><span class="pre">as.data.table()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">as.data.frame()</span></code>, or <code class="docutils literal notranslate"><span class="pre">as_tibble()</span></code> to finish the translation and actually
+perform the computation (#38).</p>
+<p>This represents a complete overhaul of the package replacing the eager
+evaluation used in the previous releases. This unfortunately breaks all
+existing code that used dtplyr, but frankly the previous version was
+extremely inefficient so offered little of data.table’s impressive speed,
+and was used by very few people.</p>
+</li>
+<li><p>dtplyr provides methods for data.tables that warning you that they use the
+data frame implementation and you should use <code class="docutils literal notranslate"><span class="pre">lazy_dt()</span></code> (#77)</p></li>
+<li><p>Joins now pass <code class="docutils literal notranslate"><span class="pre">...</span></code> on to data.table’s merge method (#41).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ungroup()</span></code> now copies its input (&#64;christophsax, #54).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutate()</span></code> preserves grouping (&#64;christophsax, #17).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if_else()</span></code> and <code class="docutils literal notranslate"><span class="pre">coalesce()</span></code> are mapped to data.table’s <code class="docutils literal notranslate"><span class="pre">fifelse()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">fcoalesce()</span></code> respectively (&#64;michaelchirico, #112).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-0-0-3">
+<h1>dtplyr 0.0.3<a class="headerlink" href="#dtplyr-0-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Maintenance release for CRAN checks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inner_join()</span></code>, <code class="docutils literal notranslate"><span class="pre">left_join()</span></code>, <code class="docutils literal notranslate"><span class="pre">right_join()</span></code>, and <code class="docutils literal notranslate"><span class="pre">full_join()</span></code>: new <code class="docutils literal notranslate"><span class="pre">suffix</span></code>
+argument which allows you to control what suffix duplicated variable names
+receive, as introduced in dplyr 0.5 (#40, &#64;christophsax).</p></li>
+<li><p>Joins use extended <code class="docutils literal notranslate"><span class="pre">merge.data.table()</span></code> and the <code class="docutils literal notranslate"><span class="pre">on</span></code> argument, introduced in
+data.table 1.9.6. Avoids copy and allows joins by different keys (#20, #21,
+&#64;christophsax).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-0-0-2">
+<h1>dtplyr 0.0.2<a class="headerlink" href="#dtplyr-0-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>This is a compatibility release. It makes dtplyr compatible with
+dplyr 0.6.0 in addition to dplyr 0.5.0.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dtplyr-0-0-1">
+<h1>dtplyr 0.0.1<a class="headerlink" href="#dtplyr-0-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">distinct()</span></code> gains <code class="docutils literal notranslate"><span class="pre">.keep_all</span></code> argument (#30, #31).</p></li>
+<li><p>Slightly improve test coverage (#6).</p></li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">devtools</span></code> from GitHub on Travis (#32).</p></li>
+<li><p>Joins return <code class="docutils literal notranslate"><span class="pre">data.table</span></code>. Right and full join are now implemented (#16, #19).</p></li>
+<li><p>Remove warnings from tests (#4).</p></li>
+<li><p>Extracted from <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> at revision e5f2952923028803.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\dtplyr"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">dtplyr 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-3-0">dtplyr 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-improvements">Performance improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-2">dtplyr 1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-1">dtplyr 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-2-0">dtplyr 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-authors">New authors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-1-0">dtplyr 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translation-improvements">Translation improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-0-1">dtplyr 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-1-0-0">dtplyr 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-3">dtplyr 0.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-2">dtplyr 0.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dtplyr-0-0-1">dtplyr 0.0.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

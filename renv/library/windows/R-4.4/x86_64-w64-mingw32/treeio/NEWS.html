@@ -1,0 +1,1243 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>treeio 1.29.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/treeio/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/treeio/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>treeio 1.29.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">treeio 1.29.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-29-1">treeio 1.29.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-28-0">treeio 1.28.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-27-1">treeio 1.27.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-26-0">treeio 1.26.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-4">treeio 1.25.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-3">treeio 1.25.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-2">treeio 1.25.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-1">treeio 1.25.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-24-0">treeio 1.24.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-23-1">treeio 1.23.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-22-0">treeio 1.22.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-3">treeio 1.21.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-2">treeio 1.21.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-1">treeio 1.21.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-20-0">treeio 1.20.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-19-2">treeio 1.19.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-19-1">treeio 1.19.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-18-0">treeio 1.18.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-17-2">treeio 1.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-17-1">treeio 1.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-16-0">treeio 1.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-6">treeio 1.15.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-5">treeio 1.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-4">treeio 1.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-3">treeio 1.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-2">treeio 1.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-1">treeio 1.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-14-0">treeio 1.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-13-1">treeio 1.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-12-0">treeio 1.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-3">treeio 1.11.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-2">treeio 1.11.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-1">treeio 1.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-10-0">treeio 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-3">treeio 1.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-2">treeio 1.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-1">treeio 1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-8-0">treeio 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-4">treeio 1.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-3">treeio 1.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-2">treeio 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-1">treeio 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-6-0">treeio 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-3">treeio 1.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-2">treeio 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-1">treeio 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-4-0">treeio 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-15">treeio 1.3.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-14">treeio 1.3.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-13">treeio 1.3.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-12">treeio 1.3.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-11">treeio 1.3.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-10">treeio 1.3.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-9">treeio 1.3.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-8">treeio 1.3.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-7">treeio 1.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-6">treeio 1.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-5">treeio 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-4">treeio 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-3">treeio 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-2">treeio 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-1">treeio 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-2-0">treeio 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-1-2">treeio 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-1-1">treeio 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-11">treeio 0.99.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-10">treeio 0.99.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-9">treeio 0.99.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-8">treeio 0.99.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-7">treeio 0.99.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-6">treeio 0.99.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-3">treeio 0.99.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-1">treeio 0.99.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-0">treeio 0.99.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-0-1">treeio 0.0.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!--
+
+# TODO LIST
+
++ [ ] improve read.phyloxml
++ [ ] re-write read.beast to optimize parsing large file
+
+
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-29-2">
+<h1>treeio 1.29.2<a class="headerlink" href="#treeio-1-29-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>speedup <code class="docutils literal notranslate"><span class="pre">read.beast()</span></code> with multithreading supports (2024-10-27, Sun, #128)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-29-1">
+<h1>treeio 1.29.1<a class="headerlink" href="#treeio-1-29-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">yulab.utils::yulab_msg()</span></code> for startup message (2024-07-26, Fri)</p></li>
+<li><p>support treetime output (2024-07-18, Thu)</p>
+<ul>
+<li><p><a class="reference external" href="https://treetime.readthedocs.io/en/latest/tutorials/clock.html">https://treetime.readthedocs.io/en/latest/tutorials/clock.html</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-28-0">
+<h1>treeio 1.28.0<a class="headerlink" href="#treeio-1-28-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_19 (2024-05-15, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-27-1">
+<h1>treeio 1.27.1<a class="headerlink" href="#treeio-1-27-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added support for multiple trees / writing phylo objects in <code class="docutils literal notranslate"><span class="pre">write.beast()</span></code> (2024-04-08, Mon, #113)</p></li>
+<li><p>speed up <code class="docutils literal notranslate"><span class="pre">read.beast()</span></code> (2023-12-13, Wed, #118)</p></li>
+<li><p>optimize <code class="docutils literal notranslate"><span class="pre">write.jtree()</span></code> (2023-12-13, Wed, #117)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write.jplace()</span></code> method to export <code class="docutils literal notranslate"><span class="pre">jplace</span></code> object to a jplace file (2023-11-27, Mon, #112, #115)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-26-0">
+<h1>treeio 1.26.0<a class="headerlink" href="#treeio-1-26-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_18 (2023-10-25, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-25-4">
+<h1>treeio 1.25.4<a class="headerlink" href="#treeio-1-25-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>reexport <code class="docutils literal notranslate"><span class="pre">as.phylo.hclust_node()</span></code> to fix <code class="docutils literal notranslate"><span class="pre">as.phylo.pvclust()</span></code> issue (2023-8-25, Fri, #110)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-25-3">
+<h1>treeio 1.25.3<a class="headerlink" href="#treeio-1-25-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">find.hclust.igraph()</span></code> method to hierarchical clustering graph nodes (2023-08-11, Fri, #105)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">spt()</span></code> and <code class="docutils literal notranslate"><span class="pre">as.phylo.igraph()</span></code> to consider edge attributes (#105)</p></li>
+<li><p>move tree operation methods to the ‘tidytree’ package so that this package is focus on input, output and object conversion</p></li>
+<li><p>fixed issue in parse BEAST file that contains negative branch length (2023-08-03, Thu, #106)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-25-2">
+<h1>treeio 1.25.2<a class="headerlink" href="#treeio-1-25-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spt</span></code> method to find shortest path tree (2023-07-14, Fri, #102)</p></li>
+<li><p>update old-style ‘CITATION’ from <code class="docutils literal notranslate"><span class="pre">citEntry()</span></code> to <code class="docutils literal notranslate"><span class="pre">bibentry()</span></code> (2023-07-14, Fri, #102)</p></li>
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">as.treedata()</span></code> for <code class="docutils literal notranslate"><span class="pre">tbl_df</span></code> object (2023-07-14, Fri, #101)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keep.tip()</span></code> method to remove all tips excepts the selected tips (2023-07-13, Thu, #100)</p></li>
+<li><p>better support of converting ‘igraph’ object to ‘phylo’ object (2023-07-12, Wed, #99)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-25-1">
+<h1>treeio 1.25.1<a class="headerlink" href="#treeio-1-25-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">read.nhx()</span></code> when metadata contains both character and numeric (e.g., AAA111) (2023-05-31, Wed, #97)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-24-0">
+<h1>treeio 1.24.0<a class="headerlink" href="#treeio-1-24-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_17 (2023-05-03, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-23-1">
+<h1>treeio 1.23.1<a class="headerlink" href="#treeio-1-23-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>supports converting <code class="docutils literal notranslate"><span class="pre">dendro</span></code> object (output of <code class="docutils literal notranslate"><span class="pre">ggdendro::dendro_data()</span></code>) to a phylo object (2023-03-02, Thu, #95)</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">inner_join()</span></code> method to allows appending data of a variable</p>
+<ul>
+<li><p>use nested data structure and <code class="docutils literal notranslate"><span class="pre">tidyr::unnest</span></code> can extract and convert the data to a simple tibble data frame (#93)</p></li>
+</ul>
+</li>
+<li><p>update full_join method (#92)</p>
+<ul>
+<li><p>support standard dplyr UI of <code class="docutils literal notranslate"><span class="pre">by</span> <span class="pre">=</span> <span class="pre">c(</span> <span class="pre">'columnX'</span> <span class="pre">=</span> <span class="pre">'cloumnY')</span></code></p></li>
+<li><p>drop data from external <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> that are not presented in the tree</p></li>
+<li><p>use nested column if duplicated rows exist</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-22-0">
+<h1>treeio 1.22.0<a class="headerlink" href="#treeio-1-22-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor RELEASE_3_16 (2022-11-02, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-21-3">
+<h1>treeio 1.21.3<a class="headerlink" href="#treeio-1-21-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">as.phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">as.treedata</span></code> for data.frame object (2022-10-31, Mon, #88)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo()</span></code> method for <code class="docutils literal notranslate"><span class="pre">list</span></code> (2022-09-14, Wed, #86)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-21-2">
+<h1>treeio 1.21.2<a class="headerlink" href="#treeio-1-21-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">as.treedata.pvclust</span></code> method (2022-08-15, Mon, #82)</p></li>
+<li><p>add citation of the tree data book (2022-08-13, Sat)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-21-1">
+<h1>treeio 1.21.1<a class="headerlink" href="#treeio-1-21-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.nextstrain.json()</span></code> function to parse json tree file from NextStrain (2022-08-03, Wed, #81)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-20-0">
+<h1>treeio 1.20.0<a class="headerlink" href="#treeio-1-20-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.15 relase</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-19-2">
+<h1>treeio 1.19.2<a class="headerlink" href="#treeio-1-19-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update <code class="docutils literal notranslate"><span class="pre">offspring()</span></code> to work as <code class="docutils literal notranslate"><span class="pre">child()</span></code>. Actually they are using the same function with different default (<code class="docutils literal notranslate"><span class="pre">child(type</span> <span class="pre">=</span> <span class="pre">&quot;children&quot;)</span></code> and <code class="docutils literal notranslate"><span class="pre">offspring(type=&quot;all&quot;)</span></code>) (2022-03-16, Wed)</p></li>
+<li><p>update <code class="docutils literal notranslate"><span class="pre">child()</span></code> to support different types (“children”, ‘tips’, ‘internal’, ‘external’, ‘all’) (2022-03-09, Wed, #75)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write.beast</span></code> allows <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object only contains <code class="docutils literal notranslate"><span class="pre">phylo</span></code> slot, then it will equivalent to <code class="docutils literal notranslate"><span class="pre">write.nexus</span></code> (2022-02-23, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-19-1">
+<h1>treeio 1.19.1<a class="headerlink" href="#treeio-1-19-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed in <code class="docutils literal notranslate"><span class="pre">groupClade.treedata</span></code> to return a <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object instead of <code class="docutils literal notranslate"><span class="pre">phylo</span></code> (2021-11-12, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-18-0">
+<h1>treeio 1.18.0<a class="headerlink" href="#treeio-1-18-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.14 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-17-2">
+<h1>treeio 1.17.2<a class="headerlink" href="#treeio-1-17-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>allow additional parameter to pass to <code class="docutils literal notranslate"><span class="pre">drop.tip</span></code> methods (2021-06-23, Wed, &#64;xiangpin, #62)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">as.treedata</span></code> for <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> (2021-06-12, Sat)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.ultrametric</span></code> method to force a tree to be ultrametric (2021-06-09, Wed)</p></li>
+<li><p>introduce <code class="docutils literal notranslate"><span class="pre">force.ultrametric</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">read.mcmctree</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-17-1">
+<h1>treeio 1.17.1<a class="headerlink" href="#treeio-1-17-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.mcmctree</span></code> for PAML MCMCTree result (2021-06-04, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-16-0">
+<h1>treeio 1.16.0<a class="headerlink" href="#treeio-1-16-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.13 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-6">
+<h1>treeio 1.15.6<a class="headerlink" href="#treeio-1-15-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>optimized <code class="docutils literal notranslate"><span class="pre">read.nhx</span></code> for large tree file (2021-03-12, Fri)</p></li>
+</ul>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/51">YuLab-SMU/treeio#51</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-5">
+<h1>treeio 1.15.5<a class="headerlink" href="#treeio-1-15-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.beast.newick</span></code> and <code class="docutils literal notranslate"><span class="pre">write.beast.newick</span></code> for importing and exporting newick text with metadata in BEAST style (2021-03-11, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/50">YuLab-SMU/treeio#50</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-4">
+<h1>treeio 1.15.4<a class="headerlink" href="#treeio-1-15-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support parsing tree qza file from qiime2 (2020-03-01, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/46/files">YuLab-SMU/treeio#files</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-3">
+<h1>treeio 1.15.3<a class="headerlink" href="#treeio-1-15-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support parsing phyloxml (2021-02-04, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/44">YuLab-SMU/treeio#44</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-2">
+<h1>treeio 1.15.2<a class="headerlink" href="#treeio-1-15-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of parsing nhx, now compatible with missing nhx tag (2020-11-19, Thu)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/40">YuLab-SMU/treeio#40</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-15-1">
+<h1>treeio 1.15.1<a class="headerlink" href="#treeio-1-15-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>remove magrittr::<code class="docutils literal notranslate"><span class="pre">%&lt;&gt;%</span></code> as it throw error of ‘Error: could not find function “%&gt;%&lt;-”’ (2020-11-19, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-14-0">
+<h1>treeio 1.14.0<a class="headerlink" href="#treeio-1-14-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.12 release (2020-10-28, Wed)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-13-1">
+<h1>treeio 1.13.1<a class="headerlink" href="#treeio-1-13-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as_tibble</span></code> for <code class="docutils literal notranslate"><span class="pre">pvclust</span></code> (2020-06-22, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">as.treedata</span></code> methods for <code class="docutils literal notranslate"><span class="pre">pvclust</span></code> object (2020-06-21, Sun)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-12-0">
+<h1>treeio 1.12.0<a class="headerlink" href="#treeio-1-12-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.11 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-11-3">
+<h1>treeio 1.11.3<a class="headerlink" href="#treeio-1-11-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>change according to dplyr (v=1.0.0) (2020-04-09, Thu)</p>
+<ul>
+<li><p>remove mutate_, rename_, select_ and group_by_</p></li>
+</ul>
+</li>
+<li><p>remove data_frame for it was deprecated in tibble (v=3.0.0)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-11-2">
+<h1>treeio 1.11.2<a class="headerlink" href="#treeio-1-11-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update citation (2020-02-18, Tue)</p></li>
+<li><p>phyloxml parser <code class="docutils literal notranslate"><span class="pre">read.phyloxml</span></code> (2019-12-05, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-11-1">
+<h1>treeio 1.11.1<a class="headerlink" href="#treeio-1-11-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support jplace version 1 (2019-11-25, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/YuLab-SMU/treeio/pull/25">YuLab-SMU/treeio#25</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offspring</span></code> return <code class="docutils literal notranslate"><span class="pre">integer(0)</span></code> instead of throw error if input <code class="docutils literal notranslate"><span class="pre">.node</span></code> is a tip (2019-11-21, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-10-0">
+<h1>treeio 1.10.0<a class="headerlink" href="#treeio-1-10-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.10 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-9-3">
+<h1>treeio 1.9.3<a class="headerlink" href="#treeio-1-9-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add citation information (2019-10-05, Sta)</p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">phyPML</span></code> to <code class="docutils literal notranslate"><span class="pre">as.treedata.pml</span></code> (2019-10-01, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo</span></code> method for <code class="docutils literal notranslate"><span class="pre">igraph</span></code> (only work with tree graph) (2019-09-28, Sat)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-9-2">
+<h1>treeio 1.9.2<a class="headerlink" href="#treeio-1-9-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nodeid</span></code> and <code class="docutils literal notranslate"><span class="pre">nodelab</span></code> methods for converting between node number and labels (2019-08-09, Fri)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>, ‘ancestor<code class="docutils literal notranslate"><span class="pre">,</span> </code>child<code class="docutils literal notranslate"><span class="pre">,</span> </code>offspring<code class="docutils literal notranslate"><span class="pre">and</span></code>rootnode<code class="docutils literal notranslate"><span class="pre">methods</span> <span class="pre">for</span></code>treedata` (2019-08-07, Wed)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.mega_tabular</span></code> to parse MEGA Tabular output (2019-07-16, Tue)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.mega</span></code> to parse MEGA NEXUS (actually BEAST compatible)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-9-1">
+<h1>treeio 1.9.1<a class="headerlink" href="#treeio-1-9-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rename_taxa</span></code> now use 1st column as key and 2nd column as value by default (2019-05-28, Tue)</p></li>
+<li><p>enable <code class="docutils literal notranslate"><span class="pre">tree_subset</span></code> to specify <code class="docutils literal notranslate"><span class="pre">group_name</span></code> and enable to incorporate <code class="docutils literal notranslate"><span class="pre">root.edge</span></code> by setting <code class="docutils literal notranslate"><span class="pre">root_edge</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (2019-05-27, Mon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">full_join</span></code> method for phylo object (2019-05-22, Wed)</p></li>
+<li><p>redefined root method to wrape <code class="docutils literal notranslate"><span class="pre">ape::root.phylo</span></code> for compatibility (2019-05-20, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/treeio/issues/18">GuangchuangYu/treeio#18</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-8-0">
+<h1>treeio 1.8.0<a class="headerlink" href="#treeio-1-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.9 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-7-4">
+<h1>treeio 1.7.4<a class="headerlink" href="#treeio-1-7-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>update test according to the change of default RNG in the comming R-3.6 (2019-04-02, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-7-3">
+<h1>treeio 1.7.3<a class="headerlink" href="#treeio-1-7-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rescale_tree</span></code> from <code class="docutils literal notranslate"><span class="pre">ggtree</span></code> (2019-01-11, Fri)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-7-2">
+<h1>treeio 1.7.2<a class="headerlink" href="#treeio-1-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MRCA</span></code> methods for <code class="docutils literal notranslate"><span class="pre">phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">treedata</span></code>  (2019-01-10, Thu)</p></li>
+<li><p>mv vignettes to <a class="reference external" href="https://yulab-smu.github.io/treedata-book/">treedata-book</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">root</span></code> method from <code class="docutils literal notranslate"><span class="pre">ggtree::reroot</span></code> (2018-12-28, Fri)</p>
+<ul>
+<li><p>rename to <code class="docutils literal notranslate"><span class="pre">root</span></code> for importing <code class="docutils literal notranslate"><span class="pre">ape::root</span></code> generic</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-7-1">
+<h1>treeio 1.7.1<a class="headerlink" href="#treeio-1-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>compatible with <code class="docutils literal notranslate"><span class="pre">tibble</span></code> v=2.0.0 (2018-11-29, Thu)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-6-0">
+<h1>treeio 1.6.0<a class="headerlink" href="#treeio-1-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.8 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-5-3">
+<h1>treeio 1.5.3<a class="headerlink" href="#treeio-1-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.jplace</span></code> compatible with output of <a class="reference external" href="https://github.com/id-bioinfo/TIPars">TIPars</a> (2018-08-07, Tue)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-5-2">
+<h1>treeio 1.5.2<a class="headerlink" href="#treeio-1-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">as.phylo.ggtree</span></code> and <code class="docutils literal notranslate"><span class="pre">as.treedata.ggtree</span></code> (2018-07-19, Thu)</p></li>
+<li><p>fixed R check for <code class="docutils literal notranslate"><span class="pre">tree_subset</span></code> by using <code class="docutils literal notranslate"><span class="pre">rlang::quo</span></code> and import <code class="docutils literal notranslate"><span class="pre">utils::head</span></code>
+and <code class="docutils literal notranslate"><span class="pre">utils::tail</span></code> (2018-05-24, Thu)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tree_subset</span></code> methods contributed by <a class="reference external" href="https://github.com/tbradley1013">&#64;tbradley1013</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop.tip</span></code> works with <code class="docutils literal notranslate"><span class="pre">tree&#64;extraInfo</span></code> (2018-05-23, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/tidytree/pull/6#issuecomment-390259901">GuangchuangYu/tidytree#6</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-5-1">
+<h1>treeio 1.5.1<a class="headerlink" href="#treeio-1-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed of <code class="docutils literal notranslate"><span class="pre">groupOTU.treedata</span></code> (2018-05-23, Wed)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/GuangchuangYu/treeio/issues/7">GuangchuangYu/treeio#7</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-4-0">
+<h1>treeio 1.4.0<a class="headerlink" href="#treeio-1-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bioconductor 3.7 release</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-15">
+<h1>treeio 1.3.15<a class="headerlink" href="#treeio-1-3-15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Supports convert edge list (matrix, data.frame or tibble) to <code class="docutils literal notranslate"><span class="pre">phylo</span></code> and <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object, now
+<code class="docutils literal notranslate"><span class="pre">ggtree</span></code> can be used to visualize all tree-like graph. (2018-04-23, Mon)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-14">
+<h1>treeio 1.3.14<a class="headerlink" href="#treeio-1-3-14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>rename_taxa (2018-04-19, Thu)</p>
+<ul>
+<li><p><a class="reference external" href="https://guangchuangyu.github.io/2018/04/rename-phylogeny-tip-labels-in-treeio/">https://guangchuangyu.github.io/2018/04/rename-phylogeny-tip-labels-in-treeio/</a></p></li>
+</ul>
+</li>
+<li><p>read.astral (2018-04-17, Tue)</p></li>
+<li><p>read.iqtree</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-13">
+<h1>treeio 1.3.13<a class="headerlink" href="#treeio-1-3-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>mv project website to <a class="reference external" href="https://guangchuangyu.github.io/software/treeio">https://guangchuangyu.github.io/software/treeio</a></p></li>
+<li><p>update for rOpenSci acceptance</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/ropensci/onboarding/issues/179#issuecomment-372127781">ropensci/onboarding#179</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-12">
+<h1>treeio 1.3.12<a class="headerlink" href="#treeio-1-3-12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>read.beast now compatible with taxa label contains ‘, “ and space (2018-02-27,
+Wed)</p></li>
+<li><p>update according to rOpenSci comments (2018-02-26, Mon)</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/ropensci/onboarding/issues/179#issuecomment-365144565">ropensci/onboarding#179</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/ropensci/onboarding/issues/179#issuecomment-366800716">ropensci/onboarding#179</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-11">
+<h1>treeio 1.3.11<a class="headerlink" href="#treeio-1-3-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>deprecate read.phyloT as read.tree in ape v5 now supports phyloT newick text
+&lt;2018-01-11, Thu&gt;</p></li>
+<li><p>fixed goodpractice check &lt;2018-01-10, Wed&gt;</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/ropensci/onboarding/issues/179#event-1416196637">ropensci/onboarding#179</a></p></li>
+<li><p>avoid using = for assignment</p></li>
+<li><p>avoid code line &gt; 80 characters</p></li>
+<li><p>avoid sapply, instead using vapply and lapply</p></li>
+<li><p>avoid using 1:length, 1:nrow and 1:ncol, use <code class="docutils literal notranslate"><span class="pre">seq_len</span></code> and <code class="docutils literal notranslate"><span class="pre">seq_along</span></code></p></li>
+<li><p>more unit tests</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-10">
+<h1>treeio 1.3.10<a class="headerlink" href="#treeio-1-3-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added ‘Parsing jtree format’ session in Importer vignette &lt;2017-12-20, Wed&gt;</p></li>
+<li><p>added ‘Exporting tree data to JSON format’ in Exporter vignette</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.jtree</span></code> and <code class="docutils literal notranslate"><span class="pre">write.jtree</span></code> functions</p></li>
+<li><p>added ‘Combining tree with external data’ and ‘Merging tree data from
+different sources’ sessions in Exporter vignette</p></li>
+<li><p>added ‘Combining tree data’ and ‘Manipulating tree data using tidytree’ sessions in Importer vignette</p></li>
+<li><p>full_join method for treedata object and added ‘Linking external data to phylogeny’ session in Importer vignette &lt;2017-12-15, Fri&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-9">
+<h1>treeio 1.3.9<a class="headerlink" href="#treeio-1-3-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>move treedata class, show, get.fields methods to tidytree &lt;2017-12-14, Thu&gt;</p></li>
+<li><p>Exporter.Rmd vignette &lt;2017-12-13, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-8">
+<h1>treeio 1.3.8<a class="headerlink" href="#treeio-1-3-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>mv treeio.Rmd vignette to Importer.Rmd and update the contents &lt;2017-12-13, Wed&gt;</p></li>
+<li><p>write.beast for treedata object &lt;2017-12-12, Tue&gt;</p></li>
+<li><p>add “connect” parameter in groupOTU &lt;2017-12-12, Tue&gt;</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/forum/#!msg/bioc-ggtree/Q4LnwoTf1DM/yEe95OFfCwAJ">https://groups.google.com/forum/#!msg/bioc-ggtree/Q4LnwoTf1DM/yEe95OFfCwAJ</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-7">
+<h1>treeio 1.3.7<a class="headerlink" href="#treeio-1-3-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>export groupClade.phylo method &lt;2017-12-11, Mon&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-6">
+<h1>treeio 1.3.6<a class="headerlink" href="#treeio-1-3-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>re-defined groupOTU and groupClade generic using S3 &lt;2017-12-11, Mon&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-5">
+<h1>treeio 1.3.5<a class="headerlink" href="#treeio-1-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>parent, ancestor, child, offspring, rootnode and sibling generic and method for phylo &lt;2017-12-11, Mon&gt;</p></li>
+<li><p>update mask and merge_tree function according to the treedata object &lt;2017-12-11, Mon&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-4">
+<h1>treeio 1.3.4<a class="headerlink" href="#treeio-1-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support tbl_tree object defined in tidytree &lt;2017-12-08, Fri&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-3">
+<h1>treeio 1.3.3<a class="headerlink" href="#treeio-1-3-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>read.codeml output treedata, remove codeml class and clean up code &lt;2017-12-07, Thu&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-2">
+<h1>treeio 1.3.2<a class="headerlink" href="#treeio-1-3-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>read.codeml_mlc output treedata object and remove codeml_mlc class &lt;2017-12-06, Wed&gt;</p></li>
+<li><p>read.paml_rst output treedata and remove paml_rst class &lt;2017-12-06, Wed&gt;</p></li>
+<li><p>read.phylip.tree and read.phylip.seq</p></li>
+<li><p>read.phylip output treedata object and phylip class definition was removed</p></li>
+<li><p>read.hyphy output treedata object; hyphy class definition was removed</p></li>
+<li><p>remove r8s class, read.r8s now output multiPhylo object</p></li>
+<li><p>jplace class inherits treedata &lt;2017-12-05, Tue&gt;</p></li>
+<li><p>using treedata object to store beast and mrbayes tree</p></li>
+<li><p>export read.mrbayes</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-3-1">
+<h1>treeio 1.3.1<a class="headerlink" href="#treeio-1-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>compatible to parse beast output that only contains HPD range &lt;2017-11-01, Wed&gt;</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/forum/?utm_medium=email&amp;amp;utm_source=footer#!msg/bioc-ggtree/RF2Ly52U_gc/jEP97nNPAwAJ">https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/bioc-ggtree/RF2Ly52U_gc/jEP97nNPAwAJ</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-2-0">
+<h1>treeio 1.2.0<a class="headerlink" href="#treeio-1-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>BioC 3.6 release &lt;2017-11-01, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-1-2">
+<h1>treeio 1.1.2<a class="headerlink" href="#treeio-1-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new project site using blogdown &lt;2017-09-28, Thu&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-1-1-1">
+<h1>treeio 1.1.1<a class="headerlink" href="#treeio-1-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>parse mlc file without dNdS &lt;2017-08-31, Thu&gt;</p>
+<ul>
+<li><p><a class="reference external" href="https://groups.google.com/forum/?utm_medium=email&amp;amp;utm_source=footer#!topic/bioc-ggtree/hTRj-uldgAg">https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!topic/bioc-ggtree/hTRj-uldgAg</a></p></li>
+</ul>
+</li>
+<li><p>better implementation of merge_tree &lt;2017-08-31, Thu&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-11">
+<h1>treeio 0.99.11<a class="headerlink" href="#treeio-0-99-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>bug fixed in get.fields method for paml_rst &lt;2017-03-20, Mon&gt;</p></li>
+<li><p>fixed raxml2nwk for using treedata as output of read.raxml &lt;2017-03-17, Fri&gt;</p></li>
+<li><p>taxa_rename function &lt;2017-03-15, Wed&gt;</p></li>
+<li><p>phyPML method moved from ggtree &lt;2017-03-06, Mon&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-10">
+<h1>treeio 0.99.10<a class="headerlink" href="#treeio-0-99-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>remove raxml class, now read.raxml output treedata object &lt;2017-02-28, Tue&gt;</p></li>
+<li><p>bug fixed of read.beast &lt;2017-02-27, Mon&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-9">
+<h1>treeio 0.99.9<a class="headerlink" href="#treeio-0-99-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>read.newick for parsing node.label as support values &lt;2017-01-03, Tue&gt;</p></li>
+<li><p>read.beast support MrBayes output &lt;2016-12-30, Fri&gt;</p></li>
+<li><p>export as.phylo.ggtree &lt;2016-12-30, Fri&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-8">
+<h1>treeio 0.99.8<a class="headerlink" href="#treeio-0-99-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>as.treedata.ggtree &lt;2016-12-30, Fri&gt;</p></li>
+<li><p>as.treedata.phylo4 &amp; as.treedata.phylo4d &lt;2016-12-28, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-7">
+<h1>treeio 0.99.7<a class="headerlink" href="#treeio-0-99-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>groupOTU, groupClade, gzoom methods from ggtree &lt;2016-12-21, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-6">
+<h1>treeio 0.99.6<a class="headerlink" href="#treeio-0-99-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add unit test of NHX (move from ggtree) &lt;2016-12-14, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-3">
+<h1>treeio 0.99.3<a class="headerlink" href="#treeio-0-99-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed BiocCheck by adding examples &lt;2016-12-07, Wed&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-1">
+<h1>treeio 0.99.1<a class="headerlink" href="#treeio-0-99-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed link in DESCRIPTION &lt;2016-12-06, Tue&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-99-0">
+<h1>treeio 0.99.0<a class="headerlink" href="#treeio-0-99-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add vignette &lt;2016-12-06, Tue&gt;</p></li>
+<li><p>move parser functions from ggtree &lt;2016-12-06, Tue&gt;</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treeio-0-0-1">
+<h1>treeio 0.0.1<a class="headerlink" href="#treeio-0-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.nhx</span></code> from ggtree &lt;2016-12-06, Tue&gt;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.phylo.treedata</span></code> to access <code class="docutils literal notranslate"><span class="pre">phylo</span></code> from <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object &lt;2016-12-06, Tue&gt;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.treedata.phylo</span></code> to convert <code class="docutils literal notranslate"><span class="pre">phylo</span></code> to <code class="docutils literal notranslate"><span class="pre">treedata</span></code> object &lt;2016-12-06, Tue&gt;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">treedata</span></code> class definition &lt;2016-12-06, Tue&gt;</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\treeio"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">treeio 1.29.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-29-1">treeio 1.29.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-28-0">treeio 1.28.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-27-1">treeio 1.27.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-26-0">treeio 1.26.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-4">treeio 1.25.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-3">treeio 1.25.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-2">treeio 1.25.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-25-1">treeio 1.25.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-24-0">treeio 1.24.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-23-1">treeio 1.23.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-22-0">treeio 1.22.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-3">treeio 1.21.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-2">treeio 1.21.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-21-1">treeio 1.21.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-20-0">treeio 1.20.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-19-2">treeio 1.19.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-19-1">treeio 1.19.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-18-0">treeio 1.18.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-17-2">treeio 1.17.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-17-1">treeio 1.17.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-16-0">treeio 1.16.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-6">treeio 1.15.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-5">treeio 1.15.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-4">treeio 1.15.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-3">treeio 1.15.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-2">treeio 1.15.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-15-1">treeio 1.15.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-14-0">treeio 1.14.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-13-1">treeio 1.13.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-12-0">treeio 1.12.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-3">treeio 1.11.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-2">treeio 1.11.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-11-1">treeio 1.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-10-0">treeio 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-3">treeio 1.9.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-2">treeio 1.9.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-9-1">treeio 1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-8-0">treeio 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-4">treeio 1.7.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-3">treeio 1.7.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-2">treeio 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-7-1">treeio 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-6-0">treeio 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-3">treeio 1.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-2">treeio 1.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-5-1">treeio 1.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-4-0">treeio 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-15">treeio 1.3.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-14">treeio 1.3.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-13">treeio 1.3.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-12">treeio 1.3.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-11">treeio 1.3.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-10">treeio 1.3.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-9">treeio 1.3.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-8">treeio 1.3.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-7">treeio 1.3.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-6">treeio 1.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-5">treeio 1.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-4">treeio 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-3">treeio 1.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-2">treeio 1.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-3-1">treeio 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-2-0">treeio 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-1-2">treeio 1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-1-1-1">treeio 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-11">treeio 0.99.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-10">treeio 0.99.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-9">treeio 0.99.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-8">treeio 0.99.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-7">treeio 0.99.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-6">treeio 0.99.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-3">treeio 0.99.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-1">treeio 0.99.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-99-0">treeio 0.99.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treeio-0-0-1">treeio 0.0.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

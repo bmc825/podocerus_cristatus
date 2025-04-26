@@ -1,0 +1,1698 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>styler 1.10.3 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/styler/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/styler/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>styler 1.10.3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">styler 1.10.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-2">styler 1.10.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-1">styler 1.10.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-0">styler 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-9-1">styler 1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-9-0">styler 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-8-1">styler 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-8-0">styler 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-7-0">styler 1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-6-2">styler 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-6-1">styler 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-5-1">styler 1.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-detection">Alignment detection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-new-features">Other new features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes-and-fixes">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-4-1">styler 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-4-0">styler 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-changes">API Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor changes and fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#infrastructure-changes">Infrastructure changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-2">styler 1.3.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-1">styler 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-0">styler 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-2-0">styler 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-fixes">Minor improvements and fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaption">Adaption</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-1-1">styler 1.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaption-of-styler">Adaption of styler</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-1-0">styler 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-2">styler 1.0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Minor Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-1">styler 1.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-dependency-related-changes">Major &amp; dependency related changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-0">styler 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stylers">stylers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guides">style guides</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide-creators">style guide creators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-10-3">
+<h1>styler 1.10.3<a class="headerlink" href="#styler-1-10-3" title="Link to this heading">#</a></h1>
+<p>This release was requested by the CRAN team since parser error messages changed,
+which were hard-coded in some unit tests (#1180).</p>
+<p><strong>Minor changes</strong></p>
+<ul class="simple">
+<li><p>Add a package sticker (#1172, #1173).</p></li>
+<li><p>Improve error message for scope (#1176).</p></li>
+<li><p>Update lintr config and address newly found lints (#1158).</p></li>
+<li><p>Fix new lints about implicit return (#1166).</p></li>
+<li><p>Clean new lints (#1149).</p></li>
+<li><p>Clean up unnecessary YAML front matter in README (#1165).</p></li>
+</ul>
+<p><strong>CI</strong></p>
+<ul class="simple">
+<li><p>Update pre-commit and GitHub Actions (#1177, #1175, #1171, #1171, #1164, #1152, #1148).</p></li>
+<li><p>Delete URL check workflow (#1160).</p></li>
+</ul>
+<p><strong>Testing</strong></p>
+<ul class="simple">
+<li><p>Suppress warning in io tests (#1169).</p></li>
+<li><p>Ensure unit tests check for appropriate error messages in the R parser for
+R &gt; 4.3 (#1180).</p></li>
+<li><p>Remove outdated test about repeated parsing (#1163).</p></li>
+<li><p>Update roxygen test comments (#1162).</p></li>
+<li><p>Delete unused snapshot (#1159).</p></li>
+</ul>
+<p>We thank everyone who helped making this release possible.</p>
+<p><a class="reference external" href="https://github.com/AshesITR">&#64;AshesITR</a>, <a class="reference external" href="https://github.com/averissimo">&#64;averissimo</a>,  <a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>, <a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>, <a class="reference external" href="https://github.com/mcanouil">&#64;mcanouil</a>, <a class="reference external" href="https://github.com/moodymudskipper">&#64;moodymudskipper</a>, <a class="reference external" href="https://github.com/olivroy">&#64;olivroy</a>, <a class="reference external" href="https://github.com/sbanville-delfi">&#64;sbanville-delfi</a>, <a class="reference external" href="https://github.com/sorhawell">&#64;sorhawell</a>, <a class="reference external" href="https://github.com/ssh352">&#64;ssh352</a>, <a class="reference external" href="https://github.com/swo">&#64;swo</a>, and <a class="reference external" href="https://github.com/vertesy">&#64;vertesy</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-10-2">
+<h1>styler 1.10.2<a class="headerlink" href="#styler-1-10-2" title="Link to this heading">#</a></h1>
+<p>This release was requested by the CRAN team to fix CRAN warning on invalid
+numeric version inputs (#1143).</p>
+<p><strong>Minor changes</strong></p>
+<ul class="simple">
+<li><p>Use cli messaging for cache (#1127).</p></li>
+<li><p>Use latest (and stable!) pre-commit (#1144).</p></li>
+<li><p>Fix CRAN warning on invalid numeric version inputs (#1143).</p></li>
+<li><p>Bump JamesIves/github-pages-deploy-action from 4.4.2 to 4.4.3 (#1139).</p></li>
+<li><p>fix pre-commit (#1132).</p></li>
+<li><p>Don’t require dplyr anywhere (#1131).</p></li>
+</ul>
+<p>We thank everyone who helped making this release possible.</p>
+<p><a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>, <a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>, <a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>, <a class="reference external" href="https://github.com/olivroy">&#64;olivroy</a>, <a class="reference external" href="https://github.com/rkrug">&#64;rkrug</a>, and <a class="reference external" href="https://github.com/rossdrucker">&#64;rossdrucker</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-10-1">
+<h1>styler 1.10.1<a class="headerlink" href="#styler-1-10-1" title="Link to this heading">#</a></h1>
+<p>This release was requested by CRAN due to accidentally populating a user cache while building vignettes for R &gt;= 4.3.0.</p>
+<ul class="simple">
+<li><p>Code quality improvements (#1122).</p></li>
+<li><p>Bump JamesIves/github-pages-deploy-action from 4.4.1 to 4.4.2 (#1123).</p></li>
+</ul>
+<p>Thanks to everyone who contributed to this release: <a class="reference external" href="https://github.com/olivroy">&#64;olivroy</a> and <a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-10-0">
+<h1>styler 1.10.0<a class="headerlink" href="#styler-1-10-0" title="Link to this heading">#</a></h1>
+<p>This release contains speed-ups between 20% and 40% depending on your use case
+thanks to replacing {base} functionality with {vctrs} (#1114). With the speed
+boost introduced in version 1.8.0 in Oct. 2022, {styler} is now up to 2x as fast
+as before release 1.8.0.</p>
+<p>This release was created upon a request by the CRAN team to actively manage not
+just cached files but also the potentially empty cache directories they live in
+(#1118). Here are the changes in detail:</p>
+<ul class="simple">
+<li><p>Require at least R 3.6 (#1101).</p></li>
+<li><p>Prefer {vctrs} functions over slower {base} equivalents (#1114).</p></li>
+<li><p>Replace deprecated use of <code class="docutils literal notranslate"><span class="pre">rlang::with_handlers()</span></code> (#1103).</p></li>
+<li><p>Remove tail recursion in favor of <code class="docutils literal notranslate"><span class="pre">repeat</span></code> (#1113).</p></li>
+<li><p>split <code class="docutils literal notranslate"><span class="pre">test-public_api.R</span></code> for better sharding (#1109).</p></li>
+<li><p>0-pad filenames for sharding (#1110)</p></li>
+<li><p>add missing {testthat} snapshots (#1115).</p></li>
+<li><p>Bump {touchstone} config (#1104, #1107).</p></li>
+<li><p>Bump <code class="docutils literal notranslate"><span class="pre">actions/checkout</span></code> to version 3 in GitHub Actions (#1098).</p></li>
+</ul>
+<p>Thanks for everyone contributing to this release:</p>
+<p><a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>, <a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>, <a class="reference external" href="https://github.com/kyleam">&#64;kyleam</a>, <a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>, <a class="reference external" href="https://github.com/mvanaman">&#64;mvanaman</a>, <a class="reference external" href="https://github.com/olivroy">&#64;olivroy</a>, and <a class="reference external" href="https://github.com/vvarik">&#64;vvarik</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-9-1">
+<h1>styler 1.9.1<a class="headerlink" href="#styler-1-9-1" title="Link to this heading">#</a></h1>
+<p><strong>Bug fixes</strong></p>
+<ul class="simple">
+<li><p>Fix interaction between cache and stylerignore that could produce invalid code (#1072).</p></li>
+<li><p>Don’t remove line break around <code class="docutils literal notranslate"><span class="pre">{{</span></code> and comments that can yield invalid code (#1070).</p></li>
+<li><p>Styling empty roxygen code examples don’t cause errors anymore (#1096).</p></li>
+<li><p>Double indent is also kept if there is only one argument (#1094).</p></li>
+<li><p>Improved blank lines handling for roxygen examples (#1085).</p></li>
+<li><p>style roxygen examples even if nothing comes after (#1089).</p></li>
+</ul>
+<p><strong>Other</strong></p>
+<ul class="simple">
+<li><p>Document <code class="docutils literal notranslate"><span class="pre">&quot;qmd&quot;</span></code> as a valid <code class="docutils literal notranslate"><span class="pre">filetype</span></code> (#1091).</p></li>
+</ul>
+<p>Thanks for everyone who contributed to this release:</p>
+<p><a class="reference external" href="https://github.com/dpprdan">&#64;dpprdan</a>, <a class="reference external" href="https://github.com/flying-sheep">&#64;flying-sheep</a>, <a class="reference external" href="https://github.com/giocomai">&#64;giocomai</a> and <a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-9-0">
+<h1>styler 1.9.0<a class="headerlink" href="#styler-1-9-0" title="Link to this heading">#</a></h1>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>The tidyverse recently introduced double-indention for function declarations
+that don’t fit on one line. It indents two levels, i.e. 4 spaces if you <code class="docutils literal notranslate"><span class="pre">indent_by</span></code> two spaces.</p></li>
+</ul>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># old style: remains compliant and won&#39;t be re-styled</span>
+<span class="n">my_fun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="n">long_argument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">indent_up_to_first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="p">}</span>
+
+<span class="c1"># new style: now also compliant and won&#39;t be re-styled</span>
+<span class="n">my_fun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span>
+<span class="w">    </span><span class="n">long_argument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">indent_double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can also use the R package <a class="reference external" href="https://github.com/lionel-/codegrip">{codegrip}</a>
+to toggle between the two modes (#1083).</p>
+<p><strong>Bug fixes</strong></p>
+<ul class="simple">
+<li><p>Previously styled code that is now stylerignored should always be formatted
+correctly. It boils down to the requirement that stylerignore sequences must
+always be in the same block (#1082).</p></li>
+<li><p>styling around <code class="docutils literal notranslate"><span class="pre">{{</span></code> and comments now yields parsable output (#1088).</p></li>
+<li><p>trailing blank lines in roxygen code examples are removed (#1085).</p></li>
+<li><p>roxygen code examples that don’t have any code following after them are now
+also styled (#1067).</p></li>
+</ul>
+<p><strong>Other user-facing changes</strong></p>
+<ul class="simple">
+<li><p>Less noisy communication if R option <code class="docutils literal notranslate"><span class="pre">styler.cache_root</span></code> is not set (#1063).</p></li>
+</ul>
+<p><strong>Infrastructure</strong></p>
+<ul class="simple">
+<li><p>use {lintr} config (#1057, #1059) and pre-commit hook (#1064).</p></li>
+<li><p>use new {pkgdown} hook, check for parsable yaml and mixed line ending (#1080,
+#1081).</p></li>
+<li><p>update GitHub Actions workflow versions one time (#1073) and add dependabot
+for the future (#1974).</p></li>
+<li><p>bdr test for additional examples (#1068).</p></li>
+<li><p>check for link rot regularly (#1077, #1086).</p></li>
+</ul>
+<p><strong>Internals</strong></p>
+<ul class="simple">
+<li><p>replace retired <code class="docutils literal notranslate"><span class="pre">purrr::when()</span></code> with <code class="docutils literal notranslate"><span class="pre">if</span></code> statements (#1066).</p></li>
+<li><p>more integer literals (#1054).</p></li>
+<li><p>Consistently use <code class="docutils literal notranslate"><span class="pre">&#64;examplesIf</span></code> for conditionally running examples (#1071).</p></li>
+<li><p>document imports in a single file (#1060).</p></li>
+<li><p>format YAML files (#1061).</p></li>
+</ul>
+<p>A big shout out to anyone who contributed to this release:</p>
+<p><a class="reference external" href="https://github.com/balthasars">&#64;balthasars</a>,
+<a class="reference external" href="https://github.com/hadley">&#64;hadley</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/">&#64;juliangrimm225</a> and
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-8-1">
+<h1>styler 1.8.1<a class="headerlink" href="#styler-1-8-1" title="Link to this heading">#</a></h1>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>Expose internals used with other style guides (&#64;Robinlovelace +
+collaborators, #1043, #1052).</p></li>
+</ul>
+<p><strong>Other</strong></p>
+<ul class="simple">
+<li><p>Bump minimal version requirement on {withr} as <code class="docutils literal notranslate"><span class="pre">...</span></code> in
+<code class="docutils literal notranslate"><span class="pre">withr::local_options()</span></code> was introduced only in v.2.3.0 (#1051).</p></li>
+<li><p>Rename internal function <code class="docutils literal notranslate"><span class="pre">set_linebreak_after_ggplot2_plus()</span></code> to
+<code class="docutils literal notranslate"><span class="pre">set_line_break_after_ggplot2_plus()</span></code> for consistency (&#64;Polkas, #1049).</p></li>
+<li><p>Reformat contributing guidelines (#1047).</p></li>
+<li><p>Improve YAML formatting for pkgdown (#1042).</p></li>
+<li><p>Simplify caching internal’s conditionals with <code class="docutils literal notranslate"><span class="pre">rlang::%||%</span></code> (#1041).</p></li>
+<li><p>Only run {pkgapi} if available (#1039).</p></li>
+<li><p>Typos (&#64;MichaelChirico, #1038)</p></li>
+</ul>
+<p>This release was requested by CRAN to resolve an R CMD Check note (#1044).
+A big hand to everyone who made this release possible:</p>
+<p>Dave Jarvis,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>,
+<a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>,
+<a class="reference external" href="https://github.com/Polkas">&#64;Polkas</a>, and
+<a class="reference external" href="https://github.com/Robinlovelace">&#64;Robinlovelace</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-8-0">
+<h1>styler 1.8.0<a class="headerlink" href="#styler-1-8-0" title="Link to this heading">#</a></h1>
+<p>{styler} 1.8.0 comes with a host of new features, around 40% speed improvement,
+bug fixes and the removal of 8 recursive dependencies. We also welcome
+&#64;IndrajeetPatil as a new contributor to {styler}, who has contributed
+significantly to this and and previous releases.</p>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_dir()</span></code> and <code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> now default to styling all supported file
+formats (<code class="docutils literal notranslate"><span class="pre">.R</span></code>, <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code>, <code class="docutils literal notranslate"><span class="pre">.Rmarkdown</span></code>, <code class="docutils literal notranslate"><span class="pre">.Rnw</span></code>, and <code class="docutils literal notranslate"><span class="pre">.qmd</span></code>) in the (package)
+directory (#965, #931, #1033).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> now excludes the auto-generated <code class="docutils literal notranslate"><span class="pre">R/cpp11.R</span></code> file (#977).</p></li>
+<li><p>minimum needed R version is now bumped to <code class="docutils literal notranslate"><span class="pre">3.5</span></code> (#986).</p></li>
+<li><p>alignment is now detected for function declaration in a similar way as for
+function calls (#968).</p></li>
+<li><p>new R option <code class="docutils literal notranslate"><span class="pre">styler.ignore_alignment</span></code> controls if alignment should be
+detected (and preserved) or not (#932).</p></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul class="simple">
+<li><p>alignment is detected in <code class="docutils literal notranslate"><span class="pre">tibble::tribble()</span></code> (and similar) calls with more
+than 3 columns when left aligned (#945).</p></li>
+<li><p>fix alignment detection for one column, mixed named/unnamed (#1035).</p></li>
+<li><p>if there are only empty lines in a code chunk, they are all removed (#936).</p></li>
+<li><p>apply rules for [ to [[ and its closing counterpair (#1030)</p></li>
+<li><p>there is now at most one line break after <code class="docutils literal notranslate"><span class="pre">{</span></code> and before <code class="docutils literal notranslate"><span class="pre">#</span></code> (#952, #1022).</p></li>
+<li><p>line breaks may be added to function calls to ensure indention symmetry for
+round braces (#975).</p></li>
+<li><p>the cache is also invalidated on changing the stylerignore markers (#932).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> is not put on a new line after <code class="docutils literal notranslate"><span class="pre">=</span></code> and in <code class="docutils literal notranslate"><span class="pre">function()</span> <span class="pre">{</span></code> for some edge
+cases (#939).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">({})</span></code> statements are now handled the same way as function statements
+with regards to breaking lines (#967).</p></li>
+<li><p>parsing of {roxygen2} example comments now also works for edge cases when
+there is no literal code immediately following after the end of the example
+section (#940).</p></li>
+<li><p>files with no tokens in it are now transformed into zero-byte files (#962).</p></li>
+</ul>
+<p><strong>Documentation</strong></p>
+<ul class="simple">
+<li><p>old (and outdated) vignettes have been removed (#955). To access them, do
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">v1.0.0</span></code>.</p></li>
+<li><p>minor improvements to the documentation (#958).</p></li>
+<li><p>turned off <code class="docutils literal notranslate"><span class="pre">styler.colored_print.vertical</span></code> in vignettes so ANSI output of
+{prettycode} not messing with {pkgdown} (#956, #957).</p></li>
+</ul>
+<p><strong>Performance and code quality improvements</strong></p>
+<ul class="simple">
+<li><p>use integer literals and avoid coercions where needed (#994).</p></li>
+<li><p>don’t preserve names for <code class="docutils literal notranslate"><span class="pre">unlist()</span></code> (#998).</p></li>
+<li><p>remove unused variables (#999).</p></li>
+<li><p>get rid of lints with performance implications (#1000).</p></li>
+<li><p>use more efficient match() alternative (#1001).</p></li>
+<li><p>don’t use <code class="docutils literal notranslate"><span class="pre">nrow</span></code> arg in <code class="docutils literal notranslate"><span class="pre">new_tibble()</span></code> calls (#1003).</p></li>
+<li><p>performance improvements with <code class="docutils literal notranslate"><span class="pre">if()</span></code> + <code class="docutils literal notranslate"><span class="pre">else()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ifelse()</span></code> (#1006).</p></li>
+<li><p>replace tibbles with data frames to improve performance (#1007).</p></li>
+<li><p>simplify <code class="docutils literal notranslate"><span class="pre">styler_df()</span></code> signature (#1009).</p></li>
+<li><p>minor cleanup (#1016).</p></li>
+<li><p>non-exported and unused functions <code class="docutils literal notranslate"><span class="pre">odd()</span></code> and <code class="docutils literal notranslate"><span class="pre">even()</span></code> were removed
+(#989).</p></li>
+<li><p>all (R)md files in this project’s source code are now formatted with default
+pandoc markdown formatter. This conversion is required when using the visual
+mode in RStudio (#941).</p></li>
+<li><p>improved code quality by fixing {lintr} warnings (#960, #1028).</p></li>
+</ul>
+<p><strong>Dependency related changes</strong></p>
+<p>In total, 8 recursive dependencies are removed: {ellipsis}, {pillar},
+{rematch2}, {tibble}, {utf8}, {fansi}, {lifecycle}, {pkgconfig}.</p>
+<ul class="simple">
+<li><p>don’t import entire tibble package (#1007).</p></li>
+<li><p>drop {rematch2} dependency (#1011).</p></li>
+</ul>
+<p><strong>Infrastructure</strong></p>
+<ul class="simple">
+<li><p>upgrade testing infra to testthat 3e (#949).</p></li>
+<li><p>run tests in parallel (#978).</p></li>
+<li><p>run some tests sequentially (#1031)</p></li>
+<li><p>better stack tracing for profiling (#979, #980).</p></li>
+<li><p>add flags to skip code coverage for zzz.R (#1005).</p></li>
+<li><p>error now on R CMD note (#987).</p></li>
+<li><p>test on latest Ubuntu instead of Ubuntu 18.04 (#982).</p></li>
+<li><p>use latest GitHub Actions for R (#1034).</p></li>
+<li><p>update {pkgdown} action to always build, but only deploy on default branch
+(#946).</p></li>
+<li><p>remove pre-commit push hook for news entry (#1023).</p></li>
+</ul>
+<p>A big hand to everyone who made this release possible:</p>
+<p><a class="reference external" href="https://github.com/behrman">&#64;behrman</a>,
+<a class="reference external" href="https://github.com/EngineerDanny">&#64;EngineerDanny</a>, <a class="reference external" href="https://github.com/gavinsimpson">&#64;gavinsimpson</a>, <a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>, <a class="reference external" href="https://github.com/jabenninghoff">&#64;jabenninghoff</a>,
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>, <a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>, <a class="reference external" href="https://github.com/moodymudskipper">&#64;moodymudskipper</a>, <a class="reference external" href="https://github.com/RaymondBalise">&#64;RaymondBalise</a>, <a class="reference external" href="https://github.com/Robinlovelace">&#64;Robinlovelace</a>, <a class="reference external" href="https://github.com/sebffischer">&#64;sebffischer</a>,
+<a class="reference external" href="https://github.com/sgorm123">&#64;sgorm123</a>, <a class="reference external" href="https://github.com/stefanoborini">&#64;stefanoborini</a>, and <a class="reference external" href="https://github.com/wdkrnls">&#64;wdkrnls</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-7-0">
+<h1>styler 1.7.0<a class="headerlink" href="#styler-1-7-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">else</span></code> follows directly after <code class="docutils literal notranslate"><span class="pre">if</span></code>, line breaks are removed (#935).</p></li>
+</ul>
+<p><strong>API changes</strong></p>
+<ul>
+<li><p>new R option <code class="docutils literal notranslate"><span class="pre">styler.cache_root</span></code> (defaulting to <code class="docutils literal notranslate"><span class="pre">&quot;styler&quot;</span></code>) that determines
+the sub-directory under the {R.cache} cache directory that {styler} uses.
+Non- default caches won’t be cleaned up by {styler}. We suggest
+<code class="docutils literal notranslate"><span class="pre">&quot;styler-perm&quot;</span></code> (also used by {precommit}).</p></li>
+<li><p>stylerignore markers are now interpreted as regular expressions instead of
+comments that must match exactly. This allows to specify multiple markers
+in one regular expression for <code class="docutils literal notranslate"><span class="pre">styler.ignore_start</span></code> and
+<code class="docutils literal notranslate"><span class="pre">styler.ignore_stop</span></code>, e.g. to use markers for lintr and styler on the same
+line, you can use
+<code class="docutils literal notranslate"><span class="pre">options(styler.ignore_start</span> <span class="pre">=</span> <span class="pre">&quot;nolint</span> <span class="pre">start|styler:</span> <span class="pre">off&quot;</span></code>:</p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># nolint start, styler: off</span>
+<span class="m">1</span><span class="w"> </span><span class="m">+1</span>
+<span class="c1"># nolint end</span>
+<span class="c1"># styler: on</span>
+</pre></div>
+</div>
+<p>As a consequence of this approach, the defaults for <code class="docutils literal notranslate"><span class="pre">styler.ignore_start</span></code>
+and <code class="docutils literal notranslate"><span class="pre">styler.ignore_stop</span></code> omit the <code class="docutils literal notranslate"><span class="pre">#</span></code> (#849).</p>
+</li>
+</ul>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li><p>{styler} can be ran via GitHub Actions using
+<code class="docutils literal notranslate"><span class="pre">usethis::use_github_action(&quot;style&quot;)</span></code> (#914).</p></li>
+<li><p>added guarantee that styled code is parsable (#892).</p></li>
+<li><p>Developers can now create style guides with indention characters other than
+spaces (#916).</p></li>
+</ul>
+<p><strong>Documentation</strong></p>
+<ul class="simple">
+<li><p>Add vignette on distributing style guide (#846, #861).</p></li>
+<li><p>Fix argument name <code class="docutils literal notranslate"><span class="pre">filetype</span></code> in Example for <code class="docutils literal notranslate"><span class="pre">style_dir()</span></code> (#855).</p></li>
+</ul>
+<p><strong>Bug fixes</strong></p>
+<ul class="simple">
+<li><p>Piped function without brackets <code class="docutils literal notranslate"><span class="pre">substitute(x</span> <span class="pre">%&gt;%</span> <span class="pre">y)</span></code> don’t get <code class="docutils literal notranslate"><span class="pre">()</span></code> added
+anymore for one level deep (not more yet, see #889), as this can change
+outcome of the code (#876).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.onLoad()</span></code> method no longer broken with {cli} &gt;= 3.1 (#893).</p></li>
+<li><p>Function calls containing <code class="docutils literal notranslate"><span class="pre">+</span></code> should no longer give any error on styling
+when there are comments and line breaks under certain circumstances (#905).</p></li>
+<li><p>rules that add tokens don’t break stylerignore sequences anymore (#891).</p></li>
+<li><p>Alignment detection respects stylerignore (#850).</p></li>
+<li><p>Unaligned expressions with quoted key (e.g. <code class="docutils literal notranslate"><span class="pre">c(&quot;x&quot;</span> <span class="pre">=</span> <span class="pre">2)</span></code>) are now correctly
+detected (#881).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~</span></code> causes now indention, like <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code> etc. (#902).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Warning:</span> <span class="pre">Unknown</span> <span class="pre">or</span> <span class="pre">uninitialised</span> <span class="pre">column:</span></code> was fixed (#885).</p></li>
+<li><p>function calls with unequal number of token on different lines are no
+longer deemed aligned if there are arbitrary spaces around the tokens on
+the lines with most tokens (#902).</p></li>
+<li><p>if a line starts with <code class="docutils literal notranslate"><span class="pre">EQ_SUB</span></code> (<code class="docutils literal notranslate"><span class="pre">=</span></code>), the corresponding key is moved to
+that line too (#923).</p></li>
+<li><p>ensure a trailing blank line also if the input is cached (#867).</p></li>
+<li><p>Preserve trailing blank line in roxygen examples to simplify concatenation
+of examples (#880).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indenty_by</span></code> is now also respected when curly braces are added to an if
+statement by {styler} (#915).</p></li>
+<li><p>An error is now thrown on styling if input unicode characters can’t be
+correctly parsed for Windows and R &lt; 4.2 (#883).</p></li>
+<li><p>styling of text does not error anymore when the R option <code class="docutils literal notranslate"><span class="pre">OutDec</span></code> is set to
+a non-default value (#912).</p></li>
+</ul>
+<p><strong>Infrastructure</strong></p>
+<ul class="simple">
+<li><p>Remove dependency on {xfun} (#866).</p></li>
+<li><p>Remove {glue} dependency that was only used by {touchstone} script and is
+declared as a dependency already in the respective action (#910).</p></li>
+<li><p>Bump minimal R requirement to 3.4 in line with the
+<a class="reference external" href="https://www.tidyverse.org/blog/2019/04/r-version-support/">tidyverse</a>,
+which allowed to remove the dependency at {backports} and some exception
+handling.</p></li>
+<li><p>rename default branch to main (#859).</p></li>
+<li><p>the built package size has been reduced by ~50% by listing <code class="docutils literal notranslate"><span class="pre">*-in_tree</span></code>
+files in <code class="docutils literal notranslate"><span class="pre">.Rbuildignore</span></code> (#879).</p></li>
+<li><p>Enable <a class="reference external" href="http://pre-commit.ci">pre-commit.ci</a> (#843).</p></li>
+<li><p>use pre-commit via GitHub Actions (#872).</p></li>
+<li><p>terminate running jobs on new push to save resources (#888).</p></li>
+<li><p>Use the {touchstone} GitHub Action instead of the literal script (#889).</p></li>
+<li><p>upgrade R CMD check Github Actions to use <code class="docutils literal notranslate"><span class="pre">v2</span></code>.</p></li>
+<li><p>{styler} test are relaxed to not assume a specific error message on the
+wrong usage of <code class="docutils literal notranslate"><span class="pre">_</span></code> (#929).</p></li>
+</ul>
+<p>Thanks to all contributors that made this release possible:</p>
+<p><a class="reference external" href="https://github.com/bersbersbers">&#64;bersbersbers</a>,
+<a class="reference external" href="https://github.com/daniel-wrench">&#64;daniel-wrench</a>,
+<a class="reference external" href="https://github.com/dbykova">&#64;dbykova</a>,
+<a class="reference external" href="https://github.com/EngrStudent">&#64;EngrStudent</a>,
+<a class="reference external" href="https://github.com/hadley">&#64;hadley</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/jam1015">&#64;jam1015</a>,
+<a class="reference external" href="https://github.com/jooyoungseo">&#64;jooyoungseo</a>,
+<a class="reference external" href="https://github.com/kalaschnik">&#64;kalaschnik</a>,
+<a class="reference external" href="https://github.com/kaytif">&#64;kaytif</a>, <a class="reference external" href="https://github.com/kpagacz">&#64;kpagacz</a>,
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>, <a class="reference external" href="https://github.com/lionel-">&#64;lionel-</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>,
+<a class="reference external" href="https://github.com/maelle">&#64;maelle</a>,
+<a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>,
+<a class="reference external" href="https://github.com/mine-cetinkaya-rundel">&#64;mine-cetinkaya-rundel</a>,
+<a class="reference external" href="https://github.com/neuwirthe">&#64;neuwirthe</a>,
+<a class="reference external" href="https://github.com/Polkas">&#64;Polkas</a>, <a class="reference external" href="https://github.com/pwang2">&#64;pwang2</a>,
+<a class="reference external" href="https://github.com/sebffischer">&#64;sebffischer</a>,
+<a class="reference external" href="https://github.com/ShixiangWang">&#64;ShixiangWang</a>,
+<a class="reference external" href="https://github.com/ssh352">&#64;ssh352</a>, and
+<a class="reference external" href="https://github.com/xjtusjtu">&#64;xjtusjtu</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-6-2">
+<h1>styler 1.6.2<a class="headerlink" href="#styler-1-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>clean up cache files older than one week (#842).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-6-1">
+<h1>styler 1.6.1<a class="headerlink" href="#styler-1-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Files with <code class="docutils literal notranslate"><span class="pre">.Rmarkdown</span></code> extension are now recognized as an R markdown files
+in <code class="docutils literal notranslate"><span class="pre">style_file()</span></code> and friends (#824).</p></li>
+<li><p>Don’t break line before comments in pipes (#822).</p></li>
+<li><p>Ordinary comments (starting with <code class="docutils literal notranslate"><span class="pre">#</span></code>) that break a roxygen code example
+block (starting with <code class="docutils literal notranslate"><span class="pre">#'</span></code>) are now recognized and preserved (#830).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;examplesIf</span></code> conditions longer than one line after styling throw an error
+for compatibility with {roxygen2} (#833).</p></li>
+<li><p>R Markdown chunk headers are no longer required to be parsable R code
+(#832).</p></li>
+<li><p>Break the line between <code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> and <code class="docutils literal notranslate"><span class="pre">{</span></code> inside and outside function calls
+(#825).</p></li>
+<li><p>Add language server to third-party integration vignette (#835).</p></li>
+<li><p>improved test setup with fixtures and similar (#798).</p></li>
+</ul>
+<p>We’d like to thank all people who helped making this release possible:</p>
+<p><a class="reference external" href="https://github.com/bersbersbers">&#64;bersbersbers</a>,
+<a class="reference external" href="https://github.com/eutwt">&#64;eutwt</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/j-mammen">&#64;j-mammen</a>,
+<a class="reference external" href="https://github.com/jennybc">&#64;jennybc</a>,
+<a class="reference external" href="https://github.com/JohannesNE">&#64;JohannesNE</a>,
+<a class="reference external" href="https://github.com/jonkeane">&#64;jonkeane</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>, and
+<a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-5-1">
+<h1>styler 1.5.1<a class="headerlink" href="#styler-1-5-1" title="Link to this heading">#</a></h1>
+<section id="alignment-detection">
+<h2>Alignment detection<a class="headerlink" href="#alignment-detection" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Code with left alignment after <code class="docutils literal notranslate"><span class="pre">=</span></code> in function calls is now recognized as
+aligned and won’t be reformatted (#774, #777).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># already detected previously
+call(
+  x  = 12345,
+  y2 =    17
+)
+
+# newly detected
+call(
+  x  = 12345,
+  y2 = 17
+)
+</pre></div>
+</div>
+</li>
+<li><p>Similarly, left aligned after comma is now detected (#785, #786).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># previously detected
+call(
+  x  = 12345, &quot;It&#39;s old&quot;,
+  y2 = 17,      &quot;before&quot;
+)
+
+tribble(
+  ~x,             ~y,
+  &quot;another&quot;,     1:3,
+  &quot;b&quot;,       1211234
+)
+
+# newly detected
+call(
+  x = 2,           p = &quot;another&quot;,
+  y = &quot;hhjkjkbew&quot;, x = 3
+)
+
+
+tribble(
+  ~x,        ~y,
+  &quot;another&quot;, 1:3,
+  &quot;b&quot;,       1211234
+)
+</pre></div>
+</div>
+<p>Also see <code class="docutils literal notranslate"><span class="pre">vignette(&quot;detect-alignment&quot;)</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="other-new-features">
+<h2>Other new features<a class="headerlink" href="#other-new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The base R pipe as introduced in R 4.1.0 is now styled the same way the
+magrittr pipe is (#803).</p></li>
+<li><p>code chunks with explicit <code class="docutils literal notranslate"><span class="pre">tidy</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> in an Rmd or Rnw code header are
+not styled anymore. This can be handy when the code can’t be parsed, e.g.
+within a learnr tutorial (#790).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&gt;</span></code> is recognized as an output marker and no space is added after <code class="docutils literal notranslate"><span class="pre">#</span></code>
+(#771).</p></li>
+</ul>
+</section>
+<section id="minor-changes-and-fixes">
+<h2>Minor changes and fixes<a class="headerlink" href="#minor-changes-and-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>No curly braces are added to else statements if they are within a pipe, as
+this can change evaluation logic of code involving the magrittr dot in rare
+cases (#816).</p></li>
+<li><p>Line breaks between <code class="docutils literal notranslate"><span class="pre">}</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span></code> are removed (#793).</p></li>
+<li><p>In function calls, code after <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">#\n</span></code> is indented correctly (#814).</p></li>
+<li><p>Multi-expressions containing multiple assignments no longer remove line
+breaks if they are not causing blank lines (#809).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exclude_dirs</span></code> in <code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> is now properly respected if it is a
+sub-directory of a directory that is scheduled for styling (e.g.
+<code class="docutils literal notranslate"><span class="pre">test/testthat/some/dir</span></code>) (#811).</p></li>
+<li><p>The user is not prompted anymore to confirm the creation of a permanent
+cache as R.cache &gt;= 0.15.0 uses a standard location in line with CRAN
+policies (#819).</p></li>
+<li><p>R code chunks in nested non-R chunks in R markdown don’t yield an error
+anymore when document is styled, chunks are still not styled (#788, #794).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache_activate()</span></code> and <code class="docutils literal notranslate"><span class="pre">cache_deactivate()</span></code> now respect the R option
+<code class="docutils literal notranslate"><span class="pre">styler.quiet</span></code> (#797).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multi_line</span></code> attribute in parse table is now integer, not boolean (#782).</p></li>
+<li><p>The style guide used in Addin is verified when set via R option (#789).</p></li>
+<li><p>Improve pkgdown author URLs (#775).</p></li>
+<li><p>Upgrade touchstone infra (#799, #805).</p></li>
+<li><p>Don’t test on R 3.3 anymore as tidyverse <a class="reference external" href="https://www.tidyverse.org/blog/2019/04/r-version-support/">supports only four previous
+releases</a>
+(#804).</p></li>
+<li><p>Update Github Actions workflow (#810).</p></li>
+</ul>
+<p>We’d like to thank everyone who has furthered the development of the latest
+release of styler through their contributions in issues and pull requests:</p>
+<p><a class="reference external" href="https://github.com/ardydavari">&#64;ardydavari</a>,
+<a class="reference external" href="https://github.com/gadenbuie">&#64;gadenbuie</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>, &#64;jasonhan-vassar,
+<a class="reference external" href="https://github.com/laresbernardo">&#64;laresbernardo</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>,
+<a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>,
+<a class="reference external" href="https://github.com/Moohan">&#64;Moohan</a>,
+<a class="reference external" href="https://github.com/njtierney">&#64;njtierney</a>,
+<a class="reference external" href="https://github.com/pat-s">&#64;pat-s</a>,
+<a class="reference external" href="https://github.com/psychelzh">&#64;psychelzh</a>,
+<a class="reference external" href="https://github.com/pvalders">&#64;pvalders</a>,
+<a class="reference external" href="https://github.com/RoyalTS">&#64;RoyalTS</a>, and
+<a class="reference external" href="https://github.com/russHyde">&#64;russHyde</a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-4-1">
+<h1>styler 1.4.1<a class="headerlink" href="#styler-1-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix interaction between cache and <code class="docutils literal notranslate"><span class="pre">base_indention</span></code>. This also fixes the
+Addin for styling a selection with base indention repeatedly (#764).</p></li>
+<li><p>add more examples to <code class="docutils literal notranslate"><span class="pre">styler_*</span></code> helpfiles (#762).</p></li>
+<li><p>hexadecimal integers now preserve the trailing <code class="docutils literal notranslate"><span class="pre">L</span></code> when styled (#761).</p></li>
+<li><p>add a pre-push hook to make sure news bullets are added to each PR (#765).</p></li>
+</ul>
+<p>Thanks to everyone who contributed to this release:</p>
+<p><a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>, and
+<a class="reference external" href="https://github.com/renkun-ken">&#64;renkun-ken</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-4-0">
+<h1>styler 1.4.0<a class="headerlink" href="#styler-1-4-0" title="Link to this heading">#</a></h1>
+<section id="api-changes">
+<h2>API Changes<a class="headerlink" href="#api-changes" title="Link to this heading">#</a></h2>
+<p><strong>new</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_file()</span></code> and friends gain argument <code class="docutils literal notranslate"><span class="pre">dry</span></code> to control if changes should
+be applied to files or not (#634).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_file()</span></code> and friends gain argument <code class="docutils literal notranslate"><span class="pre">base_indention</span></code> (defaulting to 0)
+to control by how much the output code is indented (#649, #692). The Addin
+for styling a selection picks that up, e.g. you can style a function body
+and indention is preserved (#725).</p></li>
+<li><p>added an option for disabling all communication when using the package
+(<code class="docutils literal notranslate"><span class="pre">styler.quiet</span></code>) (#640).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scope</span></code> in <code class="docutils literal notranslate"><span class="pre">tidyverse_style()</span></code> can now be specified with higher granularity
+through <code class="docutils literal notranslate"><span class="pre">I()</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">I(c('spaces',</span> <span class="pre">'tokens'))</span></code> allows us to style spaces
+and tokens without styling line breaks and indention. Previously, only a
+string was allowed and all less invasive scopes were included, e.g. if you
+wanted to style tokens, you had to always also style spaces, indention,
+line breaks as well (#705, #707).</p></li>
+<li><p>added an option (<code class="docutils literal notranslate"><span class="pre">styler.test_dir_writeable</span></code>) that changes test behavior to
+not directly modify test files in the current directory (#548).</p></li>
+<li><p>New argument <code class="docutils literal notranslate"><span class="pre">transformers_drop</span></code> in <code class="docutils literal notranslate"><span class="pre">create_style_guide()</span></code> to be populated
+with new helper function <code class="docutils literal notranslate"><span class="pre">specify_transformers_drop()</span></code> for specifying
+conditions under which transformers are not going to be used and can
+therefore be omitted without effecting the result of styling (#711).</p></li>
+</ul>
+<p><strong>deprecated</strong></p>
+<ul class="simple">
+<li><p>The environment variable <code class="docutils literal notranslate"><span class="pre">save_after_styling</span></code> is deprecated in favor of the
+R option <code class="docutils literal notranslate"><span class="pre">styler.save_after_styling</span></code> to control if a file is saved after
+styling with the RStudio Addin. Note than in RStudio &gt;= 1.3.0, you can
+auto-save edits in general (Code -&gt; Saving -&gt; Auto-Save), e.g. on idle
+editor or focus loss, so this feature becomes less relevant (#631, #726).</p></li>
+</ul>
+</section>
+<section id="major-changes">
+<h2>Major changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>styler is now distributed under the MIT license (#751).</p></li>
+<li><p>Documentation overhaul: New README, new “Get started” pkgdown page, new
+vignettes on <code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">Adoption</span></code> renamed to
+<code class="docutils literal notranslate"><span class="pre">Third-party</span>&#160;&#160; <span class="pre">integrations</span></code> (#741), adding search to pkgdown (#623), group
+functions in pkgdown reference page (#625), minor other doc improvements
+(#643, #618, #614, #677, #651, #667, #672, #687, #752, #754).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;exampleIsf</span></code> roxygen tag for conditional examples is now supported (#743).</p></li>
+<li><p>blank lines in function calls and headers are now removed, for the former
+only when there are no comments before or after the blank line (#629, #630,
+#635, #723).</p></li>
+<li><p>speed improvements: 15% faster on new code, 70% on repeated styling of
+compliant code (The latter is not so relevant because it was almost
+instantaneous already). Most relevant contributions were #679, #691, #681,
+#711, #739.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&lt;&lt;</span></code> is now recognized as the xaringan marker and no space is added
+after<code class="docutils literal notranslate"><span class="pre">#</span></code> (#700).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Minor changes and fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_dir()</span></code> and <code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> now apply directory exclusion recursively
+with <code class="docutils literal notranslate"><span class="pre">exclude_dirs</span></code> (#676).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">switch()</span></code> now has line breaks after every argument to match the tidyverse
+style guide (#722, #727).</p></li>
+<li><p>unary <code class="docutils literal notranslate"><span class="pre">+</span></code> before a function call does not give an error anymore, as before
+version 1.3.0 (#697).</p></li>
+<li><p>certain combinations of <code class="docutils literal notranslate"><span class="pre">stylerignore</span></code> markers and cached expressions now
+don’t give an error anymore (#738).</p></li>
+<li><p>cache is now correctly invalidated when style guide arguments change
+(#647).</p></li>
+<li><p>empty lines are now removed between pipes and assignments (#645, #710).</p></li>
+<li><p>multiple <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> roxygen tags in a code block of <code class="docutils literal notranslate"><span class="pre">#'</span></code> are no longer
+squashed (#748).</p></li>
+<li><p>roxygen code examples starting on the same line as the <code class="docutils literal notranslate"><span class="pre">&#64;examples</span></code> tag are
+no longer moved to the next line (#748).</p></li>
+<li><p>always strip trailing spaces and make cache insensitive to it (#626).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_text()</span></code> can now style all input that <code class="docutils literal notranslate"><span class="pre">is.character()</span></code>, not just if
+it inherits from classes <code class="docutils literal notranslate"><span class="pre">character</span></code>, <code class="docutils literal notranslate"><span class="pre">utf8</span></code> or <code class="docutils literal notranslate"><span class="pre">vertical</span></code> (#693).</p></li>
+<li><p>logical operators within square braces are now moved from the start of a
+line to the end of the previous line (#709).</p></li>
+<li><p>spaces are now removed before <code class="docutils literal notranslate"><span class="pre">[</span></code> and <code class="docutils literal notranslate"><span class="pre">[[</span></code> (#713).</p></li>
+<li><p>The internal <code class="docutils literal notranslate"><span class="pre">create_tree()</span></code> only used in testing of styler now works when
+the cache is activated (#688).</p></li>
+<li><p>simplification of internals (#692).</p></li>
+</ul>
+</section>
+<section id="infrastructure-changes">
+<h2>Infrastructure changes<a class="headerlink" href="#infrastructure-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>switched from travis and AppVeyor to GitHub Actions (#653, #660).</p></li>
+<li><p>Added basic continuous benchmarking with
+<a class="reference external" href="https://github.com/lorenzwalthert/touchstone">lorenzwalthert/touchstone</a>
+(#674, #684, #698).</p></li>
+<li><p>include <code class="docutils literal notranslate"><span class="pre">test-*</span></code> files in styling pre-commit hook (#724).</p></li>
+</ul>
+<p>Thanks to all the people who made this release possible:</p>
+<p><a class="reference external" href="https://github.com/assignUser">&#64;assignUser</a>,
+<a class="reference external" href="https://github.com/ColmanHumphrey">&#64;ColmanHumphrey</a>,
+<a class="reference external" href="https://github.com/davidchall">&#64;davidchall</a>,
+<a class="reference external" href="https://github.com/espinielli">&#64;espinielli</a>,
+<a class="reference external" href="https://github.com/giko45">&#64;giko45</a>, <a class="reference external" href="https://github.com/hadley">&#64;hadley</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/intiben">&#64;intiben</a>,
+<a class="reference external" href="https://github.com/jamespeapen">&#64;jamespeapen</a>,
+<a class="reference external" href="https://github.com/jthomasmock">&#64;jthomasmock</a>,
+<a class="reference external" href="https://github.com/Kalaschnik">&#64;Kalaschnik</a>,
+<a class="reference external" href="https://github.com/kevinushey">&#64;kevinushey</a>,
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>,
+<a class="reference external" href="https://github.com/lcolladotor">&#64;lcolladotor</a>,
+<a class="reference external" href="https://github.com/MichaelChirico">&#64;MichaelChirico</a>,
+<a class="reference external" href="https://github.com/michaelquinn32">&#64;michaelquinn32</a>,
+<a class="reference external" href="https://github.com/mine-cetinkaya-rundel">&#64;mine-cetinkaya-rundel</a>,
+<a class="reference external" href="https://github.com/pat-s">&#64;pat-s</a>,
+<a class="reference external" href="https://github.com/PMassicotte">&#64;PMassicotte</a>,
+<a class="reference external" href="https://github.com/QuLogic">&#64;QuLogic</a>,
+<a class="reference external" href="https://github.com/renkun-ken">&#64;renkun-ken</a>,
+<a class="reference external" href="https://github.com/RichardJActon">&#64;RichardJActon</a>,
+<a class="reference external" href="https://github.com/seed-of-apricot">&#64;seed-of-apricot</a>,
+<a class="reference external" href="https://github.com/select-id-from-users">&#64;select-id-from-users</a>,
+<a class="reference external" href="https://github.com/SimonDedman">&#64;SimonDedman</a>,
+<a class="reference external" href="https://github.com/stefanoborini">&#64;stefanoborini</a>,
+<a class="reference external" href="https://github.com/swsoyee">&#64;swsoyee</a>, and
+<a class="reference external" href="https://github.com/Winterstorm-j">&#64;Winterstorm-j</a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-3-2">
+<h1>styler 1.3.2<a class="headerlink" href="#styler-1-3-2" title="Link to this heading">#</a></h1>
+<p>Release upon request by the CRAN team.</p>
+<section id="id2">
+<h2>Minor changes and fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add search and reference sections to pkgdown webpage (#623, #625).</p></li>
+<li><p>various fixes to handle special cases for caching and stylerignore and
+their interaction (#611, #610, #609, #607, #602, #600).</p></li>
+<li><p>also test on macOS (#604).</p></li>
+<li><p>skip timing tests on CRAN as requested by CRAN team because they did not
+pass on all machines (#603).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-3-1">
+<h1>styler 1.3.1<a class="headerlink" href="#styler-1-3-1" title="Link to this heading">#</a></h1>
+<p>Emergency release. In case multiple expressions are on one line and only some
+of them are cached, styler can remove code. To reach this state, some of the
+expressions must have been styled previously alone and the cache must be
+active. Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>library(styler)
+cache_activate()
+#&gt; Using cache 1.3.0 at ~/.Rcache/styler/1.3.0.
+style_text(&quot;1&quot;)
+#&gt; 1
+style_text(&quot;1 # comment&quot;)
+#&gt; # comment
+</pre></div>
+</div>
+<p>This is obviously detrimental. We have added additional tests and fixed the
+problem (#593, #595), but we want repeat the warning from <code class="docutils literal notranslate"><span class="pre">?style_file</span></code> that
+all style APIs apart from <code class="docutils literal notranslate"><span class="pre">style_text()</span></code> overwrite code and that styler can
+only check the AST remains valid with <code class="docutils literal notranslate"><span class="pre">scope</span> <span class="pre">&lt;</span> <span class="pre">&quot;tokens&quot;</span></code>. So use this if you
+are conservative. Or deactivate the cache with <code class="docutils literal notranslate"><span class="pre">deactivate_cache()</span></code> until it
+has fully matured.</p>
+<p>We thank the people who have contributed to this release:</p>
+<p><a class="reference external" href="https://github.com/ellessenne">&#64;ellessenne</a> and
+<a class="reference external" href="https://github.com/renkun-ken">&#64;renkun-ken</a>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-3-0">
+<h1>styler 1.3.0<a class="headerlink" href="#styler-1-3-0" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> and <code class="docutils literal notranslate"><span class="pre">style_dir()</span></code> gain a new argument <code class="docutils literal notranslate"><span class="pre">exclude_dirs</span></code> to
+exclude directories from styling, by default <code class="docutils literal notranslate"><span class="pre">renv</span></code> and <code class="docutils literal notranslate"><span class="pre">packrat</span></code>. Note
+that the defaults won’t change the behavior of <code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> because it
+does anyways does not style these directories and they were set for
+consistency.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_file()</span></code> and friends now strip <code class="docutils literal notranslate"><span class="pre">./</span></code> in file paths returned invisibly,
+i.e. <code class="docutils literal notranslate"><span class="pre">./script.R</span></code> becomes <code class="docutils literal notranslate"><span class="pre">script.R</span></code> (#568).</p></li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ignore certain lines using <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">styler:</span> <span class="pre">off</span></code> and <code class="docutils literal notranslate"><span class="pre">#styler:</span> <span class="pre">on</span></code> or custom
+markers, see <code class="docutils literal notranslate"><span class="pre">?stylerignore</span></code> (#560).</p></li>
+<li><p>styler caches results of styling, so applying styler to code it has styled
+before will be instantaneous. This brings large speed boosts in many
+situations, e.g. when <code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> is run but only a few files have
+changed since the last styling or when using the <a class="reference external" href="https://github.com/lorenzwalthert/precommit">styler pre-commit
+hook</a>. Because styler caches
+by expression, you will also get speed boosts in large files with many
+expressions when you only change a few of them. See <code class="docutils literal notranslate"><span class="pre">?caching</span></code> for details
+(#538, #578).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_style_guide()</span></code> gains two arguments <code class="docutils literal notranslate"><span class="pre">style_guide_name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">style_guide_version</span></code> that are carried as meta data, in particular to
+version third-party style guides and ensure the proper functioning of
+caching. This change is completely invisible to users who don’t create and
+distribute their own style guide like <code class="docutils literal notranslate"><span class="pre">tidyverse_style()</span></code> (#572).</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Minor changes and fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>lines are now broken after <code class="docutils literal notranslate"><span class="pre">+</span></code> in <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> calls for <code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>
+(#569).</p></li>
+<li><p>function documentation now contains many more line breaks due to roxygen2
+update to version 7.0.1 (#566).</p></li>
+<li><p>spaces next to the braces in subsetting expressions <code class="docutils literal notranslate"><span class="pre">[</span></code> and <code class="docutils literal notranslate"><span class="pre">[[</span></code> are now
+removed (#580).</p></li>
+<li><p>Adapt to changes in the R parser to make styler pass R CMD check again.
+(#583).</p></li>
+</ul>
+<p>Thanks to all contributors involved, in particular
+<a class="reference external" href="https://github.com/colearendt">&#64;colearendt</a>,
+<a class="reference external" href="https://github.com/davidski">&#64;davidski</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/pat-s">&#64;pat-s</a>, and
+<a class="reference external" href="https://github.com">&#64;programming-wizard</a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-2-0">
+<h1>styler 1.2.0<a class="headerlink" href="#styler-1-2-0" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>Breaking changes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_file()</span></code> now correctly styles multiple files from different
+directories. We no longer display the file name of the styled file, but the
+absolute path. This is also reflected in the invisible return value of the
+function (#522).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_file()</span></code> and friends do not write content back to a file when styling
+does not cause any changes in the file. This means the modification date of
+styled files is only changed when the content is changed (#532).</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>New features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Aligned function calls are detected and remain unchanged if they match the
+styler <a class="reference external" href="https://styler.r-lib.org/articles/detect-alignment.html">definition for aligned function
+calls</a> (#537).</p></li>
+<li><p>curly-curly (<code class="docutils literal notranslate"><span class="pre">{{</span></code>) syntactic sugar introduced with rlang 0.4.0 is now
+explicitly handled, where previously it was just treated as two consecutive
+curly braces (#528).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code>, <code class="docutils literal notranslate"><span class="pre">style_dir()</span></code> and the Addins can now style <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code>, and
+hidden files are now also styled (#530).</p></li>
+</ul>
+</section>
+<section id="minor-improvements-and-fixes">
+<h2>Minor improvements and fixes<a class="headerlink" href="#minor-improvements-and-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Roxygen code examples: leverage <code class="docutils literal notranslate"><span class="pre">roxygen2</span></code> for correct escaping of
+expressions that contain <code class="docutils literal notranslate"><span class="pre">\</span></code>, in particular in <code class="docutils literal notranslate"><span class="pre">dontrun{}</span></code> and friends,
+allow quoted braces that are not matched (#729).</p></li>
+<li><p>Brace expressions in function calls are formatted in a less compact way to
+improve readability. Typical use case: <code class="docutils literal notranslate"><span class="pre">tryCatch()</span></code> (#543).</p></li>
+<li><p>Arguments in function declarations in a context which is indented multiple
+times should now be correct. This typically affects <code class="docutils literal notranslate"><span class="pre">R6::R6Class()</span></code> (#546).</p></li>
+<li><p>Escape characters in roxygen code examples are now correctly escaped
+(#512).</p></li>
+<li><p>Special characters such as <code class="docutils literal notranslate"><span class="pre">\n</span></code> in strings are now preserved in text and
+not turned into literal values like a line break (#554).</p></li>
+<li><p>Style selection Addin now preserves line break when the last line selected
+is an entire line (#520).</p></li>
+<li><p>Style file Addin can now properly handle cancelling (#511).</p></li>
+<li><p>The body of a multi-line function declaration is now indented correctly for
+<code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> and also wrapped in curly braces for <code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>
+(#536).</p></li>
+<li><p>Advice for contributors in <code class="docutils literal notranslate"><span class="pre">CONTRIBUTING.md</span></code> was updated (#508).</p></li>
+</ul>
+</section>
+<section id="adaption">
+<h2>Adaption<a class="headerlink" href="#adaption" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>styler is now available through the pre-commit hook <code class="docutils literal notranslate"><span class="pre">style-files</span></code> in
+<a class="github reference external" href="https://github.com/lorenzwalthert/precommit">lorenzwalthert/precommit</a>.</p></li>
+</ul>
+<p>Thanks to all contributors involved, in particular</p>
+<p><a class="reference external" href="https://github.com/Banana1530">&#64;Banana1530</a>,
+<a class="reference external" href="https://github.com/batpigandme">&#64;batpigandme</a>,
+<a class="reference external" href="https://github.com/cpsievert">&#64;cpsievert</a>,
+<a class="reference external" href="https://github.com/ellessenne">&#64;ellessenne</a>,
+<a class="reference external" href="https://github.com/Emiller88">&#64;Emiller88</a>,
+<a class="reference external" href="https://github.com/hadley">&#64;hadley</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>,
+<a class="reference external" href="https://github.com/lwjohnst86">&#64;lwjohnst86</a>,
+<a class="reference external" href="https://github.com/michaelquinn32">&#64;michaelquinn32</a>,
+<a class="reference external" href="https://github.com/mine-cetinkaya-rundel">&#64;mine-cetinkaya-rundel</a>,
+<a class="reference external" href="https://github.com/Moohan">&#64;Moohan</a>, <a class="reference external" href="https://github.com/nxskok">&#64;nxskok</a>,
+<a class="reference external" href="https://github.com/oliverbeagley">&#64;oliverbeagley</a>,
+<a class="reference external" href="https://github.com/pat-s">&#64;pat-s</a>, &#64;reddy-ia, and
+<a class="reference external" href="https://github.com/russHyde">&#64;russHyde</a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-1-1">
+<h1>styler 1.1.1<a class="headerlink" href="#styler-1-1-1" title="Link to this heading">#</a></h1>
+<p>This is primarily a maintenance release upon the request of the CRAN team
+(#490).</p>
+<section id="id6">
+<h2>Major changes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Users can now control style configurations for styler Addins (#463, #500),
+using the <code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">style</span></code> Addin. See <code class="docutils literal notranslate"><span class="pre">?styler::styler_addins</span></code> for details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return()</span></code> is now always put in braces and put on a new line when used in a
+conditional statement (#492).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%&gt;%</span></code> almost always causes a line break now for <code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (#503).</p></li>
+</ul>
+</section>
+<section id="minor-changes">
+<h2>Minor changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">style_pkg()</span></code> now also styles the “demo” directory by default (#453).</p></li>
+<li><p>multi-line strings are now styled more consistently (#459).</p></li>
+<li><p>indention in roxygen code example styling (#455) and EOF spacing (#469) was
+fixed.</p></li>
+<li><p>indention for for loop edge case (#457) and comments in pipe chain (#482)
+were fixed.</p></li>
+<li><p>line-break styling around comma is improved (#479).</p></li>
+<li><p>bug that can cause an error when the variable <code class="docutils literal notranslate"><span class="pre">text</span></code> in any name space
+before styler on the search path was defined and did not have length 1 is
+fixed (#484).</p></li>
+<li><p>slightly confusing warning about empty strings caused with roxygen code
+examples and Rmd was removed.</p></li>
+<li><p>right apostrophe to let package pass R CMD Check in strict Latin-1 locale
+was removed (#490, reason for release).</p></li>
+</ul>
+</section>
+<section id="adaption-of-styler">
+<h2>Adaption of styler<a class="headerlink" href="#adaption-of-styler" title="Link to this heading">#</a></h2>
+<p>Since it’s never been mentioned in the release notes, we also mention here
+where else you can use styler functionality:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">usethis::use_tidy_style()</span></code> styles your project according to the tidyverse
+style guide.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reprex::reprex(style</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> to prettify reprex code before printing. To
+permanently use <code class="docutils literal notranslate"><span class="pre">style</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> without specifying it every time, you can
+add the following line to your <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> (via
+<code class="docutils literal notranslate"><span class="pre">usethis::edit_r_profile()</span></code>): <code class="docutils literal notranslate"><span class="pre">options(reprex.styler</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code>.</p></li>
+<li><p>you can pretty-print your R code in RMarkdown reports without having styler
+modifying the source. This feature is implemented as a code chunk option in
+knitr. use <code class="docutils literal notranslate"><span class="pre">tidy</span> <span class="pre">=</span> <span class="pre">&quot;styler&quot;</span></code> in the header of a code chunks (e.g.
+<code class="docutils literal notranslate"><span class="pre">```{r</span>&#160;&#160; <span class="pre">name-of-the-chunk,</span> <span class="pre">tidy</span> <span class="pre">=</span> <span class="pre">&quot;styler&quot;}</span></code>), or
+<code class="docutils literal notranslate"><span class="pre">knitr::opts_chunk$set(tidy</span> <span class="pre">=</span>&#160;&#160; <span class="pre">&quot;styler&quot;)</span></code> at the top of your RMarkdown
+script.</p></li>
+<li><p>pretty-printing of <a class="reference external" href="https://github.com/ropensci/drake">drake</a> workflow data
+frames with <code class="docutils literal notranslate"><span class="pre">drake::drake_plan_source()</span></code>.</p></li>
+<li><p>Adding styler as a fixer to the <a class="reference external" href="https://github.com/dense-analysis/ale/pull/2401">ale
+Plug-in</a> for VIM.</p></li>
+</ul>
+<p>Thanks to all contributors involved, in particular
+<a class="reference external" href="https://github.com/ArthurPERE">&#64;ArthurPERE</a>,
+<a class="reference external" href="https://github.com/hadley">&#64;hadley</a>, <a class="reference external" href="https://github.com/igordot">&#64;igordot</a>,
+<a class="reference external" href="https://github.com/IndrajeetPatil">&#64;IndrajeetPatil</a>,
+<a class="reference external" href="https://github.com/jackwasey">&#64;jackwasey</a>,
+<a class="reference external" href="https://github.com/jcrodriguez1989">&#64;jcrodriguez1989</a>,
+<a class="reference external" href="https://github.com/jennybc">&#64;jennybc</a>,
+<a class="reference external" href="https://github.com/jonmcalder">&#64;jonmcalder</a>,
+<a class="reference external" href="https://github.com/katrinleinweber">&#64;katrinleinweber</a>,
+<a class="reference external" href="https://github.com/krlmlr">&#64;krlmlr</a>,
+<a class="reference external" href="https://github.com/lorenzwalthert">&#64;lorenzwalthert</a>,
+<a class="reference external" href="https://github.com/michaelquinn32">&#64;michaelquinn32</a>,
+<a class="reference external" href="https://github.com/msberends">&#64;msberends</a>,
+<a class="reference external" href="https://github.com/raynamharris">&#64;raynamharris</a>,
+<a class="reference external" href="https://github.com/riccardoporreca">&#64;riccardoporreca</a>,
+<a class="reference external" href="https://github.com/rjake">&#64;rjake</a>,
+<a class="reference external" href="https://github.com/Robinlovelace">&#64;Robinlovelace</a>,
+<a class="reference external" href="https://github.com/skirmer">&#64;skirmer</a>,
+<a class="reference external" href="https://github.com/thalesmello">&#64;thalesmello</a>,
+<a class="reference external" href="https://github.com/tobiasgerstenberg">&#64;tobiasgerstenberg</a>,
+<a class="reference external" href="https://github.com/tvatter">&#64;tvatter</a>,
+<a class="reference external" href="https://github.com/wdearden">&#64;wdearden</a>,
+<a class="reference external" href="https://github.com/wmayner">&#64;wmayner</a>, and &#64;yech1990.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-1-0">
+<h1>styler 1.1.0<a class="headerlink" href="#styler-1-1-0" title="Link to this heading">#</a></h1>
+<p>This release introduces new features and is fully backward-compatible. It also
+adapts to changes in the R parser committed into R devel (#419).</p>
+<section id="id7">
+<h2>Major Changes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>styler can now style roxygen code examples in the source code of package
+(#332) as well as Rnw files (#431).</p></li>
+<li><p>the print method for the output of <code class="docutils literal notranslate"><span class="pre">style_text()</span></code> (<code class="docutils literal notranslate"><span class="pre">print.vertical()</span></code>) now
+returns syntax-highlighted code by default, controllable via the option
+<code class="docutils literal notranslate"><span class="pre">styler.colored_print.vertical</span></code> (#417).</p></li>
+<li><p>the README was redesigned (#413).</p></li>
+<li><p>semi-colon expression that contained multiple assignments was fixed (#404).</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>Minor Changes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>cursor position is remembered for styling via Addin (#416).</p></li>
+<li><p>adapt spacing around tilde for multi-token expressions(#424) and brace edge
+case (#425).</p></li>
+<li><p>only add brackets to piped function call if RHS is a symbol (#422).</p></li>
+<li><p>increase coverage again to over 90% (#412).</p></li>
+<li><p>move rule that turns single quotes into double quotes to token modifier in
+`tidyverse_style_guide() (#406).</p></li>
+<li><p>remove line-breaks before commas (#405).</p></li>
+<li><p>removed package dependency enc in favor of xfun (#442).</p></li>
+</ul>
+<p>Thanks to all contributors for patches, issues and the like: &#64;jonmcalder,
+&#64;krlmlr, &#64;IndrajeetPatil, &#64;kalibera, &#64;Hasnep, &#64;kiranmaiganji, &#64;dirkschumacher,
+&#64;ClaytonJY, &#64;wlandau, &#64;maurolepore</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-0-2">
+<h1>styler 1.0.2<a class="headerlink" href="#styler-1-0-2" title="Link to this heading">#</a></h1>
+<p>This is a maintenance release without any breaking API changes.</p>
+<section id="id9">
+<h2>Major Changes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed indention for named multi-line function calls (#372).</p></li>
+<li><p>Non-R code chunks in <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code> files are now respected and won’t get styled
+(#386).</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>Minor Changes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixing an edge case in which, if very long strings were present in the
+code, tokens could be replaced with wrong text (#384).</p></li>
+<li><p>Spacing around tilde in formulas depends now on whether there is a LHS in
+the formula (#379).</p></li>
+<li><p>Spaces are now also added around <code class="docutils literal notranslate"><span class="pre">EQ_SUB</span></code> (<code class="docutils literal notranslate"><span class="pre">=</span></code>) (#380).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">CONTRIBUTING.md</span></code> to outline guidelines for contributing to styler.</p></li>
+<li><p>More informative error messages for parsing problems (#401, #400).</p></li>
+<li><p>Improved documentation (#387).</p></li>
+</ul>
+<p>Thanks to all contributors for patches, issues and the like: &#64;katrinleinweber,
+&#64;krlmlr, &#64;dchiu911, &#64;ramnathv, &#64;aedobbyn, &#64;Bio7, &#64;tonytonov, &#64;samhinshaw, &#64;fny,
+&#64;vnijs, &#64;martin-mfg, &#64;NGaffney, &#64;dchiu911.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-0-1">
+<h1>styler 1.0.1<a class="headerlink" href="#styler-1-0-1" title="Link to this heading">#</a></h1>
+<p>This is a maintenance release without any breaking API changes.</p>
+<section id="major-dependency-related-changes">
+<h2>Major &amp; dependency related changes<a class="headerlink" href="#major-dependency-related-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Removed implicit <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> dependency via <code class="docutils literal notranslate"><span class="pre">purrr:::map_dfr()</span></code> (thanks
+&#64;jimhester, #324).</p></li>
+<li><p>Added required minimal version dependency for purr (<code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">0.2.3</span></code>) (#338).</p></li>
+<li><p>We rely on the tibble package which was optimized for speed in <code class="docutils literal notranslate"><span class="pre">v1.4.2</span></code> so
+styler should run ~2x as fast
+<a class="reference external" href="https://github.com/tidyverse/tibble/pull/348">(#348)</a>. For that reason,
+styler now depends on <code class="docutils literal notranslate"><span class="pre">tibble</span> <span class="pre">&gt;=</span> <span class="pre">1.4.2</span></code>.</p></li>
+<li><p>In the dependency <code class="docutils literal notranslate"><span class="pre">enc</span></code>, a bug was fixed that removed/changed non-ASCII
+characters. Hence, styler now depends on <code class="docutils literal notranslate"><span class="pre">enc</span> <span class="pre">&gt;=</span> <span class="pre">0.2</span></code> (#348).</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>Minor changes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We’re now recognizing and respecting more DSLs used in R comments: rplumber
+(<code class="docutils literal notranslate"><span class="pre">#*</span></code>, #306), shebang <code class="docutils literal notranslate"><span class="pre">#/!</span></code> (#345), knitr chunk headers for spinning (<code class="docutils literal notranslate"><span class="pre">#+</span></code>
+/ <code class="docutils literal notranslate"><span class="pre">#-</span></code>, #362).</p></li>
+<li><p>Named arguments can stay on the first line if call is multi-line (#318).</p></li>
+<li><p>No space anymore with <code class="docutils literal notranslate"><span class="pre">tidyverse_style()</span></code> after <code class="docutils literal notranslate"><span class="pre">!!</span></code> since with
+<code class="docutils literal notranslate"><span class="pre">rlang</span> <span class="pre">0.2</span></code>, <code class="docutils literal notranslate"><span class="pre">!!</span></code> now binds tighter (#322), spacing around <code class="docutils literal notranslate"><span class="pre">~</span></code> (#316), no
+space anymore around <code class="docutils literal notranslate"><span class="pre">^</span></code> (#308).</p></li>
+<li><p>Code chunks in Rmd documents that don’t use the R engine are no longer
+formatted (#313).</p></li>
+<li><p>Various bug fixes and edge case improvements.</p></li>
+</ul>
+<p>Thanks to all contributors for patches, issues and the like: &#64;devSJR, &#64;klrmlr,
+&#64;yutannihilation, &#64;samhinshaw, &#64;martin-mfg, &#64;jjramsey, &#64;RMHogervorst, &#64;wlandau,
+&#64;llrs, &#64;aaronrudkin, &#64;crew102, &#64;jkgrain, &#64;jennybc, &#64;joranE.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="styler-1-0-0">
+<h1>styler 1.0.0<a class="headerlink" href="#styler-1-0-0" title="Link to this heading">#</a></h1>
+<p>Initial release.</p>
+<section id="stylers">
+<h2>stylers<a class="headerlink" href="#stylers" title="Link to this heading">#</a></h2>
+<p>These are functions used to style code. They style a directory, a whole
+package, a file or a string.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>style_dir(path = &quot;.&quot;, 
+  ..., style = tidyverse_style, transformers = style(...), 
+  filetype = &quot;R&quot;, recursive = TRUE, exclude_files = NULL
+)
+
+style_pkg(pkg = &quot;.&quot;, 
+  ..., style = tidyverse_style, transformers = style(...), filetype = &quot;R&quot;, 
+  exclude_files = &quot;R/RcppExports.R&quot;
+)
+
+
+style_file(path, 
+  ..., style = tidyverse_style, transformers = style(...)
+)
+
+style_text(text, ..., style = tidyverse_style, transformers = style(...))
+</pre></div>
+</div>
+</section>
+<section id="style-guides">
+<h2>style guides<a class="headerlink" href="#style-guides" title="Link to this heading">#</a></h2>
+<p>These functions are the style guides implemented.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tidyverse_style(
+  scope = &quot;tokens&quot;, 
+  strict = TRUE, 
+  indent_by = 2, 
+  start_comments_with_one_space = FALSE, 
+  reindention = tidyverse_reindention(), 
+  math_token_spacing = tidyverse_math_token_spacing()
+)
+tidyverse_reindention()
+tidyverse_math_token_spacing())
+</pre></div>
+</div>
+</section>
+<section id="style-guide-creators">
+<h2>style guide creators<a class="headerlink" href="#style-guide-creators" title="Link to this heading">#</a></h2>
+<p>This function is used to create a style guide.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>create_style_guide(
+  initialize = default_style_guide_attributes, 
+  line_break = NULL, 
+  space = NULL, 
+  token = NULL, 
+  indention = NULL, 
+  use_raw_indention = FALSE, 
+  reindention = tidyverse_reindention()
+)
+</pre></div>
+</div>
+</section>
+<section id="helpers">
+<h2>Helpers<a class="headerlink" href="#helpers" title="Link to this heading">#</a></h2>
+<p>These are helper functions used to specify the style guides in use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>specify_math_token_spacing(
+  zero = NULL, 
+  one = c(&quot;&#39;+&#39;&quot;, &quot;&#39;-&#39;&quot;, &quot;&#39;*&#39;&quot;, &quot;&#39;/&#39;&quot;, &quot;&#39;^&#39;&quot;)
+)
+
+specify_reindention(
+  regex_pattern = NULL, 
+  indention = 0, 
+  comments_only = TRUE
+)
+initialize_default_attributes(pd_flat)
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\styler"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">styler 1.10.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-2">styler 1.10.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-1">styler 1.10.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-10-0">styler 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-9-1">styler 1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-9-0">styler 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-8-1">styler 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-8-0">styler 1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-7-0">styler 1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-6-2">styler 1.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-6-1">styler 1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-5-1">styler 1.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-detection">Alignment detection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-new-features">Other new features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes-and-fixes">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-4-1">styler 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-4-0">styler 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-changes">API Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor changes and fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#infrastructure-changes">Infrastructure changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-2">styler 1.3.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-1">styler 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-3-0">styler 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor changes and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-2-0">styler 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-fixes">Minor improvements and fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaption">Adaption</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-1-1">styler 1.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaption-of-styler">Adaption of styler</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-1-0">styler 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-2">styler 1.0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Major Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Minor Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-1">styler 1.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-dependency-related-changes">Major &amp; dependency related changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#styler-1-0-0">styler 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stylers">stylers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guides">style guides</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide-creators">style guide creators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

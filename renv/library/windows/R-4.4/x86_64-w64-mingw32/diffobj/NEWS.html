@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>diffobj &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/diffobj/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/diffobj/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>diffobj</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-5">v0.3.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-4">v0.3.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-3">v0.3.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-1-2">v0.3.1-2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-0">v0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-4">v0.2.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-3">v0.2.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-2">v0.2.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-0-1">v0.2.0-1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bugs">Bugs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-11">v0.1.11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-10">v0.1.10</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-9">v0.1.9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-8">v0.1.8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-7">v0.1.7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-6">v0.1.6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-5">v0.1.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-4">v0.1.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-3">v0.1.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-2">v0.1.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-1">v0.1.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-0">v0.1.0</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="diffobj">
+<h1>diffobj<a class="headerlink" href="#diffobj" title="Link to this heading">#</a></h1>
+<section id="v0-3-5">
+<h2>v0.3.5<a class="headerlink" href="#v0-3-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Options automatically fallback to factory defaults if they are unset (h/t
+&#64;gadenbui).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/158">#158</a>: Calling <code class="docutils literal notranslate"><span class="pre">diff*</span></code> with
+<code class="docutils literal notranslate"><span class="pre">do.call</span></code> now works without warnings.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/117">#117</a>: Fix guide detection
+with very wide wrapped data.frames (h/t &#64;bastician, &#64;overvolting).</p></li>
+</ul>
+</section>
+<section id="v0-3-4">
+<h2>v0.3.4<a class="headerlink" href="#v0-3-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add a print method for <code class="docutils literal notranslate"><span class="pre">ses_dat</span></code> return values that makes it easier to
+interpret the diff.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/152">#152</a>: Rewrite the
+fall-back “O(n)” algorithm that kicks in when there are <code class="docutils literal notranslate"><span class="pre">max.diffs</span></code>
+differences to be more robust (h/t &#64;hadley, &#64;DanChaltiel, &#64;gadenbui).</p></li>
+<li><p>Related to #152: <code class="docutils literal notranslate"><span class="pre">max.diffs=0</span></code> used to mean the same as <code class="docutils literal notranslate"><span class="pre">max.diffs=-1</span></code> (i.e.
+unlimited), but this was undocumented and an error.  <code class="docutils literal notranslate"><span class="pre">max.diffs=0</span></code> will now
+immediately fall back to the “O(n)” algorithm.</p></li>
+</ul>
+</section>
+<section id="v0-3-3">
+<h2>v0.3.3<a class="headerlink" href="#v0-3-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Implement experimental .Rout / .Rout.save testing.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">all.equal</span></code> test breakages from
+<a class="reference external" href="https://github.com/r-devel/r-svn/commit/66d016544fe9deb64aa74ae55fa3edfcb721b1c4">r79555</a>.</p></li>
+</ul>
+</section>
+<section id="v0-3-1-2">
+<h2>v0.3.1-2<a class="headerlink" href="#v0-3-1-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/150">#150</a>: Make tests compatible
+with new <code class="docutils literal notranslate"><span class="pre">testthat</span></code> release (h/t &#64;hadley).</p></li>
+<li><p>Remove pre-built vignettes and note <code class="docutils literal notranslate"><span class="pre">testthat</span></code> change to <code class="docutils literal notranslate"><span class="pre">waldo</span></code> release.</p></li>
+</ul>
+</section>
+<section id="v0-3-0">
+<h2>v0.3.0<a class="headerlink" href="#v0-3-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/143">#143</a>: Add <code class="docutils literal notranslate"><span class="pre">ses_dat</span></code> to
+provide a more computable version of <code class="docutils literal notranslate"><span class="pre">ses</span></code> (h/t &#64;hadley).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/144">#144</a>: Re-encode strings to
+UTF-8 prior to comparison to avoid spurious encoding-only differences (h/t
+&#64;hadley).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/142">#142</a>: Typos in
+<code class="docutils literal notranslate"><span class="pre">standardGeneric</span></code> in trim/guide generic definitions.</p></li>
+<li><p>Drop attributes from inputs to <code class="docutils literal notranslate"><span class="pre">diffChr</span></code> (revealed as an issue by #142).</p></li>
+<li><p>Banish ghosts of <code class="docutils literal notranslate"><span class="pre">stringsAsFactors</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-2-4">
+<h2>v0.2.4<a class="headerlink" href="#v0-2-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Tests explicitly set <code class="docutils literal notranslate"><span class="pre">stringsAsFactors=TRUE</span></code> so they don’t fail with the
+anticipated changed for R4.0.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/140">#140</a>: Bad link in <code class="docutils literal notranslate"><span class="pre">?ses</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-2-3">
+<h2>v0.2.3<a class="headerlink" href="#v0-2-3" title="Link to this heading">#</a></h2>
+<p>This is a bugfix release.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/136">#136</a>: Documentation for
+<code class="docutils literal notranslate"><span class="pre">ignore.white.space</span></code> (h/t &#64;flying-sheep) and <code class="docutils literal notranslate"><span class="pre">max.diffs</span></code> parameters listed
+incorrect defaults.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/135">#135</a>: Incorrect handling of
+potential meta data strings when unwrapping atomics would cause a “wrong sign
+in by argument” error (h/t &#64;flying-sheep).  We also fixed other bugs related
+to the handling of meta data in atomic vectors that were uncovered while
+debugging this issue.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/134">#134</a>: Forwarding <code class="docutils literal notranslate"><span class="pre">...</span></code> to
+<code class="docutils literal notranslate"><span class="pre">diff*</span></code> functions no longer breaks substitution of arguments for diff banners
+(h/t &#64;noamross)..</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/133">#133</a>: <code class="docutils literal notranslate"><span class="pre">diffFile</span></code> considers
+files with equal content but different locations to be <code class="docutils literal notranslate"><span class="pre">all.equal</span></code> now (h/t
+&#64;noamross).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/132">#132</a>: Duplicate pager slot
+for baseline <code class="docutils literal notranslate"><span class="pre">Pager</span></code> removed (h/t Bill Dunlap).</p></li>
+</ul>
+<p>There are also several other small internal changes that in theory should not
+affect user facing behavior.</p>
+</section>
+<section id="v0-2-2">
+<h2>v0.2.2<a class="headerlink" href="#v0-2-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">RNGversion()</span></code> due to changes to sampling mechanism.</p></li>
+</ul>
+</section>
+<section id="v0-2-0-1">
+<h2>v0.2.0-1<a class="headerlink" href="#v0-2-0-1" title="Link to this heading">#</a></h2>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/129">#129</a>: Allow pager
+specification via lists rather than full <code class="docutils literal notranslate"><span class="pre">Pager</span></code> objects for easier changes to
+defaults.  As part of this we changed <code class="docutils literal notranslate"><span class="pre">StyleRaw</span></code> objects to use default
+pager instead of <code class="docutils literal notranslate"><span class="pre">PagerOff</span></code>.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/126">#126</a>: Add embedding diffs in
+Shiny to vignette.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/119">#119</a>: <code class="docutils literal notranslate"><span class="pre">ignore.whitespace</span></code> now
+also ignores white space differences adjoining punctuation.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/118">#118</a>: New option to preserve
+temporary diff file output when using pager (see <code class="docutils literal notranslate"><span class="pre">?Pager</span></code>).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/114">#114</a>: New options <code class="docutils literal notranslate"><span class="pre">strip.sgr</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sgr.supported</span></code> allow finer control of what happens when input already
+contains ANSI CSI SGR and how ANSI CSI SGR is handled in string manipulations.
+Related to this, <code class="docutils literal notranslate"><span class="pre">options(crayon.enabled=TRUE)</span></code> is no longer set when
+capturing output prior to diff as it used to be.  By default pre-existing ANSI
+CSI SGR is stripped with a warning prior to comparison.</p></li>
+</ul>
+</section>
+<section id="bugs">
+<h3>Bugs<a class="headerlink" href="#bugs" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/131">#131</a>: Fix missing slot in S4
+class definition (discovered by Bill Dunlap).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/127">#127</a>: Width CSS conflicts
+with bootstrap (reported by &#64;eckyu, debugged/fixed by &#64;cpsievert).</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-1-11">
+<h2>v0.1.11<a class="headerlink" href="#v0-1-11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/123">#123</a>: Compatibility with R3.1
+(&#64;krlmlr).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/121">#121</a>: Vignette describing how
+to embed diffs in Rmd documents (&#64;JBGruber).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/115">#115</a>: Declare HTML page diff
+encoding/charset as UTF-8 (&#64;artemklevtsov).</p></li>
+</ul>
+</section>
+<section id="v0-1-10">
+<h2>v0.1.10<a class="headerlink" href="#v0-1-10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Comply with CRAN directive to remove references to packages not in
+depends/imports/suggests in tests (these were run optionally before).</p></li>
+<li><p>Fix bugs in corner case handling when we hit <code class="docutils literal notranslate"><span class="pre">max.diffs</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-1-9">
+<h2>v0.1.9<a class="headerlink" href="#v0-1-9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix test failures caused by changes in tibble output</p></li>
+</ul>
+</section>
+<section id="v0-1-8">
+<h2>v0.1.8<a class="headerlink" href="#v0-1-8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/111">#111</a>: Fixed guides with
+<code class="docutils literal notranslate"><span class="pre">row.names=FALSE</span></code> (thank you &#64;<a class="reference external" href="https://github.com/HenrikBengtsson">Henrik
+Bengtsson</a>).</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/113">#113</a>: Adapt tests to new
+<code class="docutils literal notranslate"><span class="pre">str</span></code> return values (thank you &#64;<a class="reference external" href="https://github.com/mmaechler">Martin
+Mächler</a>).</p></li>
+</ul>
+</section>
+<section id="v0-1-7">
+<h2>v0.1.7<a class="headerlink" href="#v0-1-7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix tests for next <code class="docutils literal notranslate"><span class="pre">testthat</span></code> release.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/107">#107</a>: Diffs on quoted
+language</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/108">#108</a>: Problems caused by
+copying <code class="docutils literal notranslate"><span class="pre">crayon</span></code> functions
+(<a class="reference external" href="https://stackoverflow.com/users/7788015/seulki-choi">&#64;seulki-choi</a>,
+&#64;gaborcsardi)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/100">#100</a>: R_useDynamicSymbols</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/97">#97</a>: 2D Guidelines fixes for
+data.table, tibble</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/96">#96</a>: Warnings when comparing
+large data tables.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/94">#94</a>: Guide detection problems
+in nested lists.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/105">#105</a>: Copyright tweaks.</p></li>
+</ul>
+</section>
+<section id="v0-1-6">
+<h2>v0.1.6<a class="headerlink" href="#v0-1-6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/87">#87</a>: <code class="docutils literal notranslate"><span class="pre">diffobj</span></code> is now GPL (&gt;=2)
+instead of GPL-3.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/81">#81</a>: Better handling of mixed
+UTF-8 / ASCII strings, reported by <a class="reference external" href="https://github.com/jennybc">jennybc</a></p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/88">#88</a>: correctly handle trimming
+when empty lists are involved, reported by <a class="reference external" href="https://github.com/wch">wch</a></p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/77">#77</a>: <code class="docutils literal notranslate"><span class="pre">diffObj</span></code> now favors
+dispatching to <code class="docutils literal notranslate"><span class="pre">diffPrint</span></code> unless <code class="docutils literal notranslate"><span class="pre">diffPrint</span></code> output is large</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/82">#82</a>: <code class="docutils literal notranslate"><span class="pre">diffChr</span></code> and <code class="docutils literal notranslate"><span class="pre">ses</span></code> now
+treat <code class="docutils literal notranslate"><span class="pre">NA</span></code> as “NA” (needed with change in <code class="docutils literal notranslate"><span class="pre">nchar(NA)</span></code> in base R)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/85">#85</a>: Improved alignment of
+unwrapped atomic vector diffs</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/83">#83</a>: Improve pager auto
+detection (note now ANSI output is only allowed by default if terminal
+supports ANSI colors and the system pager is <code class="docutils literal notranslate"><span class="pre">less</span></code>, see <code class="docutils literal notranslate"><span class="pre">?Pager</span></code> for details)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/92">#92</a>,
+<a class="reference external" href="https://github.com/brodieG/diffobj/issues/80">#80</a>,
+<a class="reference external" href="https://github.com/brodieG/diffobj/issues/45">#45</a>: basic implementation of
+S4 guidelines and trimming (full resolution eventually with
+<a class="reference external" href="https://github.com/brodieG/diffobj/issues/33">#33</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/84">#84</a>: simplify how to call
+<code class="docutils literal notranslate"><span class="pre">diffChr</span></code> for improved performance, including “optimization” of
+<code class="docutils literal notranslate"><span class="pre">convert.hz.whitespace</span></code>.</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/64">#64</a>: fix line limit in corner
+case</p></li>
+<li><p>More robust handling of external <code class="docutils literal notranslate"><span class="pre">diff*</span></code> methods and of how <code class="docutils literal notranslate"><span class="pre">diffObj</span></code> calls
+<code class="docutils literal notranslate"><span class="pre">diffStr</span></code> and <code class="docutils literal notranslate"><span class="pre">diffPrint</span></code></p></li>
+</ul>
+</section>
+<section id="v0-1-5">
+<h2>v0.1.5<a class="headerlink" href="#v0-1-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/71">#71</a>: Buggy diffs b/w data
+frames when one has sequential row numbers and the other does not, loosely
+related to <a class="reference external" href="https://github.com/brodieG/diffobj/issues/38">#38</a></p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/69">#69</a>: Improve performance on
+outputs with large print/show output, and other assorted minor optimizations</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/72">#72</a>: Warn when <code class="docutils literal notranslate"><span class="pre">style</span></code>
+parameter overrides other user supplied parameters</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/70">#70</a>: Improve word contrast in YB
+HTML mode</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/63">#63</a>: Show <code class="docutils literal notranslate"><span class="pre">all.equal</span></code> output
+when objects are not <code class="docutils literal notranslate"><span class="pre">all.equal</span></code> but there are no visible differences</p></li>
+<li><p>Add Mean Relative Indifference vignette and update vignette styling</p></li>
+</ul>
+</section>
+<section id="v0-1-4">
+<h2>v0.1.4<a class="headerlink" href="#v0-1-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/67">#67</a>: Fix CRAN Binaries</p></li>
+<li><p>Clarified that C code is heavily modified and incompatible with original
+<code class="docutils literal notranslate"><span class="pre">libmba</span></code> implementation</p></li>
+</ul>
+</section>
+<section id="v0-1-3">
+<h2>v0.1.3<a class="headerlink" href="#v0-1-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>First version on CRAN</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/51">#51</a>: use RStudio viewport to display HTML diffs when running in RStudio (h/t Noam Ross)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/54">#54</a>: <a class="reference external" href="https://github.com/brodieG/diffobj/issues/55">#55</a>, scale HTML output to viewport width (see <code class="docutils literal notranslate"><span class="pre">?Style</span></code>)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/53">#53</a>: default term colors computed on run instead of on package load</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/56">#56</a>: disable wrap for HTML output</p></li>
+<li><p>HTML output now captured with default width 80 since there is no explicit relationship between HTML viewport width and <code class="docutils literal notranslate"><span class="pre">getOption(&quot;width&quot;)</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">style</span></code> parameter now accepts lists to use as instantiation arguments for <code class="docutils literal notranslate"><span class="pre">Style</span></code> objects (see <code class="docutils literal notranslate"><span class="pre">?Style</span></code>)</p></li>
+<li><p>Fix subtle rendering and formatting application flaws</p></li>
+<li><p>Switch Travis shields to SVG per Gábor Csárdi</p></li>
+<li><p>Improve in-hunk alignment of partially matching lines</p></li>
+<li><p>Compile with <code class="docutils literal notranslate"><span class="pre">-pedantic</span></code>, fix related warnings <a class="reference external" href="https://stackoverflow.com/users/559784/arun">Arun</a></p></li>
+<li><p>Improved coverage and more robust testing</p></li>
+<li><p>Several internal structure changes to accommodate improvements</p></li>
+</ul>
+</section>
+<section id="v0-1-2">
+<h2>v0.1.2<a class="headerlink" href="#v0-1-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/46">#46</a>: Guide and Trim Problems with Lists</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/47">#47</a>: Output Format in non-ANSI Terminals Without Browser (reported by <a class="reference external" href="https://github.com/brodieG/diffobj/issues/47">Frank</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/48">#48</a>: <code class="docutils literal notranslate"><span class="pre">make_blocking</span></code> Default prompt Confusing (reported by <a class="reference external" href="https://github.com/brodieG/diffobj/issues/47">Frank</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/49">#49</a>: In-Hunk Word Diffs Issues when Unwrap-diffing Atomics</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/50">#50</a>: CSS Lost in Rstudio Server Sessions (reported by <a class="reference external" href="https://chat.stackoverflow.com/users/4064778/steven-beaupre">Steven Beaupré</a>)</p></li>
+</ul>
+</section>
+<section id="v0-1-1">
+<h2>v0.1.1<a class="headerlink" href="#v0-1-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Turn off unwrapping for <em>named</em> atomic vectors (see <a class="reference external" href="https://github.com/brodieG/diffobj/issues/43">#43</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/44">#44</a>: Proper handling of NULL objects in <code class="docutils literal notranslate"><span class="pre">diffStr</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/brodieG/diffobj/issues/41">#41</a>: Compilation Issues in Winbuilder</p></li>
+</ul>
+</section>
+<section id="v0-1-0">
+<h2>v0.1.0<a class="headerlink" href="#v0-1-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Initial Release</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\diffobj"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-5">v0.3.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-4">v0.3.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-3">v0.3.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-1-2">v0.3.1-2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-0">v0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-4">v0.2.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-3">v0.2.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-2">v0.2.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-0-1">v0.2.0-1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bugs">Bugs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-11">v0.1.11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-10">v0.1.10</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-9">v0.1.9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-8">v0.1.8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-7">v0.1.7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-6">v0.1.6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-5">v0.1.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-4">v0.1.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-3">v0.1.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-2">v0.1.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-1">v0.1.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-0">v0.1.0</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

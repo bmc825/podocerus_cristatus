@@ -1,0 +1,2179 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CHANGES IN GEOMORPH VERSION 4.0.10 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/geomorph/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/geomorph/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CHANGES IN GEOMORPH VERSION 4.0.10</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">CHANGES IN GEOMORPH VERSION 4.0.10</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-9">CHANGES IN GEOMORPH VERSION 4.0.9</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-8">CHANGES IN GEOMORPH VERSION 4.0.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-7">CHANGES IN GEOMORPH VERSION 4.0.7</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-6">CHANGES IN GEOMORPH VERSION 4.0.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-5">CHANGES IN GEOMORPH VERSION 4.0.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-4">CHANGES IN GEOMORPH VERSION 4.0.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">NEW FEATURES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-3">CHANGES IN GEOMORPH VERSION 4.0.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-2">CHANGES IN GEOMORPH VERSION 4.0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-1">CHANGES IN GEOMORPH VERSION 4.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">CHANGES IN GEOMORPH VERSION 4.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-0">CHANGES IN GEOMORPH VERSION 4.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-2-minor-release">CHANGES IN GEOMORPH VERSION 3.3.2 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-1-patch-release">CHANGES IN GEOMORPH VERSION 3.3.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-0-minor-release">CHANGES IN GEOMORPH VERSION 3.3.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-1-0900-minor-release">CHANGES IN GEOMORPH VERSION 3.2.1.0900 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-1">CHANGES IN GEOMORPH VERSION 3.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-0-minor-release">CHANGES IN GEOMORPH VERSION 3.2.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-3-patch-release">CHANGES IN GEOMORPH VERSION 3.1.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-2-patch-release">CHANGES IN GEOMORPH VERSION 3.1.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-1-patch-release">CHANGES IN GEOMORPH VERSION 3.1.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-0-minor-release">CHANGES IN GEOMORPH VERSION 3.1.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-7-patch-release">CHANGES IN GEOMORPH VERSION 3.0.7 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixed">BUG FIXED</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-6-patch-release">CHANGES IN GEOMORPH VERSION 3.0.6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-5-patch-release">CHANGES IN GEOMORPH VERSION 3.0.5  (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-4">CHANGES IN GEOMORPH VERSION 3.0.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id56">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id57">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id58">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-3-patch-release">CHANGES IN GEOMORPH VERSION 3.0.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id59">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id60">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id61">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-2-patch-release">CHANGES IN GEOMORPH VERSION 3.0.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id62">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id63">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id64">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-1-patch-release">CHANGES IN GEOMORPH VERSION 3.0.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id65">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id66">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id67">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-0-major-release">CHANGES IN GEOMORPH VERSION 3.0.0 (Major Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id68">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id69">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id70">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-7-1-patch-release">CHANGES IN GEOMORPH VERSION 2.1.7-1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id71">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id72">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id73">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-7-patch-release">CHANGES IN GEOMORPH VERSION 2.1.7 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id74">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id75">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id76">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-6-patch-release">CHANGES IN GEOMORPH VERSION 2.1.6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id77">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id78">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id79">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-5-patch-release">CHANGES IN GEOMORPH VERSION 2.1.5 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id80">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id81">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id82">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-4-patch-release">CHANGES IN GEOMORPH VERSION 2.1.4 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id83">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id84">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id85">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-3-patch-release">CHANGES IN GEOMORPH VERSION 2.1.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id86">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id87">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id88">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-2-patch-release">CHANGES IN GEOMORPH VERSION 2.1.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id89">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id90">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id91">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-1-patch-release">CHANGES IN GEOMORPH VERSION 2.1.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id92">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id93">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id94">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-minor-release">CHANGES IN GEOMORPH VERSION 2.1 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id95">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id96">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id97">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-0-1-patch-release">CHANGES IN GEOMORPH VERSION 2.0.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id98">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id99">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id100">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-0-major-release">CHANGES IN GEOMORPH VERSION 2.0 (Major Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id101">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id102">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id103">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-6-patch-release">CHANGES IN GEOMORPH VERSION 1.1-6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id104">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id105">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id106">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-5-patch-release">CHANGES IN GEOMORPH VERSION 1.1-5 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id107">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id108">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id109">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-4-patch-release">CHANGES IN GEOMORPH VERSION 1.1-4 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id110">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id111">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id112">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-3-patch-release">CHANGES IN GEOMORPH VERSION 1.1-3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id113">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id114">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id115">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-2-patch-release">CHANGES IN GEOMORPH VERSION 1.1-2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id116">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id117">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id118">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-1-patch-release">CHANGES IN GEOMORPH VERSION 1.1-1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id119">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id120">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id121">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-0-patch-release">CHANGES IN GEOMORPH VERSION 1.1-0 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id122">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id123">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id124">BUG FIXES</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-10">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.10<a class="headerlink" href="#changes-in-geomorph-version-4-0-10" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>NEW FEATURES<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added new K-components output and plots to <code class="docutils literal notranslate"><span class="pre">physignal.eigen</span></code>.</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>BUG FIXES<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated handling of p &gt; n conditions in <code class="docutils literal notranslate"><span class="pre">physignal.eigen</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-9">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.9<a class="headerlink" href="#changes-in-geomorph-version-4-0-9" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>NEW FEATURES<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function ‘extended.pgls’ for evaluating within-species trends in a phylogenetic context</p></li>
+<li><p>New dataset ‘<a class="reference external" href="http://pupfish.ws">pupfish.ws</a>’</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">physignal.eigen</span></code> for evaluating the dimensions of phylogenetic signal in multivariate data</p></li>
+<li><p>Added an option to <code class="docutils literal notranslate"><span class="pre">gm.prcomp</span></code> to allow the phylogeny to be scaled to unit length</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">groups.first</span></code> argument to <code class="docutils literal notranslate"><span class="pre">gm.measurement.error</span></code>, to optionally include groups in ANOVA table.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>BUG FIXES<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed missing argument in <code class="docutils literal notranslate"><span class="pre">perm.index</span></code> within <code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code>.</p></li>
+<li><p>Ensured proper size-scaling of predicted shapes in <code class="docutils literal notranslate"><span class="pre">gm.prcomp</span></code>.</p></li>
+<li><p>Fixed the missing re-order of data for <code class="docutils literal notranslate"><span class="pre">anc.BM</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-8">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.8<a class="headerlink" href="#changes-in-geomorph-version-4-0-8" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>NEW FEATURES<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Improved <code class="docutils literal notranslate"><span class="pre">anc.BM</span></code></p></li>
+</ul>
+</section>
+<section id="other-changes">
+<h2>OTHER CHANGES<a class="headerlink" href="#other-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Internal changes for compliance with RRPP and Matrix changes</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Bug fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">integration.Vrel</span></code> and phylogeny checks</p></li>
+<li><p>Fixed issue with <a class="reference external" href="http://unsigned.AI">unsigned.AI</a> in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> and removed <a class="reference external" href="http://signed.AI">signed.AI</a></p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> and negNA = TRUE</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">plot.gm.prcomp</span></code> <code class="docutils literal notranslate"><span class="pre">phylo.par</span></code> default</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-7">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.7<a class="headerlink" href="#changes-in-geomorph-version-4-0-7" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>NEW FEATURES<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">gm.measurement.error</span></code></p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>Bug fixes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">estimate.missing</span></code> for shapes files and TPS option</p></li>
+<li><p>Fixed names issue with <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Fixed problems with ellipsis use in <code class="docutils literal notranslate"><span class="pre">readmulti.tps</span></code></p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">lambda.opt</span></code> internal function, for use in <code class="docutils literal notranslate"><span class="pre">physignal.z</span></code>, which precluded verbose results.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>OTHER CHANGES<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Reversed order of asymmetry components for internal consistency</p></li>
+<li><p>Updated internal code and Rd file formats to match new CRAN policies</p></li>
+<li><p>Added a feature to print a table to identify inconsistent landmarking in both <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> and <code class="docutils literal notranslate"><span class="pre">readmulti.tps</span></code>, rather than just return an error.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-6">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.6<a class="headerlink" href="#changes-in-geomorph-version-4-0-6" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>Bug fixes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> when <code class="docutils literal notranslate"><span class="pre">warnmsg</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> (updated nested model computations)</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> when curves exist but are not to be read</p></li>
+<li><p>Fixed issue with bootstrap CI for <code class="docutils literal notranslate"><span class="pre">modularity.test</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">logLikh</span></code> internal function that required <code class="docutils literal notranslate"><span class="pre">matrix</span></code> class objects for calculation.</p></li>
+<li><p>Fixed a typo bug in <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> that caused lost results.</p></li>
+<li><p>Fixed names being dropped from shape components in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">readland.fcsv</span></code> to be consistent with SlicerMorph updates.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>OTHER CHANGES<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Additional error checking in <code class="docutils literal notranslate"><span class="pre">modularity.test</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code> <code class="docutils literal notranslate"><span class="pre">rgl</span></code></p></li>
+<li><p>Added better warning for <code class="docutils literal notranslate"><span class="pre">estimate.missing</span></code> for failing with <code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;Reg&quot;</span></code> to estimate landmarks.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">shape.predictor</span></code> examples to PLS functions.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-5">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.5<a class="headerlink" href="#changes-in-geomorph-version-4-0-5" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>NEW FEATURES<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">physignal.z</span></code></p></li>
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">compare.physignal.z</span></code></p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>OTHER CHANGES<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">plotspec</span></code> and <code class="docutils literal notranslate"><span class="pre">picknplot.shape</span></code> functions to accommodate changes in <code class="docutils literal notranslate"><span class="pre">rgl</span></code></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-4">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.4<a class="headerlink" href="#changes-in-geomorph-version-4-0-4" title="Link to this heading">#</a></h1>
+<section id="id12">
+<h2>NEW FEATURES<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">integration.Vrel</span></code></p></li>
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">compare.ZVrel</span></code></p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">lambda</span></code> argument to <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-3">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.3<a class="headerlink" href="#changes-in-geomorph-version-4-0-3" title="Link to this heading">#</a></h1>
+<section id="id13">
+<h2>OTHER CHANGES<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">Cov.proj</span></code> function to work with <code class="docutils literal notranslate"><span class="pre">RRPP</span></code></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-2">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.2<a class="headerlink" href="#changes-in-geomorph-version-4-0-2" title="Link to this heading">#</a></h1>
+<section id="id14">
+<h2>BUG FIXES<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed issue in <code class="docutils literal notranslate"><span class="pre">compare.CR</span></code> when CR.null = TRUE.</p></li>
+<li><p>Added catch to <code class="docutils literal notranslate"><span class="pre">anc.BM</span></code> for singleton nodes</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-1">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.1<a class="headerlink" href="#changes-in-geomorph-version-4-0-1" title="Link to this heading">#</a></h1>
+<section id="id15">
+<h2>BUG FIXES<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed issue in <code class="docutils literal notranslate"><span class="pre">compare.CR</span></code> when CR.null = TRUE.</p></li>
+<li><p>Added catch to <code class="docutils literal notranslate"><span class="pre">anc.BM</span></code> for singleton nodes</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id16">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.1<a class="headerlink" href="#id16" title="Link to this heading">#</a></h1>
+<section id="id17">
+<h2>NEW FEATURES<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a transform argument to <code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code> for PGLS models, consistent with <code class="docutils literal notranslate"><span class="pre">gm.prcomp</span></code> approaches.</p></li>
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">module.eigen</span></code>, plus S3 generic associated functions.</p></li>
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">na.omit.geomorph.data.frame</span></code>.</p></li>
+</ul>
+</section>
+<section id="id18">
+<h2>BUG FIXES<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed some <code class="docutils literal notranslate"><span class="pre">as.matrix</span></code> names dropping in support code.</p></li>
+<li><p>Fixed pairwise Z-scores in <code class="docutils literal notranslate"><span class="pre">compare.pls</span></code> and <code class="docutils literal notranslate"><span class="pre">compare.CR</span></code> to use box-cox transformed values.</p></li>
+<li><p>Added Pcov as needed output <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code>.</p></li>
+<li><p>Fixed small issue with label plotting in <code class="docutils literal notranslate"><span class="pre">gridPar.r</span></code>.</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">readmulti.tps</span></code> to allow for any kind of tps input and correctly combine them into an array</p></li>
+<li><p>Fixed typo bug in <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> (only affected separate matrices).</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">estimate.missing</span></code> (only affecting method = “Reg”).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-4-0-0">
+<h1>CHANGES IN GEOMORPH VERSION 4.0.0<a class="headerlink" href="#changes-in-geomorph-version-4-0-0" title="Link to this heading">#</a></h1>
+<section id="id19">
+<h2>NEW FEATURES<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Included calculation of individual asymmetry indices to <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> output</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> to use arguments available with updates to <code class="docutils literal notranslate"><span class="pre">RRPP::lm.rrpp</span></code>, taking advantage of parallel processing, C++, and turbo-charged (coefficient-suppressed) calculations to maximize speed.</p></li>
+<li><p>More options for parallel processing.
+*<code class="docutils literal notranslate"><span class="pre">make_ggplot2</span></code> function for converting <code class="docutils literal notranslate"><span class="pre">geomorph</span></code> plots to <code class="docutils literal notranslate"><span class="pre">ggplot</span></code> objects, which can be amended.</p></li>
+</ul>
+</section>
+<section id="id20">
+<h2>BUG FIXES<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> where <code class="docutils literal notranslate"><span class="pre">crossprod</span></code> was used instead of <code class="docutils literal notranslate"><span class="pre">tcrossprod</span></code></p></li>
+<li><p>Fixed typo causing error in <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code></p></li>
+<li><p>Fixed issue in <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> for permutations</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-3-2-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.3.2 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-3-3-2-minor-release" title="Link to this heading">#</a></h1>
+<section id="id21">
+<h2>NEW FEATURES<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added Box-Cox transformation to <code class="docutils literal notranslate"><span class="pre">effect.size</span></code></p></li>
+<li><p>Added an argument to flip axes in <code class="docutils literal notranslate"><span class="pre">plot.gm.prcomp</span></code></p></li>
+<li><p>Added pairwise r, Z, and P-values to <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code></p></li>
+</ul>
+</section>
+<section id="id22">
+<h2>BUG FIXES<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">compare.CR</span></code> so object labels are retained</p></li>
+<li><p>Fixed bug with <code class="docutils literal notranslate"><span class="pre">plot.bilat.symmetry</span></code> that missed changed object output in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code>.</p></li>
+<li><p>Fixed issue with permutations in multi-module configurations for <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code></p></li>
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">plot.gm.prcomp</span></code> 3D tree plotting with time.plot = TRUE</p></li>
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> for univariate data and permutations</p></li>
+<li><p>Fixed plotting parameter arguments for phylo.par in <code class="docutils literal notranslate"><span class="pre">plot.gm.prcomp</span></code>.</p></li>
+<li><p>Made it possible to assign <code class="docutils literal notranslate"><span class="pre">summary.gm.prcomp</span></code> as an object</p></li>
+<li><p>Fixed plotting issue in <code class="docutils literal notranslate"><span class="pre">warpRefMesh</span></code></p></li>
+<li><p>Fixed single variable issue in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> related to R 4.0.2 changes</p></li>
+<li><p>Added factor labels to output object CR.mat in <code class="docutils literal notranslate"><span class="pre">modularity.test</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Fixed bug in computations of <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Fixed order consistency for pairwise calculations in <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Allows single landmarks as slider LM in gpagen</p></li>
+<li><p>Fixed labels in <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code>, allowing 3d TPS warp grids to show labels and for txt.pos to be passed to 3d plots</p></li>
+<li><p>Fixed bug in txt.adj argument for <code class="docutils literal notranslate"><span class="pre">gridPar</span></code></p></li>
+</ul>
+</section>
+<section id="id23">
+<h2>OTHER CHANGES<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">readmulti.nts</span></code> function turning it into a wrapper of <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code> thus allowing also multiple dta files to be read in and compiled</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-3-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.3.1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-3-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id24">
+<h2>BUG FIXES<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed non-centering issue in <code class="docutils literal notranslate"><span class="pre">geomorph:::pls</span></code></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-3-0-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.3.0 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-3-3-0-minor-release" title="Link to this heading">#</a></h1>
+<section id="id25">
+<h2>NEW FEATURES<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A vignette has been added (geomorphPCA) to aid the transition of users to the gm.prcomp family of functions for exploring and visualizing shape space.</p></li>
+<li><p>Updates to <code class="docutils literal notranslate"><span class="pre">gm.prcomp</span></code> to include PaCA.</p></li>
+<li><p>Added the possibility of a 3D PCA plot with a phylogeny and time on the z-axis to <code class="docutils literal notranslate"><span class="pre">plot.gm.prcomp</span></code>.</p></li>
+<li><p>Added the possibility of controlling plot3d definitions in <code class="docutils literal notranslate"><span class="pre">plotspec</span></code>.</p></li>
+<li><p>New dataset of dorsal views of lizard heads added: <code class="docutils literal notranslate"><span class="pre">lizards</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mshape</span></code> now has options (<code class="docutils literal notranslate"><span class="pre">na.action</span></code> argument) for missing values.</p></li>
+<li><p>New function, <code class="docutils literal notranslate"><span class="pre">readland.fcsv</span></code> for importing landmark data from SlicerMorph <code class="docutils literal notranslate"><span class="pre">.fcsv</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">combine.subsets</span></code> updated to include weighting options for relative centroid size.</p></li>
+</ul>
+</section>
+<section id="id26">
+<h2>BUG FIXES<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed row order issue for BM simulation in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> and <code class="docutils literal notranslate"><span class="pre">compare.multi.evol.rates</span></code></p></li>
+<li><p>Fixed bug in FA shape components output in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Fixed pGPA issue to use first specimen rather than mean in first iteration</p></li>
+</ul>
+</section>
+<section id="id27">
+<h2>OTHER CHANGES<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphospace</span></code> and <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> now deprecated</p></li>
+<li><p>Removed DA.mns and FA.mns from <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> (use DA.component and FA.component)</p></li>
+<li><p>Option for handling NAs added to mshape and plot.mshape</p></li>
+<li><p>Function plotTangentSpace has been deprecated</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-2-1-0900-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.2.1.0900 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-3-2-1-0900-minor-release" title="Link to this heading">#</a></h1>
+<section id="id28">
+<h2>NEW FEATURES<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added the possibility of plotting an outline with method = “vector” in plotRefToTarget</p></li>
+</ul>
+</section>
+<section id="id29">
+<h2>BUG FIXES<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed small bug in plot.mshape par definitions</p></li>
+<li><p>Amended specimen name extraction from .tiff files when using imageID in readland.tps</p></li>
+</ul>
+</section>
+<section id="id30">
+<h2>OTHER CHANGES<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Function plotGMPhyloMorphoSpace has been deprecated</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-2-1">
+<h1>CHANGES IN GEOMORPH VERSION 3.2.1<a class="headerlink" href="#changes-in-geomorph-version-3-2-1" title="Link to this heading">#</a></h1>
+<section id="id31">
+<h2>NEW FEATURES<a class="headerlink" href="#id31" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function added: <code class="docutils literal notranslate"><span class="pre">readmulti.tps</span></code></p></li>
+</ul>
+</section>
+<section id="id32">
+<h2>BUG FIXES<a class="headerlink" href="#id32" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed small bug in readland.tps to accurately replace negative values with NA when only one specimen has NAs and allow for NAs in the original file</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-2-0-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.2.0 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-3-2-0-minor-release" title="Link to this heading">#</a></h1>
+<section id="id33">
+<h2>NEW FEATURES<a class="headerlink" href="#id33" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Effect sizes provided in the output of <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code>, <code class="docutils literal notranslate"><span class="pre">compare.multi.evol.rates</span></code>,<code class="docutils literal notranslate"><span class="pre">integration.test</span></code>,
+<code class="docutils literal notranslate"><span class="pre">modularity.test</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code>, <code class="docutils literal notranslate"><span class="pre">physignal</span></code>, <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code></p></li>
+</ul>
+</section>
+<section id="id34">
+<h2>OTHER CHANGES<a class="headerlink" href="#id34" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adjustment in ‘class’ statements to be compliant with new handling of objects in R 4.0</p></li>
+</ul>
+</section>
+<section id="id35">
+<h2>BUG FIXES<a class="headerlink" href="#id35" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed small bug in plotAllometry that returned spurious RegScore values.</p></li>
+<li><p>Adjusted calculations of pairwise effect size in compare.pls and <a class="reference external" href="http://compare.CR">compare.CR</a> to mirror publication equations</p></li>
+<li><p>Fixed issue with 3D plotting in plotOutliers with inspect.outliers = T</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-1-3-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.1.3 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-1-3-patch-release" title="Link to this heading">#</a></h1>
+<section id="id36">
+<h2>NEW FEATURES<a class="headerlink" href="#id36" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function added: <code class="docutils literal notranslate"><span class="pre">compare.CR</span></code></p></li>
+<li><p>New function added: <code class="docutils literal notranslate"><span class="pre">readmulti.tps</span></code></p></li>
+</ul>
+</section>
+<section id="id37">
+<h2>OTHER CHANGES<a class="headerlink" href="#id37" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adjustment to getSurfPCs to allow for more robust surface sliding</p></li>
+<li><p>Added a one-tail/two-tailed option to compare.pls</p></li>
+</ul>
+</section>
+<section id="id38">
+<h2>BUG FIXES<a class="headerlink" href="#id38" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">mshape</span></code> inability to distinguish between one p x k specimen and a n x pk matrix.</p></li>
+<li><p>Fixed issue with 3D TPS grids in plotRefToTarget</p></li>
+<li><p>Fixed issue with digit.fixed, digitsurface, plotspec, warpRefMesh, build.template, for null ply $material, due to rgl updates</p></li>
+<li><p>Updated example in read.ply to not give bad advice for ply $material</p></li>
+<li><p>Fixed issue with 3D plotting in plotOutliers with inspect.outliers = T</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-1-2-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.1.2 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-1-2-patch-release" title="Link to this heading">#</a></h1>
+<section id="id39">
+<h2>NEW FEATURES<a class="headerlink" href="#id39" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Three vignettes have been added: one assists the user in implementing analyses previously included in the deprecated functions <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code>, <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code> and <code class="docutils literal notranslate"><span class="pre">nested.update</span></code> through <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> and other <code class="docutils literal notranslate"><span class="pre">RRPP</span></code> tools; the second provides a comprehensive list of main geomorph functions and their use; and the third is a step-by-step demonstration of 3D digitizing procedures</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> now includes an argument (negNA = FALSE) to define whether negative landmark coordinates should be transformed to NAs (by setting the argument to TRUE)</p></li>
+</ul>
+</section>
+<section id="id40">
+<h2>OTHER CHANGES<a class="headerlink" href="#id40" title="Link to this heading">#</a></h2>
+</section>
+<section id="id41">
+<h2>BUG FIXES<a class="headerlink" href="#id41" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed bug with <code class="docutils literal notranslate"><span class="pre">combine.subsets</span></code> for gpagen objects</p></li>
+<li><p>Tweaked <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> to work better with missing data frames</p></li>
+<li><p>Fixed p-value miscalculation in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Added meshColor specification in plotting of 3d meshes (to match RGL change)</p></li>
+<li><p>Fixed text plot for 3D (to match RGL changes)</p></li>
+<li><p>Added missing gls component in <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> output</p></li>
+<li><p>Fixed missing SS.types for pgls</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-1-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.1.1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-1-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id42">
+<h2>NEW FEATURES<a class="headerlink" href="#id42" title="Link to this heading">#</a></h2>
+</section>
+<section id="id43">
+<h2>OTHER CHANGES<a class="headerlink" href="#id43" title="Link to this heading">#</a></h2>
+</section>
+<section id="id44">
+<h2>BUG FIXES<a class="headerlink" href="#id44" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed single landmark issue in <code class="docutils literal notranslate"><span class="pre">readland.shapes</span></code></p></li>
+<li><p>Updated simulator for <code class="docutils literal notranslate"><span class="pre">compar.evol.rates</span></code> to utilize all simulated datasets</p></li>
+<li><p>Updated rotation in <code class="docutils literal notranslate"><span class="pre">fixed.angle</span></code></p></li>
+<li><p>Removed code causing warning in <code class="docutils literal notranslate"><span class="pre">GMfromShapes1</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-1-0-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.1.0 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-3-1-0-minor-release" title="Link to this heading">#</a></h1>
+<section id="id45">
+<h2>NEW FEATURES<a class="headerlink" href="#id45" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Permutation computations now performed in <code class="docutils literal notranslate"><span class="pre">RRPP</span></code></p></li>
+<li><p>New functions added: <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code>, <code class="docutils literal notranslate"><span class="pre">gm.prcomp</span></code>, <code class="docutils literal notranslate"><span class="pre">picknplot.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">shape.hulls</span></code></p></li>
+<li><p>Deprecated: <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code>, <code class="docutils literal notranslate"><span class="pre">nested.update</span></code>, <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code> (features of these functions now found using <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code>)</p></li>
+<li><p>Generalized plotting options</p></li>
+<li><p>Reduced dependencies on <code class="docutils literal notranslate"><span class="pre">geiger</span></code> and <code class="docutils literal notranslate"><span class="pre">Matrix</span></code></p></li>
+<li><p>Added mean-centering to <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> for permutations</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">fixed.angle</span></code> to allow centroids from multiple points to be used as angle points.</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">coords.subset</span></code> to avoid issue with arrayspecs and naming subsetted data.</p></li>
+<li><p>Changed the default for sliding to ProcD=FALSE in <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+<li><p>Added Procrustes distance matrix to <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> output</p></li>
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code> to <code class="docutils literal notranslate"><span class="pre">RRPP</span></code> package and updated its arguments</p></li>
+<li><p>Added partial disparity option to <code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code></p></li>
+</ul>
+</section>
+<section id="id46">
+<h2>OTHER CHANGES<a class="headerlink" href="#id46" title="Link to this heading">#</a></h2>
+</section>
+<section id="id47">
+<h2>BUG FIXES<a class="headerlink" href="#id47" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed ratio call for permutations in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code></p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code> call when groups &gt; 2</p></li>
+<li><p>Fixed scaling default in <code class="docutils literal notranslate"><span class="pre">combine.subsets</span></code></p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code> to properly center mean values for PC plotting (now in RRPP)</p></li>
+<li><p>Added a trap for large distance matrices to <code class="docutils literal notranslate"><span class="pre">gpagen</span></code>, to avoid errors</p></li>
+<li><p>Fixed bug to allow for a single specimen with missing data in <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code></p></li>
+<li><p>Fixed bug for HOS result mismatching criterion for <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-7-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.7 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-7-patch-release" title="Link to this heading">#</a></h1>
+<section id="id48">
+<h2>NEW FEATURES<a class="headerlink" href="#id48" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Computations for <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code> now performed using RRPP package</p></li>
+<li><p>Modified output in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> so output shapes retain order in ‘ind’ factor</p></li>
+<li><p>Modified <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> to identify missing data only when all lm coordinate are &lt;0 and interactively prompt the user to confirm if they are to be treated as NAs</p></li>
+</ul>
+</section>
+<section id="id49">
+<h2>OTHER CHANGES<a class="headerlink" href="#id49" title="Link to this heading">#</a></h2>
+</section>
+<section id="bug-fixed">
+<h2>BUG FIXED<a class="headerlink" href="#bug-fixed" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-6-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.6 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-6-patch-release" title="Link to this heading">#</a></h1>
+<section id="id50">
+<h2>NEW FEATURES<a class="headerlink" href="#id50" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plotOutliers</span></code> now allows to plot outlier configurations in order to compare their shape with the consensus</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.mshape</span></code> function added to plot the consensus configuration with numbers and links</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">gm.prcom</span></code>p implements raw and weighted PCA and allows S3 generic plotting of its output</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">readland.shapes</span></code> allows reading a shapes file produced by StereoMorph, including landmark data and (potentially multiple) curves, and sampling semilandmarks from these curves.</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">picknplot.shape</span></code> allows interactively picking points in geomorph scatterplots to visualize shape variation across morphospace.</p></li>
+</ul>
+</section>
+<section id="id51">
+<h2>OTHER CHANGES<a class="headerlink" href="#id51" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Modified previous addition to <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> to identify missing data only when all lm dimensions are &lt;0 and interactively prompt the user to confirm if they are to be treated as NAs.</p></li>
+<li><p>Added ellipsis to <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> and <code class="docutils literal notranslate"><span class="pre">geomorphShapes</span></code> option to allow more flexible <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> options within</p></li>
+<li><p>Changed <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code> to use residuals from GLS model for permutations</p></li>
+<li><p>Added effect type option to <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code></p></li>
+<li><p>Added an additional line of summary to ANOVA tables to signal how effect sizes are calculated</p></li>
+<li><p>Adjusted ANOVA tables to show from which distributions P-values are estimated</p></li>
+<li><p>Modified <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code> to allow direct control of all plotting arguments by the user</p></li>
+<li><p>Modified <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code> and tps to use plot.xy instead of plot, and thus avoid conflicts with <code class="docutils literal notranslate"><span class="pre">plot.mshape</span></code></p></li>
+<li><p>Added catch for missing data to <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code>, to identify negative values and recode them as NAs</p></li>
+</ul>
+</section>
+<section id="id52">
+<h2>BUG FIXES<a class="headerlink" href="#id52" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed multi-group output in <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> permutation method for univariate trait</p></li>
+<li><p>Fixed issues with <code class="docutils literal notranslate"><span class="pre">estimate.missing</span></code> regression approach</p></li>
+<li><p>Fixed issues with <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code> where Y-dataset contained a single variable</p></li>
+<li><p>Fixed issue with <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> when 3+ partitions with non-contiguous variables</p></li>
+<li><p>Fixed effect size calculation error in <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> for single factor OLS models.</p></li>
+<li><p>Fixed ellipses options in <code class="docutils literal notranslate"><span class="pre">procD.fit</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-5-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.5  (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-5-patch-release" title="Link to this heading">#</a></h1>
+<section id="id53">
+<h2>NEW FEATURES<a class="headerlink" href="#id53" title="Link to this heading">#</a></h2>
+</section>
+<section id="id54">
+<h2>OTHER CHANGES<a class="headerlink" href="#id54" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Simplified options available in <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code></p></li>
+</ul>
+</section>
+<section id="id55">
+<h2>BUG FIXES<a class="headerlink" href="#id55" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed CAC calculations in <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code></p></li>
+<li><p>Fixed dimnames error in <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code> when file contained a single specimen’s data</p></li>
+<li><p>Fixed PGLS weights for factors in <code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code> when phylogeny utilized</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> to be general to whitespace delimitation</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-4">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.4<a class="headerlink" href="#changes-in-geomorph-version-3-0-4" title="Link to this heading">#</a></h1>
+<section id="id56">
+<h2>NEW FEATURES<a class="headerlink" href="#id56" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function: <code class="docutils literal notranslate"><span class="pre">interlmkdist</span></code> to calculate linear distances between landmarks (interlandmark distances)</p></li>
+<li><p>PGLS option for <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code></p></li>
+<li><p>An option to use types I, II, or III sums of squares and cross-products for ANOVA analyses (e.g., <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code>, <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code>)</p></li>
+<li><p>An option to choose between SS, F-values, or Cohen’s f-squared to calculate effect sizes for ANOVA analyses</p></li>
+<li><p>Effect sizes are now centered on mean values from distributions of random statistics.  Statistics are also log-transformed in certain cases to normalize distributions</p></li>
+<li><p>An option to use only an intercept as a model for <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> and <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code>, with limited output</p></li>
+<li><p>An option to use permutation tests when comparing net evolutionary rates for <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code></p></li>
+</ul>
+</section>
+<section id="id57">
+<h2>OTHER CHANGES<a class="headerlink" href="#id57" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added ellipsis programming to <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> to pass arguments to <code class="docutils literal notranslate"><span class="pre">prcomp</span></code>.  Also, adjusted default tolerance to remove redundant PC dimensions.</p></li>
+<li><p>Enhanced landmark labeling in <code class="docutils literal notranslate"><span class="pre">arrayspecs</span></code></p></li>
+<li><p>Created transferability of dimnames between <code class="docutils literal notranslate"><span class="pre">arrayspecs</span></code> and <code class="docutils literal notranslate"><span class="pre">two.d.array</span></code></p></li>
+<li><p>Updated Rd files for PLS functions to better cross-reference the similar functions</p></li>
+<li><p>Added data frame output to <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code></p></li>
+<li><p>Change to <code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphoSpace</span></code> to center data by phylogenetic mean</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code> now supports lists of file names to return a single data object</p></li>
+<li><p>Updated Rd files for <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code> and <code class="docutils literal notranslate"><span class="pre">readmulti.nts</span></code> to avoid ambiguity and resolve misinformation in previous versions</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code> to accept specimen labels with spaces in name</p></li>
+</ul>
+</section>
+<section id="id58">
+<h2>BUG FIXES<a class="headerlink" href="#id58" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed problem with incorporating lm arguments in <code class="docutils literal notranslate"><span class="pre">procD.fit</span></code></p></li>
+<li><p>Fixed univariate PLS to allow negative correlations</p></li>
+<li><p>Fixed permutation issues with <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code></p></li>
+<li><p>Fixed links not plotting in <code class="docutils literal notranslate"><span class="pre">plotAllSpecimens</span></code> if no colour specified</p></li>
+<li><p>Added missing random.r output to <code class="docutils literal notranslate"><span class="pre">integration.test</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-3-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.3 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-3-patch-release" title="Link to this heading">#</a></h1>
+<section id="id59">
+<h2>NEW FEATURES<a class="headerlink" href="#id59" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New functions: <code class="docutils literal notranslate"><span class="pre">compare.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">coords.subset</span></code>, <code class="docutils literal notranslate"><span class="pre">shape.predictor</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">droplevels.geomorph.data.frame</span></code> added to support code</p></li>
+</ul>
+</section>
+<section id="id60">
+<h2>OTHER CHANGES<a class="headerlink" href="#id60" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a sensor to support code for <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> and its allies to
+choose the computationally fastest algorithms based on design matrix complexity
+and data dimensionality</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">procD.fit</span></code> to remove unused levels from factors</p></li>
+<li><p>Updated all functions using <code class="docutils literal notranslate"><span class="pre">geomorph.data.frame</span></code> to drop unused factor levels</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">mshape</span></code> to be used on lists, arrays, or matrices</p></li>
+</ul>
+</section>
+<section id="id61">
+<h2>BUG FIXES<a class="headerlink" href="#id61" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">single.factor</span></code> function to properly maintain factor levels when combining factors</p></li>
+<li><p>Fixed plotting issues with <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-2-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.2 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-2-patch-release" title="Link to this heading">#</a></h1>
+<section id="id62">
+<h2>NEW FEATURES<a class="headerlink" href="#id62" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added return of min/max shape matrices to <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code> and <code class="docutils literal notranslate"><span class="pre">plot.pls</span></code></p></li>
+<li><p>Added option to save specimen ID to ID= line in <code class="docutils literal notranslate"><span class="pre">writeland.tps</span></code></p></li>
+</ul>
+</section>
+<section id="id63">
+<h2>OTHER CHANGES<a class="headerlink" href="#id63" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Optimized analytical functions for faster computations</p></li>
+<li><p>Added force match of specimen order between blocks in <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code></p></li>
+<li><p>Updated A, Ahat, ref, p and k outputs when 2D matrix is used in <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code></p></li>
+<li><p>Added option to plot group labels in <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code> (method=”PredLine”)</p></li>
+<li><p>Added legend option to <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> when groups are specified</p></li>
+<li><p>Removed ‘verbose’ from <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code>; function now returns PC scores automatically when assigned to object</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> to return min and max shapes for all PC axes in $pc.shapes</p></li>
+</ul>
+</section>
+<section id="id64">
+<h2>BUG FIXES<a class="headerlink" href="#id64" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed label output issue with <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> shape components</p></li>
+<li><p>Fixed error plotting TPS grids when groups were included in <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code></p></li>
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">digit.curves</span></code> where open outline would be treated as closed if starting point was the end point</p></li>
+<li><p>Fixed reading of ape::chronos phylogenies in ‘phylo’ functions</p></li>
+<li><p>Fixed error in reading names in <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> for some tps files</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id65">
+<h2>NEW FEATURES<a class="headerlink" href="#id65" title="Link to this heading">#</a></h2>
+</section>
+<section id="id66">
+<h2>OTHER CHANGES<a class="headerlink" href="#id66" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Removed dependency on <code class="docutils literal notranslate"><span class="pre">phytools</span></code></p></li>
+<li><p>Small addition to outputs in <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code></p></li>
+<li><p>Added reading polygons in <code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code></p></li>
+<li><p>Plots of 3D shapes now plotted in pairs in single rgl window for: <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code>, <code class="docutils literal notranslate"><span class="pre">plot.bilat.symmetry</span></code>, <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code>, <code class="docutils literal notranslate"><span class="pre">plot.pls</span></code></p></li>
+<li><p>Functions performing warping of 3D meshes now present progress bar</p></li>
+<li><p>Added option pt.col to <code class="docutils literal notranslate"><span class="pre">plot.procD.allometry</span></code> to designate plotting colors</p></li>
+</ul>
+</section>
+<section id="id67">
+<h2>BUG FIXES<a class="headerlink" href="#id67" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed error in output order in <code class="docutils literal notranslate"><span class="pre">plotOutliers</span></code></p></li>
+<li><p>Fixed error in calculation slope distances in <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code></p></li>
+<li><p>Fixed 2D data input error for <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code></p></li>
+<li><p>Fixed centering error for CAC scores in <code class="docutils literal notranslate"><span class="pre">procD.Allometry</span></code></p></li>
+<li><p>Fixed deformation plot issue with <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code> (via <code class="docutils literal notranslate"><span class="pre">plot.pls</span></code>)</p></li>
+<li><p>Fixed two small issues with <code class="docutils literal notranslate"><span class="pre">plot.pls</span></code>, regarding best fit line and matrix reduction.</p></li>
+<li><p>Fixed three small issues with <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> source files: indexing errors, arbitrary PC rotations for surface points, maximum iteration disparity.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">digitize2D</span></code> scaling issue when different scales used in each image</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code> error when 3+ partitions examined</p></li>
+<li><p>Fixed typo in <code class="docutils literal notranslate"><span class="pre">modularity.test</span></code> for CI intervals into matrix input</p></li>
+<li><p>Updated permutation procedure in <code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code> so that prob(A,B|phy)~prob(B,A|phy)</p></li>
+<li><p>Fixed typo in <code class="docutils literal notranslate"><span class="pre">plotAllSpecimens</span></code> where links were not being plotted</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-3-0-0-major-release">
+<h1>CHANGES IN GEOMORPH VERSION 3.0.0 (Major Release)<a class="headerlink" href="#changes-in-geomorph-version-3-0-0-major-release" title="Link to this heading">#</a></h1>
+<section id="id68">
+<h2>NEW FEATURES<a class="headerlink" href="#id68" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New functions: <code class="docutils literal notranslate"><span class="pre">modularity.test</span></code>, <code class="docutils literal notranslate"><span class="pre">integration.test</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.modularity</span></code>,
+<code class="docutils literal notranslate"><span class="pre">phylo.integration</span></code>, <code class="docutils literal notranslate"><span class="pre">procD.allometry</span></code>, <code class="docutils literal notranslate"><span class="pre">nested.update</span></code>, <code class="docutils literal notranslate"><span class="pre">geomorph.data.frame</span></code></p></li>
+<li><p>Seed option added for most analytical functions</p></li>
+<li><p>Major overhaul of underlying support code for analytics</p></li>
+<li><p>Output from analytical functions provided in lists</p></li>
+<li><p>Added ‘summary’ option to most analytical functions</p></li>
+<li><p>Plotting for most analytical functions as ‘plot(res)’ if res is output from function</p></li>
+<li><p>Diagnostic plots for anova/regression added</p></li>
+<li><p>Nested ANOVA via <code class="docutils literal notranslate"><span class="pre">nested.update</span></code> of <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> objects</p></li>
+</ul>
+</section>
+<section id="id69">
+<h2>OTHER CHANGES<a class="headerlink" href="#id69" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Deprecated: <code class="docutils literal notranslate"><span class="pre">compare.modular.partitions</span></code>, <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code>, and <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code></p></li>
+<li><p>Removed internal C-code for <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+<li><p>Removed automatic plots for most analytical functions</p></li>
+<li><p>Removed method=”” parameter from <code class="docutils literal notranslate"><span class="pre">physignal</span></code>. Only Kmult used</p></li>
+<li><p>Removed verbose option for most functions: all output provided in lists</p></li>
+<li><p>Added option to pre-multiply coordinates by scale in <code class="docutils literal notranslate"><span class="pre">digitize2d</span></code></p></li>
+<li><p>Added plotting options to <code class="docutils literal notranslate"><span class="pre">plotAllSpecimens</span></code></p></li>
+</ul>
+</section>
+<section id="id70">
+<h2>BUG FIXES<a class="headerlink" href="#id70" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">morphol.disparity$Prob.Disp</span></code> displaying NAs</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-7-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.7-1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-7-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id71">
+<h2>NEW FEATURES<a class="headerlink" href="#id71" title="Link to this heading">#</a></h2>
+</section>
+<section id="id72">
+<h2>OTHER CHANGES<a class="headerlink" href="#id72" title="Link to this heading">#</a></h2>
+</section>
+<section id="id73">
+<h2>BUG FIXES<a class="headerlink" href="#id73" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed small change in C-code for <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-7-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.7 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-7-patch-release" title="Link to this heading">#</a></h1>
+<section id="id74">
+<h2>NEW FEATURES<a class="headerlink" href="#id74" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">compare.multi.evol.rates</span></code> for comparing rates of evolution among traits</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphoSpace</span></code> now plots 3D phylomorphospaces and chronophylomorphospaces</p></li>
+<li><p>Added ShowPlot option to <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code>, <code class="docutils literal notranslate"><span class="pre">compare.modular.partitions</span></code>, <code class="docutils literal notranslate"><span class="pre">globalIntegration</span></code>, <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code>, and <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code></p></li>
+</ul>
+</section>
+<section id="id75">
+<h2>OTHER CHANGES<a class="headerlink" href="#id75" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated Imports packages as per new CRAN policies</p></li>
+<li><p>Small change to C-code for <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> (added additional checks on alignment)</p></li>
+<li><p>Package ape now full Import for geomorph (no longer ImportsFrom)</p></li>
+<li><p>Enhanced input flexibility for <code class="docutils literal notranslate"><span class="pre">advanced.ProcD.lm</span></code>: for single-factor analyses and matrix/variable input</p></li>
+<li><p>Enhanced <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code> flexibility with specimen labels; now supports spaces in labels</p></li>
+<li><p>Generalized <code class="docutils literal notranslate"><span class="pre">read.ply</span></code> to allow reading meshes with many properties</p></li>
+<li><p>Generalized input for <code class="docutils literal notranslate"><span class="pre">physignal</span></code> and <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code>: univariate data accepted as named vector</p></li>
+<li><p>Enhanced input for <code class="docutils literal notranslate"><span class="pre">define.links</span></code>: read and append links to existing links matrix</p></li>
+</ul>
+</section>
+<section id="id76">
+<h2>BUG FIXES<a class="headerlink" href="#id76" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected error in <code class="docutils literal notranslate"><span class="pre">warpRefMesh</span></code> where normals were incorrectly assigned to new mesh3d object</p></li>
+<li><p>Corrected error in <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> which read in a file containing a single specimen returned a 2D matrix rather than 3D array; this fixes the issue with <code class="docutils literal notranslate"><span class="pre">digitize2d</span></code> not working for a single file</p></li>
+<li><p>Corrected error in <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code> where warpgrids = F did not work for 3D datasets</p></li>
+<li><p>Corrected issue with <code class="docutils literal notranslate"><span class="pre">globalIntegration</span></code> for use with 3D data</p></li>
+<li><p>Corrected bug in <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code> method = “TPS” where the wrong options from gridPars were being passed</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-6-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.6 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-6-patch-release" title="Link to this heading">#</a></h1>
+<section id="id77">
+<h2>NEW FEATURES<a class="headerlink" href="#id77" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New globalIntegration` function for evaluating integration vs. self-similarity of shape variation</p></li>
+<li><p>Coordinates returned by digitize2d` are now unscaled, and SCALE= returns the scale</p></li>
+</ul>
+</section>
+<section id="id78">
+<h2>OTHER CHANGES<a class="headerlink" href="#id78" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Phylogenetic simulation procedure in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> generalized to use a single evolutionary rate matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pairwiseD.test</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.slope</span></code>.test now defunct</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">define.sliders.2d</span></code> and <code class="docutils literal notranslate"><span class="pre">define.sliders.3d</span></code> now defunct</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code> can read files with missing data</p></li>
+<li><p>Ability to not show plot added to <code class="docutils literal notranslate"><span class="pre">physignal</span></code> and <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code></p></li>
+</ul>
+</section>
+<section id="id79">
+<h2>BUG FIXES<a class="headerlink" href="#id79" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected error in defining starting point in <code class="docutils literal notranslate"><span class="pre">digit.curves</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-5-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.5 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-5-patch-release" title="Link to this heading">#</a></h1>
+<section id="id80">
+<h2>NEW FEATURES<a class="headerlink" href="#id80" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ability to include pre-digitized landmarks added to <code class="docutils literal notranslate"><span class="pre">build.template</span></code> and <code class="docutils literal notranslate"><span class="pre">digitsurface</span></code></p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">gridPar</span></code> is a new function to customize plots of <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code></p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">digit.curves</span></code> is a new function to calculate equidistant semilandmarks along 2D and 3D curves</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">define.sliders</span></code> is new interactive function for defining sliding semilandmarks for 2D and 3D curves, plus an automatic mode when given a sequence of semilandmarks along a curve</p></li>
+</ul>
+</section>
+<section id="id81">
+<h2>OTHER CHANGES<a class="headerlink" href="#id81" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pairwiseD.test</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.slope.test</span></code> deprecated</p></li>
+<li><p>‘read’ functions now allow both tab and space delimited files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">define.sliders.2d</span></code> and <code class="docutils literal notranslate"><span class="pre">define.sliders.3d</span></code> deprecated (replaced by define.sliders)</p></li>
+</ul>
+</section>
+<section id="id82">
+<h2>BUG FIXES<a class="headerlink" href="#id82" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected an error in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> where verbose=T did not return</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-4-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.4 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-4-patch-release" title="Link to this heading">#</a></h1>
+<section id="id83">
+<h2>NEW FEATURES<a class="headerlink" href="#id83" title="Link to this heading">#</a></h2>
+</section>
+<section id="id84">
+<h2>OTHER CHANGES<a class="headerlink" href="#id84" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">warpRefMesh</span></code> generalized - now takes a mesh3d object (i.e. made from <code class="docutils literal notranslate"><span class="pre">read.ply</span></code>) rather than calling <code class="docutils literal notranslate"><span class="pre">read.ply</span></code> directly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code> now reads [groups] option and adds these data to the $labels matrix</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plotOutliers</span></code> now has option groups to plot outliers by levels(groups) using group means</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code> help file updated to correctly indicate that group shape residuals, rather than shape values, themselves, are randomized in the permutation procedure</p></li>
+<li><p>Internal changes to support functions for compatibility with R 3.1.3</p></li>
+<li><p>Generalized plot inputs in <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+</ul>
+</section>
+<section id="id85">
+<h2>BUG FIXES<a class="headerlink" href="#id85" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected error <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code></p></li>
+<li><p>Corrected errors <code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code></p></li>
+<li><p>Corrected an issue with <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> that flipped principal axes</p></li>
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code> with reading [wireframe] in some morphologika files</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-3-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.3 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-3-patch-release" title="Link to this heading">#</a></h1>
+<section id="id86">
+<h2>NEW FEATURES<a class="headerlink" href="#id86" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>new <code class="docutils literal notranslate"><span class="pre">plotOutliers</span></code> function to identify potential outliers</p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">define.links</span></code> function for enhanced plotting of shapes</p></li>
+</ul>
+</section>
+<section id="id87">
+<h2>OTHER CHANGES<a class="headerlink" href="#id87" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Additional input options added to <code class="docutils literal notranslate"><span class="pre">pairwiseD.test</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.slope.test</span></code></p></li>
+<li><p>Ability to accommodate singular phylogenetic covariance matrices in: <code class="docutils literal notranslate"><span class="pre">physignal</span></code>, <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code>, <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code> and <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code></p></li>
+<li><p>Enhanced digitizing capability in: <code class="docutils literal notranslate"><span class="pre">build.template</span></code>, <code class="docutils literal notranslate"><span class="pre">define.modules</span></code>, <code class="docutils literal notranslate"><span class="pre">define.sliders.3d</span></code>, <code class="docutils literal notranslate"><span class="pre">digit.fixed</span></code>, <code class="docutils literal notranslate"><span class="pre">digitsurface</span></code>, and <code class="docutils literal notranslate"><span class="pre">editTemplate</span></code> )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> input can be 2D matrix or 3D array</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.ply</span></code> reads normals for enhanced downstream digitizing from ply files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readland.tps</span></code>  reads curves from tps files and convert them to landmarks (semilandmarks)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> has enhanced plotting flexibility with labels and colors</p></li>
+</ul>
+</section>
+<section id="id88">
+<h2>BUG FIXES<a class="headerlink" href="#id88" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected error printing output of ANOVA table of <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Removed redundant permutation loop in <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-2-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.2 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-2-patch-release" title="Link to this heading">#</a></h1>
+<section id="id89">
+<h2>NEW FEATURES<a class="headerlink" href="#id89" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">advanced.procD.lm</span></code> for statistically comparing two or explanatory models</p></li>
+<li><p>Added warping of outline in <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code></p></li>
+<li><p>New function to warp a specimen outline to the reference: <code class="docutils literal notranslate"><span class="pre">warpRefOutline</span></code></p></li>
+<li><p>Added ShowPlot option to `two.b.pls</p></li>
+<li><p>Added RRPP option to <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code></p></li>
+<li><p>New dataset pupfish</p></li>
+</ul>
+</section>
+<section id="id90">
+<h2>OTHER CHANGES<a class="headerlink" href="#id90" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Enhanced underlying code in <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code>, <code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code> <code class="docutils literal notranslate"><span class="pre">pairwiseD.test</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.slope.test</span></code></p></li>
+<li><p>Removed k&gt;3 restriction in <code class="docutils literal notranslate"><span class="pre">arrayspecs</span></code></p></li>
+<li><p>Added is.numeric check to <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code></p></li>
+<li><p>Removed arrows from plots when groups included in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code></p></li>
+</ul>
+</section>
+<section id="id91">
+<h2>BUG FIXES<a class="headerlink" href="#id91" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed output of <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> when verbose=TRUE</p></li>
+<li><p>Fixed reflections of aligned coordinate axes when PrinAxes=TRUE in <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1.1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id92">
+<h2>NEW FEATURES<a class="headerlink" href="#id92" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Specimens rotated to their principal axes in <code class="docutils literal notranslate"><span class="pre">gpagen</span></code> with option to disable</p></li>
+</ul>
+</section>
+<section id="id93">
+<h2>OTHER CHANGES<a class="headerlink" href="#id93" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Underlying code for ancestral state estimation changed to use <code class="docutils literal notranslate"><span class="pre">fastAnc</span></code> (phytools)</p></li>
+</ul>
+</section>
+<section id="id94">
+<h2>BUG FIXES<a class="headerlink" href="#id94" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed concatenated SSCP matrix issue in <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code>, <code class="docutils literal notranslate"><span class="pre">pairwise.D.test</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.slope.test</span></code></p></li>
+<li><p>Corrected issue reading specimen names in <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code></p></li>
+<li><p>Corrected color options for plotting groups in <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+<li><p>Corrected test for slope:group interaction in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-1-minor-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.1 (Minor Release)<a class="headerlink" href="#changes-in-geomorph-version-2-1-minor-release" title="Link to this heading">#</a></h1>
+<section id="id95">
+<h2>NEW FEATURES<a class="headerlink" href="#id95" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">procD.pgls</span></code> added to assess high-dimensional ANOVA and regression models in a phylogenetic context</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pairwise.slope.test</span></code> added to compare slopes of regression lines</p></li>
+<li><p>Residual randomization options added to <code class="docutils literal notranslate"><span class="pre">procD.lm</span></code> and <code class="docutils literal notranslate"><span class="pre">pairwise.d.test</span></code></p></li>
+<li><p>Enhanced capabilities of <code class="docutils literal notranslate"><span class="pre">digitize2d</span></code>. Function now reads multiple images and outputs TPS file, can be used with missing data, and digitizing session can be restarted where previous session stopped</p></li>
+</ul>
+</section>
+<section id="id96">
+<h2>OTHER CHANGES<a class="headerlink" href="#id96" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Ability to plot specimen labels added to <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code>, and <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code></p></li>
+<li><p>Slight ANOVA table output adjustment in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>Vector of labels can be added for plotting in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> and <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+<li><p>Labels for ancestral states added to <code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphoSpace</span></code></p></li>
+</ul>
+</section>
+<section id="id97">
+<h2>BUG FIXES<a class="headerlink" href="#id97" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed scale issue in <code class="docutils literal notranslate"><span class="pre">digitize2d</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-0-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.0.1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-2-0-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id98">
+<h2>NEW FEATURES<a class="headerlink" href="#id98" title="Link to this heading">#</a></h2>
+</section>
+<section id="id99">
+<h2>OTHER CHANGES<a class="headerlink" href="#id99" title="Link to this heading">#</a></h2>
+</section>
+<section id="id100">
+<h2>BUG FIXES<a class="headerlink" href="#id100" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Small change to C-code for <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-2-0-major-release">
+<h1>CHANGES IN GEOMORPH VERSION 2.0 (Major Release)<a class="headerlink" href="#changes-in-geomorph-version-2-0-major-release" title="Link to this heading">#</a></h1>
+<section id="id101">
+<h2>NEW FEATURES<a class="headerlink" href="#id101" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code> for assessing the multivariate association between two blocks of variables in a phylogenetic context</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code> for assessing the multivariate association between two blocks of variables</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">morphol.disparity</span></code> to compare Procrustes variance disparity among groups</p></li>
+<li><p>F-ratios and R-squared values added to output of <code class="docutils literal notranslate"><span class="pre">ProcD.lm</span></code></p></li>
+<li><p>3D Visualizations now include “surface” option to view shape deformation as warped mesh3d surfaces in the following: <code class="docutils literal notranslate"><span class="pre">plotRefToTarget</span></code>, <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code>, <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code>, and <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+<li><p>New I/O functions: <code class="docutils literal notranslate"><span class="pre">warpRefMesh</span></code> to create a mesh3d surface that represents the mean shape, <code class="docutils literal notranslate"><span class="pre">findMeanSpec</span></code> to assist in choosing a template ply file for use with <code class="docutils literal notranslate"><span class="pre">warpRefMesh</span></code> that identifies specimen closest to the mean shape, and <code class="docutils literal notranslate"><span class="pre">defline.modules</span></code> to interactively assign landmarks to modular partitions [currently 2D only]</p></li>
+<li><p>Generalized data input to allow 3D array or 2D matrix of data added to the following analysis functions: <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code>, <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">physignal</span></code>, and <code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphoSpace</span></code></p></li>
+<li><p>Ability to input univariate data added to <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> and <code class="docutils literal notranslate"><span class="pre">physignal</span></code></p></li>
+<li><p>Verbose output = T/F added to the following functions: <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code>, <code class="docutils literal notranslate"><span class="pre">phylo.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">two.b.pls</span></code>, <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code>, <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code>, <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code>, <code class="docutils literal notranslate"><span class="pre">physignal</span></code></p></li>
+</ul>
+</section>
+<section id="id102">
+<h2>OTHER CHANGES<a class="headerlink" href="#id102" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added calculation of pairwise Pvalues, and the option to assess a single group in  function <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code></p></li>
+<li><p>Additional graphical output added to <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code></p></li>
+<li><p>Missing data handling altered (now NA is used)</p></li>
+<li><p>byLand option in <code class="docutils literal notranslate"><span class="pre">arrayspecs</span></code> has been removed</p></li>
+<li><p>Residual shape component (RSC) plot added and scores returned for <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> (method = “CAC”)</p></li>
+<li><p>Procrustes ANOVA added to <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code> output</p></li>
+<li><p>Centering = T/F option added to following 3D digitizing functions: <code class="docutils literal notranslate"><span class="pre">build.Template</span></code>, <code class="docutils literal notranslate"><span class="pre">digit.fixed</span></code>, <code class="docutils literal notranslate"><span class="pre">digitsurface</span></code>, and <code class="docutils literal notranslate"><span class="pre">plotSpec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read.vrml</span></code> now defunct</p></li>
+<li><p>Major re-organization of underlying R code structure and format</p></li>
+<li><p>Optimized code to improve speed and performance in following functions: <code class="docutils literal notranslate"><span class="pre">arrayspecs</span></code>, <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code>, <code class="docutils literal notranslate"><span class="pre">readland.nts</span></code>, <code class="docutils literal notranslate"><span class="pre">readmulti.nts</span></code>, <code class="docutils literal notranslate"><span class="pre">two.d.array</span></code>, <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code>, <code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code>, <code class="docutils literal notranslate"><span class="pre">gpagen</span></code></p></li>
+<li><p>Simplified plotting options in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code></p></li>
+</ul>
+</section>
+<section id="id103">
+<h2>BUG FIXES<a class="headerlink" href="#id103" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected small coding error in <code class="docutils literal notranslate"><span class="pre">digitize2D</span></code> and updated flexibility of the function</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-6-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-6 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-6-patch-release" title="Link to this heading">#</a></h1>
+<section id="id104">
+<h2>NEW FEATURES<a class="headerlink" href="#id104" title="Link to this heading">#</a></h2>
+</section>
+<section id="id105">
+<h2>OTHER CHANGES<a class="headerlink" href="#id105" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor I/O enhancements in <code class="docutils literal notranslate"><span class="pre">readmulti.nts</span></code></p></li>
+<li><p>Minor I/O enhancements in <code class="docutils literal notranslate"><span class="pre">define.sliders.3d</span></code> to allow sliders to be in any order</p></li>
+<li><p>Simplified <code class="docutils literal notranslate"><span class="pre">pPsup</span></code> (original code from J. Claude) to not include size re-scaling by beta (underlying function used in <code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code> only)</p></li>
+<li><p>Added name.check for groups in <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code></p></li>
+</ul>
+</section>
+<section id="id106">
+<h2>BUG FIXES<a class="headerlink" href="#id106" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-5-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-5 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-5-patch-release" title="Link to this heading">#</a></h1>
+<section id="id107">
+<h2>NEW FEATURES<a class="headerlink" href="#id107" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">compare.evol.rates</span></code> for comparing multivariate evolutionary rates on phylogenies</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">define.sliders.2d</span></code> and <code class="docutils literal notranslate"><span class="pre">define.sliders.3d</span></code> replace <code class="docutils literal notranslate"><span class="pre">curves2d</span></code> and <code class="docutils literal notranslate"><span class="pre">digit.curves</span></code></p></li>
+<li><p>Option allowing specimens to be colored by group added to <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code> and <code class="docutils literal notranslate"><span class="pre">PlotAllometry</span></code></p></li>
+</ul>
+</section>
+<section id="id108">
+<h2>OTHER CHANGES<a class="headerlink" href="#id108" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Simplified options in <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">curves2d</span></code> and <code class="docutils literal notranslate"><span class="pre">digit.curves</span></code> deprecated</p></li>
+</ul>
+</section>
+<section id="id109">
+<h2>BUG FIXES<a class="headerlink" href="#id109" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected parameter estimates when groups specified for Regression Score option in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-4-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-4 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-4-patch-release" title="Link to this heading">#</a></h1>
+<section id="id110">
+<h2>NEW FEATURES<a class="headerlink" href="#id110" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Enhanced plotting of ply files in <code class="docutils literal notranslate"><span class="pre">read.ply</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">digitsurface</span></code>, <code class="docutils literal notranslate"><span class="pre">buildtemplate</span></code>, <code class="docutils literal notranslate"><span class="pre">plotspec</span></code>, <code class="docutils literal notranslate"><span class="pre">digitfixed</span></code>, and <code class="docutils literal notranslate"><span class="pre">digitcurves</span></code> now support ply file input</p></li>
+</ul>
+</section>
+<section id="id111">
+<h2>OTHER CHANGES<a class="headerlink" href="#id111" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor changes to plot window options in plotting functions</p></li>
+<li><p>Change to magnification factor usage in <code class="docutils literal notranslate"><span class="pre">plotRefToTartget</span></code></p></li>
+</ul>
+</section>
+<section id="id112">
+<h2>BUG FIXES<a class="headerlink" href="#id112" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-3-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-3 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-3-patch-release" title="Link to this heading">#</a></h1>
+<section id="id113">
+<h2>NEW FEATURES<a class="headerlink" href="#id113" title="Link to this heading">#</a></h2>
+</section>
+<section id="id114">
+<h2>OTHER CHANGES<a class="headerlink" href="#id114" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Improved NAMESPACE file and package usage</p></li>
+<li><p>Generalized <code class="docutils literal notranslate"><span class="pre">read.vrml</span></code> code for additional file formats</p></li>
+</ul>
+</section>
+<section id="id115">
+<h2>BUG FIXES<a class="headerlink" href="#id115" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-2-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-2 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-2-patch-release" title="Link to this heading">#</a></h1>
+<section id="id116">
+<h2>NEW FEATURES<a class="headerlink" href="#id116" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pairwiseD.test</span></code> function added</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> output includes symmetric and asymmetric shape components</p></li>
+</ul>
+</section>
+<section id="id117">
+<h2>OTHER CHANGES<a class="headerlink" href="#id117" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adjusted plotting routines in <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code> to be compatible with new CRAN guidelines</p></li>
+<li><p>Adjusted plotting routines in <code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> to be compatible with new CRAN guidelines</p></li>
+<li><p>Alternative ancestral state reconstruction and tests for bifurcating tree implemented in <code class="docutils literal notranslate"><span class="pre">physignal</span></code></p></li>
+<li><p>Alternative ancestral state reconstruction and tests for bifurcating tree implemented in <code class="docutils literal notranslate"><span class="pre">PlotGMPhyloMorphoSpace</span></code></p></li>
+</ul>
+</section>
+<section id="id118">
+<h2>BUG FIXES<a class="headerlink" href="#id118" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Corrected <code class="docutils literal notranslate"><span class="pre">readland.tps</span></code> to allow for non-numeric ID and reading a single specimen per file</p></li>
+<li><p>Corrected landmark plotting issue and added greater directory flexibility in <code class="docutils literal notranslate"><span class="pre">curves2D</span></code></p></li>
+<li><p>Added greater directory flexibility and fixed header output in <code class="docutils literal notranslate"><span class="pre">digitize2D</span></code></p></li>
+<li><p>Added greater flexibility in reading distinct file formats in <code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code></p></li>
+<li><p>Corrected angle calculations in <code class="docutils literal notranslate"><span class="pre">fixed.angle</span></code></p></li>
+<li><p>Corrected plotting of deformations grids in <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+<li><p>Corrected ancestral state output in <code class="docutils literal notranslate"><span class="pre">physignal</span></code> and <code class="docutils literal notranslate"><span class="pre">PlotGMPhyloMorphoSpace</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-1-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-1 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-1-patch-release" title="Link to this heading">#</a></h1>
+<section id="id119">
+<h2>NEW FEATURES<a class="headerlink" href="#id119" title="Link to this heading">#</a></h2>
+</section>
+<section id="id120">
+<h2>OTHER CHANGES<a class="headerlink" href="#id120" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Removed dependency in <code class="docutils literal notranslate"><span class="pre">physignal</span></code> on <code class="docutils literal notranslate"><span class="pre">getAncStates</span></code> from <code class="docutils literal notranslate"><span class="pre">geiger</span></code>, which is no longer supported</p></li>
+<li><p>Removed dependency in <code class="docutils literal notranslate"><span class="pre">plotGMPhyloMorphoSpace</span></code> on <code class="docutils literal notranslate"><span class="pre">getAncStates</span></code> from <code class="docutils literal notranslate"><span class="pre">geiger</span></code>, which is no longer supported</p></li>
+</ul>
+</section>
+<section id="id121">
+<h2>BUG FIXES<a class="headerlink" href="#id121" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="changes-in-geomorph-version-1-1-0-patch-release">
+<h1>CHANGES IN GEOMORPH VERSION 1.1-0 (Patch Release)<a class="headerlink" href="#changes-in-geomorph-version-1-1-0-patch-release" title="Link to this heading">#</a></h1>
+<section id="id122">
+<h2>NEW FEATURES<a class="headerlink" href="#id122" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bilat.symmetry</span></code> function added</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writeland.tps</span></code> function added</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed.angle</span></code> function added</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compare.modular.partitions</span></code> generalized to allow 2 or more partitions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code> generalized to allow 2 or more partitions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory.analysis</span></code> re-written to accept formulas, allowing greater flexibility for motion analysis</p></li>
+<li><p>PLS scores added to output <code class="docutils literal notranslate"><span class="pre">morphol.integr</span></code></p></li>
+<li><p>Ancestral states added to output <code class="docutils literal notranslate"><span class="pre">physignal</span></code></p></li>
+<li><p>Centroid size and allometry scores added as output in <code class="docutils literal notranslate"><span class="pre">plotAllometry</span></code></p></li>
+<li><p>PC scores added to output of <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+<li><p>Option added to select PC axes for plot in <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+<li><p>Option added to include specimen numbers to <code class="docutils literal notranslate"><span class="pre">plotTangentSpace</span></code></p></li>
+</ul>
+</section>
+<section id="id123">
+<h2>OTHER CHANGES<a class="headerlink" href="#id123" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read.morphologika</span></code> accepts greater variety of input file formats</p></li>
+</ul>
+</section>
+<section id="id124">
+<h2>BUG FIXES<a class="headerlink" href="#id124" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">buildtemplate</span></code> positional error in plot between template and scan corrected</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">digit.curves</span></code> error with passing objects to internal function corrected</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpgen</span></code> occasional reflection issue corrected</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">NEWS.md</span></code> file to track changes to the package.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\geomorph"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">CHANGES IN GEOMORPH VERSION 4.0.10</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-9">CHANGES IN GEOMORPH VERSION 4.0.9</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-8">CHANGES IN GEOMORPH VERSION 4.0.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-7">CHANGES IN GEOMORPH VERSION 4.0.7</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-6">CHANGES IN GEOMORPH VERSION 4.0.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-5">CHANGES IN GEOMORPH VERSION 4.0.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-4">CHANGES IN GEOMORPH VERSION 4.0.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">NEW FEATURES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-3">CHANGES IN GEOMORPH VERSION 4.0.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-2">CHANGES IN GEOMORPH VERSION 4.0.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-1">CHANGES IN GEOMORPH VERSION 4.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">CHANGES IN GEOMORPH VERSION 4.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-4-0-0">CHANGES IN GEOMORPH VERSION 4.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-2-minor-release">CHANGES IN GEOMORPH VERSION 3.3.2 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-1-patch-release">CHANGES IN GEOMORPH VERSION 3.3.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-3-0-minor-release">CHANGES IN GEOMORPH VERSION 3.3.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-1-0900-minor-release">CHANGES IN GEOMORPH VERSION 3.2.1.0900 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">BUG FIXES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">OTHER CHANGES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-1">CHANGES IN GEOMORPH VERSION 3.2.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-2-0-minor-release">CHANGES IN GEOMORPH VERSION 3.2.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-3-patch-release">CHANGES IN GEOMORPH VERSION 3.1.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-2-patch-release">CHANGES IN GEOMORPH VERSION 3.1.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-1-patch-release">CHANGES IN GEOMORPH VERSION 3.1.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-1-0-minor-release">CHANGES IN GEOMORPH VERSION 3.1.0 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id45">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id46">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id47">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-7-patch-release">CHANGES IN GEOMORPH VERSION 3.0.7 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id48">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id49">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixed">BUG FIXED</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-6-patch-release">CHANGES IN GEOMORPH VERSION 3.0.6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id50">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id51">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id52">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-5-patch-release">CHANGES IN GEOMORPH VERSION 3.0.5  (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id53">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id54">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id55">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-4">CHANGES IN GEOMORPH VERSION 3.0.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id56">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id57">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id58">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-3-patch-release">CHANGES IN GEOMORPH VERSION 3.0.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id59">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id60">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id61">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-2-patch-release">CHANGES IN GEOMORPH VERSION 3.0.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id62">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id63">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id64">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-1-patch-release">CHANGES IN GEOMORPH VERSION 3.0.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id65">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id66">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id67">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-3-0-0-major-release">CHANGES IN GEOMORPH VERSION 3.0.0 (Major Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id68">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id69">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id70">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-7-1-patch-release">CHANGES IN GEOMORPH VERSION 2.1.7-1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id71">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id72">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id73">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-7-patch-release">CHANGES IN GEOMORPH VERSION 2.1.7 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id74">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id75">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id76">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-6-patch-release">CHANGES IN GEOMORPH VERSION 2.1.6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id77">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id78">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id79">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-5-patch-release">CHANGES IN GEOMORPH VERSION 2.1.5 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id80">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id81">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id82">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-4-patch-release">CHANGES IN GEOMORPH VERSION 2.1.4 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id83">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id84">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id85">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-3-patch-release">CHANGES IN GEOMORPH VERSION 2.1.3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id86">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id87">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id88">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-2-patch-release">CHANGES IN GEOMORPH VERSION 2.1.2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id89">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id90">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id91">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-1-patch-release">CHANGES IN GEOMORPH VERSION 2.1.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id92">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id93">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id94">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-1-minor-release">CHANGES IN GEOMORPH VERSION 2.1 (Minor Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id95">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id96">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id97">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-0-1-patch-release">CHANGES IN GEOMORPH VERSION 2.0.1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id98">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id99">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id100">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-2-0-major-release">CHANGES IN GEOMORPH VERSION 2.0 (Major Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id101">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id102">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id103">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-6-patch-release">CHANGES IN GEOMORPH VERSION 1.1-6 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id104">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id105">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id106">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-5-patch-release">CHANGES IN GEOMORPH VERSION 1.1-5 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id107">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id108">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id109">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-4-patch-release">CHANGES IN GEOMORPH VERSION 1.1-4 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id110">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id111">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id112">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-3-patch-release">CHANGES IN GEOMORPH VERSION 1.1-3 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id113">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id114">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id115">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-2-patch-release">CHANGES IN GEOMORPH VERSION 1.1-2 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id116">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id117">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id118">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-1-patch-release">CHANGES IN GEOMORPH VERSION 1.1-1 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id119">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id120">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id121">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#changes-in-geomorph-version-1-1-0-patch-release">CHANGES IN GEOMORPH VERSION 1.1-0 (Patch Release)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id122">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id123">OTHER CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id124">BUG FIXES</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

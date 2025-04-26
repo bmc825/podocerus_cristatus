@@ -1,0 +1,1342 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ggrepel 0.9.6 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/ggrepel/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/ggrepel/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ggrepel 0.9.6</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggrepel 0.9.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changes">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-5">ggrepel 0.9.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-4">ggrepel 0.9.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-3">ggrepel 0.9.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-2">ggrepel 0.9.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-1-2021-01-09">ggrepel 0.9.1 2021-01-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-0-2020-12-14">ggrepel 0.9.0 2020-12-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-improvements">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-8-1-2019-05-07">ggrepel 0.8.1 2019-05-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-8-0-2018-05-09">ggrepel 0.8.0 2018-05-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-3-2018-02-09">ggrepel 0.7.3 2018-02-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-2-2018-01-14">ggrepel 0.7.2 2018-01-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-1-2017-11-18">ggrepel 0.7.1 2017-11-18</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-0-2017-09-28">ggrepel 0.7.0 2017-09-28</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-12-2017-07-16">ggrepel 0.6.12 2017-07-16</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-11-2017-07-08">ggrepel 0.6.11 2017-07-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-10-2017-03-07">ggrepel 0.6.10 2017-03-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-9-2017-03-07">ggrepel 0.6.9 2017-03-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-8-2017-02-12">ggrepel 0.6.8 2017-02-12</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-7-2017-01-09">ggrepel 0.6.7 2017-01-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-6-2016-11-28">ggrepel 0.6.6 2016-11-28</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-5-2016-11-22">ggrepel 0.6.5 2016-11-22</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-4-2016-11-08">ggrepel 0.6.4 2016-11-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-3-2016-10-14">ggrepel 0.6.3 2016-10-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-2-2016-10-06">ggrepel 0.6.2 2016-10-06</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-1-2016-10-04">ggrepel 0.6.1 2016-10-04</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-0-2016-10-03">ggrepel 0.6.0 2016-10-03</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-5-1-2016-02-22">ggrepel 0.5.1 2016-02-22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-5-2016-02-08">ggrepel 0.5 2016-02-08</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-6-2016-02-07">ggrepel 0.4.6 2016-02-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-5-2016-02-06">ggrepel 0.4.5 2016-02-06</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-4-2016-02-05">ggrepel 0.4.4 2016-02-05</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-3-2016-01-18">ggrepel 0.4.3 2016-01-18</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-2-2016-01-15">ggrepel 0.4.2 2016-01-15</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-1-2016-01-13">ggrepel 0.4.1 2016-01-13</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-2016-01-12">ggrepel 0.4 2016-01-12</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-3-2016-01-08">ggrepel 0.3 2016-01-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-2-0-2016-01-07">ggrepel 0.2.0 2016-01-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-1-0-2016-01-05">ggrepel 0.1.0 2016-01-05</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-0-1-2016-01-04">ggrepel 0.0.1 2016-01-04</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-6">
+<h1>ggrepel 0.9.6<a class="headerlink" href="#ggrepel-0-9-6" title="Link to this heading">#</a></h1>
+<section id="changes">
+<h2>Changes<a class="headerlink" href="#changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">exclude_outside()</span></code> from <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code> because this change introduced too many breaking changes for other users. See issues:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/slowkow/ggrepel/issues/253">slowkow/ggrepel#253</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/slowkow/ggrepel/issues/255">slowkow/ggrepel#255</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/slowkow/ggrepel/issues/257">slowkow/ggrepel#257</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/slowkow/ggrepel/issues/260">slowkow/ggrepel#260</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/slowkow/ggrepel/issues/261">slowkow/ggrepel#261</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-5">
+<h1>ggrepel 0.9.5<a class="headerlink" href="#ggrepel-0-9-5" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>Changes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Introduce a new function <code class="docutils literal notranslate"><span class="pre">exclude_outside()</span></code> into <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code> to discard labels outside the panel range, in order to support the <a class="reference external" href="https://github.com/YuLab-SMU/ggbreak">ggbreak</a> package. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/244">issue 244</a> for details.</p></li>
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">expect_equal()</span></code> to include a tolerance, to satisfy CRAN testing.</p></li>
+<li><p>Delete note about old (before 2.2.1) versions of ggplot2, thanks to &#64;olivroy for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/246">pull request 246</a>.</p></li>
+<li><p>Add website link to <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>, thanks to &#64;olivroy for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/241">pull request 241</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-4">
+<h1>ggrepel 0.9.4<a class="headerlink" href="#ggrepel-0-9-4" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>Changes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">min.segment.length</span></code> to the options table in the examples page, thanks to
+&#64;jwhendy for <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/213">mentioning this</a>.</p></li>
+<li><p>Add example for how to use ggrepel with sf objects, i.e.
+<code class="docutils literal notranslate"><span class="pre">geom_text_repel(...,</span> <span class="pre">stat</span> <span class="pre">=</span> <span class="pre">&quot;sf_coordinates&quot;)</span></code>, thanks to &#64;francisbarton for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/236">pull request 236</a>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">expect_equal(x,</span> <span class="pre">y)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">expect_true(identical(x,</span> <span class="pre">y))</span></code>, see <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/242">issue 242</a> for details.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-3">
+<h1>ggrepel 0.9.3<a class="headerlink" href="#ggrepel-0-9-3" title="Link to this heading">#</a></h1>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>When we set the seed in <code class="docutils literal notranslate"><span class="pre">ggrepel::geom_text_repel(seed</span> <span class="pre">=</span> <span class="pre">1)</span></code>, this will
+no longer override the seed for other unrelated code. Thanks to
+&#64;kassambara for reporting this in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/228">issue 228</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-2">
+<h1>ggrepel 0.9.2<a class="headerlink" href="#ggrepel-0-9-2" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>Bug fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix compiler errors for C++ expressions like <code class="docutils literal notranslate"><span class="pre">v[i]</span> <span class="pre">=</span> <span class="pre">{0,0}</span></code> that arise
+for some versions of the clang compiler. Thanks to &#64;Krascal and &#64;vrognas
+for reporting this in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/184">issue 184</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Fix warning from CRAN <code class="docutils literal notranslate"><span class="pre">warning:</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">bitwise</span> <span class="pre">'&amp;'</span> <span class="pre">with</span> <span class="pre">boolean</span> <span class="pre">operands</span></code></p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Changes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Change internal column names, so that <code class="docutils literal notranslate"><span class="pre">ggrepel::position_nudge_repel()</span></code> can now be used
+with <code class="docutils literal notranslate"><span class="pre">ggplot2::geom_text()</span></code>. This should also allow us to use new nudge functions
+from the <a class="reference external" href="https://github.com/aphalo/ggpp">ggpp</a> package by &#64;aphalo. Thanks to &#64;aphalo for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/193">pull request 193</a>.</p></li>
+<li><p>Improve handling of justification for <code class="docutils literal notranslate"><span class="pre">angle</span></code> different from zero in
+<code class="docutils literal notranslate"><span class="pre">ggrepel::geom_text_repel()</span></code> <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/196">pull request 196</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-1-2021-01-09">
+<h1>ggrepel 0.9.1 2021-01-09<a class="headerlink" href="#ggrepel-0-9-1-2021-01-09" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>Bug fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix label positions (only for <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>). The same plot would look
+OK with ggrepel 0.8.2, but incorrect with ggrepel 0.9.0. Thanks to
+Ben Baumer (&#64;beanumber) for reporting this in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/182">issue 182</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Fix a bug that caused R to crash (only on Windows, not on Linux or macOS) for
+some specific code examples. Thanks to Pedro Aphalo (&#64;aphalo) for reporting
+this in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/179">issue 179</a> and for testing the patched code.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-9-0-2020-12-14">
+<h1>ggrepel 0.9.0 2020-12-14<a class="headerlink" href="#ggrepel-0-9-0-2020-12-14" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>Changes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Points can be different sizes. Repel text labels from large points and small
+points. New examples in the vignette show how to do this. See discussion about
+this feature in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/83">issue 83</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>New parameter <code class="docutils literal notranslate"><span class="pre">max.overlaps</span></code> stops ggrepel from trying to label overcrowded
+data points. The default setting is <code class="docutils literal notranslate"><span class="pre">max.overlaps</span> <span class="pre">=</span> <span class="pre">10</span></code>, so text labels that
+overlap more than 10 things (points or labels) will be excluded from further
+calculations and rendering. Of course, we can set <code class="docutils literal notranslate"><span class="pre">max.overlaps</span> <span class="pre">=</span> <span class="pre">Inf</span></code> to
+restore the behavior in ggrepel 0.8.1. See [issue 48] for more discussion.
+We can also use <code class="docutils literal notranslate"><span class="pre">option(ggrepel.max.overlaps</span> <span class="pre">=</span> <span class="pre">Inf)</span></code> to disable this new
+functionality and display all labels, regardless of too many overlaps.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Add examples to the <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a> for <code class="docutils literal notranslate"><span class="pre">ggplot2::position_jitter()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ggbeeswarm::position_quasirandom()</span></code></p></li>
+<li><p>Line segments can now be curved (#131, &#64;malcolmbarrett). Add examples
+to the <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a> showing different options.</p></li>
+<li><p>Add support for new aesthetics:</p>
+<ul>
+<li><p>segment.size</p></li>
+<li><p>segment.colour</p></li>
+<li><p>segment.alpha</p></li>
+<li><p>segment.curvature</p></li>
+<li><p>segment.angle</p></li>
+<li><p>segment.ncp</p></li>
+</ul>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">max.time</span></code> option to limit the number of seconds spent trying to position
+the text labels.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">verbose</span></code> option to show timing information: seconds elapse, iteration count,
+number of remaining overlaps (thanks to &#64;MichaelChirico #159).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">bg.color</span></code> and <code class="docutils literal notranslate"><span class="pre">bg.r</span></code> aesthetics for <code class="docutils literal notranslate"><span class="pre">geom_text()</span></code> to display shadows
+behind text labels. Thanks to &#64;rcannood for adding this feature with
+<a class="reference external" href="https://github.com/slowkow/ggrepel/pull/142">pull request 142</a>.</p></li>
+</ul>
+</section>
+<section id="bug-fixes-and-improvements">
+<h2>Bug fixes and improvements<a class="headerlink" href="#bug-fixes-and-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Line segments are the same color as the text by default (#164, &#64;lishinkou).</p></li>
+<li><p>Text justification for multi-line text labels should be working as expected.
+Thanks to &#64;johnhenrypezzuto and &#64;phalteman for comments in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/137">issue 137</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Put text labels on top of all line segments (&#64;kiendang). This fixes
+<a class="reference external" href="https://github.com/slowkow/ggrepel/issues/35">issue 35</a>, where line segments sometimes appear on top of text.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Thanks to Paul Murrell (&#64;pmur002) for notifying us to use <code class="docutils literal notranslate"><span class="pre">is.unit(x)</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">class(x)</span> <span class="pre">==</span> <span class="pre">&quot;unit&quot;</span></code> in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/141">issue 141</a>. This should future-proof
+ggrepel for new versions of the grid package.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Fix the way <code class="docutils literal notranslate"><span class="pre">xlim</span> <span class="pre">=</span> <span class="pre">c(-Inf,</span> <span class="pre">Inf)</span></code> is treated. Thanks to &#64;thomasp85 for
+pointing out the bug in <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/136">issue 136</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Add new segment options. Thanks to &#64;krassowski for adding this feature with
+<a class="reference external" href="https://github.com/slowkow/ggrepel/pull/151">pull request 151</a>.</p>
+<ul>
+<li><p>segment.shape</p></li>
+<li><p>segment.square</p></li>
+<li><p>segment.squareShape</p></li>
+<li><p>segment.inflect</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-8-1-2019-05-07">
+<h1>ggrepel 0.8.1 2019-05-07<a class="headerlink" href="#ggrepel-0-8-1-2019-05-07" title="Link to this heading">#</a></h1>
+<section id="id7">
+<h2>Bug fixes and improvements<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix heap buffer overflow that causes R to crash. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/115">issue 115</a>. Thanks to
+Brodie Gaslam (&#64;brodieG) for helping me to setup an environment to reproduce
+the bug on my own system.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-8-0-2018-05-09">
+<h1>ggrepel 0.8.0 2018-05-09<a class="headerlink" href="#ggrepel-0-8-0-2018-05-09" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>Bug fixes and improvements<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">geom_label_repel(...,</span> <span class="pre">point.padding=NA)</span></code>. Reported by &#64;mlell in
+<a class="reference external" href="https://github.com/slowkow/ggrepel/issues/104">issue 104</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-7-3-2018-02-09">
+<h1>ggrepel 0.7.3 2018-02-09<a class="headerlink" href="#ggrepel-0-7-3-2018-02-09" title="Link to this heading">#</a></h1>
+<section id="id9">
+<h2>Changes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Add support for <code class="docutils literal notranslate"><span class="pre">position</span></code> parameter. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/69">issue 69</a>. This allows us to
+add text labels to points positioned with <code class="docutils literal notranslate"><span class="pre">position_jitter()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">position_dodge()</span></code>, <code class="docutils literal notranslate"><span class="pre">position_jitterdodge()</span></code>, etc.</p>
+<p>Please note that this feature will not work with ggplot2 2.2.1 or older.</p>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-7-2-2018-01-14">
+<h1>ggrepel 0.7.2 2018-01-14<a class="headerlink" href="#ggrepel-0-7-2-2018-01-14" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>Bug fixes and improvements<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>Thanks to &#64;AliciaSchep and &#64;aphalo</p>
+<ul class="simple">
+<li><p>Fix warning about <code class="docutils literal notranslate"><span class="pre">hjust</span></code>. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/93">issue 93</a>.</p></li>
+<li><p>Fix bug when subset of points is labeled in <code class="docutils literal notranslate"><span class="pre">geom_label_repel</span></code>.
+See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/92">issue 92</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-7-1-2017-11-18">
+<h1>ggrepel 0.7.1 2017-11-18<a class="headerlink" href="#ggrepel-0-7-1-2017-11-18" title="Link to this heading">#</a></h1>
+<section id="id11">
+<h2>Changes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>Thanks to &#64;AliciaSchep</p>
+<ul class="simple">
+<li><p>Add support for <code class="docutils literal notranslate"><span class="pre">hjust</span></code> and <code class="docutils literal notranslate"><span class="pre">vjust</span></code> parameters. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/69">issue 69</a>.
+Also see new examples in the <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a>.</p></li>
+<li><p>Add code to avoid intersecting line segments. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/34">issue 34</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-7-0-2017-09-28">
+<h1>ggrepel 0.7.0 2017-09-28<a class="headerlink" href="#ggrepel-0-7-0-2017-09-28" title="Link to this heading">#</a></h1>
+<section id="id12">
+<h2>Bug fixes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Fix intersection between lines and rectangles, to reproduce the same
+aesthetically pleasant behavior as in version 0.6.5.</p>
+<p>This is an improvement on the sloppy implementation introduced in 0.6.8. See
+<a class="reference external" href="https://github.com/slowkow/ggrepel/commit/28633db5eb3d3cc2bd935bd438a8bb36b5673951">commit 28633d</a> for more information.</p>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-12-2017-07-16">
+<h1>ggrepel 0.6.12 2017-07-16<a class="headerlink" href="#ggrepel-0-6-12-2017-07-16" title="Link to this heading">#</a></h1>
+<section id="id13">
+<h2>Changes<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Reproduce identical plots by using <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">=</span> <span class="pre">1</span></code> to set the seed in
+<code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> or <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>. By default, no seed will be set.</p>
+<p>This is an improvement on the sloppy implementation introduced in 0.6.2. See
+<a class="reference external" href="https://github.com/slowkow/ggrepel/issues/33">issue 33</a> and <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/73">issue 73</a> for more discussion of this feature. Thanks to
+Pierre Gramme for reminding me about this via email.</p>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-11-2017-07-08">
+<h1>ggrepel 0.6.11 2017-07-08<a class="headerlink" href="#ggrepel-0-6-11-2017-07-08" title="Link to this heading">#</a></h1>
+<section id="id14">
+<h2>Changes<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<p>Thanks to &#64;seaaan</p>
+<ul class="simple">
+<li><p>Allow certain parameters to be passed as numbers or <code class="docutils literal notranslate"><span class="pre">unit()</span></code>
+instead of only units. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/79">issue 79</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-10-2017-03-07">
+<h1>ggrepel 0.6.10 2017-03-07<a class="headerlink" href="#ggrepel-0-6-10-2017-03-07" title="Link to this heading">#</a></h1>
+<section id="id15">
+<h2>Bug fixes<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<p>Thanks to &#64;zkamvar</p>
+<ul class="simple">
+<li><p>Fix the crash for plots that do not specify <code class="docutils literal notranslate"><span class="pre">xlim</span></code> or <code class="docutils literal notranslate"><span class="pre">ylim</span></code>.
+See <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/74">pull 74</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-9-2017-03-07">
+<h1>ggrepel 0.6.9 2017-03-07<a class="headerlink" href="#ggrepel-0-6-9-2017-03-07" title="Link to this heading">#</a></h1>
+<section id="id16">
+<h2>Bug fixes<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix the crash for plots with <code class="docutils literal notranslate"><span class="pre">facet_wrap</span></code> or <code class="docutils literal notranslate"><span class="pre">facet_grid</span></code> that have no
+labeled points. Thanks to &#64;pcroteau for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/70">pull 70</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-8-2017-02-12">
+<h1>ggrepel 0.6.8 2017-02-12<a class="headerlink" href="#ggrepel-0-6-8-2017-02-12" title="Link to this heading">#</a></h1>
+<section id="id17">
+<h2>Changes<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Constrain repulsion force to x-axis “x” or y-axis “y” with <code class="docutils literal notranslate"><span class="pre">direction</span></code> in
+<code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>. Thanks to &#64;AliciaSchep for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/68">pull 68</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-7-2017-01-09">
+<h1>ggrepel 0.6.7 2017-01-09<a class="headerlink" href="#ggrepel-0-6-7-2017-01-09" title="Link to this heading">#</a></h1>
+<section id="id18">
+<h2>Changes<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Constrain text labels to specific areas of the plot with <code class="docutils literal notranslate"><span class="pre">xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim</span></code> in
+<code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>. Thanks to &#64;lukauskas for <a class="reference external" href="https://github.com/slowkow/ggrepel/pull/67">pull 67</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-6-2016-11-28">
+<h1>ggrepel 0.6.6 2016-11-28<a class="headerlink" href="#ggrepel-0-6-6-2016-11-28" title="Link to this heading">#</a></h1>
+<section id="id19">
+<h2>Bug fixes<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Mathematical expressions as labels with <code class="docutils literal notranslate"><span class="pre">parse</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> in
+<code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.
+Thanks to &#64;fawda123 for <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/60">issue 60</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-5-2016-11-22">
+<h1>ggrepel 0.6.5 2016-11-22<a class="headerlink" href="#ggrepel-0-6-5-2016-11-22" title="Link to this heading">#</a></h1>
+<section id="id20">
+<h2>Changes<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<p>Thanks to &#64;jiho for these:</p>
+<ul class="simple">
+<li><p>changed <code class="docutils literal notranslate"><span class="pre">alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code> to control text, label
+background, label border, and segment.</p></li>
+<li><p>Allow <code class="docutils literal notranslate"><span class="pre">segment.colour</span></code> as well as <code class="docutils literal notranslate"><span class="pre">segment.color</span></code>.</p></li>
+<li><p>By default, map text color and text alpha to the segment color unless they
+are overridden.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">scales::alpha()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">alpha()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-4-2016-11-08">
+<h1>ggrepel 0.6.4 2016-11-08<a class="headerlink" href="#ggrepel-0-6-4-2016-11-08" title="Link to this heading">#</a></h1>
+<section id="id21">
+<h2>Bug fixes<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix a bug that caused ggrepel to fail on polar coordinates <code class="docutils literal notranslate"><span class="pre">coord_polar()</span></code>.
+See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/56">issue 56</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-3-2016-10-14">
+<h1>ggrepel 0.6.3 2016-10-14<a class="headerlink" href="#ggrepel-0-6-3-2016-10-14" title="Link to this heading">#</a></h1>
+<section id="id22">
+<h2>Changes<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">point.padding=NA</span></code> to ignore data points in repulsion calculations.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-2-2016-10-06">
+<h1>ggrepel 0.6.2 2016-10-06<a class="headerlink" href="#ggrepel-0-6-2-2016-10-06" title="Link to this heading">#</a></h1>
+<section id="id23">
+<h2>Bug fixes<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Stop the labels from escaping the plot boundaries instead of applying
+a force at the boundary.</p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">set.seed</span></code> within <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code> to
+allow recreating identical plots. Thanks to &#64;erikor for <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/33">issue 33</a>.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h2>Changes<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">min.segment.length</span></code> to <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-1-2016-10-04">
+<h1>ggrepel 0.6.1 2016-10-04<a class="headerlink" href="#ggrepel-0-6-1-2016-10-04" title="Link to this heading">#</a></h1>
+<section id="id25">
+<h2>Changes<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Tweak <code class="docutils literal notranslate"><span class="pre">repel_boxes.cpp</span></code>. Dampen forces to tune how the labels move. The
+result looks better, at least for the examples in the <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-6-0-2016-10-03">
+<h1>ggrepel 0.6.0 2016-10-03<a class="headerlink" href="#ggrepel-0-6-0-2016-10-03" title="Link to this heading">#</a></h1>
+<section id="id26">
+<h2>Changes<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Do not draw labels with empty strings. When a label is an empty string,
+the text will not be shown, the segment will not be drawn, but the
+corresponding data point will repel other labels. See <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/51">issue 51</a>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">segment.alpha</span></code> as an option for <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">angle</span></code> aesthetic for <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code>, the same way as done in
+ggplot2 <code class="docutils literal notranslate"><span class="pre">geom_text()</span></code>.</p></li>
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">nudge_x</span></code> and <code class="docutils literal notranslate"><span class="pre">nudge_y</span></code> out of the aesthetics function <code class="docutils literal notranslate"><span class="pre">aes()</span></code>. This
+makes ggrepel consistent with ggplot2 functions <code class="docutils literal notranslate"><span class="pre">geom_text()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">geom_label()</span></code>. Backwards incompatible with 0.5.1.</p></li>
+<li><p>Restore <code class="docutils literal notranslate"><span class="pre">segment.color</span></code> as an option for <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.</p></li>
+<li><p>Tweak <code class="docutils literal notranslate"><span class="pre">repel_boxes.cpp</span></code>. Do not weight repulsion force by ratios of bounding
+box heights and widths. This seems to perform better, especially after
+rotating text labels.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-5-1-2016-02-22">
+<h1>ggrepel 0.5.1 2016-02-22<a class="headerlink" href="#ggrepel-0-5-1-2016-02-22" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Optimize C++ code further by reducing number of calls to <code class="docutils literal notranslate"><span class="pre">rnorm()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-5-2016-02-08">
+<h1>ggrepel 0.5 2016-02-08<a class="headerlink" href="#ggrepel-0-5-2016-02-08" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>First push to CRAN.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-6-2016-02-07">
+<h1>ggrepel 0.4.6 2016-02-07<a class="headerlink" href="#ggrepel-0-4-6-2016-02-07" title="Link to this heading">#</a></h1>
+<section id="id27">
+<h2>Changes<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Tweak <code class="docutils literal notranslate"><span class="pre">point.padding</span></code> so that users can configure how far labels are pushed
+away from data points.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-5-2016-02-06">
+<h1>ggrepel 0.4.5 2016-02-06<a class="headerlink" href="#ggrepel-0-4-5-2016-02-06" title="Link to this heading">#</a></h1>
+<section id="id28">
+<h2>Changes<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Optimize C++ code for a 2.5X speed improvment.</p></li>
+<li><p>Delete unnecessary .Rd files.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-4-2016-02-05">
+<h1>ggrepel 0.4.4 2016-02-05<a class="headerlink" href="#ggrepel-0-4-4-2016-02-05" title="Link to this heading">#</a></h1>
+<p>FIXES</p>
+<ul class="simple">
+<li><p>Fix the bug when the line segment from the data point points to the origin
+at (0,0) instead of the text label.</p></li>
+</ul>
+<section id="id29">
+<h2>Changes<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Automatically recompute repulsion between labels after resizing the plot.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-3-2016-01-18">
+<h1>ggrepel 0.4.3 2016-01-18<a class="headerlink" href="#ggrepel-0-4-3-2016-01-18" title="Link to this heading">#</a></h1>
+<section id="id30">
+<h2>Changes<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Change distance between segment and label in <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>. Now there
+is no gap between the end of the segment and the label border.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-2-2016-01-15">
+<h1>ggrepel 0.4.2 2016-01-15<a class="headerlink" href="#ggrepel-0-4-2-2016-01-15" title="Link to this heading">#</a></h1>
+<p>FIXES</p>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">spring_force()</span></code> so that it never returns NaN.</p></li>
+</ul>
+<section id="id31">
+<h2>Changes<a class="headerlink" href="#id31" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">nudge_x</span></code> and <code class="docutils literal notranslate"><span class="pre">nudge_y</span></code> to better control positioning of labels.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-1-2016-01-13">
+<h1>ggrepel 0.4.1 2016-01-13<a class="headerlink" href="#ggrepel-0-4-1-2016-01-13" title="Link to this heading">#</a></h1>
+<section id="id32">
+<h2>Changes<a class="headerlink" href="#id32" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">arrow</span></code> parameter to allow plotting arrows that point to the labeled data
+points rather than plain line segments.</p></li>
+<li><p>Always draw segments, even if the labeled point is very close to the label.</p></li>
+</ul>
+<p>FIXES</p>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">point.padding</span></code> so that horizontal and vertical padding is calculated
+correctly.</p></li>
+<li><p>Tweak forces to improve layout near borders and in crowded areas.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-4-2016-01-12">
+<h1>ggrepel 0.4 2016-01-12<a class="headerlink" href="#ggrepel-0-4-2016-01-12" title="Link to this heading">#</a></h1>
+<section id="id33">
+<h2>Bug fixes<a class="headerlink" href="#id33" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix <a class="reference external" href="https://github.com/slowkow/ggrepel/issues/7">issue 7</a>. Labels can now be placed anywhere in the plotting area
+instead of being limited to the x and y ranges of their corresponding data
+points.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Fix DESCRIPTION to require ggplot2 &gt;= 2.0.0</p></li>
+</ul>
+</section>
+<section id="id34">
+<h2>Changes<a class="headerlink" href="#id34" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add new parameter <code class="docutils literal notranslate"><span class="pre">point.padding</span></code> to add padding around the labeled points.
+The line segment will stop before reaching the coordinates of the point. The
+text labels are also now padded from the line segment to improve legibility.</p></li>
+<li><p>Add volcano plot to the <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a> usage examples.</p></li>
+<li><p>Add Travis continuous integration to test against R-devel, R-release, and
+R-oldrel.</p></li>
+<li><p>Dampen repulsion force to slightly improve algorithm efficiency.</p></li>
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">intersect_line_rectangle()</span></code> to <code class="docutils literal notranslate"><span class="pre">src/repel_boxes.cpp</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-3-2016-01-08">
+<h1>ggrepel 0.3 2016-01-08<a class="headerlink" href="#ggrepel-0-3-2016-01-08" title="Link to this heading">#</a></h1>
+<section id="id35">
+<h2>Changes<a class="headerlink" href="#id35" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Remove unused imports: <code class="docutils literal notranslate"><span class="pre">colorspace</span></code>.</p></li>
+<li><p>Update NAMESPACE with new version of roxygen.</p></li>
+<li><p>Use spring force to attract each label to its own point.</p></li>
+<li><p>Change default maximum iterations from 10,000 to 2000.</p></li>
+<li><p>Update man pages.</p></li>
+<li><p>Remove unused code.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-2-0-2016-01-07">
+<h1>ggrepel 0.2.0 2016-01-07<a class="headerlink" href="#ggrepel-0-2-0-2016-01-07" title="Link to this heading">#</a></h1>
+<section id="id36">
+<h2>Changes<a class="headerlink" href="#id36" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">geom_text_repel()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.</p>
+<ul>
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">label.padding</span></code> to <code class="docutils literal notranslate"><span class="pre">box.padding</span></code>.</p></li>
+<li><p>Remove unsupported parameters:</p>
+<ul>
+<li><p>position</p></li>
+<li><p>nudge_x</p></li>
+<li><p>nudge_y</p></li>
+<li><p>hjust</p></li>
+<li><p>vjust</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Remove unused imports.</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add roxygen docs to all functions.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-1-0-2016-01-05">
+<h1>ggrepel 0.1.0 2016-01-05<a class="headerlink" href="#ggrepel-0-1-0-2016-01-05" title="Link to this heading">#</a></h1>
+<section id="id37">
+<h2>Changes<a class="headerlink" href="#id37" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">geom_label_repel()</span></code>.</p></li>
+<li><p>Add fudge width to help with legends.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">expand=TRUE</span></code> to allow text to be placed in the expanded plot area.</p></li>
+<li><p>Add man/ folder.</p></li>
+<li><p>Add links to ggplot2 docs in <a class="reference external" href="https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.Rmd">vignette</a>.</p></li>
+<li><p>Add unused R implementation of <code class="docutils literal notranslate"><span class="pre">repel_boxes()</span></code>, just for your reference.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ggrepel-0-0-1-2016-01-04">
+<h1>ggrepel 0.0.1 2016-01-04<a class="headerlink" href="#ggrepel-0-0-1-2016-01-04" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial release to github.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\ggrepel"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ggrepel 0.9.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changes">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-5">ggrepel 0.9.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-4">ggrepel 0.9.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-3">ggrepel 0.9.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-2">ggrepel 0.9.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-1-2021-01-09">ggrepel 0.9.1 2021-01-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-9-0-2020-12-14">ggrepel 0.9.0 2020-12-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-improvements">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-8-1-2019-05-07">ggrepel 0.8.1 2019-05-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-8-0-2018-05-09">ggrepel 0.8.0 2018-05-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-3-2018-02-09">ggrepel 0.7.3 2018-02-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-2-2018-01-14">ggrepel 0.7.2 2018-01-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Bug fixes and improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-1-2017-11-18">ggrepel 0.7.1 2017-11-18</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-7-0-2017-09-28">ggrepel 0.7.0 2017-09-28</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-12-2017-07-16">ggrepel 0.6.12 2017-07-16</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-11-2017-07-08">ggrepel 0.6.11 2017-07-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-10-2017-03-07">ggrepel 0.6.10 2017-03-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-9-2017-03-07">ggrepel 0.6.9 2017-03-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-8-2017-02-12">ggrepel 0.6.8 2017-02-12</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-7-2017-01-09">ggrepel 0.6.7 2017-01-09</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-6-2016-11-28">ggrepel 0.6.6 2016-11-28</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-5-2016-11-22">ggrepel 0.6.5 2016-11-22</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-4-2016-11-08">ggrepel 0.6.4 2016-11-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-3-2016-10-14">ggrepel 0.6.3 2016-10-14</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-2-2016-10-06">ggrepel 0.6.2 2016-10-06</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-1-2016-10-04">ggrepel 0.6.1 2016-10-04</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-6-0-2016-10-03">ggrepel 0.6.0 2016-10-03</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-5-1-2016-02-22">ggrepel 0.5.1 2016-02-22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-5-2016-02-08">ggrepel 0.5 2016-02-08</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-6-2016-02-07">ggrepel 0.4.6 2016-02-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-5-2016-02-06">ggrepel 0.4.5 2016-02-06</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-4-2016-02-05">ggrepel 0.4.4 2016-02-05</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-3-2016-01-18">ggrepel 0.4.3 2016-01-18</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-2-2016-01-15">ggrepel 0.4.2 2016-01-15</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-1-2016-01-13">ggrepel 0.4.1 2016-01-13</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-4-2016-01-12">ggrepel 0.4 2016-01-12</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-3-2016-01-08">ggrepel 0.3 2016-01-08</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-2-0-2016-01-07">ggrepel 0.2.0 2016-01-07</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-1-0-2016-01-05">ggrepel 0.1.0 2016-01-05</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">Changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ggrepel-0-0-1-2016-01-04">ggrepel 0.0.1 2016-01-04</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>downlit 0.4.4 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/downlit/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/downlit/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>downlit 0.4.4</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">downlit 0.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-3">downlit 0.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-2">downlit 0.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-1">downlit 0.4.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-highlighting">Syntax highlighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-linkg">Auto-linkg</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-0">downlit 0.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Syntax highlighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-linking">Auto-linking</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-2-1">downlit 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-2-0">downlit 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-1-0">downlit 0.1.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="downlit-0-4-4">
+<h1>downlit 0.4.4<a class="headerlink" href="#downlit-0-4-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Use simpler parsing algorithm for R 4.0, which avoids crash with certain UTF-8 characters (#189).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-4-3">
+<h1>downlit 0.4.3<a class="headerlink" href="#downlit-0-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix for upcoming R-devel (#169).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-4-2">
+<h1>downlit 0.4.2<a class="headerlink" href="#downlit-0-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">highlight()</span></code> no longer errors if a package imputed to have been attached
+isn’t installed.</p></li>
+<li><p>Correctly link <code class="docutils literal notranslate"><span class="pre">requireNamespace(MASS)</span></code> (#151).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-4-1">
+<h1>downlit 0.4.1<a class="headerlink" href="#downlit-0-4-1" title="Link to this heading">#</a></h1>
+<section id="syntax-highlighting">
+<h2>Syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Supports new base pipe <code class="docutils literal notranslate"><span class="pre">|&gt;</span></code> syntax (#126).</p></li>
+<li><p>Every line get its own <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> to match pandoc (#122).</p></li>
+<li><p>Multi-line tokens (e.g. strings) now get a <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> per line (#139).</p></li>
+<li><p>Very long strings or other tokens are no longer truncated (&#64;dmurdoch, #128).</p></li>
+</ul>
+</section>
+<section id="auto-linkg">
+<h2>Auto-linkg<a class="headerlink" href="#auto-linkg" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Function calls (in inline and code blocks) will no longer to non-function
+topics (#135).</p></li>
+<li><p>Re-exports detection no longer relies on name of <code class="docutils literal notranslate"><span class="pre">.Rd</span></code> file (#134).</p></li>
+<li><p>Link to correct topic with <code class="docutils literal notranslate"><span class="pre">::()</span></code> and <code class="docutils literal notranslate"><span class="pre">utils::help()</span></code> (&#64;IndrajeetPatil, #131).</p></li>
+<li><p>Generate correct link for Bioconductor vignettes (&#64;zeehio, #145)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-4-0">
+<h1>downlit 0.4.0<a class="headerlink" href="#downlit-0-4-0" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>Syntax highlighting<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Messages, warnings, and errors now get a much more minimal style.
+Messages are styled the same way as output; and warnings and errors
+only style the “Warning” or “Error” text. This makes these types of
+output easier to read, and easier for package developers to style
+themselves.</p></li>
+<li><p>Messages, warnings, and errors now retrieve their text using
+<code class="docutils literal notranslate"><span class="pre">conditionMessage()</span></code>, which supports more advanced types of conditions
+(&#64;davidchall, #100).</p></li>
+<li><p>The overall structure of the syntax highlighting has been overhauled.
+Now each line is wrapped in a <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> with class <code class="docutils literal notranslate"><span class="pre">r-in</span></code> (input code),
+<code class="docutils literal notranslate"><span class="pre">r-out</span></code> (output printed to console), <code class="docutils literal notranslate"><span class="pre">r-plot</span></code> (plots), <code class="docutils literal notranslate"><span class="pre">r-msg</span></code> (messages),
+<code class="docutils literal notranslate"><span class="pre">r-wrn</span></code> (warnings), and <code class="docutils literal notranslate"><span class="pre">r-err</span></code> (errors). Additionally, the prompt (<code class="docutils literal notranslate"><span class="pre">#&gt;</span></code>)
+is wrapped in a <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">class=&quot;r-pr&quot;&gt;</span></code>. Altogether, these changes
+should give much more flexibility for styling with CSS (#90).</p></li>
+<li><p>ANSI escapes no longer generate invalid HTML (#79).</p></li>
+<li><p>Changes to better support for HTML widgets and rgl in pkgdown
+(&#64;dmurdoch, #78). In particular, <code class="docutils literal notranslate"><span class="pre">evaluate_and_highlight()</span></code> now returns
+an additional attribute containing all extra dependencies needed to render
+the returned HTML.</p></li>
+</ul>
+</section>
+<section id="auto-linking">
+<h2>Auto-linking<a class="headerlink" href="#auto-linking" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Packages attached when you call <code class="docutils literal notranslate"><span class="pre">library(package)</span></code> (including by the
+tidyverse), are now taken into account when autolinking (#87).</p></li>
+<li><p>In code blocks, custom infix operators are now autolinked (#89).
+In inline code, infix operators are no longer autolinked; this lead to too
+many false positives. You can still link with (e.g.) <code class="docutils literal notranslate"><span class="pre">?&quot;-&quot;</span></code> (#86).</p></li>
+<li><p>Inline calls with arguments (e.g. <code class="docutils literal notranslate"><span class="pre">foo(1,</span> <span class="pre">2)</span></code>) are no longer auto-linked,
+as intended and documented (#82).</p></li>
+<li><p>Autolinking <code class="docutils literal notranslate"><span class="pre">vignette(foo,</span> <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;pkg&quot;)</span></code> no longer errors if <code class="docutils literal notranslate"><span class="pre">pkg</span></code> is not
+installed (#85).</p></li>
+<li><p>Unusual help calls (e.g. <code class="docutils literal notranslate"><span class="pre">help(a$b)</span></code>), no longer generate errors (#77).</p></li>
+<li><p>Rare warning about incomplete final line in <code class="docutils literal notranslate"><span class="pre">autolink_url(&quot;pkgname::foo&quot;)</span></code>
+is now suppressed (&#64;dmurdoch, pkgdown#1419).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">href_package()</span></code> is now exported (#103).</p></li>
+<li><p>Auto-linking is more likely to succeed when the remote package is not
+installed as downlit now looks for the URL using <code class="docutils literal notranslate"><span class="pre">tools::CRAN_package_db()</span></code>
+for CRAN packages, and and <code class="docutils literal notranslate"><span class="pre">available.packages()</span></code> for packages installed
+from non-CRAN repos (&#64;ARawles, #108).</p></li>
+<li><p>Functions in HTML <code class="docutils literal notranslate"><span class="pre">&lt;summary&gt;</span></code> elements are no longer autolinked
+(&#64;gadenbuie, #105).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-2-1">
+<h1>downlit 0.2.1<a class="headerlink" href="#downlit-0-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>When auto-linking <code class="docutils literal notranslate"><span class="pre">vignette(foo)</span></code>, downlit now looks for a vignette named
+foo in the packages it knows to be attached (#61).</p></li>
+<li><p>Can now force highlighting of any <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> by wrapping it inside a <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code>
+with <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">=</span> <span class="pre">&quot;downlit&quot;</span></code>. This is useful in cases where it may otherwise
+be hard to set the class of the <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code>.</p></li>
+<li><p>In comments, <code class="docutils literal notranslate"><span class="pre">\u2029</span></code> is converted to <code class="docutils literal notranslate"><span class="pre">\033</span></code> to make it possible to preserve
+ANSI escapes when passed through xml2.</p></li>
+<li><p>No longer errors on library calls with named but empty arguments.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-2-0">
+<h1>downlit 0.2.0<a class="headerlink" href="#downlit-0-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Autolinking can use metadata stored in package itself with pkgdown setting
+<code class="docutils literal notranslate"><span class="pre">deploy.install_metadata</span></code>; this is useful for packages that only have
+private websites (&#64;matthewstrasiotto, #29)</p></li>
+<li><p>Autolinking guesses reference and article urls for pkgdown sites that haven’t
+set url (&#64;krlmlr, #44).</p></li>
+<li><p>R6 classes are autolinked when a new object is created i.e. in
+<code class="docutils literal notranslate"><span class="pre">r6_object$new()</span></code>, <code class="docutils literal notranslate"><span class="pre">r6_object</span></code> will link to its docs (#59, &#64;maelle).</p></li>
+<li><p>R6 methods are no longer autolinked as if they were functions of the same
+name (#54, &#64;maelle).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">classes_pandoc()</span></code> and <code class="docutils literal notranslate"><span class="pre">classes_chroma()</span></code> have been thoroughly revieweed to
+produce syntax highlighting as similar as possible to RStudio.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">downlit_html_path()</span></code> has a more flexible XPath identifying R code blocks,
+and a <code class="docutils literal notranslate"><span class="pre">classes</span></code> argument (#53, &#64;maelle, &#64;cderv)</p></li>
+<li><p>Trailing <code class="docutils literal notranslate"><span class="pre">/</span></code> are no longer stripped from URLs (#45, &#64;krlmlr).</p></li>
+<li><p>Removed extra newline in <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> output (#42, &#64;krlmlr).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="downlit-0-1-0">
+<h1>downlit 0.1.0<a class="headerlink" href="#downlit-0-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">NEWS.md</span></code> file to track changes to the package.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\downlit"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">downlit 0.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-3">downlit 0.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-2">downlit 0.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-1">downlit 0.4.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntax-highlighting">Syntax highlighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-linkg">Auto-linkg</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-4-0">downlit 0.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Syntax highlighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#auto-linking">Auto-linking</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-2-1">downlit 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-2-0">downlit 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#downlit-0-1-0">downlit 0.1.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

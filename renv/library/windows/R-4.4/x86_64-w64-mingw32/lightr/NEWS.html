@@ -1,0 +1,768 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lightr 1.8.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/lightr/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/lightr/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>lightr 1.8.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">lightr 1.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-7-1">lightr 1.7.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-changes">Internal changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-7-0">lightr 1.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-2">lightr 1.6.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-1">lightr 1.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-0">lightr 1.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-breaking-changes">Major breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-5-0">lightr 1.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Major breaking changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-4">lightr 1.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes-and-bug-fixes">Minor changes and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-3">lightr 1.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-2">lightr 1.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-1">lightr 1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-major-changes">New features and major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-0">lightr 1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New features and major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-0-1">lightr 0.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lightr-1-8-0">
+<h1>lightr 1.8.0<a class="headerlink" href="#lightr-1-8-0" title="Link to this heading">#</a></h1>
+<section id="minor-changes">
+<h2>Minor changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>timezones for converted OceanOptics files are now handled differently internally (&#64;Bisaloo, #64),
+to handle changes in upstream tzdata 2024b, which removed for example the CET and EST timezone codes.
+This may result in some other deprecated timezone codes not being handled correctly.
+Please report any bugs or discrepancies you may notice in the <code class="docutils literal notranslate"><span class="pre">datetime</span></code> field of metadata.</p></li>
+<li><p>lightr now depends on R &gt;= 4.0.0, following the tidyverse recommendation (&#64;Bisaloo, #28)</p></li>
+<li><p>the future package is now explicitly listed as a dependency, removing an <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> <code class="docutils literal notranslate"><span class="pre">NOTE</span></code> and thus removing the strain on CRAN reviewers (&#64;Bisaloo, #63).
+The future package was already a indirect dependency via the future.apply package.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-7-1">
+<h1>lightr 1.7.1<a class="headerlink" href="#lightr-1-7-1" title="Link to this heading">#</a></h1>
+<section id="internal-changes">
+<h2>Internal changes<a class="headerlink" href="#internal-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>this project now uses lintr to ensure the code is always following the current
+best coding practices in the R community</p></li>
+<li><p>ensure floating precision issues are not causing tests to fail on CRAN (&#64;Bisaloo, #156)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Minor changes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_parse_irr8()</span></code>, <code class="docutils literal notranslate"><span class="pre">lr_parse_rfl8()</span></code> and <code class="docutils literal notranslate"><span class="pre">lr_parse_raw8()</span></code> now error if you
+provide a file not produced by AvaSoft 8.2 as they have not been tested properly
+with other versions of AvaSoft 8.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-7-0">
+<h1>lightr 1.7.0<a class="headerlink" href="#lightr-1-7-0" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>Minor changes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Errors in low-level parsers are now passed as warnings in high-level
+<code class="docutils literal notranslate"><span class="pre">lr_get_XXX()</span></code> functions instead of being completely silenced.</p></li>
+<li><p>IRR8 (irradiance files produced by AvaSoft 8) are now explicitly supported by
+<code class="docutils literal notranslate"><span class="pre">lr_get_spec()</span></code>. An alias has been added for the low-level parser:
+<code class="docutils literal notranslate"><span class="pre">lr_parse_irr8()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-6-2">
+<h1>lightr 1.6.2<a class="headerlink" href="#lightr-1-6-2" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>Minor changes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fix failing tests on CRAN due to unattached dependency</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-6-1">
+<h1>lightr 1.6.1<a class="headerlink" href="#lightr-1-6-1" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>Minor changes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fix failing tests on CRAN caused by non UTF-8 files</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-6-0">
+<h1>lightr 1.6.0<a class="headerlink" href="#lightr-1-6-0" title="Link to this heading">#</a></h1>
+<section id="major-breaking-changes">
+<h2>Major breaking changes<a class="headerlink" href="#major-breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The date returned in metadata (by <code class="docutils literal notranslate"><span class="pre">lr_get_metadata()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">lr_convert_tocsv(metadata</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> and <code class="docutils literal notranslate"><span class="pre">lr_parse_XXXX()</span></code>) is now a datetime
+(with UTC as timezone and format <code class="docutils literal notranslate"><span class="pre">%Y-%m-%d</span> <span class="pre">%H:%M:%S</span></code>).
+The column name in <code class="docutils literal notranslate"><span class="pre">lr_get_metadata()</span></code> has been updated from <code class="docutils literal notranslate"><span class="pre">date</span></code> to
+<code class="docutils literal notranslate"><span class="pre">datetime</span></code> to reflect this. Thanks to Giancarlo Chiarenza for the report, and
+to Hao Ye, Laura DeCicco and Elin Waring for helpful comments about timezones
+and datetime formatting for reproducibility.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Minor changes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>datetime parsing is supported for more formats</p></li>
+<li><p>Files produced by OceanInsight software (such as SpectraSuite) in Spanish
+can now be parsed)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-5-0">
+<h1>lightr 1.5.0<a class="headerlink" href="#lightr-1-5-0" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>Major breaking changes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">cores</span></code> argument in <code class="docutils literal notranslate"><span class="pre">lr_get_spec()</span></code>, <code class="docutils literal notranslate"><span class="pre">lr_get_metadata()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">lr_convert_tocsv()</span></code> has been completely removed. It was already deprecated
+since lightr 1.0 (released on CRAN on 2020-01-27)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_convert_tocsv()</span></code> gains a new <code class="docutils literal notranslate"><span class="pre">metadata</span></code> argument (defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>) to
+determine if metadata should be exported in a csv file as well alongside the
+spectral data.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-4">
+<h1>lightr 1.4<a class="headerlink" href="#lightr-1-4" title="Link to this heading">#</a></h1>
+<section id="minor-changes-and-bug-fixes">
+<h2>Minor changes and bug fixes<a class="headerlink" href="#minor-changes-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Output of the low-level parsers <code class="docutils literal notranslate"><span class="pre">lr_parse_XXXX()</span></code> is now a named list with
+elements <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">metadata</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_parse_raw8()</span></code> and <code class="docutils literal notranslate"><span class="pre">lr_parse_rfl8()</span></code> now explicitly mention the number
+of spectra in the warnings instead of the generic “multiple spectra”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_parse_generic()</span></code> now makes sure that the data is ordered by increasing
+wavelengths, which fixes a bug reported by &#64;itamshab</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-3">
+<h1>lightr 1.3<a class="headerlink" href="#lightr-1-3" title="Link to this heading">#</a></h1>
+<section id="id7">
+<h2>Minor changes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>(mostly internal) <code class="docutils literal notranslate"><span class="pre">compute_processed()</span></code> function is now named
+<code class="docutils literal notranslate"><span class="pre">lr_compute_processed()</span></code></p></li>
+<li><p>disable hash tests on Solaris (the output is still checked by other tests)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-2">
+<h1>lightr 1.2<a class="headerlink" href="#lightr-1-2" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>Minor changes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed tests on platform with no long-doubles (‘noLD’)</p></li>
+<li><p>restored tests on 32bits machines</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spec_ID</span></code> extraction from Avantes exported files (<code class="docutils literal notranslate"><span class="pre">ttt</span></code> and <code class="docutils literal notranslate"><span class="pre">trt</span></code>) is now
+more robust, meaning it should work for more files.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-1">
+<h1>lightr 1.1<a class="headerlink" href="#lightr-1-1" title="Link to this heading">#</a></h1>
+<section id="new-features-and-major-changes">
+<h2>New features and major changes<a class="headerlink" href="#new-features-and-major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code> column in metadata is now always formatted as ISO 8601.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lightr</span></code> can now import AvaSoft8 files (test files provided by M.D. Shawkey
+and L. Swierk), via the functions <code class="docutils literal notranslate"><span class="pre">lr_parse_rfl8()</span></code>/<code class="docutils literal notranslate"><span class="pre">lr_parse_raw8()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lightr</span></code> can correctly imports <code class="docutils literal notranslate"><span class="pre">TRM</span></code> files from AvaSoft 6.0 (previously it
+only supported files from AvaSoft 7.0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lightr</span></code> can now import binary <code class="docutils literal notranslate"><span class="pre">.spc</span></code> files (via the <code class="docutils literal notranslate"><span class="pre">lr_parse_spc()</span></code> parser).
+This format is used by OceanInsight and CRAIC.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>Minor changes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>new test suite on a different locale (in this case <code class="docutils literal notranslate"><span class="pre">fr_FR.UTF-8</span></code>) to ensure
+parsing is locale-independent.</p></li>
+<li><p>warnings on CRAN build system for platforms that don’t support markdown 2
+have been fixed.</p></li>
+<li><p>new, stricter tests for various file formats.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jdx</span></code> files saved in a locale that uses <code class="docutils literal notranslate"><span class="pre">,</span></code> as the decimal separator are now
+parsed correctly.</p></li>
+<li><p>Avantes exported files in non-English locales (<code class="docutils literal notranslate"><span class="pre">ttt</span></code> and <code class="docutils literal notranslate"><span class="pre">trt</span></code> files) are now
+parsed correctly again (this was a regression compared to pavo’s
+<code class="docutils literal notranslate"><span class="pre">pavo::getspec()</span></code>). Thanks to A. Fargevieille for reporting the issue and
+providing a test file.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-1-0">
+<h1>lightr 1.0<a class="headerlink" href="#lightr-1-0" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>New features and major changes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>parallel processing now relies on the <code class="docutils literal notranslate"><span class="pre">future</span></code> package, which offers windows
+and high performance computing (HPC) environments support. The progress bar is
+produced by the <code class="docutils literal notranslate"><span class="pre">progressr</span></code> package and can be customised as well.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_parse_generic()</span></code> (and thus <code class="docutils literal notranslate"><span class="pre">lr_get_spec()</span></code>) now works with non-UTF8 files
+(this was a regression compared to pavo’s <code class="docutils literal notranslate"><span class="pre">pavo::getspec()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr_get_spec()</span></code> now has a new <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> argument to determine whether you
+want your data interpolated and pruned at every nm or not.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>Minor changes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">readBin()</span></code> (in the binary Avantes parser) now has an explicit <code class="docutils literal notranslate"><span class="pre">endian</span></code> value,
+making this package portable to platform that use big endians.</p></li>
+<li><p>documentation has been updated to follow the rebranding of OceanOptics into
+OceanInsight.</p></li>
+<li><p>vignette chunks that use <code class="docutils literal notranslate"><span class="pre">pavo</span></code> now only run if the package is available.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">savetime</span></code> field is now extracted from converted avantes files (when
+available).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lightr-0-1">
+<h1>lightr 0.1<a class="headerlink" href="#lightr-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>First release.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\lightr"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">lightr 1.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-7-1">lightr 1.7.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-changes">Internal changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-7-0">lightr 1.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-2">lightr 1.6.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-1">lightr 1.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-6-0">lightr 1.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-breaking-changes">Major breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-5-0">lightr 1.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Major breaking changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-4">lightr 1.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes-and-bug-fixes">Minor changes and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-3">lightr 1.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-2">lightr 1.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-1">lightr 1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-major-changes">New features and major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-1-0">lightr 1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New features and major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Minor changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lightr-0-1">lightr 0.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

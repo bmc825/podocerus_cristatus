@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>fontawesome 0.5.3 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/fontawesome/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/fontawesome/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>fontawesome 0.5.3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">fontawesome 0.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-2">fontawesome 0.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-1">fontawesome 0.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-0">fontawesome 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-4-0">fontawesome 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-3-0">fontawesome 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-2">fontawesome 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-1">fontawesome 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-0">fontawesome 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-1-0">fontawesome 0.1.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-5-3">
+<h1>fontawesome 0.5.3<a class="headerlink" href="#fontawesome-0-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated icon set to that of Font Awesome 6.5.2. (#119)</p></li>
+<li><p>Added page on pkgdown site that contains a table showing all of the icons available in the package. (#113)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">fa()</span></code> function now allows percentage values to be used as <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">width</span></code> args (#117). (#125)</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">fa_i()</span></code>, the <code class="docutils literal notranslate"><span class="pre">class</span></code> value is appended when a fully-qualified <code class="docutils literal notranslate"><span class="pre">name</span></code> is used (#122. (#123, thanks &#64;averissimo!)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-5-2">
+<h1>fontawesome 0.5.2<a class="headerlink" href="#fontawesome-0-5-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated icon set to that of Font Awesome 6.4.2. (#111)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-5-1">
+<h1>fontawesome 0.5.1<a class="headerlink" href="#fontawesome-0-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated icon set to that of Font Awesome 6.4.0. (#109)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-5-0">
+<h1>fontawesome 0.5.0<a class="headerlink" href="#fontawesome-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated icon set to that of Font Awesome 6.2.1. (#102)</p></li>
+<li><p>Closed #101: added the <code class="docutils literal notranslate"><span class="pre">vertical_align</span></code> argument <code class="docutils literal notranslate"><span class="pre">fa()</span></code> to control vertical alignment of icons. (#103)</p></li>
+<li><p>Closed #99 and #100: reinstated missing ‘.woff2’ files. (#102)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-4-0">
+<h1>fontawesome 0.4.0<a class="headerlink" href="#fontawesome-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated icon set to that of Font Awesome 6.2.0. (#96)</p></li>
+<li><p>It’s now possible to reference icons by several of their previous names. For example the old icon names <code class="docutils literal notranslate"><span class="pre">&quot;contact-card&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;vcard&quot;</span></code> will map to the current name of <code class="docutils literal notranslate"><span class="pre">&quot;address-card&quot;</span></code>. (#96)</p></li>
+<li><p>There is now a <code class="docutils literal notranslate"><span class="pre">prefer_type</span></code> argument (default: <code class="docutils literal notranslate"><span class="pre">&quot;regular&quot;</span></code>) that allows you to register a choice between a solid- or regular-type icon should both be available for a specific short name. (#96)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-3-0">
+<h1>fontawesome 0.3.0<a class="headerlink" href="#fontawesome-0-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #80: Updated icon set to that of Font Awesome 6.1. (#85)</p></li>
+<li><p>Closed #68: full icon names (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;fab</span> <span class="pre">fa-r-project&quot;</span></code>) are now properly parsed and verified in the <code class="docutils literal notranslate"><span class="pre">fa_i()</span></code> function. (#77)</p></li>
+<li><p>Closed #66 and #73: CSS length values (supplied to the <code class="docutils literal notranslate"><span class="pre">height</span></code> or <code class="docutils literal notranslate"><span class="pre">width</span></code> options of the <code class="docutils literal notranslate"><span class="pre">fa()</span></code> function) are now correctly handled when they contain decimals. (#74)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-2-2">
+<h1>fontawesome 0.2.2<a class="headerlink" href="#fontawesome-0-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>.ttf font files (and associated CSS) have been added back to the pared down selection of included webfonts (includes .woff and .ttf); this was to re-enable compatibility with the webshot package in Windows. (#61)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-2-1">
+<h1>fontawesome 0.2.1<a class="headerlink" href="#fontawesome-0-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #53: The <code class="docutils literal notranslate"><span class="pre">margin_right</span></code> argument of <code class="docutils literal notranslate"><span class="pre">fa()</span></code> is now functional, defaulting to the <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> margin; a <code class="docutils literal notranslate"><span class="pre">margin_left</span></code> argument was also added with the same default. (#54)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&quot;desc&quot;</span></code> option in <code class="docutils literal notranslate"><span class="pre">fa()</span></code>’s <code class="docutils literal notranslate"><span class="pre">a11y</span></code> argument is now changed to <code class="docutils literal notranslate"><span class="pre">&quot;deco&quot;</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-2-0">
+<h1>fontawesome 0.2.0<a class="headerlink" href="#fontawesome-0-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Closed #42: Support for additional R Markdown output formats with <code class="docutils literal notranslate"><span class="pre">fa()</span></code>: <code class="docutils literal notranslate"><span class="pre">pdf_document</span></code>, <code class="docutils literal notranslate"><span class="pre">word_document</span></code>, <code class="docutils literal notranslate"><span class="pre">github_document</span></code>, <code class="docutils literal notranslate"><span class="pre">slidy_presentation</span></code>, <code class="docutils literal notranslate"><span class="pre">beamer_presentation</span></code>, and <code class="docutils literal notranslate"><span class="pre">ioslides_presentation</span></code>. (#43)</p></li>
+<li><p>Closed #38: Add accessibility features to SVG icons produced by <code class="docutils literal notranslate"><span class="pre">fa()</span></code> with its new <code class="docutils literal notranslate"><span class="pre">a11y</span></code> argument. (#41)</p></li>
+<li><p>Fixes a rendering issue with SVG icons in IE11. (#40)</p></li>
+<li><p>Tooltips can be added to SVG icons prepared by <code class="docutils literal notranslate"><span class="pre">fa()</span></code> by using the new <code class="docutils literal notranslate"><span class="pre">title</span></code> argument.</p></li>
+<li><p>Closed #44: The collection of font files that support the use of <code class="docutils literal notranslate"><span class="pre">fa_i()</span></code> has been trimmed down to just the ‘.woff’ variety. (#45)</p></li>
+<li><p>Closed #32, #33: Package dependencies have been greatly reduced. (#35)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fontawesome-0-1-0">
+<h1>fontawesome 0.1.0<a class="headerlink" href="#fontawesome-0-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added functions <code class="docutils literal notranslate"><span class="pre">fa()</span></code>, <code class="docutils literal notranslate"><span class="pre">fa_i()</span></code>, and <code class="docutils literal notranslate"><span class="pre">fa_png()</span></code> for preparing Font Awesome icons in three ways.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\fontawesome"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">fontawesome 0.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-2">fontawesome 0.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-1">fontawesome 0.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-5-0">fontawesome 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-4-0">fontawesome 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-3-0">fontawesome 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-2">fontawesome 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-1">fontawesome 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-2-0">fontawesome 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#fontawesome-0-1-0">fontawesome 0.1.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

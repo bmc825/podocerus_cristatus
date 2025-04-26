@@ -1,0 +1,977 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>kableExtra 1.4.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/kableExtra/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/kableExtra/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>kableExtra 1.4.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">kableExtra 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-3-1-1-3-3-1-3-4">kableExtra 1.3.1, 1.3.3, 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-3-0">kableExtra 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#major-change">Major Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-2-1">kableExtra 1.2.1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Major Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-change">Minor Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fix">Bug Fix</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-1-0">kableExtra 1.1.0</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-0-1">kableExtra 1.0.1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-0-0">kableExtra 1.0.0</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Major Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features">Minor Features</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-9-0">kableExtra 0.9.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-8-0">kableExtra 0.8.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-7-0">kableExtra 0.7.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-6-1">kableExtra 0.6.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-6-0">kableExtra 0.6.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-2">kableExtra 0.5.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-1">kableExtra 0.5.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-0-a-big-latex-update">kableExtra 0.5.0 (a big LaTeX update)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-4-0">kableExtra 0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-3-0">kableExtra 0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-2-1">kableExtra 0.2.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-2-0">kableExtra 0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-1-0">kableExtra 0.1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="kableextra-1-4-0">
+<h1>kableExtra 1.4.0<a class="headerlink" href="#kableextra-1-4-0" title="Link to this heading">#</a></h1>
+<p>New Features:</p>
+<ul class="simple">
+<li><p>Added live preview of inline plots (#777).</p></li>
+<li><p>Add feature to scale_up and scale_down latex tables (#753)</p></li>
+<li><p>Added row grouping feature with <code class="docutils literal notranslate"><span class="pre">row_group_label_position</span> <span class="pre">=</span> <span class="pre">first</span></code> option (#711).</p></li>
+<li><p>Expanded the functionality of <code class="docutils literal notranslate"><span class="pre">spec_color</span></code> to allow arbitrary palettes.</p></li>
+<li><p>Removed dependency on <code class="docutils literal notranslate"><span class="pre">rvest</span></code> and <code class="docutils literal notranslate"><span class="pre">glue</span></code></p></li>
+<li><p>In previous versions, kableExtra manipulated knitr’s global settings to auto
+format tables. In 1.4.0, we introduced a markdown table parser, which will
+parse the inputting markdown table back to a dataframe and resend it to the
+kbl function. In this way, all the auto formatting happens within this
+package. In terms of latex table specifically, we also turned on booktabs and
+longtable by default to mimic the default behavior of how pandoc handle
+markdown tables. As a result, most users won’t even feel the change. The only
+part that gets impacted is the table labels or references set within the kable
+function through the label option. For this part, first, people can set labels
+using knitr chunk options. Also, people can easily overcome it by either using
+kbl or setting format in kable.</p></li>
+<li><p>Added line_col to spec_pointrange()</p></li>
+</ul>
+<p>Improvements:</p>
+<ul class="simple">
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">kbl()</span></code> parameters to match current <code class="docutils literal notranslate"><span class="pre">knitr</span></code> version 1.45 (#784).</p></li>
+<li><p>Adjusted placement of collapsed row labels to account for <code class="docutils literal notranslate"><span class="pre">cmidrules</span></code> within a
+section (#787).</p></li>
+<li><p>Enhanced footnote examples and fixed footnote label when notation is “none” in
+“pipe” output (#792).</p></li>
+<li><p>Enhanced text input for <code class="docutils literal notranslate"><span class="pre">font_size</span></code> for better customization (#576).</p></li>
+</ul>
+<p>Bug Fixes:</p>
+<ul class="simple">
+<li><p>Fixed a bug in current <code class="docutils literal notranslate"><span class="pre">column_spec</span></code> that prevents finding the correct rows
+(#791).</p></li>
+<li><p>Resolved centering issue of three-part tables (#789).</p></li>
+<li><p>Corrected behavior of special characters in captions (#788).</p></li>
+<li><p>Fixed obscure but legal case with YAML in multi-output context (#781).</p></li>
+<li><p>Addressed issue with blank table in Rmarkdown inline rendering with
+dark-themed Rstudio (#689).</p></li>
+<li><p>Fixed output type detection in <code class="docutils literal notranslate"><span class="pre">.onLoad</span></code> and handled HTML <code class="docutils literal notranslate"><span class="pre">kable</span></code> object
+including extra stuff, like a style block.</p></li>
+<li><p>Fixed minor spelling errors and typos in various places (#779, #709, #710, #676).</p></li>
+<li><p>Resolved issue with <code class="docutils literal notranslate"><span class="pre">auto_format</span></code> default setting (#749).</p></li>
+<li><p>Some table additions didn’t work with custom rule
+widths (#806).</p></li>
+</ul>
+<p>Documentation and Maintenance:</p>
+<ul class="simple">
+<li><p>Documented special cases and added heads-up about typo in <code class="docutils literal notranslate"><span class="pre">linebreak.R</span></code> (#679).</p></li>
+<li><p>Added Github action to run R CMD check, necessitating <code class="docutils literal notranslate"><span class="pre">pdflatex</span></code> and vignette
+compaction (#780).</p></li>
+<li><p>Defaulted to <code class="docutils literal notranslate"><span class="pre">booktabs=TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">longtable=TRUE</span></code> when converting a pipe table (#778).</p></li>
+<li><p>Declared LaTeX packages with each <code class="docutils literal notranslate"><span class="pre">kbl()</span></code> call and exported
+<code class="docutils literal notranslate"><span class="pre">use_latex_packages()</span></code> for user flexibility (#782).</p></li>
+</ul>
+<p>Misc:</p>
+<ul class="simple">
+<li><p>Converted CSS colors like “darkgoldenrod2” to rgba() form for better
+compatibility (#785).</p></li>
+<li><p>Made various minor changes and namespace qualifications for improved
+functionality.</p></li>
+<li><p>Merged various pull requests improving codebase and resolving issues (#800,
+#799, #797, #798, #794, #793, #768, #632, #628, etc.).</p></li>
+</ul>
+</section>
+<section id="kableextra-1-3-1-1-3-3-1-3-4">
+<h1>kableExtra 1.3.1, 1.3.3, 1.3.4<a class="headerlink" href="#kableextra-1-3-1-1-3-3-1-3-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fixes</p></li>
+</ul>
+</section>
+<section id="kableextra-1-3-0">
+<h1>kableExtra 1.3.0<a class="headerlink" href="#kableextra-1-3-0" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="major-change">
+<h1>Major Change<a class="headerlink" href="#major-change" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">header_separate</span></code> function that simplifies the workflow of adding
+header rows to grouped data. For example, if the original dataframe has columns
+in the form of “var”, “a_mean”, “a_sd”, “b_mean” and “b_sd”, this
+<code class="docutils literal notranslate"><span class="pre">header_separate</span></code> will change the column names of the 1st row to be “var”,
+“mean”, “sd”, “mean” and “sd” and add an additional row with group a and b
+there.</p></li>
+<li><p>&#64;r2evans significanntly improved the previous spec_** functions to generate
+mini plots. He also added a more general <code class="docutils literal notranslate"><span class="pre">spec_plot</span></code> function to use the base R general plot function (scatter, line / polygon).</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">spec_pointrange</span></code> function for forest-plot like figures.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bug-fixes">
+<h1>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Quite a lot. Somehow I forgot to document these changes this round…</p></li>
+</ul>
+<section id="kableextra-1-2-1">
+<h2>kableExtra 1.2.1<a class="headerlink" href="#kableextra-1-2-1" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Major Change<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">kable</span></code> function as a wrapper of the original <code class="docutils literal notranslate"><span class="pre">kable</span></code> but provides better documentation and auto-complete. We also moved the automatic format
+setup piece into the <code class="docutils literal notranslate"><span class="pre">kable</span></code> function call instead of changing global option
+during package start-up.</p></li>
+<li><p>Added a few alternative HTML table themes. See <a class="reference external" href="https://haozhu233.github.io/kableExtra/awesome_table_in_html.html#Alternative_themes">https://haozhu233.github.io/kableExtra/awesome_table_in_html.html#Alternative_themes</a>. (#451)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">column_spec</span></code> now takes vectorized input so it’s easier to do conditional
+formatting without using <code class="docutils literal notranslate"><span class="pre">cell_spec</span></code>.</p></li>
+<li><p>Added tools to include images and inline plots in <code class="docutils literal notranslate"><span class="pre">column_spec</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="minor-change">
+<h1>Minor Change<a class="headerlink" href="#minor-change" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add_indent</span></code> has a new option <code class="docutils literal notranslate"><span class="pre">level_of_indent</span></code> to control the width of the
+indentation. (thanks &#64;samiaab1990 #479)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_indent</span></code> has a new option <code class="docutils literal notranslate"><span class="pre">all_cols</span></code> to control whether the indentation
+should be applied to the first column or all columns. Default is False. (#488)</p></li>
+<li><p>Removed xcolor from latex dependency list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> has a new option <code class="docutils literal notranslate"><span class="pre">target</span></code> to choose the target column in
+<code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> (#484)</p></li>
+<li><p>Added mathjax to HTML preview (#473)</p></li>
+<li><p>Added a new function <code class="docutils literal notranslate"><span class="pre">remove_column</span></code> for html. The latex part hasn’t been
+implemented yet. (#490, thanks &#64;DanChaltiel)</p></li>
+<li><p>Added a global option to control whether to preview HTML tables in RStudio
+viewer. If you want to disable the default behavior, try to set
+<code class="docutils literal notranslate"><span class="pre">options(kableExtra_view_html</span> <span class="pre">=</span> <span class="pre">F)</span></code>. (#455)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">new_tab</span></code> option to <code class="docutils literal notranslate"><span class="pre">cell_spec</span></code> to control whether to open up links
+in new tab. (#454)</p></li>
+<li><p>Improved the behavior of <code class="docutils literal notranslate"><span class="pre">scroll_box</span></code> so it will skip non-html tables. (#450)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">html_font</span></code> option to <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code> and its variants.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">wraptable_width</span></code> to <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code> (#414)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">monospace</span></code>, <code class="docutils literal notranslate"><span class="pre">underline</span></code>, <code class="docutils literal notranslate"><span class="pre">strikeout</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code> and <code class="docutils literal notranslate"><span class="pre">background</span></code> to
+<code class="docutils literal notranslate"><span class="pre">pack_rows()</span></code>. (#412)</p></li>
+<li><p>Added documentation for how to use <code class="docutils literal notranslate"><span class="pre">sparkline</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bug-fix">
+<h1>Bug Fix<a class="headerlink" href="#bug-fix" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">group_rows</span></code> when used with <code class="docutils literal notranslate"><span class="pre">repeat_header</span></code> on the last row
+(#476)</p></li>
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">repeat_header</span></code> when the header row is customized (#480)</p></li>
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> when text is too long. (#464)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_header_above</span></code> now can take a data.frame as input. (#440, thanks &#64;jokorn)</p></li>
+<li><p>Fixed a bug when using UTF-8 on non-UTF-8 system. (#440, thanks &#64;jokorn)</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> when there is no column names (#459)</p></li>
+<li><p>Fixed a bug for <code class="docutils literal notranslate"><span class="pre">add_header_rows</span></code> when there isn’t thead in HTML (#246, #423,
+thanks &#64;kbrevoort)</p></li>
+<li><p>Fixed inconsistent behavior for <code class="docutils literal notranslate"><span class="pre">add_header_rows</span></code> in HTML and latex (#387,
+#422, thanks &#64;kbrevoort)</p></li>
+<li><p>Fixed a bug for <code class="docutils literal notranslate"><span class="pre">group_rows</span></code> for longtable with repeated_header but without
+booktabs. (#331)</p></li>
+<li><p>Fixed a bug for <code class="docutils literal notranslate"><span class="pre">group_rows</span></code> with certain duplicated rows input
+(#303, #304, thanks &#64;tomjemmett)</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">include_empty</span></code> option in <code class="docutils literal notranslate"><span class="pre">add_header_above</span></code>. (#367, #393, thanks
+&#64;trianglegirl)</p></li>
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">pack_rows</span></code> when escape is <code class="docutils literal notranslate"><span class="pre">F</span></code>. (#396)</p></li>
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> when used together with <code class="docutils literal notranslate"><span class="pre">pack_rows</span></code>. (#430)</p></li>
+<li><p>Fixed a bug with <code class="docutils literal notranslate"><span class="pre">pack_rows</span></code> when longtable is enabled. (#410)</p></li>
+</ul>
+<section id="kableextra-1-1-0">
+<h2>kableExtra 1.1.0<a class="headerlink" href="#kableextra-1-1-0" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="major-changes">
+<h1>Major Changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pack_rows</span></code> was added as an alias to <code class="docutils literal notranslate"><span class="pre">group_rows</span></code> and is now the preferred
+term for this feature as <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> 0.8.0 instroduced a function with the same
+name.</p></li>
+<li><p>HTML Font and Background Colors now gets a “!important” tag so they can be
+printed out under bootstrap</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="minor-changes">
+<h1>Minor Changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">fixed_header</span></code> option to <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code>. (Similar with the same option in <code class="docutils literal notranslate"><span class="pre">scroll_box</span></code>)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Bug Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>LaTeX packages now only loaded in latex environment so there won’t be
+memory leaking issues in html_notebook.</p></li>
+<li><p>Fixed an typo in stripe_index</p></li>
+</ul>
+<section id="kableextra-1-0-1">
+<h2>kableExtra 1.0.1<a class="headerlink" href="#kableextra-1-0-1" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>Bug Fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix issue where HTML results cannot be displayed inline (#330)</p></li>
+<li><p>Fix extra texts with save_kable for HTML (#310)</p></li>
+</ul>
+<section id="kableextra-1-0-0">
+<h2>kableExtra 1.0.0<a class="headerlink" href="#kableextra-1-0-0" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>Major Changes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">save_table</span></code> will be able to save HTML tables to png, jpg and PDF using
+webshot automatically.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">xcolor</span></code> dependency for recent updates in fancyvrb, which causes a
+<code class="docutils literal notranslate"><span class="pre">xcolor</span></code> option clash.</p></li>
+<li><p>Added formatting options to <code class="docutils literal notranslate"><span class="pre">add_header_above</span></code>.</p></li>
+<li><p>Exported <code class="docutils literal notranslate"><span class="pre">kable_as_xml</span></code> and <code class="docutils literal notranslate"><span class="pre">xml_as_kable</span></code>.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">xtable2kable</span></code> function to support most xtable output.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="minor-features">
+<h1>Minor Features<a class="headerlink" href="#minor-features" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added symbol_manual to footnote so that users can manually customize the
+sequence of symbols in footnote.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>Bug Fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed an issue that prevents linebreak works with factor</p></li>
+<li><p>Moved a lot LaTeX function options to the top level for easier selection.</p></li>
+<li><p>…</p></li>
+</ul>
+<section id="kableextra-0-9-0">
+<h2>kableExtra 0.9.0<a class="headerlink" href="#kableextra-0-9-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Major Change: Now when you load <code class="docutils literal notranslate"><span class="pre">kableExtra</span></code> package, it will automatically
+set format for <code class="docutils literal notranslate"><span class="pre">kable()</span></code> based on the working environment: only if you are using
+R Markdown or R Sweave to render PDFs, the default format will be set to “latex”.
+Otherwise it will be set to “html”.</p></li>
+<li><p>Major Change: Now <code class="docutils literal notranslate"><span class="pre">kableExtra</span></code> will try to load the table section of the
+bootstrap stylesheet when you are rendering slidy_presentation &amp;
+ioslides_presentation. You can also choose to load it manually via the
+global option <code class="docutils literal notranslate"><span class="pre">kableExtra.html.bsTable</span></code>.</p></li>
+<li><p>Added support to the <code class="docutils literal notranslate"><span class="pre">tables</span></code> package. (Thank you &#64;dmurdoch)</p></li>
+<li><p>Added a save_kable function to save HTML table as independent HTML pages.</p></li>
+<li><p>Added min_width and max_width to column_spec.</p></li>
+<li><p>Added documentation about 100% width in scroll_box (Thank you &#64;isteves!)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">include_thead</span></code> to <code class="docutils literal notranslate"><span class="pre">column_spec</span></code>. (#177)</p></li>
+<li><p>Fixed a few bugs in <code class="docutils literal notranslate"><span class="pre">linebreak</span></code> (#167, #180)</p></li>
+<li><p>Fixed a bug when there is no column header row in LaTeX (Thank you &#64;leovan)</p></li>
+<li><p>Fixed header formatting for repeated header row in latex longtable (#183)</p></li>
+<li><p>Removed the \small tag in threeparttable (#162)</p></li>
+<li><p>Added valign to collapse_rows to adjust vertical position of the contents.
+Change default setting from middle to top. (#191)</p></li>
+<li><p>Added an auto_index function to facilitate group_rows. (#193)</p></li>
+<li><p>Added a title_format option to footnote and changed default format from
+bold to italic. (#200)</p></li>
+</ul>
+</section>
+<section id="kableextra-0-8-0">
+<h2>kableExtra 0.8.0<a class="headerlink" href="#kableextra-0-8-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now kableExtra imports &amp; exports knitr::kable so users don’t need to load knitr entirely to NAMESPACE when it’s not necessary, for example, in shiny.</p></li>
+<li><p>Fixed #115, a bug in latex footnote about escaping.</p></li>
+<li><p>Fixed #116, a bug about the position of footnote in longtable with booktabs</p></li>
+<li><p>Fixed #119, a bug between collapse_rows and add_header_above</p></li>
+<li><p>Improve footnotes in longtable and replace threeparttable with threeparttablex. Now footnotes works smoothly in longtable, even with full width in tabu.</p></li>
+<li><p>Fixed #135, a bug in footnote_marker_symbol</p></li>
+<li><p>Added a new layout for collapse_rows, thanks &#64;georgegui! #159</p></li>
+<li><p>Added the linebreak function to support adding linebreaks to LaTeX table.</p></li>
+<li><p>Added internal support to convert \n to linebreak in table to all kableExtra functions for both LaTeX and HTML</p></li>
+<li><p>Added a document about wrapping texts and adding linebreaks.</p></li>
+<li><p>Fixed a bug related to the handling of special characters</p></li>
+<li><p>Remove HTML to Word doc from vignette because it’s too large.</p></li>
+<li><p>Fixed varies other bugs.</p></li>
+</ul>
+</section>
+<section id="kableextra-0-7-0">
+<h2>kableExtra 0.7.0<a class="headerlink" href="#kableextra-0-7-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now HTML table will be previewed in Viewer panel</p></li>
+<li><p>Added HTML color code support to kableExtra</p></li>
+<li><p>Added footnote as a more flexible replacement for add_footnote. <code class="docutils literal notranslate"><span class="pre">Add_footnote()</span></code> will be kept maintained for a while.</p></li>
+<li><p>Fixed bug #105: bold/italic/monospace cannot accept T/F as vector</p></li>
+<li><p>Added extra_css to cell_spec, row_spec &amp; column_spec</p></li>
+<li><p>Fixed bug #88: add_footnote doesn’t support full width</p></li>
+<li><p>Added hline_after and extra_latex_after to row_spec #101</p></li>
+<li><p>Improved warning message for kables not in <code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">latex</span></code></p></li>
+<li><p>Added latex_hline to collapse_rows so users can choose from full, major or none</p></li>
+<li><p>Added strikeout and underline to column_spec, row_spec and cell_spec.</p></li>
+<li><p>Added extra_css to column_spec, row_spec and cell_spec.</p></li>
+<li><p>Added a vignette about how to copy tables from HTML to Word.</p></li>
+<li><p>Change some read_xml to read_html</p></li>
+<li><p>Added scale_from to some spec_tools</p></li>
+<li><p>Quite a few minor bug fixes</p></li>
+</ul>
+</section>
+<section id="kableextra-0-6-1">
+<h2>kableExtra 0.6.1<a class="headerlink" href="#kableextra-0-6-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug in column_spec width introduced in ver 0.6.0</p></li>
+<li><p>Fixed a bug in add_header_above. #90</p></li>
+</ul>
+</section>
+<section id="kableextra-0-6-0">
+<h2>kableExtra 0.6.0<a class="headerlink" href="#kableextra-0-6-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added cell_spec for HTML &amp; LaTeX</p></li>
+<li><p>Added helper functions including spec_color, spec_font_size, spec_angle,
+spec_tooltip &amp; spec_popover to facilitate the cell_spec function.</p></li>
+<li><p>Added align/rotate/font_size to row_spec</p></li>
+<li><p>Allowed row_spec to modify header row with row_spec(0, …)</p></li>
+<li><p>Improved <code class="docutils literal notranslate"><span class="pre">repeat_header</span></code> in LaTeX for longtables. Now you can write texts like
+“continued on next page”</p></li>
+<li><p>Fixed a critical bug with latex group_rows (#68)</p></li>
+<li><p>Escape question mark ? in regex_escape (thanks &#64;nichtleiter)</p></li>
+<li><p>Switched from readr::write_file to base::writeLines (for support in earlier
+version of readr)</p></li>
+<li><p>Switched from sub to str_replace in some places due to a bug in sub on
+Windows.</p></li>
+</ul>
+</section>
+<section id="kableextra-0-5-2">
+<h2>kableExtra 0.5.2<a class="headerlink" href="#kableextra-0-5-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Request from CRAN: Changed dependency on <code class="docutils literal notranslate"><span class="pre">magick</span></code> from Imports to Suggest.
+Added error message when users don’t have magick installed.</p></li>
+<li><p>Added argument <code class="docutils literal notranslate"><span class="pre">index</span></code> to <code class="docutils literal notranslate"><span class="pre">group_rows</span></code> so users can build multiple row groups
+in one step. The syntax is the same with <code class="docutils literal notranslate"><span class="pre">add_header_above</span></code></p></li>
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">row_spec</span></code> and <code class="docutils literal notranslate"><span class="pre">column_spec</span></code> can take vectors so users can customized
+multiple row/columns at the same time.</p></li>
+<li><p>Fixed a bug for <code class="docutils literal notranslate"><span class="pre">kable_as_image</span></code> on Windows. Improved documentations and
+error messages.</p></li>
+</ul>
+</section>
+<section id="kableextra-0-5-1">
+<h2>kableExtra 0.5.1<a class="headerlink" href="#kableextra-0-5-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added documentations about those color/background color options in column_spec
+and row_spec</p></li>
+<li><p>Added the kableExtra_latex_packages function to quickly print all necessary
+LaTeX packages on the screen.</p></li>
+<li><p>Hot fix a bug in full_width in LaTeX</p></li>
+</ul>
+</section>
+<section id="kableextra-0-5-0-a-big-latex-update">
+<h2>kableExtra 0.5.0 (a big LaTeX update)<a class="headerlink" href="#kableextra-0-5-0-a-big-latex-update" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Now column_spec &amp; row_spec can customize font &amp; cell background color with
+2 new options <code class="docutils literal notranslate"><span class="pre">color</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">background</span></code>. Also, you can draw border lines using
+<code class="docutils literal notranslate"><span class="pre">border_left</span></code> or <code class="docutils literal notranslate"><span class="pre">border_right</span></code> when you are using <code class="docutils literal notranslate"><span class="pre">column_spec</span></code>.</p></li>
+<li><p>Making it optional to pre-load LaTeX package on package startup</p></li>
+<li><p>Adding documentations about dependencies on LaTeX packages and the auto-load
+behavior of kableExtra</p></li>
+<li><p>Improved the look of full_width in kable_styling LaTeX and add tabu to LaTeX
+dependency</p></li>
+<li><p>Added enc2utf8() to improve behavior in non-UTF8 machines.</p></li>
+<li><p>Added HOLD_position, which uses LaTeX package <code class="docutils literal notranslate"><span class="pre">float</span></code> and H, for a stronger
+hold on table position. (Thanks &#64;robshep)</p></li>
+<li><p>Move conditional usepackage_latex() calls to zzz.R for more consistant
+behavior</p></li>
+<li><p>Now you can change strip color for LaTeX tables.</p></li>
+<li><p>Added support to tables with caption.short.</p></li>
+<li><p>Added kable_as_image() for LaTeX tables. This function will render the LaTeX
+code snippet to a piece of standalone PDF file and then convert that to an
+image, which will then be included in the R Markdown document, if the
+environment exists. It’s useful for people who have a strong need of
+generating Word documents and producing well-formatted LaTeX table at the same
+time.</p></li>
+<li><p>For both HTML &amp; LaTeX, added escape option for add_footnote</p></li>
+<li><p>Fixed a bug in LaTeX for the processing of the + sign</p></li>
+<li><p>Fixed a bug with the [ symbol in escape_regex</p></li>
+</ul>
+</section>
+<section id="kableextra-0-4-0">
+<h2>kableExtra 0.4.0<a class="headerlink" href="#kableextra-0-4-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add scroll_box for HTML table for extremely long/wide tables</p></li>
+<li><p>Fixed a bug in collapse_row on removing addlinespace</p></li>
+<li><p>Removed addlinespace from group_rows</p></li>
+<li><p>Added monospace to column_spec &amp; row_spec</p></li>
+<li><p>Lowered R version requirement to R 3.1.0</p></li>
+<li><p>Added testthat (#28, thank you &#64;wibeasley)</p></li>
+<li><p>For all HTML table functions, changed reading method from <code class="docutils literal notranslate"><span class="pre">xml2::read_xml</span></code> to
+<code class="docutils literal notranslate"><span class="pre">xml2::read_html</span></code> plus some extra steps to avoid errors when HTML contents
+don’t fulfill XHTML requirements (#24)</p></li>
+<li><p>For all HTML table functions, improved exportation method to remove the XML
+declaration. (Stackoverflow: <a class="reference external" href="https://stackoverflow.com/questions/45262308/knit2wp-adds-text-with-kableextra">https://stackoverflow.com/questions/45262308/knit2wp-adds-text-with-kableextra</a>)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">repeat_header_method</span></code> in kable_styling (#25)</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">position</span></code> in <code class="docutils literal notranslate"><span class="pre">kable_styling()</span></code> (<a class="reference external" href="https://stackoverflow.com/questions/45378664/kableextra-rmarkdown-tables-aligning-grouping-row-labels-and-footnotes">https://stackoverflow.com/questions/45378664/kableextra-rmarkdown-tables-aligning-grouping-row-labels-and-footnotes</a>)</p></li>
+<li><p>Improved striped line look on tables with multiple layers of header rows. (#31)</p></li>
+<li><p>Added escape to <code class="docutils literal notranslate"><span class="pre">add_header_above</span></code> and <code class="docutils literal notranslate"><span class="pre">group_rows</span></code></p></li>
+<li><p>Added PDF vignette to the CRAN vignette folder</p></li>
+</ul>
+</section>
+<section id="kableextra-0-3-0">
+<h2>kableExtra 0.3.0<a class="headerlink" href="#kableextra-0-3-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Improved the look of HTML grouped header row (again) by adding spaces between
+groups</p></li>
+<li><p>Fixed a bug in grouped header row.</p></li>
+<li><p>Fixed a bug in grouped rows: <a class="reference external" href="https://stackoverflow.com/questions/44360040/group-rows-function-in-kableextra-package-not-grouping-rows">https://stackoverflow.com/questions/44360040/group-rows-function-in-kableextra-package-not-grouping-rows</a></p></li>
+<li><p>Fixed a bug in grouped rows with ()[].</p></li>
+<li><p>Added a new LaTeX option <code class="docutils literal notranslate"><span class="pre">repeat_header</span></code> in <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code> for repeating
+header rows in a longtable environment.</p></li>
+<li><p>Fixed a bug in add_header_above to allow special symbol in extra header rows.</p></li>
+<li><p>Allow column_spec automatically align when width is specified.</p></li>
+<li><p>Added bold/italic options to add_header_above.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">collapse_rows</span></code> to collapse repeated rows to multirow cell</p></li>
+<li><p>Improve package-level documentation based on &#64;wibeasley’s suggestion</p></li>
+</ul>
+</section>
+<section id="kableextra-0-2-1">
+<h2>kableExtra 0.2.1<a class="headerlink" href="#kableextra-0-2-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">column_spec()</span></code> to customize the look of the selected column.</p></li>
+<li><p>Improved the look of HTML grouped header row.</p></li>
+<li><p>Fixed an error in a documentation.</p></li>
+</ul>
+</section>
+<section id="kableextra-0-2-0">
+<h2>kableExtra 0.2.0<a class="headerlink" href="#kableextra-0-2-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">add_indent()</span></code> feature to add indentations to rows in HTML and LaTeX.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">group_rows()</span></code> feature to group rows together in HTML and LaTeX.</p></li>
+<li><p>Changing <code class="docutils literal notranslate"><span class="pre">font_size</span></code> in <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code> won’t affect table caption any more.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">scale_down</span></code> in <code class="docutils literal notranslate"><span class="pre">kable_styling</span></code> on landscape page in LaTeX.</p></li>
+<li><p>Changed <code class="docutils literal notranslate"><span class="pre">stop</span></code> to <code class="docutils literal notranslate"><span class="pre">message</span></code> on format checking.</p></li>
+<li><p>Added an example for how to use it in Shiny.</p></li>
+<li><p>Fixed a few errors in the LaTeX vignette file.</p></li>
+</ul>
+</section>
+<section id="kableextra-0-1-0">
+<h2>kableExtra 0.1.0<a class="headerlink" href="#kableextra-0-1-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Initial Release</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\kableExtra"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">kableExtra 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-3-1-1-3-3-1-3-4">kableExtra 1.3.1, 1.3.3, 1.3.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-3-0">kableExtra 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#major-change">Major Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-2-1">kableExtra 1.2.1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Major Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-change">Minor Change</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fix">Bug Fix</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-1-0">kableExtra 1.1.0</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-0-1">kableExtra 1.0.1</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-1-0-0">kableExtra 1.0.0</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Major Changes</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features">Minor Features</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Bug Fixes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-9-0">kableExtra 0.9.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-8-0">kableExtra 0.8.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-7-0">kableExtra 0.7.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-6-1">kableExtra 0.6.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-6-0">kableExtra 0.6.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-2">kableExtra 0.5.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-1">kableExtra 0.5.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-5-0-a-big-latex-update">kableExtra 0.5.0 (a big LaTeX update)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-4-0">kableExtra 0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-3-0">kableExtra 0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-2-1">kableExtra 0.2.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-2-0">kableExtra 0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kableextra-0-1-0">kableExtra 0.1.0</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

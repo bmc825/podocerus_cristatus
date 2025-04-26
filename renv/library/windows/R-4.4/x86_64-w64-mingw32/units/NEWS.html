@@ -1,0 +1,735 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>version 0.8-5 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/units/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/units/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>version 0.8-5</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">version 0.8-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-4">version 0.8-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-3">version 0.8-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-2">version 0.8-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-1">version 0.8-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-0">version 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-2">version 0.7-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-1">version 0.7-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-0">version 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-7">version 0.6-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-6">version 0.6-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-5">version 0.6-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-4">version 0.6-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-3">version 0.6-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-2">version 0.6-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-1">version 0.6-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-0">version 0.6-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-1">version 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-0">version 0.5-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-6">version 0.4-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-5">version 0.4-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-4">version 0.4-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-3">version 0.4-3</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="version-0-8-5">
+<h1>version 0.8-5<a class="headerlink" href="#version-0-8-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>avoid -Wformat-security warning on CRAN</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-4">
+<h1>version 0.8-4<a class="headerlink" href="#version-0-8-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Identical unit division and multiplication will now respect
+<code class="docutils literal notranslate"><span class="pre">units_options(simplify</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> reverting a change from #310; #355
+&#64;billdenney</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">scale_units</span></code> when both <code class="docutils literal notranslate"><span class="pre">unit</span></code> and <code class="docutils literal notranslate"><span class="pre">trans</span></code> are specified; #357</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-3">
+<h1>version 0.8-3<a class="headerlink" href="#version-0-8-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Remove tolerance from comparisons with logical operators, restoring behavior
+changed in previous release; #353 addressing #351</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-2">
+<h1>version 0.8-2<a class="headerlink" href="#version-0-8-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Names are preserved when doing unit conversions; #305 &#64;billdenney</p></li>
+<li><p>Identical units will always divide (<code class="docutils literal notranslate"><span class="pre">/</span></code>) and allow integer division (<code class="docutils literal notranslate"><span class="pre">%/%</span></code>).
+And, inverse units will always be able to multiply; #310 &#64;billdenney</p></li>
+<li><p>Compare units via <code class="docutils literal notranslate"><span class="pre">ud_compare()</span></code>, fixing inconsistent results for aliases
+and symbols; #339, #346, #347</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">units&lt;-()</span></code> to treat an empty unit the same as <code class="docutils literal notranslate"><span class="pre">NULL</span></code>; #332</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">as.data.frame()</span></code> method for <code class="docutils literal notranslate"><span class="pre">mixed_units</span></code>; #309</p></li>
+<li><p>Use short paths for database loading on Windows to fix UTF-16 issues; #342</p></li>
+<li><p>Add example in the docs about reversing a ggplot2 units scale; #343</p></li>
+<li><p>Force storage mode to double; #344 addressing #324</p></li>
+<li><p>Fix units in transformed axis; #323</p></li>
+<li><p>Consider unitless as radians in trigonometric functions; #328</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-1">
+<h1>version 0.8-1<a class="headerlink" href="#version-0-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">%/%</span></code> and <code class="docutils literal notranslate"><span class="pre">%%</span></code> if arguments have different units; #313</p></li>
+<li><p>fix multiplier parsing for <code class="docutils literal notranslate"><span class="pre">exp(log(x))</span></code> operations; #321</p></li>
+<li><p>fix specification of secondary axes with <code class="docutils literal notranslate"><span class="pre">scale_units</span></code>; #326</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-8-0">
+<h1>version 0.8-0<a class="headerlink" href="#version-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>enhance unit mapping for newly installed units; #290</p></li>
+<li><p>remove deprecations: <code class="docutils literal notranslate"><span class="pre">install_symbolic_unit</span></code>, <code class="docutils literal notranslate"><span class="pre">remove_symbolic_unit</span></code>,
+<code class="docutils literal notranslate"><span class="pre">install_conversion_constant</span></code>, <code class="docutils literal notranslate"><span class="pre">install_conversion_offset</span></code>; #290</p></li>
+<li><p>fix multipliers for round trip log-exp operations; #292</p></li>
+<li><p>integrate <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> scales (previously in the <code class="docutils literal notranslate"><span class="pre">ggforce</span></code> package) to
+automatically print axes with units; #294 addressing #164</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">all.equal.units</span></code> for non-units <code class="docutils literal notranslate"><span class="pre">current</span></code></p></li>
+<li><p>fix zero power; #285</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">unique.units</span></code> to support arrays and matrices, implement methods for
+<code class="docutils literal notranslate"><span class="pre">duplicated</span></code> and <code class="docutils literal notranslate"><span class="pre">anyDuplicated</span></code></p></li>
+<li><p>fix plot labels with spaces; #298 addressing #297</p></li>
+<li><p>always add units to labels, including user-provided ones; as part of #298</p></li>
+<li><p>new symbols/names with a percentage character are not allowed due to an
+upstream bug; #289</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-2">
+<h1>version 0.7-2<a class="headerlink" href="#version-0-7-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>enhance <code class="docutils literal notranslate"><span class="pre">pillar</span></code> integration; #273, #275, #280 &#64;krlmlr</p></li>
+<li><p>new <code class="docutils literal notranslate"><span class="pre">unique</span></code> method for <code class="docutils literal notranslate"><span class="pre">units</span></code> and <code class="docutils literal notranslate"><span class="pre">mixed_units</span></code> objects; #283 addressing
+#277 &#64;lewinfox</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-1">
+<h1>version 0.7-1<a class="headerlink" href="#version-0-7-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>allow longer units grouping; #270 addressing #269 &#64;bart1</p></li>
+<li><p>fix regression in <code class="docutils literal notranslate"><span class="pre">set_units</span></code> method for <code class="docutils literal notranslate"><span class="pre">mixed_units</span></code> to ensure that
+ordering is preserved; #272 addressing #271</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-7-0">
+<h1>version 0.7-0<a class="headerlink" href="#version-0-7-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">load_units_xml</span></code> to enable database reloading as well as loading
+user-provided unit systems; #254 addressing #243, #244</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">install_unit</span></code> and <code class="docutils literal notranslate"><span class="pre">remove_unit</span></code> for adding/removing custom user-defined
+symbols or names, with optional mapping to existing units;
+<code class="docutils literal notranslate"><span class="pre">install_symbolic_unit</span></code>, <code class="docutils literal notranslate"><span class="pre">remove_symbolic_unit</span></code>, <code class="docutils literal notranslate"><span class="pre">install_conversion_constant</span></code>,
+<code class="docutils literal notranslate"><span class="pre">install_conversion_offset</span></code> are deprecated; #261 addressing #89</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">keep_units</span></code>, a helper to apply functions that do not preserve units;
+#255 addressing #252</p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">as_units(&quot;&quot;)</span></code>, which is now equivalent to <code class="docutils literal notranslate"><span class="pre">unitless</span></code>; #199</p></li>
+<li><p>fix plot axes for <code class="docutils literal notranslate"><span class="pre">plot.formula</span></code> and <code class="docutils literal notranslate"><span class="pre">plot.data.frame</span></code>; #213</p></li>
+<li><p>fix arithmetic for powers above 1 and below -1; #264</p></li>
+<li><p>improve arithmetic of logarithms; #249</p></li>
+<li><p>export <code class="docutils literal notranslate"><span class="pre">ud_are_convertible</span></code>; #263 addressing #258 &#64;cregouby</p></li>
+<li><p>remove deprecations: <code class="docutils literal notranslate"><span class="pre">as.units</span></code>, <code class="docutils literal notranslate"><span class="pre">as_cf</span></code>, <code class="docutils literal notranslate"><span class="pre">make_unit</span></code>, <code class="docutils literal notranslate"><span class="pre">parse_unit</span></code>; #259</p></li>
+<li><p>remove deprecated pre-computed <code class="docutils literal notranslate"><span class="pre">ud_units</span></code> database; #259</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-7">
+<h1>version 0.6-7<a class="headerlink" href="#version-0-6-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>port <code class="docutils literal notranslate"><span class="pre">isFALSE</span></code> to fix regression in old R versions; #230 addressing #229</p></li>
+<li><p>fix replacement operation for <code class="docutils literal notranslate"><span class="pre">units</span></code> objects; #233 addressing #232</p></li>
+<li><p>fix compatibility with dplyr 1.0; #247 addressing #239</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-6">
+<h1>version 0.6-6<a class="headerlink" href="#version-0-6-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>prettier <code class="docutils literal notranslate"><span class="pre">str</span></code> print for units and mixed units; #228 addressing #227</p></li>
+<li><p>add compatibility with upcoming tibble v3.0.0; #225</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-5">
+<h1>version 0.6-5<a class="headerlink" href="#version-0-6-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>skip test on CRAN to avoid issues with strict latin1 environments</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-4">
+<h1>version 0.6-4<a class="headerlink" href="#version-0-6-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix support for weights with units in <code class="docutils literal notranslate"><span class="pre">weighted.mean</span></code>; #205</p></li>
+<li><p>invalid names for new units now trigger a proper error message; #209 addressing #208</p></li>
+<li><p>fix issues in strict latin1 environments; #202</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-3">
+<h1>version 0.6-3<a class="headerlink" href="#version-0-6-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>improve platform dependent encodings handling; #183</p></li>
+<li><p>don’t force <code class="docutils literal notranslate"><span class="pre">as.numeric</span></code> when unnecessary; #182 addressing #181</p></li>
+<li><p>fix valgrind issues on CRAN and tidy up tests; #193 addressing #192</p></li>
+<li><p>new method <code class="docutils literal notranslate"><span class="pre">drop_units</span></code> for data frames; #191 addressing #187</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-2">
+<h1>version 0.6-2<a class="headerlink" href="#version-0-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix support for logarithms and decibels; #177 addressing #176</p></li>
+<li><p>add delayed S3 registration mechanism for R &gt;= 3.6.0</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-1">
+<h1>version 0.6-1<a class="headerlink" href="#version-0-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>vectors with mixed units are now supported; #145</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NA</span></code> values for units now trigger a proper error message; #163</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-6-0">
+<h1>version 0.6-0<a class="headerlink" href="#version-0-6-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>print units as [unit] more consistently, e.g. for single unit and in data.frames; #132</p></li>
+<li><p>improve printing of unitless units; provide option to print something else than 1; #150</p></li>
+<li><p>fix printing unitless in labels when <code class="docutils literal notranslate"><span class="pre">negative_power</span></code> is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>; #133</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_symbolic_unit</span></code> now adds a dimensionless unit, integrated in the units system, meaning that prefixes on it work as well; #71</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_conversion_constant</span></code> and <code class="docutils literal notranslate"><span class="pre">install_conversion_offset</span></code> now install a new unit that is a function of an existing udunits unit.; #71, #84</p></li>
+<li><p>unit simplification can now be user-controlled by <code class="docutils literal notranslate"><span class="pre">units_options</span></code>; #89</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_units(15,</span> <span class="pre">mg/kg)</span></code> is now no longer simplified to 1e-9 unitless; #89</p></li>
+<li><p>directly uses the udunits2 C library; drop dependence on R package <code class="docutils literal notranslate"><span class="pre">udunits2</span></code>, fixing R package <code class="docutils literal notranslate"><span class="pre">udunits2</span></code> memory leaks; #135</p></li>
+<li><p>drops <code class="docutils literal notranslate"><span class="pre">%*%</span></code>, no longer gives warning when loading</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-1">
+<h1>version 0.5-1<a class="headerlink" href="#version-0-5-1" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-5-0">
+<h1>version 0.5-0<a class="headerlink" href="#version-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>deal with trigonometric functions for units degree; return units rad on inverse trigonometric functions.</p></li>
+<li><p>Unit creation has been significantly refactored. <code class="docutils literal notranslate"><span class="pre">units&lt;-</span></code> now accepts strings
+or quoted language objects on the right hand side, powered by new S3 methods for
+<code class="docutils literal notranslate"><span class="pre">as_units</span></code>. All valid unit symbols and unit names recognized by package ‘udunits2’ are
+now accepted. New user facing function <code class="docutils literal notranslate"><span class="pre">make_units()</span></code> (plural s) is also
+provided. See <code class="docutils literal notranslate"><span class="pre">?as_units</span></code> for details. &#64;t-kalinowski</p></li>
+<li><p>new functions <code class="docutils literal notranslate"><span class="pre">valid_udunits()</span></code> and <code class="docutils literal notranslate"><span class="pre">valid_udunits_prefixes()</span></code> generate tidy
+dataframes listing all the valid unit names, symbols, and prefixes recognized by
+udunits. &#64;t-kalinowski</p></li>
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">install_symbolic_unit()</span></code> for adding custom, user-defined units.
+&#64;t-kalinowski</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make_unit</span></code> and <code class="docutils literal notranslate"><span class="pre">parse_unit</span></code> (singular unit) have been deprecated, please use
+<code class="docutils literal notranslate"><span class="pre">as_units</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ud_units</span></code> is no longer necessary and is soft-deprecated, and may be removed
+in a future release.</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">%*%</span></code> as an S3 generic; #54</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">%%</span></code> and <code class="docutils literal notranslate"><span class="pre">%/%</span></code> to <code class="docutils literal notranslate"><span class="pre">Ops.units</span></code></p></li>
+<li><p>support unary + and - ; #56</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">seq</span></code> method for <code class="docutils literal notranslate"><span class="pre">units</span></code>, converting units to those of the first argument</p></li>
+<li><p>Deprecate <code class="docutils literal notranslate"><span class="pre">as.dt</span></code> for <code class="docutils literal notranslate"><span class="pre">as_difftime</span></code>, <code class="docutils literal notranslate"><span class="pre">as.units</span></code> for <code class="docutils literal notranslate"><span class="pre">as_units</span></code> and <code class="docutils literal notranslate"><span class="pre">as_cf</span></code> for <code class="docutils literal notranslate"><span class="pre">deparse_unit</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-6">
+<h1>version 0.4-6<a class="headerlink" href="#version-0-4-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">all.equal</span></code> method for <code class="docutils literal notranslate"><span class="pre">units</span></code>; #51</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">deparse_unit</span></code> to replace <code class="docutils literal notranslate"><span class="pre">as_cf</span></code></p></li>
+<li><p>add calender/time conversions between <code class="docutils literal notranslate"><span class="pre">udunits</span></code> time units like <code class="docutils literal notranslate"><span class="pre">minutes</span> <span class="pre">from</span> <span class="pre">1900-0-0</span></code>, and R’s <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> and <code class="docutils literal notranslate"><span class="pre">Date</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">as_units</span></code> to replace <code class="docutils literal notranslate"><span class="pre">as.units</span></code></p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">as.dt</span></code> to <code class="docutils literal notranslate"><span class="pre">as_difftime</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-5">
+<h1>version 0.4-5<a class="headerlink" href="#version-0-4-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>add support for user-defined unit conversion; #31</p></li>
+<li><p>allow for 1/n integer powers, as in <code class="docutils literal notranslate"><span class="pre">set_units(1:10,</span> <span class="pre">m^-2)</span> <span class="pre">^</span> <span class="pre">0.5</span></code>; #29</p></li>
+<li><p>properly set log units after log transform; #33</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sin</span></code>, <code class="docutils literal notranslate"><span class="pre">cos</span></code> and <code class="docutils literal notranslate"><span class="pre">tan</span></code> no longer complain when units is <code class="docutils literal notranslate"><span class="pre">rad</span></code>, and return <code class="docutils literal notranslate"><span class="pre">unitless</span></code>; #40</p></li>
+<li><p>now allow for <code class="docutils literal notranslate"><span class="pre">set_units(1:3,</span> <span class="pre">&quot;°C&quot;)</span></code> and also <code class="docutils literal notranslate"><span class="pre">set_units(1:3,</span> <span class="pre">&quot;degree_Celsius&quot;)</span></code> by resolving names to symbols first; #43</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_units(x)</span></code> with <code class="docutils literal notranslate"><span class="pre">x</span></code> numeric sets units to <code class="docutils literal notranslate"><span class="pre">unitless</span></code>; #41</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-4">
+<h1>version 0.4-4<a class="headerlink" href="#version-0-4-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fix a result units bug when multiplying or dividing units vectors of different length, #34</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">rep</span></code> method for <code class="docutils literal notranslate"><span class="pre">units</span></code> vectors</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="version-0-4-3">
+<h1>version 0.4-3<a class="headerlink" href="#version-0-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>support for <code class="docutils literal notranslate"><span class="pre">set_units(1:10,</span> <span class="pre">m)</span></code> which does not require to declare or define, <code class="docutils literal notranslate"><span class="pre">m</span></code> (<code class="docutils literal notranslate"><span class="pre">m</span></code> is resolved automatically from <code class="docutils literal notranslate"><span class="pre">ud_units</span></code>)</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\units"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">version 0.8-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-4">version 0.8-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-3">version 0.8-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-2">version 0.8-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-1">version 0.8-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8-0">version 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-2">version 0.7-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-1">version 0.7-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7-0">version 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-7">version 0.6-7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-6">version 0.6-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-5">version 0.6-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-4">version 0.6-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-3">version 0.6-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-2">version 0.6-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-1">version 0.6-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-6-0">version 0.6-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-1">version 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-5-0">version 0.5-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-6">version 0.4-6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-5">version 0.4-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-4">version 0.4-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-4-3">version 0.4-3</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

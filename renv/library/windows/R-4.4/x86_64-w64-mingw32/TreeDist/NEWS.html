@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TreeDist 2.9.2 (2025-01-11) &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/TreeDist/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/TreeDist/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TreeDist 2.9.2 (2025-01-11)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TreeDist 2.9.2 (2025-01-11)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-9-1-2024-09-05">TreeDist 2.9.1 (2024-09-05)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-9-0-2024-09-03">TreeDist 2.9.0 (2024-09-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-8-0-2024-07-25">TreeDist 2.8.0 (2024-07-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-7-1-2024-06-13">TreeDist 2.7.1 (2024-06-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-7-0-2023-10-25">TreeDist 2.7.0 (2023-10-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-3-2023-08-25">TreeDist 2.6.3 (2023-08-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-2-2023-06-28">TreeDist 2.6.2 (2023-06-28)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-1-2023-04-25">TreeDist 2.6.1 (2023-04-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-0-2023-02-20">TreeDist 2.6.0 (2023-02-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-5-0-2022-10-07">TreeDist 2.5.0 (2022-10-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-4-1-2022-07-20">TreeDist 2.4.1 (2022-07-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-4-0-2022-03-23">TreeDist 2.4.0 (2022-03-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-3-0-2022-01-04">TreeDist 2.3.0 (2022-01-04)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-2-0-2021-09-13">TreeDist 2.2.0 (2021-09-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-1-1-2021-07-13">TreeDist 2.1.1 (2021-07-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-1-0-2021-07-12">TreeDist 2.1.0 (2021-07-12)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renamed-functions">Renamed functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-0-3-2021-01-31">TreeDist 2.0.3 (2021-01-31)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-0-0-2021-01-20">TreeDist 2.0.0 (2021-01-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-2-1-2020-09-17">TreeDist 1.2.1 (2020-09-17)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-2-0-2020-08-28">TreeDist 1.2.0 (2020-08-28)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-1-1-2020-07-10">TreeDist 1.1.1 (2020-07-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-1-0">TreeDist 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-0-0-2020-06-30">TreeDist 1.0.0 (2020-06-30)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="treedist-2-9-2-2025-01-11">
+<h1>TreeDist 2.9.2 (2025-01-11)<a class="headerlink" href="#treedist-2-9-2-2025-01-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Avoid crashing when calculating NNI distance for large trees.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-9-1-2024-09-05">
+<h1>TreeDist 2.9.1 (2024-09-05)<a class="headerlink" href="#treedist-2-9-1-2024-09-05" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Avoid false positive in MKL testing environment.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-9-0-2024-09-03">
+<h1>TreeDist 2.9.0 (2024-09-03)<a class="headerlink" href="#treedist-2-9-0-2024-09-03" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VisualizeMatching()</span></code> allows more control over output format, and returns
+the matching (<a class="reference external" href="https://github.com/ms609/TreeDist/issues/124">#124</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DistanceFromMedian(Average</span> <span class="pre">=</span> <span class="pre">median)</span></code> allows calculation of MAD.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SpectralEigens()</span></code> returns correct eigenvalues (smallest was overlooked).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SpectralEigens()</span></code> handles values of <code class="docutils literal notranslate"><span class="pre">nEig</span></code> larger than the input.</p></li>
+<li><p>Anticipate new behaviour of <code class="docutils literal notranslate"><span class="pre">unlist(use.names</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> in R 4.5.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-8-0-2024-07-25">
+<h1>TreeDist 2.8.0 (2024-07-25)<a class="headerlink" href="#treedist-2-8-0-2024-07-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Islands()</span></code> allows the identification of islands of trees.</p></li>
+<li><p>Internal implementation of path and SPR distances, removing dependency
+on phangorn (and thus R 4.4).</p></li>
+<li><p>Add progress bar within <code class="docutils literal notranslate"><span class="pre">.MaxValue()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-7-1-2024-06-13">
+<h1>TreeDist 2.7.1 (2024-06-13)<a class="headerlink" href="#treedist-2-7-1-2024-06-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Documentation improvements.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">KCDiameter.multiPhylo()</span></code> for multiple trees.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-7-0-2023-10-25">
+<h1>TreeDist 2.7.0 (2023-10-25)<a class="headerlink" href="#treedist-2-7-0-2023-10-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix calculation error in <code class="docutils literal notranslate"><span class="pre">StrainCol()</span></code>.</p></li>
+<li><p>App: Display strain in 3D tree space viewer.</p></li>
+<li><p>Support for distances between larger trees.</p></li>
+<li><p>Support unrooted trees in <code class="docutils literal notranslate"><span class="pre">VisualizeMatching()</span></code>
+(<a class="reference external" href="https://github.com/ms609/TreeDist/issues/103">#103</a>).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-6-3-2023-08-25">
+<h1>TreeDist 2.6.3 (2023-08-25)<a class="headerlink" href="#treedist-2-6-3-2023-08-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix bug when comparing a “multiPhylo” object containing a single tree.</p></li>
+<li><p>Documentation clarification: finding non-matching leaves.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-6-2-2023-06-28">
+<h1>TreeDist 2.6.2 (2023-06-28)<a class="headerlink" href="#treedist-2-6-2-2023-06-28" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support non-square matrices in <code class="docutils literal notranslate"><span class="pre">LAPJV()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-6-1-2023-04-25">
+<h1>TreeDist 2.6.1 (2023-04-25)<a class="headerlink" href="#treedist-2-6-1-2023-04-25" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">StopParallel()</span></code> gains <code class="docutils literal notranslate"><span class="pre">quietly</span></code> argument to suppress unnecessary messages.</p></li>
+<li><p>Use “PlotTools” package for spectrum legends.</p></li>
+<li><p>Minor documentation tweaks.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-6-0-2023-02-20">
+<h1>TreeDist 2.6.0 (2023-02-20)<a class="headerlink" href="#treedist-2-6-0-2023-02-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support comparison of trees with different tips.</p></li>
+<li><p>Fix caching errors in <code class="docutils literal notranslate"><span class="pre">MapDist()</span></code>
+(<a class="reference external" href="https://github.com/ms609/TreeDist/issues/98">#98</a>).</p></li>
+<li><p>Update tests for compatibility with ape 5.7.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-5-0-2022-10-07">
+<h1>TreeDist 2.5.0 (2022-10-07)<a class="headerlink" href="#treedist-2-5-0-2022-10-07" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New functions to measure cluster sizes (see <a class="reference external" href="https://ms609.github.io/TreeDist/reference/cluster-statistics.html"><code class="docutils literal notranslate"><span class="pre">?&quot;cluster-statistics&quot;</span></code></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KMeansPP()</span></code> conducts clustering using K-means++, replacing K-means in app.</p></li>
+<li><p>New <a class="reference external" href="https://ms609.github.io/TreeDist/articles/landscapes.html">vignette</a>
+on tree landscape analysis.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-4-1-2022-07-20">
+<h1>TreeDist 2.4.1 (2022-07-20)<a class="headerlink" href="#treedist-2-4-1-2022-07-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New <a class="reference external" href="https://ms609.github.io/TreeDist/articles/compare-treesets.html">vignette</a>
+on how to compare tree sets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PathVector()</span></code> now treats trees with a root node as rooted.</p></li>
+<li><p>Fix plot layout in <a class="reference external" href="https://ms609.github.io/TreeDist/articles/treespace.html">treespace vignette</a>.</p></li>
+<li><p>Informative failure when not enough memory for <code class="docutils literal notranslate"><span class="pre">consensus_info()</span></code>.</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">throw</span></code> with <code class="docutils literal notranslate"><span class="pre">stop</span></code> in C++.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-4-0-2022-03-23">
+<h1>TreeDist 2.4.0 (2022-03-23)<a class="headerlink" href="#treedist-2-4-0-2022-03-23" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Correct calculation of trustworthiness and continuity metrics.</p></li>
+<li><p>Depict strain in minimum spanning trees with <code class="docutils literal notranslate"><span class="pre">StrainCol()</span></code> and helper
+function <code class="docutils literal notranslate"><span class="pre">MSTSegments()</span></code>.</p></li>
+<li><p>Update tests for consistency with “TreeTools” v1.7.</p></li>
+<li><p>Use lighter Rcpp headers.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-3-0-2022-01-04">
+<h1>TreeDist 2.3.0 (2022-01-04)<a class="headerlink" href="#treedist-2-3-0-2022-01-04" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support <code class="docutils literal notranslate"><span class="pre">ConsensusInfo(p</span> <span class="pre">&gt;</span> <span class="pre">0.5)</span></code>.</p></li>
+<li><p>Address hypervolume comparison in vignettes.</p></li>
+<li><p>Support uniform manifold approximation and projection in app.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-2-0-2021-09-13">
+<h1>TreeDist 2.2.0 (2021-09-13)<a class="headerlink" href="#treedist-2-2-0-2021-09-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Speed improvements, using optimizations suggested by Alexis Stamatakis’
+Bioinformatics group.</p></li>
+<li><p>Support for parallel computation via <code class="docutils literal notranslate"><span class="pre">StartParallel()</span></code>.</p></li>
+<li><p>Progress bars.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-1-1-2021-07-13">
+<h1>TreeDist 2.1.1 (2021-07-13)<a class="headerlink" href="#treedist-2-1-1-2021-07-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Solaris compatibility.</p></li>
+<li><p>Modest vignette improvements.</p></li>
+<li><p>spic/scic abbreviation recognition.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-1-0-2021-07-12">
+<h1>TreeDist 2.1.0 (2021-07-12)<a class="headerlink" href="#treedist-2-1-0-2021-07-12" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ConsensusInfo()</span></code> quickly calculates the splitwise information content of the
+consensus of a set of trees, after Smith (forthcoming).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SplitwiseInfo()</span></code> and <code class="docutils literal notranslate"><span class="pre">ClusteringInfo()</span></code> gain a <code class="docutils literal notranslate"><span class="pre">p</span></code> parameter to reflect the
+reduced information content of splits with lower support values, and a <code class="docutils literal notranslate"><span class="pre">sum</span></code>
+parameter to allow return of individual split information content.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KCDiameter()</span></code> approximates the diameter of the Kendall-Colijn metric.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Plot3()</span></code> (experimental) provides pseudo-3D plotting.</p></li>
+</ul>
+</section>
+<section id="renamed-functions">
+<h2>Renamed functions<a class="headerlink" href="#renamed-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Project()</span></code>/<code class="docutils literal notranslate"><span class="pre">ProjectionQuality()</span></code> re-named to <code class="docutils literal notranslate"><span class="pre">MapTrees()</span></code>/<code class="docutils literal notranslate"><span class="pre">MappingQuality()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SpectralClustering()</span></code> re-named to <code class="docutils literal notranslate"><span class="pre">SpectralEigens()</span></code>.</p></li>
+</ul>
+</section>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add self-organizing map example to treespace vignette.</p></li>
+<li><p>Allow the specification of custom vectors in the Kendall–Colijn metric.</p></li>
+<li><p>Faster all-to-all tree distance calculation.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-0-3-2021-01-31">
+<h1>TreeDist 2.0.3 (2021-01-31)<a class="headerlink" href="#treedist-2-0-3-2021-01-31" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Diagnose and fix memory leaks, including over-long reported matchings.</p></li>
+<li><p>Explicitly import shiny/shinyjs functions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-2-0-0-2021-01-20">
+<h1>TreeDist 2.0.0 (2021-01-20)<a class="headerlink" href="#treedist-2-0-0-2021-01-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Project()</span></code> launches ‘shiny’ app for projection and analysis of tree space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProjectionQuality()</span></code> calculates trustworthiness and continuity of tree
+space mappings.</p></li>
+<li><p>Faster calculation of Robinson–Foulds distance (using algorithm of Day (1985))
+and clustering information distance.</p></li>
+<li><p>New class <code class="docutils literal notranslate"><span class="pre">ClusterTable</span></code> to allow faster distance computation with Day (1985)
+algorithm.</p></li>
+<li><p>Improve error messages in <code class="docutils literal notranslate"><span class="pre">CalculateTreeDist()</span></code>.</p></li>
+<li><p>Improvements to vignettes.</p></li>
+<li><p>Use package ‘vdiffr’ conditionally.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-1-2-1-2020-09-17">
+<h1>TreeDist 1.2.1 (2020-09-17)<a class="headerlink" href="#treedist-1-2-1-2020-09-17" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Import RdMacros package ‘RdPack’.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-1-2-0-2020-08-28">
+<h1>TreeDist 1.2.0 (2020-08-28)<a class="headerlink" href="#treedist-1-2-0-2020-08-28" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TreeDistance()</span></code> and related functions now return a <code class="docutils literal notranslate"><span class="pre">dist</span></code> object when
+computing all distances between all pairs of trees in a list.</p></li>
+<li><p>Improve floating-point arithmetic in <code class="docutils literal notranslate"><span class="pre">TreeDistance()</span></code> functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TreeDistance()</span></code> now returns a distance (as documented), rather than a
+similarity.</p></li>
+<li><p>Fix rounding error in NNI ‘Li’ upper estimate, and improve NNI performance.</p></li>
+<li><p>Reduce precision of LAPJV so rounding errors do not result in interminable run
+times.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-1-1-1-2020-07-10">
+<h1>TreeDist 1.1.1 (2020-07-10)<a class="headerlink" href="#treedist-1-1-1-2020-07-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix range errors when calculating tree distances.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-1-1-0">
+<h1>TreeDist 1.1.0<a class="headerlink" href="#treedist-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">NNIDist()</span></code> in light of Fack <em>et al.</em> (2002).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">NNIDiameter()</span></code>: approximate diameter of NNI distance.</p></li>
+<li><p>Remove vignette ‘Interpreting tree distances’: duplicates
+<a class="reference external" href="https://ms609.github.io/TreeDistData/articles/09-expected-similarity.html">https://ms609.github.io/TreeDistData/articles/09-expected-similarity.html</a>.</p></li>
+<li><p>Remove redundant data object <code class="docutils literal notranslate"><span class="pre">oneOverlap</span></code>.</p></li>
+<li><p>Fix an issue when installing on R 3.x (require C++11 to ensure declaration
+of <code class="docutils literal notranslate"><span class="pre">UINT_FAST16_MAX</span></code>).</p></li>
+<li><p>Fix memory-handling bug in <code class="docutils literal notranslate"><span class="pre">lapjv()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="treedist-1-0-0-2020-06-30">
+<h1>TreeDist 1.0.0 (2020-06-30)<a class="headerlink" href="#treedist-1-0-0-2020-06-30" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Initial release, building on some draft functions included in
+‘<a class="reference external" href="https://ms609.github.io/TreeSearch/">TreeSearch</a>’ 0.3.2.9005.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\TreeDist"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TreeDist 2.9.2 (2025-01-11)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-9-1-2024-09-05">TreeDist 2.9.1 (2024-09-05)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-9-0-2024-09-03">TreeDist 2.9.0 (2024-09-03)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-8-0-2024-07-25">TreeDist 2.8.0 (2024-07-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-7-1-2024-06-13">TreeDist 2.7.1 (2024-06-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-7-0-2023-10-25">TreeDist 2.7.0 (2023-10-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-3-2023-08-25">TreeDist 2.6.3 (2023-08-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-2-2023-06-28">TreeDist 2.6.2 (2023-06-28)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-1-2023-04-25">TreeDist 2.6.1 (2023-04-25)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-6-0-2023-02-20">TreeDist 2.6.0 (2023-02-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-5-0-2022-10-07">TreeDist 2.5.0 (2022-10-07)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-4-1-2022-07-20">TreeDist 2.4.1 (2022-07-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-4-0-2022-03-23">TreeDist 2.4.0 (2022-03-23)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-3-0-2022-01-04">TreeDist 2.3.0 (2022-01-04)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-2-0-2021-09-13">TreeDist 2.2.0 (2021-09-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-1-1-2021-07-13">TreeDist 2.1.1 (2021-07-13)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-1-0-2021-07-12">TreeDist 2.1.0 (2021-07-12)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renamed-functions">Renamed functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-0-3-2021-01-31">TreeDist 2.0.3 (2021-01-31)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-2-0-0-2021-01-20">TreeDist 2.0.0 (2021-01-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-2-1-2020-09-17">TreeDist 1.2.1 (2020-09-17)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-2-0-2020-08-28">TreeDist 1.2.0 (2020-08-28)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-1-1-2020-07-10">TreeDist 1.1.1 (2020-07-10)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-1-0">TreeDist 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#treedist-1-0-0-2020-06-30">TreeDist 1.0.0 (2020-06-30)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

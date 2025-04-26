@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>rbibutils 2.3 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/rbibutils/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/rbibutils/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>rbibutils 2.3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">rbibutils 2.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-and-improved-features">New and improved features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-16">rbibutils 2.2.16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-15">rbibutils 2.2.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-14">rbibutils 2.2.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-13">rbibutils 2.2.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-12">rbibutils 2.2.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-11">rbibutils 2.2.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-10">rbibutils 2.2.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-9">rbibutils 2.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-8">rbibutils 2.2.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-7">rbibutils 2.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-6-not-on-cran">rbibutils 2.2.6 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-5">rbibutils 2.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-4">rbibutils 2.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-3">rbibutils 2.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-2">rbibutils 2.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-1">rbibutils 2.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2">rbibutils 2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-1-1">rbibutils 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-1">rbibutils 2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-0">rbibutils 2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-4">rbibutils 1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-3">rbibutils 1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-2-1-not-on-cran">rbibutils 1.2.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-2-not-on-cran">rbibutils 1.2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-1-0">rbibutils 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-3">rbibutils 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-2">rbibutils 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-1-not-on-cran">rbibutils 1.0.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-0-not-on-cran">rbibutils 1.0.0 (not on CRAN)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-3">
+<h1>rbibutils 2.3<a class="headerlink" href="#rbibutils-2-3" title="Link to this heading">#</a></h1>
+<section id="new-and-improved-features">
+<h2>New and improved features<a class="headerlink" href="#new-and-improved-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>the class of the object returned by <code class="docutils literal notranslate"><span class="pre">readBibentry()</span></code>, <code class="docutils literal notranslate"><span class="pre">readBib()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">bibtexImport()</span></code> is now always <code class="docutils literal notranslate"><span class="pre">c(&quot;bibentryExtra&quot;,</span> <span class="pre">&quot;bibentry&quot;)</span></code> (unless
+argument <code class="docutils literal notranslate"><span class="pre">fbibentry</span></code> is supplied). Previously <code class="docutils literal notranslate"><span class="pre">&quot;bibentryExtra&quot;</span></code> was added only
+when there were bib items with non-standard type and <code class="docutils literal notranslate"><span class="pre">extra</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>. An option
+to return just <code class="docutils literal notranslate"><span class="pre">&quot;bibentry&quot;</span></code> may be considered.</p></li>
+<li><p>non-standard bibtypes are lowercased.</p></li>
+<li><p>consolidated the subsetting operators for ‘bibentryExtra’ objects and the
+documentation for them.</p></li>
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">bibentryExtra()</span></code> creates ‘bibentryExtra’ objects. It accepts
+arbitrary Bibtex entry types and takes the same arguments as <code class="docutils literal notranslate"><span class="pre">bibentry()</span></code>.</p></li>
+<li><p>the default bib style for the <code class="docutils literal notranslate"><span class="pre">bibentryExtra</span></code> method for <code class="docutils literal notranslate"><span class="pre">format()</span></code> is now
+“JSSextra”.</p></li>
+<li><p>refactored and streamlined <code class="docutils literal notranslate"><span class="pre">writeBibentry()</span></code> (the original version didn’t use
+the <code class="docutils literal notranslate"><span class="pre">format</span></code> method).</p></li>
+<li><p>new generic function <code class="docutils literal notranslate"><span class="pre">as.bibentryExtra</span></code>.</p></li>
+<li><p>new ‘bibentryExtra’ method for <code class="docutils literal notranslate"><span class="pre">c()</span></code>.</p></li>
+<li><p>bib style “JSSextra” now knows how to render ‘online’ bibtype. It is a
+biblatex (not bibtex) field but very useful these days.</p></li>
+<li><p>bib style “JSSextra” now knows how to render a few more non-standard bib
+types.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print(be,</span> <span class="pre">style</span> <span class="pre">=</span> <span class="pre">&quot;R&quot;)</span></code>, where <code class="docutils literal notranslate"><span class="pre">be</span></code> is an object from class “bibentryExtra”
+no longer includes the, effectively, internal for <code class="docutils literal notranslate"><span class="pre">rbibutils</span></code> field
+<code class="docutils literal notranslate"><span class="pre">truebibtype</span></code>.</p></li>
+<li><p>first draft of a vignette.</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>now bibstyle ‘JSSextra’ creates a new environment for its stuff. Previously it
+was accidentally adding its objects directly in the ‘JSS’ style’s environment,
+causing the two to be equivalent.</p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">format.bibentryExtra()</span></code> which caused <code class="docutils literal notranslate"><span class="pre">writeBibentry()</span></code> to
+misbehave when <code class="docutils literal notranslate"><span class="pre">style</span> <span class="pre">=</span> <span class="pre">&quot;Rstyle&quot;</span></code>.</p></li>
+<li><p>fixed <code class="docutils literal notranslate"><span class="pre">[&lt;-</span></code> sub-assignment to ‘bibentryExtra’ objects.</p></li>
+<li><p>when <code class="docutils literal notranslate"><span class="pre">style</span> <span class="pre">=</span> <span class="pre">&quot;latex&quot;</span></code>, style “JSSextra” was failing to print bibentries with
+types InBook and InCollection, due to a typo (redundant comma) in the code.</p></li>
+<li><p>a number of minor bugs were fixed.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-16">
+<h1>rbibutils 2.2.16<a class="headerlink" href="#rbibutils-2-2-16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed processing of the Polish suppressed-l <code class="docutils literal notranslate"><span class="pre">\l</span></code>. Previously the character
+following it was enclosed in braces, which was harmless in most cases but the
+superfluous braces could cause trouble in special circumstances. Did the same
+for the uppercase version, <code class="docutils literal notranslate"><span class="pre">\L</span></code>, which was missing from the code.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-15">
+<h1>rbibutils 2.2.15<a class="headerlink" href="#rbibutils-2-2-15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>adapted some tests to a change in R-devel circa r84986.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-14">
+<h1>rbibutils 2.2.14<a class="headerlink" href="#rbibutils-2-2-14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed a couple of tests in ‘test-convert.R’ which started failing (ca. R svn
+rev 84760) due to an R-devel change in <code class="docutils literal notranslate"><span class="pre">person()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-13">
+<h1>rbibutils 2.2.13<a class="headerlink" href="#rbibutils-2-2-13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bugfix: the declaration of the return value of a C function was accidentally
+changed from <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char</span> <span class="pre">*</span></code> to <code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">*</span></code> in v2.2.12, causing CRAN warnings on
+some platforms.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-12">
+<h1>rbibutils 2.2.12<a class="headerlink" href="#rbibutils-2-2-12" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>Bugfix: <code class="docutils literal notranslate"><span class="pre">readBib</span></code> with <code class="docutils literal notranslate"><span class="pre">texChars</span> <span class="pre">=</span> <span class="pre">&quot;Rdpack&quot;</span></code> which converts <code class="docutils literal notranslate"><span class="pre">\'i</span></code> to <code class="docutils literal notranslate"><span class="pre">\'\i</span></code>
+was wrapping <code class="docutils literal notranslate"><span class="pre">\'\i</span></code> in braces in ‘author’ and related fields only. Failure to
+do so in other fields was making the output invalid when <code class="docutils literal notranslate"><span class="pre">\'i</span></code> was followed
+by alphabetical character(s). Fixes issue#7 reopened by &#64;EricMarcon.</p>
+<p>Note that option <code class="docutils literal notranslate"><span class="pre">&quot;Rdpack&quot;</span></code> for argument <code class="docutils literal notranslate"><span class="pre">texChars</span></code> is mainly for internal
+use which compensates for R not recognising <code class="docutils literal notranslate"><span class="pre">\'i</span></code> as an accented character,
+see the news items for v2.2.5 and v2.2.4 and the bug report about
+<code class="docutils literal notranslate"><span class="pre">tools:::latexToUtf8</span></code> at <a class="reference external" href="https://bugs.r-project.org/show_bug.cgi?id=18208">R bugs</a>.</p>
+</li>
+<li><p>partial internal refactoring of C code to avoid duplication.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-11">
+<h1>rbibutils 2.2.11<a class="headerlink" href="#rbibutils-2-2-11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>in <code class="docutils literal notranslate"><span class="pre">C</span></code> code, changed <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> calls to use <code class="docutils literal notranslate"><span class="pre">snprintf</span></code> to fix CRAN warnings.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-10">
+<h1>rbibutils 2.2.10<a class="headerlink" href="#rbibutils-2-2-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed warnings about deprecated function declarations without prototypes in
+<code class="docutils literal notranslate"><span class="pre">C</span></code> code.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-9">
+<h1>rbibutils 2.2.9<a class="headerlink" href="#rbibutils-2-2-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed wrong markup of an item in this file (for v2.2.4) causing bad rendering
+and a NOTE from CRAN.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-8">
+<h1>rbibutils 2.2.8<a class="headerlink" href="#rbibutils-2-2-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new argument <code class="docutils literal notranslate"><span class="pre">fbibentry</span></code> for <code class="docutils literal notranslate"><span class="pre">readBib</span></code> and <code class="docutils literal notranslate"><span class="pre">readBibentry</span></code> for specification of
+a function for generation of bib objects. It should have the same arguments as
+the default <code class="docutils literal notranslate"><span class="pre">utils::bibentry()</span></code> but doesn’t need to be vectorised, since
+<code class="docutils literal notranslate"><span class="pre">readBibentry()</span></code> generates one <code class="docutils literal notranslate"><span class="pre">bibentry</span></code> call for each reference.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> now parses correctly LaTeX accents like <code class="docutils literal notranslate"><span class="pre">\a'o</span></code>. These are officially
+defined only for LaTeX’s <code class="docutils literal notranslate"><span class="pre">tabbing</span></code> environment as replacements for <code class="docutils literal notranslate"><span class="pre">\'o</span></code>,
+etc., but seem accepted by LaTeX outside these environments. Also, <code class="docutils literal notranslate"><span class="pre">Bibtex</span></code>
+converts them to the standard ones when writing <code class="docutils literal notranslate"><span class="pre">.bbl</span></code> files and R’s bib
+processing functions know about them.</p></li>
+<li><p>a bug in <code class="docutils literal notranslate"><span class="pre">ads</span></code> export was causing a test to fail on platforms with <code class="docutils literal notranslate"><span class="pre">char</span></code>
+equivalent to <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">char</span></code>. Reported by &#64;nileshpatra, who also identified
+the cause. Fixes issue#8 on github.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-7">
+<h1>rbibutils 2.2.7<a class="headerlink" href="#rbibutils-2-2-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed bug in isi output occuring in v2.2.5 and 2.2.6 and revealed by gss/ASAN
+check.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-6-not-on-cran">
+<h1>rbibutils 2.2.6 (not on CRAN)<a class="headerlink" href="#rbibutils-2-2-6-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed memory leaks in nbib output in biblatex input occuring in v2.2.5.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-5">
+<h1>rbibutils 2.2.5<a class="headerlink" href="#rbibutils-2-2-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">readBibentry</span></code> with <code class="docutils literal notranslate"><span class="pre">extra</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> now parses (almost) any syntactically
+correct bib entries. In particular, it accepts arbitrary bib types and doesn’t
+throw errors for bibentries missing fields required by bibtex for the standard
+bibtex types. For example, biblatex entries typically have <code class="docutils literal notranslate"><span class="pre">date</span></code>, not <code class="docutils literal notranslate"><span class="pre">year</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> with <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> and <code class="docutils literal notranslate"><span class="pre">texChars</span></code> set to <code class="docutils literal notranslate"><span class="pre">&quot;convert&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;export&quot;</span></code>
+was not processing mathematical expressions properly. Now fixed.</p></li>
+<li><p>argument <code class="docutils literal notranslate"><span class="pre">texChars</span></code> of <code class="docutils literal notranslate"><span class="pre">readBib</span></code> gets new possible value, “Rdpack”. This is
+like the default, “keep”, but in addition it converts <code class="docutils literal notranslate"><span class="pre">\'i</span></code> to <code class="docutils literal notranslate"><span class="pre">\'\i</span></code>. This
+is related to issue #7, see below the fix in v2.2.4 for details. This is
+mainly for internal use.</p></li>
+<li><p>improved the messages from error handling when creating bibentry
+objects. The fix is in <code class="docutils literal notranslate"><span class="pre">readBibentry</span></code> but users typically see them when
+calling <code class="docutils literal notranslate"><span class="pre">readBib</span></code>.</p></li>
+<li><p>fixed an error which caused <code class="docutils literal notranslate"><span class="pre">bibConvert</span></code> to segfault when importing <code class="docutils literal notranslate"><span class="pre">nbib</span></code>
+files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBibentry</span></code> (and hence <code class="docutils literal notranslate"><span class="pre">readBib</span></code>) were printing some error messages that
+were actually handled.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-4">
+<h1>rbibutils 2.2.4<a class="headerlink" href="#rbibutils-2-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>stopped converting <code class="docutils literal notranslate"><span class="pre">\'\i'</span></code> to <code class="docutils literal notranslate"><span class="pre">\'i</span></code>. They are equivalent but there is no
+reason to do this. Also, at the time of writing R’s <code class="docutils literal notranslate"><span class="pre">tools::latexToUtf8</span></code>
+converts the former but not the latter, while Biber seems to convert the
+latter but not the former, see
+<a class="reference external" href="https://bugs.r-project.org/show_bug.cgi?id=18208">https://bugs.r-project.org/show_bug.cgi?id=18208</a> . So, users of the bib file
+may have specific reasons to use one or the other.</p></li>
+<li><p>names consisting of just one part, family, were missing processing of escaped
+characters (issue #5).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-3">
+<h1>rbibutils 2.2.3<a class="headerlink" href="#rbibutils-2-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed memory issues from valgrind in v2.2.2 thanks to patch supplied by Bill
+Dunlap.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-2">
+<h1>rbibutils 2.2.2<a class="headerlink" href="#rbibutils-2-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>import of <code class="docutils literal notranslate"><span class="pre">Pubmed</span> <span class="pre">XML</span></code> was sometimes giving a handful of references for files
+with tens or hundreds of them. Now fixed, see issue #4, reported by Rafael
+Santamaría.  (The function reading the file was implicitly assuming that the
+end of each reference is on a line by itself and was silently ignoring text on
+the same line after the end of reference tag. Reference files from online
+databases often have no new lines at all, except for the XML header.)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2-1">
+<h1>rbibutils 2.2.1<a class="headerlink" href="#rbibutils-2-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed problems revealed by valgrind.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-2">
+<h1>rbibutils 2.2<a class="headerlink" href="#rbibutils-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new convenience function <code class="docutils literal notranslate"><span class="pre">charToBib</span></code> takes input from a character vector
+rather than a file. By default it assumes that the input is in <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> format
+and dispatches to <code class="docutils literal notranslate"><span class="pre">readBib</span></code>. If an input format is specified it calls
+<code class="docutils literal notranslate"><span class="pre">bibConvert</span></code>.</p></li>
+<li><p>new S3 class <code class="docutils literal notranslate"><span class="pre">bibentryExtra</span></code>, inheriting from <code class="docutils literal notranslate"><span class="pre">bibentry</span></code>, provides support for
+non-standard types (potentially arbitrary) of bibtex entries. Suitable methods
+are defined for printing, converting and manipulating (e.g., subsetting and
+assignment) <code class="docutils literal notranslate"><span class="pre">bibentryExtra</span></code> objects. The initial implementation is incomplete
+and under development.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib()</span></code> gets a new argument <code class="docutils literal notranslate"><span class="pre">extra</span></code>. If it is set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> and
+non-standard types of entries are encountered in the input bibtex file, then
+the class of the result is set to <code class="docutils literal notranslate"><span class="pre">bibentryExtra</span></code>. See also the note about
+<code class="docutils literal notranslate"><span class="pre">bibentryExtra</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> gets new argument, <code class="docutils literal notranslate"><span class="pre">macros</span></code>, for specification of file(s) containing
+Bibtex macros (such as abbreviations for names of journals). These files are
+read in before file(s) specified by <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> with <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> now accepts non-syntactic field names,
+e.g. containing <code class="docutils literal notranslate"><span class="pre">-</span></code>. (This is irrelevant when <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> since in that
+case nonstandard fields are ignored and standard fields do not contain unusual
+characters.)</p></li>
+<li><p>internal structures for bibtex macros, such as <code class="docutils literal notranslate"><span class="pre">&#64;string</span></code> were not cleared at
+the end of calls and were accumulating from multiple invocations of
+conversions from bibtex and biblatex. Now fixed.</p></li>
+<li><p>now references with missing cite keys in bibtex input are accepted (previously
+such references were dropped). Dummy cite keys are inserted.</p></li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">&#64;preamble</span></code> entry in bibtex is ignored silently. Previously it was also
+dropped but with a message about unrecognised type, which was confusing.</p></li>
+<li><p>export arXiv:XXX and similar as <code class="docutils literal notranslate"><span class="pre">https</span></code> (some were still exported as <code class="docutils literal notranslate"><span class="pre">http</span></code>).
+Fixes GeoBosh/Rdpack#21, reported by Kisung You.</p></li>
+<li><p>unsuported conversions for some formats were accepted with unpredictable
+results. Informative messages are printed now.</p></li>
+<li><p>improved handling of byte order marks (BOM) for utf8 output. This was causing
+problems to tests of this package on Windows since on Linux BOMs are not
+emitted (I haven’t figured what causes the difference - the code is not OS
+dependent).</p></li>
+<li><p>improved handling of corner cases in bibtex input, especially for <code class="docutils literal notranslate"><span class="pre">readBib</span></code>
+with <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-1-1">
+<h1>rbibutils 2.1.1<a class="headerlink" href="#rbibutils-2-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>now a warning (rather than error) is issued if package ‘testthat’ is not
+available for tests.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> now has a default for the encoding, so it would usually be called
+just with one argument (the filename).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-1">
+<h1>rbibutils 2.1<a class="headerlink" href="#rbibutils-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> can now convert bibtex files directly (i.e., without first
+converting to XML intermediate) to bibentry R objects. This can be requested
+by setting the new argument <code class="docutils literal notranslate"><span class="pre">direct</span></code> to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> gets argument <code class="docutils literal notranslate"><span class="pre">texChars</span></code> to control whether or not to convert TeX
+sequences representing characters (such as accented Latin characters) to
+normal characters in the output encoding. There is an option also to convert
+charaters to the corresponding TeX sequences.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> now accepts encodings as for <code class="docutils literal notranslate"><span class="pre">bibConvert</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readBib</span></code> now processes field <code class="docutils literal notranslate"><span class="pre">key</span></code> in bibtex files. (This field is optional,
+used by some bibtex styles for sorting.)</p></li>
+<li><p>bug fixes and improvements.</p></li>
+<li><p>removed field <code class="docutils literal notranslate"><span class="pre">LazyData</span></code> from DESCRIPTION as there is no data directory
+(and R-devel now flags it with a NOTE).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-2-0">
+<h1>rbibutils 2.0<a class="headerlink" href="#rbibutils-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>there is no longer (unintended) dependence on R &gt;= 3.4. This was because of
+the use of <code class="docutils literal notranslate"><span class="pre">R_unif_index</span></code>. Report and fix due to Henrik Sloot (#1).</p></li>
+<li><p>completely reimplemented the conversion to <code class="docutils literal notranslate"><span class="pre">bibentry</span></code> - now this is done
+entirely in <code class="docutils literal notranslate"><span class="pre">C</span></code> and it now has the same speed as the conversions to other
+bibliograthy formats.</p></li>
+<li><p>removed <code class="docutils literal notranslate"><span class="pre">xml2</span></code> from the imports - it is no longer needed now that the
+conversion to bibentry is done in <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
+<li><p>new functions <code class="docutils literal notranslate"><span class="pre">readBibentry</span></code> and <code class="docutils literal notranslate"><span class="pre">writeBibentry</span></code> for reading from and writing
+bibentries to R source files.</p></li>
+<li><p>now errors when reading bibentry files are turned into warnings with suitable
+messages.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-4">
+<h1>rbibutils 1.4<a class="headerlink" href="#rbibutils-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">writeBib</span></code> for writing bibtex files.</p></li>
+<li><p>fixed erroneous processing of PhD thesis bib entries with some values of field
+<code class="docutils literal notranslate"><span class="pre">type</span></code>.  (reported by Kisung You for GeoBosh/Rdpack#17)</p></li>
+<li><p>fixed a compiler warning about a pointer differing in
+signedness from the expected type (reported by Patrice Kiener).</p></li>
+<li><p>somehow <code class="docutils literal notranslate"><span class="pre">README.md</span></code> went missing in v1.3, now reinstated.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-3">
+<h1>rbibutils 1.3<a class="headerlink" href="#rbibutils-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>reverted a change in v1.2 which caused trouble with some latex characters.</p></li>
+<li><p>trimmed white space in cite keys and some others to avoid getting cite keys
+containing the newline character (possible if the comma after the key is on a
+new line).</p></li>
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">readBib</span></code> for importing bibtex files.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-2-1-not-on-cran">
+<h1>rbibutils 1.2.1 (not on CRAN)<a class="headerlink" href="#rbibutils-1-2-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>improved processing of URL field when converting to bibentry.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-2-not-on-cran">
+<h1>rbibutils 1.2 (not on CRAN)<a class="headerlink" href="#rbibutils-1-2-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed inBook processing.</p></li>
+<li><p>fixed encoding bug introduced in v1.1.</p></li>
+<li><p>fixed misterous loss of <code class="docutils literal notranslate"><span class="pre">$</span></code>s and curly braces in certain circumstances.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-1-0">
+<h1>rbibutils 1.1.0<a class="headerlink" href="#rbibutils-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed processing of multiple person names in bibtex import.</p></li>
+<li><p>mathematical formulas were wrongly exported without dollars in some cases.</p></li>
+<li><p>stopped printing some messages causing problems to Rdpack.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-0-3">
+<h1>rbibutils 1.0.3<a class="headerlink" href="#rbibutils-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed warnings from <code class="docutils literal notranslate"><span class="pre">clang</span></code> compilers on CRAN. (These were about tautology
+<code class="docutils literal notranslate"><span class="pre">if</span></code> clauses in <code class="docutils literal notranslate"><span class="pre">src/adsout.c</span></code> and default argument promotion of the second
+argument in a couple of invocations of <code class="docutils literal notranslate"><span class="pre">va_start</span></code> in <code class="docutils literal notranslate"><span class="pre">src/modsout.c</span></code>).</p></li>
+<li><p>fixed typo’s in the documentation.</p></li>
+<li><p>updated the website.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-0-2">
+<h1>rbibutils 1.0.2<a class="headerlink" href="#rbibutils-1-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>completed the copyright credits in DESCRIPTION (there were contributors not
+mentioned anywhere except in the C source files they contributed).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-0-1-not-on-cran">
+<h1>rbibutils 1.0.1 (not on CRAN)<a class="headerlink" href="#rbibutils-1-0-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>clarified the copyright holders in DESCRIPTION.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rbibutils-1-0-0-not-on-cran">
+<h1>rbibutils 1.0.0 (not on CRAN)<a class="headerlink" href="#rbibutils-1-0-0-not-on-cran" title="Link to this heading">#</a></h1>
+<p>Features of this version:</p>
+<ul class="simple">
+<li><p>includes an R port of <code class="docutils literal notranslate"><span class="pre">bibutils</span></code> libraries (currently <code class="docutils literal notranslate"><span class="pre">bibutils_6.10</span></code>).</p></li>
+<li><p>supports all character encodings available in <code class="docutils literal notranslate"><span class="pre">bibutils</span></code> (defaults are UTF-8).</p></li>
+<li><p>supports all input/output bibliography formats available in <code class="docutils literal notranslate"><span class="pre">bibutils</span></code>,
+including Bibtex, Biblatex, and XML mods intermediate.</p></li>
+<li><p>in addition, supports conversions of the above formats from/to <code class="docutils literal notranslate"><span class="pre">bibentry</span></code> R
+source files or <code class="docutils literal notranslate"><span class="pre">rds</span></code> objects.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\rbibutils"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">rbibutils 2.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-and-improved-features">New and improved features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-16">rbibutils 2.2.16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-15">rbibutils 2.2.15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-14">rbibutils 2.2.14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-13">rbibutils 2.2.13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-12">rbibutils 2.2.12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-11">rbibutils 2.2.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-10">rbibutils 2.2.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-9">rbibutils 2.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-8">rbibutils 2.2.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-7">rbibutils 2.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-6-not-on-cran">rbibutils 2.2.6 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-5">rbibutils 2.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-4">rbibutils 2.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-3">rbibutils 2.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-2">rbibutils 2.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2-1">rbibutils 2.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-2">rbibutils 2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-1-1">rbibutils 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-1">rbibutils 2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-2-0">rbibutils 2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-4">rbibutils 1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-3">rbibutils 1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-2-1-not-on-cran">rbibutils 1.2.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-2-not-on-cran">rbibutils 1.2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-1-0">rbibutils 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-3">rbibutils 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-2">rbibutils 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-1-not-on-cran">rbibutils 1.0.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rbibutils-1-0-0-not-on-cran">rbibutils 1.0.0 (not on CRAN)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

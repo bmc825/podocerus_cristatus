@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.10.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/extraDistr/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/extraDistr/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1.10.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.8.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.8.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.8.1-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.6.10-14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.6.7-9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">1.5.15-19</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>1.10.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">rgpd</span></code> which produced negative samples.</p></li>
+<li><p>The RcppExports.cpp was fixed by reformatting it thanks to Dirk Eddelbuettel.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h1>1.9.1<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Generated header file, <code class="docutils literal notranslate"><span class="pre">inst/include/extraDistr.h</span></code>, to make C++ code callable
+from C++ code in other R packages (#23, contribution from Jon Fintzi, &#64;fintzij).</p></li>
+</ul>
+</section>
+<section id="id3">
+<h1>1.8.11<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bugs in Frechet distribution implementations (<code class="docutils literal notranslate"><span class="pre">pfrechet</span></code>).</p></li>
+</ul>
+</section>
+<section id="id4">
+<h1>1.8.10<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now zero-inflated negative-binomial (#12) and beta negative-binomial distributions (#14)
+do not have integer-only constraint on <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter.</p></li>
+<li><p>Fixed mistakes in the zero-inflated Poisson distribution documentation (#15) and
+negative hypergeometric distribution documentation.</p></li>
+<li><p>Minor changes towards future Rcpp STRICT_R_HEADERS compatibility.</p></li>
+<li><p>Fixed bug in vectorization code for <code class="docutils literal notranslate"><span class="pre">pbbinom</span></code> (#16). Additionally, this should make
+<code class="docutils literal notranslate"><span class="pre">pbbinom</span></code> and <code class="docutils literal notranslate"><span class="pre">pbnbinom</span></code> faster when working with large vectors.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h1>1.8.9<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">dinvgamma</span></code> function</p></li>
+<li><p>Updated the DESCRIPTION file by mentioning the packages used in
+optional unit tests for CRAN compatibility</p></li>
+</ul>
+</section>
+<section id="id6">
+<h1>1.8.8<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Deprecated functions: <code class="docutils literal notranslate"><span class="pre">dnst</span></code>, <code class="docutils literal notranslate"><span class="pre">pnst</span></code>, <code class="docutils literal notranslate"><span class="pre">qnst</span></code> and <code class="docutils literal notranslate"><span class="pre">rnst</span></code> were removed</p></li>
+<li><p>Fixed typos in documentation (thanks to #8 by philchalmers)</p></li>
+<li><p>Converted a number of pdf and cdf functions to more numerically stable
+versions using logs (see #9 and #10)</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">ppower</span></code>: with <code class="docutils literal notranslate"><span class="pre">lower.tail</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> it returned wrong values</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">dgpd</span></code> and <code class="docutils literal notranslate"><span class="pre">pgpd</span></code>: they assumed slightly wrong support</p></li>
+<li><p>Improved the <code class="docutils literal notranslate"><span class="pre">rgev</span></code> and <code class="docutils literal notranslate"><span class="pre">rgpd</span></code>, now they give better random values since
+relying on exponential distribution random generator if possible</p></li>
+<li><p>Documentation was improved and corrected in several places</p></li>
+<li><p>Power distribution functions now check if <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span> <span class="pre">&gt;</span> <span class="pre">0</span></code></p></li>
+</ul>
+</section>
+<section id="id7">
+<h1>1.8.7<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">pinvgamma</span></code> (<code class="docutils literal notranslate"><span class="pre">lower.tail</span></code> and <code class="docutils literal notranslate"><span class="pre">log.p</span></code> didn’t work)</p></li>
+<li><p>Fixed underflow issues with <code class="docutils literal notranslate"><span class="pre">rmnom</span></code> and <code class="docutils literal notranslate"><span class="pre">rdirmnom</span></code> (#7)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">*nst</span></code> functions are now deprecated and renamed to more informative
+abbrevation <code class="docutils literal notranslate"><span class="pre">*lst</span></code></p></li>
+</ul>
+</section>
+<section id="id8">
+<h1>1.8.6<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now consistently with base R only the first elements of the logical
+arguments are used (thanks to #5)</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">rtnorm</span></code> (sampling from lower bound returned incorrect
+values)</p></li>
+<li><p>When computation becomes slow, now <code class="docutils literal notranslate"><span class="pre">pbnbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pbbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pgpois</span></code>
+functions are easier to brake</p></li>
+<li><p>Automatically registering native routines via Rcpp</p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">pinvgamma</span></code> (it returned non-zero probabilities for
+q &lt; 0)</p></li>
+</ul>
+</section>
+<section id="id9">
+<h1>1.8.5<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">rmnom</span></code> and <code class="docutils literal notranslate"><span class="pre">rdirmnom</span></code> (issue #3) do not return <code class="docutils literal notranslate"><span class="pre">NaN</span></code>’s due to
+underflow issues</p></li>
+<li><p>Fixed bug (issue #4) that resulted in hanging R if zero-length vectors
+were provided as input</p></li>
+</ul>
+</section>
+<section id="id10">
+<h1>1.8.4<a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Random generation from categorical distribution parametrized by
+log-probabilities <code class="docutils literal notranslate"><span class="pre">rcatlp</span></code></p></li>
+<li><p>Re-parametrized beta distribution is now more flexible since
+“prior” parameter was introduced (see documentation); this change
+is connected to switching to different prior equal to zero
+(instead of one as previously). Such parametrization is more
+commonly used in the literature. This change is documented in
+the <code class="docutils literal notranslate"><span class="pre">?PropBeta</span></code> documentation</p></li>
+<li><p>Improvements in documentation and examples</p></li>
+<li><p>Fixed bugs in <code class="docutils literal notranslate"><span class="pre">pbbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pbnbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pgpois</span></code>, <code class="docutils literal notranslate"><span class="pre">*nhyper</span></code> that
+prevented compiling on RedHat Linux (#2)</p></li>
+</ul>
+</section>
+<section id="id11">
+<h1>1.8.3<a class="headerlink" href="#id11" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Switched to C++11, underlying code was simplified and improved</p></li>
+<li><p>Using memoization techniques for <code class="docutils literal notranslate"><span class="pre">pbbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pbnbinom</span></code>, <code class="docutils literal notranslate"><span class="pre">pgpois</span></code> and
+negative hypergeometric distribution that lead to major speed improvements</p></li>
+<li><p>Improved and simplified code for beta-binomial, beta negative-binomial,
+and gamma-Poisson cdf; now recursive algorithm employing memoization techniques
+is used what noticeably improves performance</p></li>
+<li><p>Discrete gamma, shifted Gompertz (d,p,r), negative hypergeometric and
+truncated binomial distributions (d,p,q,r) were added</p></li>
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">lower.tail</span></code> and <code class="docutils literal notranslate"><span class="pre">log.p</span></code> options for <code class="docutils literal notranslate"><span class="pre">pbetapr</span></code> work properly</p></li>
+<li><p>Simplified code for multivariate hypergeometric, multinomial,
+Dirichlet-multinomial and categorical distributions</p></li>
+<li><p>Truncated poisson distribution is now parametrized by lower and upper
+truncation points</p></li>
+<li><p>Fixed bugs in <code class="docutils literal notranslate"><span class="pre">dbvpois</span></code> (it returned underestimated probabilities),
+<code class="docutils literal notranslate"><span class="pre">dslash</span></code> (there was discontinuity at x=0), <code class="docutils literal notranslate"><span class="pre">pcat</span></code> (randomly it broke
+if x was greater then the upper limit), and <code class="docutils literal notranslate"><span class="pre">pdnorm</span></code>.</p></li>
+<li><p>Random generation functions throw warnings and produce <code class="docutils literal notranslate"><span class="pre">NA</span></code>’s on <code class="docutils literal notranslate"><span class="pre">NA</span></code>’s in
+parameters or incorrect parameters - as in base R</p></li>
+<li><p>Order of parameters in discrete Laplace distribution was changed to
+location and scale (vs scale and location) for consistency with other
+distributions (e.g. continous Laplace)</p></li>
+<li><p>Improved exception handling</p></li>
+</ul>
+</section>
+<section id="id12">
+<h1>1.8.1-2<a class="headerlink" href="#id12" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Corrected and simplified documentation for <code class="docutils literal notranslate"><span class="pre">*prop</span></code> distribution</p></li>
+<li><p>Categorical, multinomial, mixture of normals and mixture of Poisson
+distributions are now <em>less restrictive</em> about probability parameters
+and accept any non-negative values. Probability parameter vectors are
+normalized to sum to one (i.e. <code class="docutils literal notranslate"><span class="pre">c(1,1,1)</span></code> becomes <code class="docutils literal notranslate"><span class="pre">c(1,1,1)/3</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NA</span></code>’s and <code class="docutils literal notranslate"><span class="pre">NaN</span></code>’s in input now always lead to <code class="docutils literal notranslate"><span class="pre">NA</span></code>’s in output</p></li>
+<li><p>Fixed bugs in <code class="docutils literal notranslate"><span class="pre">rtnorm</span></code>, now it properly handles sampling from extreme
+tails</p></li>
+<li><p>Tests for multivariate distribution now done
+with tolerance <code class="docutils literal notranslate"><span class="pre">1e-2</span></code></p></li>
+</ul>
+</section>
+<section id="id13">
+<h1>1.8.0<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Bug fixes in <code class="docutils literal notranslate"><span class="pre">qtnorm</span></code> - now it works properly for
+non-standard truncated normal</p></li>
+<li><p>Bug fixes for <code class="docutils literal notranslate"><span class="pre">rmnom</span></code> and <code class="docutils literal notranslate"><span class="pre">rdirmnom</span></code> - now they correctly
+use the <code class="docutils literal notranslate"><span class="pre">prob</span></code> parameter values</p></li>
+<li><p>Minor improvements in <code class="docutils literal notranslate"><span class="pre">dmvhyper</span></code> and <code class="docutils literal notranslate"><span class="pre">dbvpois</span></code></p></li>
+<li><p>Cleaned-up the documentation</p></li>
+<li><p>Added discrete Laplace distribution</p></li>
+<li><p>Faster RNG generator for Laplace distribution</p></li>
+<li><p>Changes to using lower level RNG functions
+(<code class="docutils literal notranslate"><span class="pre">unif_rand</span></code>, <code class="docutils literal notranslate"><span class="pre">norm_rand</span></code>) when possible</p></li>
+<li><p>More tests</p></li>
+</ul>
+</section>
+<section id="id14">
+<h1>1.7.2<a class="headerlink" href="#id14" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Documentation clean-up</p></li>
+<li><p>Minor improvements and simplifications in C++ code</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">min</span> <span class="pre">==</span> <span class="pre">max</span></code> discrete uniform distribution behaves now
+as degenerate distribution</p></li>
+</ul>
+</section>
+<section id="id15">
+<h1>1.7.1<a class="headerlink" href="#id15" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added Dirichlet-multinomial and beta prime distributions</p></li>
+<li><p>Code clean-up for categorical distribution</p></li>
+<li><p>Improvements in documentation and examples (e.g. bivariate Poisson,
+bivariate normal)</p></li>
+<li><p>Other minor improvements in the code</p></li>
+</ul>
+</section>
+<section id="id16">
+<h1>1.7.0<a class="headerlink" href="#id16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Cleaning namespace - now mathematical functions are explicitly
+called from std library</p></li>
+<li><p>“using namespace Rcpp” was removed from all the files</p></li>
+<li><p>All the numerical values are now explicitly <code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code>’s,
+or casted to <code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code>; or <code class="docutils literal notranslate"><span class="pre">&lt;int&gt;</span></code>’s (for indexing)</p></li>
+<li><p>Improvements in algorithms for discrete uniform, categorical,
+mixture of normal, mixture of Poisson distributions</p></li>
+<li><p>Improvements in discrete uniform; now it accepts only integer
+valued parameters</p></li>
+<li><p>Major C++ code clean-up</p></li>
+</ul>
+</section>
+<section id="id17">
+<h1>1.6.10-14<a class="headerlink" href="#id17" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">erf</span></code>, <code class="docutils literal notranslate"><span class="pre">erfc</span></code>, <code class="docutils literal notranslate"><span class="pre">inv_erf</span></code> that are not used at this moment and
+caused problems when compiling on Fedora and Solaris</p></li>
+<li><p>Minor improvements in documentation</p></li>
+<li><p>Added mixtures of normal and of Poisson distributions</p></li>
+<li><p>Added truncated Poisson distribution</p></li>
+</ul>
+</section>
+<section id="id18">
+<h1>1.6.7-9<a class="headerlink" href="#id18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Minor changes and improvements in documention</p></li>
+<li><p>Truncated normal returns normal for infinite truncation points</p></li>
+<li><p>Added half-t, half-normal and half-Cauchy distributions</p></li>
+<li><p>Changed naming of data-variable from <code class="docutils literal notranslate"><span class="pre">x</span></code> to <code class="docutils literal notranslate"><span class="pre">q</span></code> for CDF’s</p></li>
+<li><p>Added inverse-CDF for discrete normal distribution, fixed
+random generation</p></li>
+<li><p>Added tests</p></li>
+<li><p>Multiple minor bug fixes (e.g. functions returning <code class="docutils literal notranslate"><span class="pre">NaN</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">0</span></code> for <code class="docutils literal notranslate"><span class="pre">Inf</span></code> values)</p></li>
+<li><p>Added Birnbaum-Saunders (fatigue life) distribution</p></li>
+<li><p>New algorithm for <code class="docutils literal notranslate"><span class="pre">rtriang</span></code></p></li>
+<li><p>Added quantile functions for: zero-inflated Poisson, zero-inflated binomial
+zero-inflated negative binomial, inverse gamma, inverse chi-squared
+distributions</p></li>
+<li><p>Added Huber density</p></li>
+</ul>
+</section>
+<section id="id19">
+<h1>1.6.1<a class="headerlink" href="#id19" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Exception handling in discrete uniform distribution functions</p></li>
+<li><p>Bug fixes in <code class="docutils literal notranslate"><span class="pre">rdunif</span></code></p></li>
+<li><p>Clean-up in documentation and examples</p></li>
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">dbvnorm</span></code> and <code class="docutils literal notranslate"><span class="pre">dbvpois</span></code> work with matrixes</p></li>
+<li><p>Renaming of parameters in bivariate normal to be consistent with
+base R normal distribution</p></li>
+</ul>
+</section>
+<section id="id20">
+<h1>1.6.0<a class="headerlink" href="#id20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Warning messages for non-integer values in discrete distributions</p></li>
+<li><p>Warning when returning NANs</p></li>
+<li><p>Code clean-up in <code class="docutils literal notranslate"><span class="pre">pbbinom</span></code> and <code class="docutils literal notranslate"><span class="pre">pbnbinom</span></code></p></li>
+<li><p>Clean-up in documentation</p></li>
+</ul>
+</section>
+<section id="id21">
+<h1>1.5.15-19<a class="headerlink" href="#id21" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Ranamed zero-inflated distributions to <code class="docutils literal notranslate"><span class="pre">*zip</span></code> and <code class="docutils literal notranslate"><span class="pre">*zinb</span></code></p></li>
+<li><p>Added zero-inflated binomial <code class="docutils literal notranslate"><span class="pre">*zib</span></code></p></li>
+<li><p>Code clean-up</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">pzipois</span></code> and <code class="docutils literal notranslate"><span class="pre">pzibinom</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">qlgser</span></code>; changes in <code class="docutils literal notranslate"><span class="pre">plgser</span></code> and <code class="docutils literal notranslate"><span class="pre">rlgser</span></code></p></li>
+<li><p>Fixed bug in <code class="docutils literal notranslate"><span class="pre">rlgser</span></code></p></li>
+<li><p>Examples for most of the functions</p></li>
+<li><p>Exception handling for <code class="docutils literal notranslate"><span class="pre">dmvhyper</span></code> and <code class="docutils literal notranslate"><span class="pre">rmvhyper</span></code>: values of <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">n</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">k</span></code> are checked against being non-integers</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\extraDistr"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.9.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.8.11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.8.10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.8.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.8.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.8.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.8.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.8.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.8.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.8.1-2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.6.10-14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.6.7-9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">1.5.15-19</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1250 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rdpack 2.6.2 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/Rdpack/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/Rdpack/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Rdpack 2.6.2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Rdpack 2.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-6-1">Rdpack 2.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-6">Rdpack 2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-5">Rdpack 2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-4">Rdpack 2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-3-1">Rdpack 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-3">Rdpack 2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-2">Rdpack 2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-4">Rdpack 2.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-3">Rdpack 2.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-2">Rdpack 2.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-1">Rdpack 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1">Rdpack 2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-0">Rdpack 2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-1-0-not-on-cran">Rdpack 1.1.0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-0-1-not-on-cran">Rdpack 1.0.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-0-0">Rdpack 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-11-1">Rdpack 0.11-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-11-0">Rdpack 0.11-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-3-not-on-cran">Rdpack 0.10-3 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-2-not-on-cran">Rdpack 0.10-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-1">Rdpack 0.10-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-0-not-on-cran">Rdpack 0.10-0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-9-1-not-on-cran">Rdpack 0.9-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-9-0">Rdpack 0.9-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-4-not-on-cran">Rdpack 0.8-4 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-3-not-on-cran">Rdpack 0.8-3 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-2-not-on-cran">Rdpack 0.8-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-1-not-on-cran">Rdpack 0.8-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-0">Rdpack 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-7-1-not-on-cran">Rdpack 0.7-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-7-0">Rdpack 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-6-x-not-on-cran">Rdpack 0.6-x (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-7-not-on-cran">Rdpack 0.5-7 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-6-not-on-cran">Rdpack 0.5-6 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-5">Rdpack 0.5-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-4-not-on-cran">Rdpack 0.5-4 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-3">Rdpack 0.5-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-2-not-on-cran">Rdpack 0.5-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-1">Rdpack 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-0-not-on-cran">Rdpack 0.5-0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-23-not-on-cran">Rdpack 0.4-23 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-22">Rdpack 0.4-22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-21">Rdpack 0.4-21</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-20">Rdpack 0.4-20</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-19-not-on-cran">Rdpack 0.4-19 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-18">Rdpack 0.4-18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-17-not-on-cran">Rdpack 0.4-17 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-16-not-on-cran">Rdpack 0.4-16 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-8-not-on-cran">Rdpack 0.4-8 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-7-not-on-cran">Rdpack 0.4-7 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-5-not-on-cran">Rdpack 0.4-5 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-4">Rdpack 0.4-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-1-not-on-cran">Rdpack 0.4-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-11-not-on-cran">Rdpack 0.3-11 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-10">Rdpack 0.3-10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-8">Rdpack 0.3-8</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-6-2">
+<h1>Rdpack 2.6.2<a class="headerlink" href="#rdpack-2-6-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RStudio_reprompt</span></code> now issues a more informative error message when not called
+on a suitable file or function. Fixes issue #30, reported by &#64;daattali.</p></li>
+<li><p>now the LaTeX macro <code class="docutils literal notranslate"><span class="pre">\slash</span></code> is wrapped in a condition, so that it is passed
+on for LaTeX related output but converted to <code class="docutils literal notranslate"><span class="pre">/</span></code> for other formats (such as
+html). Fixes GeoBosh/rbibutils#9, reported by &#64;MLopez-Ibanez.</p></li>
+<li><p>fixed the test for the fix in Rdpack v2.6.1 (see below) to work with R-4.4.2,
+since that R-devel change was not carried on to R-4.4.2.  (Note: the error
+concerns the test only. The fix in the code of the package works for any R
+version.) Fixes issue #37, reported by &#64;charles-plessy.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-6-1">
+<h1>Rdpack 2.6.1<a class="headerlink" href="#rdpack-2-6-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>R-devel c86938 turned to error the warning for a non-existing key in the bib
+file. Fixed <code class="docutils literal notranslate"><span class="pre">insert_bib</span></code> (and a related test) to handle that.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-6">
+<h1>Rdpack 2.6<a class="headerlink" href="#rdpack-2-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed issues causing ‘lost braces’ (actually, superfluous braces) NOTEs from
+checks in R-devel occuring with some accented LaTeX characters. These NOTEs
+are not yet activated on CRAN but if/when they do, developers using Rd macros
+<code class="docutils literal notranslate"><span class="pre">\insertRef</span></code> and <code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> can eliminate them by building their packages
+with Rdpack (&gt;= 2.6) and rbibutils (&gt;= 2.2.16).  Thanks to Sebastian Meyer for
+tracing down the issues.</p></li>
+<li><p>fixed a <code class="docutils literal notranslate"><span class="pre">Sweave</span></code> expression in ‘man/predefined.Rd’ to not emit unnecessary
+braces (see the note above).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-5">
+<h1>Rdpack 2.5<a class="headerlink" href="#rdpack-2-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Rd macros <code class="docutils literal notranslate"><span class="pre">insertCite</span></code> and friends were calling <code class="docutils literal notranslate"><span class="pre">\insert_citeOnly()</span></code> with
+argument <code class="docutils literal notranslate"><span class="pre">key</span></code> instead of <code class="docutils literal notranslate"><span class="pre">keys</span></code>. This was not an error since partial matching
+is ok here but not good practice. Fixes issue #28 reported by Marcel Ramos.</p></li>
+<li><p>changed the saved value in “tests/testthat/dummyArticle.rds” used in
+‘test-bib.R’ with a value obtained with R-devel r84896 n previu versins of R
+there wasasuperfluous final ‘ .’).</p></li>
+<li><p>in some cases when square brackets were requested, rather than round ones,
+<code class="docutils literal notranslate"><span class="pre">\insertCiteOnly</span></code> was using closing round parenthesis.</p></li>
+<li><p>in some cases <code class="docutils literal notranslate"><span class="pre">\insertCiteOnly</span></code> was not handling well the last cite when it
+was followed by free text.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-4">
+<h1>Rdpack 2.4<a class="headerlink" href="#rdpack-2-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new Rd macro <code class="docutils literal notranslate"><span class="pre">\insertCited{}</span></code> works like <code class="docutils literal notranslate"><span class="pre">\insertAllCited</span></code> but empties the
+references list after finishing its work. This means that the second and
+subsequent <code class="docutils literal notranslate"><span class="pre">\insertCited</span></code> in the same help page will list only citations done
+since the preceding <code class="docutils literal notranslate"><span class="pre">\insertCited</span></code>. Prompted by issue #27 to allow separate
+references lists for each method and the class in R6 documentation.</p></li>
+<li><p>It is no longer necessary to remove backslashes from <code class="docutils literal notranslate"><span class="pre">\&amp;</span></code> and similar in
+bibtex files (e.g. in “John Wiley &amp; Sons”). The backslash was appearing in
+the rendered pdf manual but R-devel’s checks started to warn about it recently
+with something like <code class="docutils literal notranslate"><span class="pre">checkRd:</span> <span class="pre">(-1)</span> <span class="pre">pcts-package.Rd:287:</span> <span class="pre">Escaped</span> <span class="pre">LaTeX</span> <span class="pre">specials:</span> <span class="pre">\&amp;</span></code> (starting June 2022). This could be avoided by removing the
+superfluous backslash in the bib file but this is annoying since this is
+proper syntax for the latter. Concerned packages should rebuild the tarball
+with Rdpack (&gt;= 2.4) or remove the offending backslashes from their bib
+files. (addresses issue #26)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-3-1">
+<h1>Rdpack 2.3.1<a class="headerlink" href="#rdpack-2-3-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>in Rd macro <code class="docutils literal notranslate"><span class="pre">\insertCite</span></code>, two or more accented Latin characters were rendered
+with superfluous curly braces, see issue#25 (reported by Manuel López-Ibáñez)
+and <a class="reference external" href="https://stat.ethz.ch/pipermail/r-devel/2022-April/081604.html">https://stat.ethz.ch/pipermail/r-devel/2022-April/081604.html</a>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-3">
+<h1>Rdpack 2.3<a class="headerlink" href="#rdpack-2-3" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>reverted the change in v2.2, since a further fix in R-devel,
+<a class="reference external" href="https://stat.ethz.ch/pipermail/r-devel/2022-March/081570.html">https://stat.ethz.ch/pipermail/r-devel/2022-March/081570.html</a>, made it
+unnecessary and dependent on the versions of R used to build and install a
+package.  This concerns developers who use the Bibtex related macros - they
+should not build their package with v2.2 of <code class="docutils literal notranslate"><span class="pre">Rdpack</span></code> and could require `Rdpack</p>
+<blockquote>
+<div><p>= 2.3<code class="docutils literal notranslate"><span class="pre">to</span> <span class="pre">ensure</span> <span class="pre">that</span> <span class="pre">users</span> <span class="pre">installing</span> <span class="pre">their</span> <span class="pre">package</span> <span class="pre">don't</span> <span class="pre">do</span> <span class="pre">that</span>&#160;&#160; <span class="pre">accidentally</span> <span class="pre">with</span></code>Rdpack 2.2`.</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-2">
+<h1>Rdpack 2.2<a class="headerlink" href="#rdpack-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>a change in R-devel (around built r81914, March 2022) in the processing of
+<code class="docutils literal notranslate"><span class="pre">\doi</span></code> Rd macros resulted in warnings from R-devel’s checks for packages that
+use Rdpack built with the released versions of R. This fixes it.  (fixes #24)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-1-4">
+<h1>Rdpack 2.1.4<a class="headerlink" href="#rdpack-2-1-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Rdmacro <code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> gets a new feature allowing to drop parentheses for
+parenthesised citations, analogous to natbib’s <code class="docutils literal notranslate"><span class="pre">\citealp</span></code> in latex. This makes
+it possible to use markup around the citations outside the arguments of the
+macro. This fixes github issue #23 by &#64;ms609.</p></li>
+<li><p>updated vignette “Inserting_bibtex_references” and other documentation.</p></li>
+<li><p>the pkgdown site now has a <code class="docutils literal notranslate"><span class="pre">Search</span></code> button on the navigation bar.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-1-3">
+<h1>Rdpack 2.1.3<a class="headerlink" href="#rdpack-2-1-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed a test that was failing with versions of rbibutils before v2.1.1
+(issue reported by Andreas Tille).</p></li>
+<li><p>if the version of rbibutils is greater than v2.2.5, parsing bib files with
+<code class="docutils literal notranslate"><span class="pre">rbibutils::readBib</span></code> now uses <code class="docutils literal notranslate"><span class="pre">texChars</span> <span class="pre">=</span> <span class="pre">&quot;Rdpack&quot;</span></code>. This ensures proper
+rendering of <code class="docutils literal notranslate"><span class="pre">\'i</span></code> in references (by converting <code class="docutils literal notranslate"><span class="pre">\'i</span></code> to <code class="docutils literal notranslate"><span class="pre">\'\i</span></code> which base
+R renders correctly).  For detailed discussion of this see issue
+GeoBosh/bibutils#7 and <a class="reference external" href="http://NEWS.md">NEWS.md</a> in rbibutils v2.2.4 and v2.2.5.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-1-2">
+<h1>Rdpack 2.1.2<a class="headerlink" href="#rdpack-2-1-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Rdmacros generating references now drop the <code class="docutils literal notranslate"><span class="pre">URL</span></code> field if a <code class="docutils literal notranslate"><span class="pre">doi</span></code> field
+generating the same URL is present. This avoids repetition of the URL since
+rendering the <code class="docutils literal notranslate"><span class="pre">doi</span></code> field produces the URL anyway.</p></li>
+<li><p>now references with identical authors are sorted by year.</p></li>
+<li><p>fixed rebib() to process doi’s properly.</p></li>
+<li><p>now checks on github (using github actions) are done on the three major
+platforms for the following versions of R: release, devel, oldrel, and 3.3.</p></li>
+<li><p>now a warning (rather than error) is issued if package ‘testthat’ is not
+available for tests.</p></li>
+<li><p>now bibtex files are parsed with option <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> when the version of
+<code class="docutils literal notranslate"><span class="pre">rbibutils</span></code> is &gt;= ‘2.1.2’. This fixes GeoBosh/rbibutils#3 for Rdpack users
+(although that needs fixing also for <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">=</span> <span class="pre">FALSE</span></code>).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-1-1">
+<h1>Rdpack 2.1.1<a class="headerlink" href="#rdpack-2-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">viewRd</span></code>, the default for the help type now is <code class="docutils literal notranslate"><span class="pre">options(&quot;help_type&quot;)</span></code>
+(previously the default was <code class="docutils literal notranslate"><span class="pre">&quot;text&quot;</span></code>).</p></li>
+<li><p>for <code class="docutils literal notranslate"><span class="pre">roxygen2</span></code> users, added a note in README and <code class="docutils literal notranslate"><span class="pre">Rdpack-package.Rd</span></code> not to
+indent by exactly four spaces <code class="docutils literal notranslate"><span class="pre">\insertAllCited{}</span></code> relative to <code class="docutils literal notranslate"><span class="pre">&#64;references</span></code>
+when markdown mode is activated. This is to avoid it being translated by
+<code class="docutils literal notranslate"><span class="pre">roxygen2</span></code> as verbatim (<code class="docutils literal notranslate"><span class="pre">\preformatted</span></code>) text, see issue (#18).</p></li>
+<li><p>moved package <code class="docutils literal notranslate"><span class="pre">gbRd</span></code> to Suggests.</p></li>
+<li><p>fixed uses of \dots in several examples (necessitated by a change in R-devel
+circa February 2021).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-1">
+<h1>Rdpack 2.1<a class="headerlink" href="#rdpack-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>dramatic speed up of processing of bibliography references, most noticeable
+for users with large number of help pages and large <code class="docutils literal notranslate"><span class="pre">REFERENCES.bib</span></code>.
+(prompted by Kisung You, issue #17)</p></li>
+<li><p>amended the warning message from  bibliography macros to mention duplicated keys.</p></li>
+<li><p>added entry for <code class="docutils literal notranslate"><span class="pre">rbibutils</span></code> in REFERENCES.bib.</p></li>
+<li><p>corrected wrong citation of <code class="docutils literal notranslate"><span class="pre">rbibutils</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-2-0">
+<h1>Rdpack 2.0<a class="headerlink" href="#rdpack-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>removed <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> from <code class="docutils literal notranslate"><span class="pre">Suggests</span></code> and elsewhere.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-1-1-0-not-on-cran">
+<h1>Rdpack 1.1.0 (not on CRAN)<a class="headerlink" href="#rdpack-1-1-0-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>imported <code class="docutils literal notranslate"><span class="pre">rbibutils</span></code> and made suitable adjustments to the code.</p></li>
+<li><p>moved <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> to <code class="docutils literal notranslate"><span class="pre">Suggests</span></code> (since <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> has been orphaned for several years).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-1-0-1-not-on-cran">
+<h1>Rdpack 1.0.1 (not on CRAN)<a class="headerlink" href="#rdpack-1-0-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>removed a documentation link to a function in <code class="docutils literal notranslate"><span class="pre">gbutils</span></code>, which is not among
+the dependencies of <code class="docutils literal notranslate"><span class="pre">Rdpack</span></code>. This was raising a NOTE on one of the CRAN
+testing machines.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-1-0-0">
+<h1>Rdpack 1.0.0<a class="headerlink" href="#rdpack-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">viewRd()</span></code> now loads also Rd macros declared by the package to which the
+rendered Rd file belongs.  Previously only macros from <code class="docutils literal notranslate"><span class="pre">Rdpack</span></code> were loaded
+but now there is at least one other package, <code class="docutils literal notranslate"><span class="pre">mathjaxr</span></code>, which defines Rd
+macros.</p></li>
+<li><p>moved <code class="docutils literal notranslate"><span class="pre">grDevices</span></code> to <code class="docutils literal notranslate"><span class="pre">Suggests</span></code>.</p></li>
+<li><p>edited some documentation files.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-11-1">
+<h1>Rdpack 0.11-1<a class="headerlink" href="#rdpack-0-11-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>in documentation of S4 classes, such as <code class="docutils literal notranslate"><span class="pre">&quot;classname-class.Rd&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>
+was sometimes inserting entries for slots already listed in the Slots
+section. The same bug was causing the new slots not to be reported properly to
+the user.</p></li>
+<li><p>in some cases <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> failed to process properly <code class="docutils literal notranslate"><span class="pre">\S4method</span></code> entries in
+the Usage section of Rd files. Now fixed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> now handles <code class="docutils literal notranslate"><span class="pre">\S4method</span></code> statements for replacement methods.  As
+for other functions and methods (S3 and S4), it is sufficient to put a
+declaration with empty argument list in the Usage section and <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> will
+insert the correct formal arguments for the method (they may be different from
+those of the generic).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>  now gives a more helpful error message when <code class="docutils literal notranslate"><span class="pre">type</span></code> is invalid.</p></li>
+<li><p>corrected some minor typo’s in the documentation.</p></li>
+<li><p>README and the documentation of <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> and <code class="docutils literal notranslate"><span class="pre">Rdpack-package</span></code> now give
+more details on <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>ing replacement functions.</p></li>
+<li><p><a class="reference external" href="http://README.md">README.md</a> and <a class="reference external" href="http://README.org">README.org</a> now give the correct <code class="docutils literal notranslate"><span class="pre">install.packages</span></code>
+instruction for CRAN (pull request #10 from &#64;katrinleinweber).</p></li>
+<li><p>some examples were leaving a stray file, <code class="docutils literal notranslate"><span class="pre">dummyfun.Rd</span></code>, after
+<code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-11-0">
+<h1>Rdpack 0.11-0<a class="headerlink" href="#rdpack-0-11-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Updated the vignette about <code class="docutils literal notranslate"><span class="pre">\insertFig</span></code>, <code class="docutils literal notranslate"><span class="pre">\printExample</span></code> and <code class="docutils literal notranslate"><span class="pre">\runExamples</span></code>,
+to reflect the lifting in <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">3.6.0</span></code> of some limitations of Rd processing in
+previous R versions.</p></li>
+<li><p>Vignette ‘Inserting BibTeX references’ now includes a section on bibliography
+styles. This section was previously only in README.</p></li>
+<li><p>The fix in Rdpack 0.10-3 (see below) for an issue introduced in R-devel in Oct
+2018 will be made permanent, at least for now. This fix resolves also a
+similar issue in package <code class="docutils literal notranslate"><span class="pre">pkgdown</span></code>, see the discussion at
+<a class="github reference external" href="https://github.com/GeoBosh/Rdpack/issues/9">GeoBosh/Rdpack#9</a> for details and further links.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-10-3-not-on-cran">
+<h1>Rdpack 0.10-3 (not on CRAN)<a class="headerlink" href="#rdpack-0-10-3-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>fixed issue#9 (reported by by &#64;aravind-j) appearing when a package is built
+with R-devel (since about Oct 2018) causing references by <code class="docutils literal notranslate"><span class="pre">\insertAllCited{}</span></code>
+to appear in a single paragraph in the <code class="docutils literal notranslate"><span class="pre">html</span></code> rendering of the Rd documentation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-10-2-not-on-cran">
+<h1>Rdpack 0.10-2 (not on CRAN)<a class="headerlink" href="#rdpack-0-10-2-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added pkgdown site to DESCRIPTION.</p></li>
+<li><p>README and the vignette about evaluated examples now state that R-devel no
+longer gives warnings about <code class="docutils literal notranslate"><span class="pre">\Sexpr</span></code> not being a top level section.
+This means that macro <code class="docutils literal notranslate"><span class="pre">runExamples</span></code> which creates section ‘Examples’
+containing code and results of evaluation will be useable in CRAN packages.</p></li>
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">Rdo_fetch()</span></code> gets the Rd object representing a help page from an
+installed or source package. It works also for packages under devtool’s
+developer’s mode</p></li>
+<li><p>The site created with pkgdown contains fewer errors now.
+(Note that the documentation builds without error with R’s tools).</p></li>
+<li><p>Started moving tests from my local setup to testthat.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-10-1">
+<h1>Rdpack 0.10-1<a class="headerlink" href="#rdpack-0-10-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>removed redundant references from REFERENCES.bib (they were leftovers from
+testing).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-10-0-not-on-cran">
+<h1>Rdpack 0.10-0 (not on CRAN)<a class="headerlink" href="#rdpack-0-10-0-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>updated vignette ‘Inserting_bibtex_references’.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-9-1-not-on-cran">
+<h1>Rdpack 0.9-1 (not on CRAN)<a class="headerlink" href="#rdpack-0-9-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>now <code class="docutils literal notranslate"><span class="pre">REFERENCES.bib</span></code> is read-in using the declared encoding for the
+corresponding package. If there is no declared encoding, “UTF-8” is assumed.</p></li>
+<li><p>Now macros <code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> and <code class="docutils literal notranslate"><span class="pre">\insertCiteOnly</span></code> use the correct <code class="docutils literal notranslate"><span class="pre">results=rd</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">results=Rd</span></code>. This was not catched by <code class="docutils literal notranslate"><span class="pre">R</span></code>s building tools but
+caused errors when processed with <code class="docutils literal notranslate"><span class="pre">pkgdown::build_site()</span></code>. Fixes issue#8. Also
+fixes r-lib/pkgdown#784.
+Thanks to <a class="reference external" href="https://github.com/jayhesselberth">Jay Hesselberth</a> for uncovering
+this.</p></li>
+<li><p>now references produced by the citation macros for BibTeX entries of type
+<code class="docutils literal notranslate"><span class="pre">&#64;book</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;incollection</span></code> treat field ‘series’ similarly to other BibTeX
+styles, including JSS (issue#7 raised by Kisung You). Note that even though
+the underlying base R tools are based on JSS, they treat this field
+differently.</p></li>
+<li><p>Bugfix: now Rd macro <code class="docutils literal notranslate"><span class="pre">\printExample</span></code> evaluates the expressions in the correct
+environment.</p></li>
+<li><p>help page of <code class="docutils literal notranslate"><span class="pre">get_usage()</span></code> gets a fairly complete Details section with
+numerous evaluated examples.</p></li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">run_examples()</span></code> escapes <code class="docutils literal notranslate"><span class="pre">%</span></code> by default, before returning the text. This is
+needed for text that is to be included in an Rd file. It can be turned off by
+setting the new argument <code class="docutils literal notranslate"><span class="pre">escape</span></code> to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p></li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> gives a more informative error message if an Rd file
+describes a non-existent S4 class. This is not captured by <code class="docutils literal notranslate"><span class="pre">R</span></code>s tools. It can
+happen during development if a class is removed.</p></li>
+<li><p>now reports printed by <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> about methods documented in Usage
+sections, but no longer existing, are more readable. This is due to a new
+print method for (the mostly internal) class “f_usage”.</p></li>
+<li><p>Many features of Rdpack are best demonstrated on a package. The new package
+RdpackTester under <code class="docutils literal notranslate"><span class="pre">./inst/examples</span></code> now makes this easier.</p></li>
+<li><p>now the help page “predefined.Rd” does not print some tables twice in the pdf
+manual. (This was due to using <code class="docutils literal notranslate"><span class="pre">\if{latex}{}{}</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">\ifelse{latex}{}{}</span></code> for those tables.)</p></li>
+<li><p>also in “predefined.Rd”, removed illegal use of vertical bars (in column
+specifications of tabular environments) from the pure LaTeX code in the
+<code class="docutils literal notranslate"><span class="pre">\ifelse</span></code> clause(s) and wrapped them in <code class="docutils literal notranslate"><span class="pre">\out{}</span></code>.</p></li>
+<li><p>in “get_sig_text.Rd”, replace <code class="docutils literal notranslate"><span class="pre">help()</span></code> with <code class="docutils literal notranslate"><span class="pre">utils::help()</span></code> to avoid warnings
+from more stringent <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code>. Similarly, in “Rdpack-package.Rd” replace
+<code class="docutils literal notranslate"><span class="pre">packageDescription()</span></code> with <code class="docutils literal notranslate"><span class="pre">utils::packageDescription()</span></code>. This may
+be needed in <code class="docutils literal notranslate"><span class="pre">\Sexpr</span></code>’s more generally (<strong>TODO:</strong> check if these would still
+be needed if the symbols are imported by the package.)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-9-0">
+<h1>Rdpack 0.9-0<a class="headerlink" href="#rdpack-0-9-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>some brush-up of the documentation for the changes since version 0.8-0 of the package.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-8-4-not-on-cran">
+<h1>Rdpack 0.8-4 (not on CRAN)<a class="headerlink" href="#rdpack-0-8-4-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>now simple mathematics in BibTeX entries is rendered natively, no need to replace dollars
+with <code class="docutils literal notranslate"><span class="pre">\eqn{}</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-8-3-not-on-cran">
+<h1>Rdpack 0.8-3 (not on CRAN)<a class="headerlink" href="#rdpack-0-8-3-not-on-cran" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>new macro <code class="docutils literal notranslate"><span class="pre">\printExample</span></code> for inclusion of example computations in narrative sections, such
+as <code class="docutils literal notranslate"><span class="pre">Details</span></code>. The code is evaluated and printed similarly to <code class="docutils literal notranslate"><span class="pre">R</span></code> sessions but the code is
+not prefixed and the output is prefixed with comment symbols, eg.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span>
+<span class="c1">##: 4</span>
+</pre></div>
+</div>
+</li>
+<li><p>new experimental macro <code class="docutils literal notranslate"><span class="pre">\runExamples</span></code> for use as top level section in an Rd
+file as a replacement of section <code class="docutils literal notranslate"><span class="pre">\examples</span></code>. <code class="docutils literal notranslate"><span class="pre">\runExamples{code}</span></code> evaluates
+the code and creates section <code class="docutils literal notranslate"><span class="pre">\examples</span></code> containing the code and the results
+(similarly to <code class="docutils literal notranslate"><span class="pre">\printExample</span></code>).  So, <code class="docutils literal notranslate"><span class="pre">\runExamples{2</span> <span class="pre">+</span> <span class="pre">2}</span></code> produces</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">examples</span><span class="p">{</span>
+<span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="c1">##: 4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The generated section <code class="docutils literal notranslate"><span class="pre">examples</span></code> is processed by R’s documentation tools
+(almost) as if it was there from the outset.</p>
+</li>
+<li><p>new experimental macro <code class="docutils literal notranslate"><span class="pre">\insertFig</span></code> to create a figure with <code class="docutils literal notranslate"><span class="pre">R</span></code> code and
+include it in the documentation. The related macro <code class="docutils literal notranslate"><span class="pre">\makeFig</span></code> just creates a
+graphics file, which can be included with the standard Rd command <code class="docutils literal notranslate"><span class="pre">\figure</span></code>.</p></li>
+<li><p>new vignette gives a brief description of the new macros.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-8-2-not-on-cran">
+<h1>Rdpack 0.8-2 (not on CRAN)<a class="headerlink" href="#rdpack-0-8-2-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Now text citations use “et al.” when there are three or more authors.
+(Issue#6 reported by Timothy P. Bilton)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-8-1-not-on-cran">
+<h1>Rdpack 0.8-1 (not on CRAN)<a class="headerlink" href="#rdpack-0-8-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>in this file, added backticks to <code class="docutils literal notranslate"><span class="pre">\insertRef</span></code> and <code class="docutils literal notranslate"><span class="pre">\insertAllCited</span></code> (see
+below) - in the rendered <code class="docutils literal notranslate"><span class="pre">News</span></code> on CRAN the backslashed words had disappeared.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-8-0">
+<h1>Rdpack 0.8-0<a class="headerlink" href="#rdpack-0-8-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">\insertRef</span></code> and <code class="docutils literal notranslate"><span class="pre">\insertAllCited</span></code> macros now support <code class="docutils literal notranslate"><span class="pre">bibstyles</span></code> for
+formatting references (feature requested by Jamie Halliday, issue#5). Use
+<code class="docutils literal notranslate"><span class="pre">Rdpack</span> <span class="pre">(&gt;=</span> <span class="pre">0.8)</span></code> in <code class="docutils literal notranslate"><span class="pre">Imports:</span></code> to use this feature. Currently only long
+author names are supported but complete support for styles can be added
+trivially if requested.</p></li>
+<li><p>updates to the documentation, in particular the bulk of Rdpack-package.Rd was
+from 2011!</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-7-1-not-on-cran">
+<h1>Rdpack 0.7-1 (not on CRAN)<a class="headerlink" href="#rdpack-0-7-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>improvements to handling of free form citations in textual mode:</p></li>
+<li><p>(bugfix) now the whole citation is not parenthesised in textual mode,</p></li>
+<li><p>the handling for textual mode was incomplete in that additional text after the
+citation was not put inside the parentheses along with the year.</p></li>
+<li><p>updates to the documentation.</p></li>
+<li><p>fix a bug in <code class="docutils literal notranslate"><span class="pre">Rdo_locate_core_section()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-7-0">
+<h1>Rdpack 0.7-0<a class="headerlink" href="#rdpack-0-7-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>consolidated the changes introduced since the previous CRAN release of Rdpack
+(it was 0.5-5) in preparation for the next release.  Users of the new macros
+for citation can use <code class="docutils literal notranslate"><span class="pre">Rdpack</span> <span class="pre">(&gt;=0.7)</span></code> in the <code class="docutils literal notranslate"><span class="pre">Imports:</span></code> field of file
+“DESCRIPTION” to ensure that they are available.</p></li>
+<li><p>comprehensive overhaul of handling of errors and warnings during processing of
+references and citations. In particular, such errors should (in most cases)
+produce only warnings during <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">INSTALL</span></code>, and not
+prevent the package from being built and installed.</p></li>
+<li><p>Unresolved BibTeX keys produce warnings during building and installation of
+the package, but not errors. Dummy entries are inserted in the documentation
+explaining what was amiss (currently with ‘author’ A Adummy).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-6-x-not-on-cran">
+<h1>Rdpack 0.6-x (not on CRAN)<a class="headerlink" href="#rdpack-0-6-x-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new Rd macros for citations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> inserts citation(s) for one or more keys and records the keys
+for <code class="docutils literal notranslate"><span class="pre">\insertAllCited</span></code> (see below).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\insertCiteOnly</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> but does not record the keys.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\insertNoCite</span></code> records the keys but does not produce a citation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\insertAllCited</span></code> prints a bibliography including all references recorded by
+<code class="docutils literal notranslate"><span class="pre">\insertCite</span></code> and <code class="docutils literal notranslate"><span class="pre">\insertNoCite</span></code>.</p></li>
+<li><p>new entries in this file will use markdown syntax.</p></li>
+<li><p>updates to the documentation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-7-not-on-cran">
+<h1>Rdpack 0.5-7 (not on CRAN)<a class="headerlink" href="#rdpack-0-5-7-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_bibentries()</span></code> gets a new argument “everywhere”. When is is TRUE, the
+default, unescaped percents are escaped in all bibtex fields, otherwise the
+replacement is done only in field “URL”.</p></li>
+<li><p>removed several <code class="docutils literal notranslate"><span class="pre">print()</span></code> statements which were accidentally left in the
+code in v. 0.5-6.</p></li>
+<li><p>updated help page of <code class="docutils literal notranslate"><span class="pre">get_bibentries()</span></code> and included examples.</p></li>
+<li><p>cleaned up the imports in NAMESPACE.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-6-not-on-cran">
+<h1>Rdpack 0.5-6 (not on CRAN)<a class="headerlink" href="#rdpack-0-5-6-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">insert_ref()</span></code> and Rd macro <code class="docutils literal notranslate"><span class="pre">\insertRef</span></code> should now work ok in the presence
+of percent encoded symbols in URL field of a BibTeX entry.  Closes issue
+“Unexpected END_OF_INPUT error (URL parsing?)”, see
+<a class="reference external" href="https://github.com/GeoBosh/Rdpack/issues/3">Rdpack issue 3</a>, raised by
+<a class="reference external" href="https://github.com/jdnewmil">jdnewmil</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_bibentries()</span></code> now takes care of percent encoded symbols in URLs.  It now
+returns an object from class “bibentryRd”, which inherits from “bibentry” but
+has its own print method which escapes or unescapes the percent signs in URLs
+depending on the requested output style. This was also reported by by
+<a class="reference external" href="https://github.com/jdnewmil">jdnewmil</a> in issue#3 referenced above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_bibentries()</span></code> now tries to load the <code class="docutils literal notranslate"><span class="pre">bib</span></code> file from the development
+directory of argument “package”, in case it is in development mode under
+“devtools”. (Even though the search is with <code class="docutils literal notranslate"><span class="pre">system.file()</span></code>, which <code class="docutils literal notranslate"><span class="pre">devtools</span></code>
+replaces with its own version, the bib file still needs to be looked for in
+“inst/”, i.e. it is not in the root directory as is the case in installed
+packages.)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-5">
+<h1>Rdpack 0.5-5<a class="headerlink" href="#rdpack-0-5-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Streamlined the help page of <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> and <code class="docutils literal notranslate"><span class="pre">Rdpack-package</span></code>.</p></li>
+<li><p>new argument, <code class="docutils literal notranslate"><span class="pre">edit</span></code>, in <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> opens the Rd file after updating it.</p></li>
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">ereprompt()</span></code> (<code class="docutils literal notranslate"><span class="pre">e'</span> <span class="pre">for</span> <span class="pre">_edit_)*</span> <span class="pre">opens</span> </code>reprompt()<code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">suitable</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">replace</span> <span class="pre">the</span> <span class="pre">original</span> <span class="pre">Rd</span> <span class="pre">file</span> <span class="pre">and</span> <span class="pre">open</span> <span class="pre">it</span> <span class="pre">in</span> <span class="pre">an</span> <span class="pre">editor,</span> <span class="pre">otherwise</span> <span class="pre">equivalent</span> <span class="pre">to</span></code>reprompt()`.</p></li>
+<li><p>now if <code class="docutils literal notranslate"><span class="pre">infile</span></code> does not exist, <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>, and hence <code class="docutils literal notranslate"><span class="pre">ereprompt()</span></code>, strips
+the directory part, finds the root of the package directory, and looks for the
+file under <code class="docutils literal notranslate"><span class="pre">man/</span></code> (this uses package <code class="docutils literal notranslate"><span class="pre">rprojroot</span></code>’). In particular, if the
+working directory is anywhere under the package root, <code class="docutils literal notranslate"><span class="pre">infile</span></code> can be simply
+the name of the Rd file, without path.</p></li>
+<li><p>now <a class="reference external" href="http://README.md">README.md</a> is generated from <a class="reference external" href="http://README.org">README.org</a>. I changed the layout and
+amended the information in it.</p></li>
+<li><p>README.* now get links to
+<a class="reference external" href="https://github.com/GeoBosh/georgisemacs">georgisemacs</a> for an emacs
+function to <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> the Rd file at point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">viewRd()</span></code> now works also when the file is from a package under devtools’
+development mode on any platform (e.g. RStudio, Emacs/ESS, Rgui).</p></li>
+<li><p>new RStudio add-in <code class="docutils literal notranslate"><span class="pre">Reprompt</span></code>, contributed by Duncan Murdoch.  If the file
+being edited in the RStudio’s code editor is an Rd file it calls
+<code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>. If the file is as R source file, it looks for the help page of a
+selected object name and works on it if found, otherwise creates one.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-4-not-on-cran">
+<h1>Rdpack 0.5-4 (not on CRAN)<a class="headerlink" href="#rdpack-0-5-4-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added the version of <code class="docutils literal notranslate"><span class="pre">Rdpack</span></code> to the abstract of the vignette.  This seems
+more informative than giving the compilation date.</p></li>
+<li><p>now <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> doesn’t give spurious warnings about unknown Rd macros when
+the Rd file contains user defined Rd macros. These warnings were harmless and
+rare, but alarming and annoying.</p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">inspect_args()</span></code> which caused the warning <em>“In <a class="reference external" href="http://is.na">is.na</a>(x) :
+<a class="reference external" href="http://is.na">is.na</a>() applied to non-(list or vector) of type ‘NULL’”</em> in <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code>, when
+the signature of a function in “Usage” section was empty.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-3">
+<h1>Rdpack 0.5-3<a class="headerlink" href="#rdpack-0-5-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The warning message about a missing reference key now appears also in the
+respective help page.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-2-not-on-cran">
+<h1>Rdpack 0.5-2 (not on CRAN)<a class="headerlink" href="#rdpack-0-5-2-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>added the github url to DESCRIPTION.</p></li>
+<li><p>now give a more informative warning if a key is missing from REFERENCES.bib
+(thanks to Kisung You for suggesting this).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-1">
+<h1>Rdpack 0.5-1<a class="headerlink" href="#rdpack-0-5-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>an example was not restoring the working directory.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-5-0-not-on-cran">
+<h1>Rdpack 0.5-0 (not on CRAN)<a class="headerlink" href="#rdpack-0-5-0-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>moved gbRd from Depends to Imports and adjusted some examples to use
+<code class="docutils literal notranslate"><span class="pre">tools::parse_Rd()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">parse_Rd()</span></code> (before this was not necessary
+since ‘gbRd’ <em>depended on</em> ‘tools’).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-23-not-on-cran">
+<h1>Rdpack 0.4-23 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-23-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new function <code class="docutils literal notranslate"><span class="pre">viewRd()</span></code> parses and shows an Rd file in a source package.<br />
+May be particularly helpful for devtools developers.</p></li>
+<li><p>revamped the vignette, added additional explanations of possible issues.</p></li>
+<li><p>new functions <code class="docutils literal notranslate"><span class="pre">makeVignetteReference()</span></code> and <code class="docutils literal notranslate"><span class="pre">vigbib()</span></code> generate Bibtex
+references for vignettes in a package.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-22">
+<h1>Rdpack 0.4-22<a class="headerlink" href="#rdpack-0-4-22" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added the requirement to <strong>Import Rdpack</strong> to the help page of
+<code class="docutils literal notranslate"><span class="pre">insert_ref()</span></code>.  (It was out of sync with the vignette.)</p></li>
+<li><p>Updated Description in DESCRIPTION, which was also out of sync with the
+vignette.</p></li>
+<li><p>Bug fix in the vignette: changed <code class="docutils literal notranslate"><span class="pre">\&#64;references</span></code> to <code class="docutils literal notranslate"><span class="pre">&#64;references</span></code> in the
+roxygen2 example.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-21">
+<h1>Rdpack 0.4-21<a class="headerlink" href="#rdpack-0-4-21" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Edited and amended vignette <em>“Inserting_bibtex_references”</em>, including:</p></li>
+<li><p>additional explanation and an example,</p></li>
+<li><p>requirement to import Rdpack and a mention of travis etc.</p></li>
+<li><p>paragraph about devtools.</p></li>
+<li><p>changed the URL for parse_Rd.pdf in REFERENCES.bib to https.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-20">
+<h1>Rdpack 0.4-20<a class="headerlink" href="#rdpack-0-4-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>cleaned up some minor CRAN issues.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-19-not-on-cran">
+<h1>Rdpack 0.4-19 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-19-not-on-cran" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>new facility for inserting references from BibTeX files - just put the line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  RdMacros: Rdpack
+</pre></div>
+</div>
+<p>in the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file of your package and the references in
+<code class="docutils literal notranslate"><span class="pre">inst/REFERENCES.bib</span></code>.  Then put <code class="docutils literal notranslate"><span class="pre">\inserRef{key}{yourpackage}</span></code> in
+documentation chunks to insert item <code class="docutils literal notranslate"><span class="pre">key</span></code> from the bib file. This works with
+both manually created Rd files and roxygen comments, see the documentation for
+details.</p>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-18">
+<h1>Rdpack 0.4-18<a class="headerlink" href="#rdpack-0-4-18" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>from now on, put next to versions published on CRAN (as above)</p></li>
+<li><p>a minor correction in file NEWS.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-17-not-on-cran">
+<h1>Rdpack 0.4-17 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-17-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>In file DESCRIPTION, changed reprompt and rebib to <code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">rebib()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-16-not-on-cran">
+<h1>Rdpack 0.4-16 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-16-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>don’t export <code class="docutils literal notranslate"><span class="pre">parse_text</span></code></p></li>
+<li><p>corrected bug in reprompt for S4 classes - new slots were not handled
+correctly (see <code class="docutils literal notranslate"><span class="pre">slots.R</span></code> for details).</p></li>
+<li><p>in reprompt for S4 methods: if the methods documentation describes methods
+that do not exist, print an informative message for the user. (Such methods
+are also printed for debugging purposes but in non-user friendly form.)</p></li>
+</ul>
+<ul class="simple">
+<li><p>included <code class="docutils literal notranslate"><span class="pre">methods</span></code> in <code class="docutils literal notranslate"><span class="pre">Imports:</span></code> - around R-devel version 2015-07-01 r68620
+not including it triggers warnings)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-8-not-on-cran">
+<h1>Rdpack 0.4-8 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-8-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new functions <code class="docutils literal notranslate"><span class="pre">.whichtageq</span></code> and <code class="docutils literal notranslate"><span class="pre">.whichtagin</span></code>; replaced most calls to
+<code class="docutils literal notranslate"><span class="pre">toolsdotdotdotRdTags</span></code> with these.</p></li>
+<li><p>removed <code class="docutils literal notranslate"><span class="pre">toolsdotdotdotRdTags</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-7-not-on-cran">
+<h1>Rdpack 0.4-7 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-7-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>removed <code class="docutils literal notranslate"><span class="pre">:::</span></code> calls from code; copied some functions from <code class="docutils literal notranslate"><span class="pre">tools</span></code> to achieve
+this (see “threedots.R”). Renamed the functions replacing <code class="docutils literal notranslate"><span class="pre">:::</span></code> with
+dotdotdot.</p></li>
+<li><p>export by name (not the generic export pattern); preparation for more
+selective export of functions in the future.</p></li>
+<li><p>new functions: <code class="docutils literal notranslate"><span class="pre">Rdo_get_argument_names</span></code>, <code class="docutils literal notranslate"><span class="pre">Rdo_get_item_labels</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-5-not-on-cran">
+<h1>Rdpack 0.4-5 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-5-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>dependence <code class="docutils literal notranslate"><span class="pre">bibtex</span></code> becomes “Imports”.  <code class="docutils literal notranslate"><span class="pre">tools</span></code> and <code class="docutils literal notranslate"><span class="pre">gbRd</span></code> remain (for now)
+“Depends” since functions from them are used in some examples without
+<code class="docutils literal notranslate"><span class="pre">require()</span></code>’s.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rebib()</span></code>: now <code class="docutils literal notranslate"><span class="pre">outfile=&quot;&quot;</span></code> can be used to request overwriting <code class="docutils literal notranslate"><span class="pre">infile</span></code>.
+(a small convenience; before the change, one could do this by giving the
+<code class="docutils literal notranslate"><span class="pre">outfile</span></code> and <code class="docutils literal notranslate"><span class="pre">infile</span></code> the same values.)</p></li>
+<li><p>Bug fix: <code class="docutils literal notranslate"><span class="pre">predefined.Rd</span></code> contained <code class="docutils literal notranslate"><span class="pre">\tabular</span></code> environments with vertical bars,
+<code class="docutils literal notranslate"><span class="pre">|</span></code>, in the format specification. This is not documented in “Writing R exts”
+but works for LaTeX and remained unnoticed by me and R CMD check. However,
+rendering the help page for the objects documented in “predefined.Rd” gave an
+error in html and text mode.  Package installation failed only if html was
+requested at build time.</p></li>
+<li><p>small changes in the documentation</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-4">
+<h1>Rdpack 0.4-4<a class="headerlink" href="#rdpack-0-4-4" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-4-1-not-on-cran">
+<h1>Rdpack 0.4-1 (not on CRAN)<a class="headerlink" href="#rdpack-0-4-1-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>new major feature: processing references from Bibtex files.  The top user
+level function is <code class="docutils literal notranslate"><span class="pre">rebib()</span></code>, which updates section “references” in an Rd
+file. <code class="docutils literal notranslate"><span class="pre">promptPackageSexpr()</span></code> has been updated to use this
+feature. <code class="docutils literal notranslate"><span class="pre">inspect_Rdbib()</span></code> can be used in programming.</p></li>
+<li><p>new auxiliary functions for work with <code class="docutils literal notranslate"><span class="pre">bibentry</span></code> objects.</p></li>
+<li><p>new convenience programming functions for Rd objects.</p></li>
+<li><p>some small bug fixes.</p></li>
+<li><p>some gaps in the documentation filled.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-3-11-not-on-cran">
+<h1>Rdpack 0.3-11 (not on CRAN)<a class="headerlink" href="#rdpack-0-3-11-not-on-cran" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reprompt()</span></code> was not handling properly S4 replacement methods. Changed the
+parsing of the arguments to rectify this. Some other functions also needed
+correction to handle this.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-3-10">
+<h1>Rdpack 0.3-10<a class="headerlink" href="#rdpack-0-3-10" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Depends</span></code> field in DESCRIPTION file updated to require R 2.15.0 or later
+(because of a few uses of <code class="docutils literal notranslate"><span class="pre">paste0()</span></code> in recent code).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rdpack-0-3-8">
+<h1>Rdpack 0.3-8<a class="headerlink" href="#rdpack-0-3-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>first public version</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\Rdpack"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Rdpack 2.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-6-1">Rdpack 2.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-6">Rdpack 2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-5">Rdpack 2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-4">Rdpack 2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-3-1">Rdpack 2.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-3">Rdpack 2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-2">Rdpack 2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-4">Rdpack 2.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-3">Rdpack 2.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-2">Rdpack 2.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1-1">Rdpack 2.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-1">Rdpack 2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-2-0">Rdpack 2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-1-0-not-on-cran">Rdpack 1.1.0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-0-1-not-on-cran">Rdpack 1.0.1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-1-0-0">Rdpack 1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-11-1">Rdpack 0.11-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-11-0">Rdpack 0.11-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-3-not-on-cran">Rdpack 0.10-3 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-2-not-on-cran">Rdpack 0.10-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-1">Rdpack 0.10-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-10-0-not-on-cran">Rdpack 0.10-0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-9-1-not-on-cran">Rdpack 0.9-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-9-0">Rdpack 0.9-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-4-not-on-cran">Rdpack 0.8-4 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-3-not-on-cran">Rdpack 0.8-3 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-2-not-on-cran">Rdpack 0.8-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-1-not-on-cran">Rdpack 0.8-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-8-0">Rdpack 0.8-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-7-1-not-on-cran">Rdpack 0.7-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-7-0">Rdpack 0.7-0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-6-x-not-on-cran">Rdpack 0.6-x (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-7-not-on-cran">Rdpack 0.5-7 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-6-not-on-cran">Rdpack 0.5-6 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-5">Rdpack 0.5-5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-4-not-on-cran">Rdpack 0.5-4 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-3">Rdpack 0.5-3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-2-not-on-cran">Rdpack 0.5-2 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-1">Rdpack 0.5-1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-5-0-not-on-cran">Rdpack 0.5-0 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-23-not-on-cran">Rdpack 0.4-23 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-22">Rdpack 0.4-22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-21">Rdpack 0.4-21</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-20">Rdpack 0.4-20</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-19-not-on-cran">Rdpack 0.4-19 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-18">Rdpack 0.4-18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-17-not-on-cran">Rdpack 0.4-17 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-16-not-on-cran">Rdpack 0.4-16 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-8-not-on-cran">Rdpack 0.4-8 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-7-not-on-cran">Rdpack 0.4-7 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-5-not-on-cran">Rdpack 0.4-5 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-4">Rdpack 0.4-4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-4-1-not-on-cran">Rdpack 0.4-1 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-11-not-on-cran">Rdpack 0.3-11 (not on CRAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-10">Rdpack 0.3-10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rdpack-0-3-8">Rdpack 0.3-8</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

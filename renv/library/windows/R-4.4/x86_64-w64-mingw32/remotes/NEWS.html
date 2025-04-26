@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>remotes 2.5.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/remotes/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/remotes/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>remotes 2.5.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">remotes 2.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-2">remotes 2.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-1">remotes 2.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-0">remotes 2.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-3-0">remotes 2.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-fixes">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-2-0">remotes 2.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions-and-features">New functions and features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-1-1">remotes 2.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-1-0">remotes 2.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-4">remotes 2.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-3">remotes 2.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-2">remotes 2.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-1">remotes 2.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-0">remotes 2.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-1-1">remotes 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-1-0">remotes 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-0-0">remotes 1.0.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="remotes-2-5-0">
+<h1>remotes 2.5.0<a class="headerlink" href="#remotes-2-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_github()</span></code> now uses credentials from the git
+credential store, if <code class="docutils literal notranslate"><span class="pre">GITHUB_PAT</span></code> and <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> are not set.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Remotes</span></code> field in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> now accepts explicit package names:
+<code class="docutils literal notranslate"><span class="pre">&lt;pkgname&gt;=&lt;type&gt;::&lt;username&gt;/&lt;repo&gt;</span></code> (#719, &#64;heavywatal).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dev_package_deps()</span></code> now works for packages with <code class="docutils literal notranslate"><span class="pre">Enhances</span></code> dependencies
+(#711, &#64;maksymiuks).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_dev()</span></code> now ignores a trailing slash (#692,  &#64;krlmlr).</p></li>
+<li><p>System requirements now support Ubuntu 22.04.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local_package_deps()</span></code> now errors for non-existent directories
+(#772, &#64;MatthieuStigler).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-4-2">
+<h1>remotes 2.4.2<a class="headerlink" href="#remotes-2-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Gábor Csárdi is now the maintainer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bioc_version()</span></code> now points to the most recent (2021-10-27) Bioconductor
+release, <code class="docutils literal notranslate"><span class="pre">v3.14</span></code> (&#64;stufield, #664).</p></li>
+<li><p>Fix regex to handle user names in URL in <code class="docutils literal notranslate"><span class="pre">git_remote</span></code>, add regression tests (&#64;achimgaedke, #646).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-4-1">
+<h1>remotes 2.4.1<a class="headerlink" href="#remotes-2-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild is no longer accidentally loaded even in standalone mode (#548)</p></li>
+<li><p>The internal GitHub token used to increase rate limits has been regenerated.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">remote_package_name.git2r_remote</span></code> now passes credentials when looking up the package <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> (#633, &#64;rnorberg)</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">remote_package_name.git2r_remote</span></code> and <code class="docutils literal notranslate"><span class="pre">remote_package_name.xgit_remote</span></code>, http responses returning an invalid <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> or that redirect to another page will now fallback to return <code class="docutils literal notranslate"><span class="pre">NA</span></code> instead of throwing an error when trying to parse the unexpected content (#628, &#64;dgkf).</p></li>
+<li><p>Fix regex that breaks git protocol in <code class="docutils literal notranslate"><span class="pre">git_remote</span></code> (&#64;niheaven #630).</p></li>
+<li><p>Clarify <code class="docutils literal notranslate"><span class="pre">github_pull()</span></code> documentation (&#64;ms609 #640).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-4-0">
+<h1>remotes 2.4.0<a class="headerlink" href="#remotes-2-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Re-license as MIT. (#551)</p></li>
+<li><p>Fix bug in install_bioc() when using version=’devel’. The code will now pull from the git HEAD, not a branch named ‘HEAD’ (&#64;bbimber, #612).</p></li>
+<li><p>skip tests for <code class="docutils literal notranslate"><span class="pre">download.file(method</span> <span class="pre">=</span> <span class="pre">&quot;internal&quot;)</span></code>, on R &gt; 4.1, since that method is now defunct on those versions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">system_requirements()</span></code> now works as intended if only the <code class="docutils literal notranslate"><span class="pre">os</span></code> argument is used (&#64;mdneuzerling, #609)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remote_package_name.git2r_remote</span></code> and <code class="docutils literal notranslate"><span class="pre">remote_package_name.xgit_remote</span></code> now get correct package name from HTTP(S) git repo’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file, and thus package’s <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file’s <code class="docutils literal notranslate"><span class="pre">Remotes</span></code> field could have <code class="docutils literal notranslate"><span class="pre">git::http(s)://&lt;host&gt;/&lt;username&gt;/&lt;repo&gt;[.git][&#64;ref]</span></code> items that install remote packages using git via HTTP(S) protocol (&#64;niheaven, #603).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-3-0">
+<h1>remotes 2.3.0<a class="headerlink" href="#remotes-2-3-0" title="Link to this heading">#</a></h1>
+<section id="major-changes">
+<h2>Major changes<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*()</span></code> functions will no longer fail by default if there warnings from <code class="docutils literal notranslate"><span class="pre">install.packages()</span></code>. Concretely the default value of <code class="docutils literal notranslate"><span class="pre">R_REMOTES_NO_ERRORS_FROM_WARNINGS</span></code> has changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> from the previous value of <code class="docutils literal notranslate"><span class="pre">false</span></code>. (#403)</p></li>
+</ul>
+</section>
+<section id="minor-improvements-and-fixes">
+<h2>Minor improvements and fixes<a class="headerlink" href="#minor-improvements-and-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_bioc()</span></code> now respects the environment variable R_BIOC_VERSION, and will use the git branch corresponding to this Bioconductor version (&#64;bbimber, #580).</p></li>
+<li><p>remotes without package names are now unconditionally installed (#532, &#64;jakubkovac)</p></li>
+<li><p>It is now possible to specify a custom host for dependencies listed in the <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> file with <code class="docutils literal notranslate"><span class="pre">Remotes:</span> <span class="pre">&lt;type&gt;[&#64;host]::&lt;username&gt;/&lt;repo&gt;[&#64;ref]</span></code>. The <code class="docutils literal notranslate"><span class="pre">ref</span></code> now supports <code class="docutils literal notranslate"><span class="pre">/</span></code> in it for <code class="docutils literal notranslate"><span class="pre">GitLab</span></code> repositories as it did for <code class="docutils literal notranslate"><span class="pre">GitHub</span></code>repositories. (&#64;dagola, #448)</p></li>
+<li><p>Internal <code class="docutils literal notranslate"><span class="pre">package2remote()</span></code> function now supports local remotes created by pak.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">github_pat()</span></code> will now check if <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> is set if it cannot find <code class="docutils literal notranslate"><span class="pre">GITHUB_PAT</span></code>. (&#64;coatless)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">system_requirements()</span></code> now supports querying released packages as well as development dependencies (#545)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">system_requirements()</span></code> now supports OS name + version in the <code class="docutils literal notranslate"><span class="pre">os</span></code> argument (#549, &#64;krlmlr).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-2-0">
+<h1>remotes 2.2.0<a class="headerlink" href="#remotes-2-2-0" title="Link to this heading">#</a></h1>
+<section id="new-functions-and-features">
+<h2>New functions and features<a class="headerlink" href="#new-functions-and-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">system_requirements()</span></code> function to query the Public RStudio Package Manager for system requirements for a package (and its dependencies)</p></li>
+<li><p>Remotes functions can now install dependencies from additional DESCRIPTION fields, e.g. passing <code class="docutils literal notranslate"><span class="pre">dependencies</span> <span class="pre">=</span> <span class="pre">&quot;Config/Needs/website&quot;</span></code> will install the dependencies listed in the <code class="docutils literal notranslate"><span class="pre">Config/Needs/website:</span> </code> field in the package’s DESCRIPTION.
+Prefixing fields with <code class="docutils literal notranslate"><span class="pre">Config/Needs</span></code> allows them to pass <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code> without a NOTE, so it is the recommended format for these extra dependencies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*()</span></code> family of functions now use the default branch in the repository, not the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch (&#64;MyKo101,#508).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Minor improvements and fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Internal functions <code class="docutils literal notranslate"><span class="pre">remote_download()</span></code>, <code class="docutils literal notranslate"><span class="pre">remote_metadata()</span></code>, <code class="docutils literal notranslate"><span class="pre">remote_package_name()</span></code> and <code class="docutils literal notranslate"><span class="pre">remote_sha()</span></code> are now exported, so 3rd party packages could provide methods for new remote types (#509, #56)</p></li>
+<li><p>Internal functions <code class="docutils literal notranslate"><span class="pre">add_metadata()</span></code>, <code class="docutils literal notranslate"><span class="pre">github_remote()</span></code> are now exported. They are mainly for 3rd party extensions and should not be used by most users (#485).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_version()</span></code> now keeps searching subsequent repositories for the requested version, rather than failing if the version it finds in an early repository is unsuitable. (#305, &#64;kenahoo)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_version()</span></code> now understands specifications like ‘&gt;= 1.0’ or ‘&gt;= 1.12.0, &lt; 1.14’ to install the first version of the package it can find that satisfies the criteria. (#305, &#64;kenahoo)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_version()</span></code> now avoids use of <code class="docutils literal notranslate"><span class="pre">base::url()</span></code>, as prior to R 3.6.2 it had a bug when downloading large files (#463)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_submodules()</span></code> internal regular expression is now PCRE 2 compatible (#502, &#64;jan-glx)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_packages()</span></code> argument <code class="docutils literal notranslate"><span class="pre">force</span></code> has been deprecated and no longer has any effect (#521)</p></li>
+<li><p>Another fix for the mixed binary and source dependency issue, it should hopefully be fully squashed now (#296)</p></li>
+<li><p>The upgrade menu is now interruptible in RStudio (#489).</p></li>
+<li><p>Internal GitHub functions now correctly handle cases when characters are not representable in the default locale, but are representable in UTF-8 (#492).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-1-1">
+<h1>remotes 2.1.1<a class="headerlink" href="#remotes-2-1-1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>Minor improvements and fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Installing mixed binary and source dependencies when the latest versions of
+some packages do not have binaries yet should now install dependencies in the
+correct order to prevent load failures (#296)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">github_error()</span></code> now also works when a GitHub (Enterprise) server does not
+return information about the rate limit (&#64;dpprdan, #396, #413).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_gitlab</span></code> passes the <code class="docutils literal notranslate"><span class="pre">quiet</span></code> argument on to <code class="docutils literal notranslate"><span class="pre">gitlab_pat</span></code> (&#64;michaelchirico, #437)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remotes</span></code> is now resilient against installed packages that declare
+<code class="docutils literal notranslate"><span class="pre">RemoteType:</span> <span class="pre">standard</span></code> but do not include a <code class="docutils literal notranslate"><span class="pre">RemoteRepos</span></code> or <code class="docutils literal notranslate"><span class="pre">RemotePkgType</span></code>
+field. In such a case, the values for <code class="docutils literal notranslate"><span class="pre">getOption(&quot;repos&quot;)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">getOption(&quot;pkgType&quot;)</span></code> will be used (respectively).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_gitlab()</span></code> now installs from repositories in subgroups and with dots
+in their name. <code class="docutils literal notranslate"><span class="pre">subdir</span></code> is now an explicit argument instead of implicit in
+<code class="docutils literal notranslate"><span class="pre">repo</span></code> (&#64;robertdj, #259, #420).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install()</span></code> now passes the ellipsis <code class="docutils literal notranslate"><span class="pre">...</span></code> to <code class="docutils literal notranslate"><span class="pre">install_deps()</span></code> (&#64;Neil-Schneider, #411)</p></li>
+<li><p>The tests have been updated to work with newer versions of callr and R 4.0</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-1-0">
+<h1>remotes 2.1.0<a class="headerlink" href="#remotes-2-1-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*()</span></code> functions gain <code class="docutils literal notranslate"><span class="pre">build_manual</span></code> and <code class="docutils literal notranslate"><span class="pre">build_vignette</span></code> arguments
+that previously existed in devtools versions &lt; 2.0 (#353).</p></li>
+<li><p>The interactive menu has been modified to provide more clear instructions on
+the skipping behavior (#207)</p></li>
+<li><p>Credentials are now passed via HTTP headers, to reduce exposure when requests
+fail (#391).</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Minor improvements and fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">download()</span></code> with the external curl download method now always uses <code class="docutils literal notranslate"><span class="pre">-L</span></code> to
+follow redirects. (#350)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_packages()</span></code> now has a more informative error message when the update
+fails (#223, #232)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_git()</span></code> now can take credentials from the global option
+<code class="docutils literal notranslate"><span class="pre">remotes.git_credentials</span></code> (#378).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_git()</span></code> now works with SHA references and external git (#389).</p></li>
+<li><p>GitHub remotes that point to branches no longer fail when the branch is later
+deleted (#274).</p></li>
+<li><p>Local remotes whose original location has been moved will no longer error
+when updating (#370).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_deps()</span></code> no longer sorts the dependencies alphabetically (#296, #301)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">github_resolve_ref()</span></code> now takes a <code class="docutils literal notranslate"><span class="pre">host</span></code> parameter (#284)</p></li>
+<li><p>Remotes specific environment variables now accept 0 and 1 as valid values (#238)</p></li>
+<li><p>remotes now uses locking by default when installing binary packages, which avoids
+issues when installing binaries that are already open in other R processes
+(#368)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_deps()</span></code> no longer fails if a local package no longer exists (#289)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_version()</span></code> now errors with a more informative message when <code class="docutils literal notranslate"><span class="pre">type</span></code> is
+not ‘source’ (#323)</p></li>
+<li><p>Bioc <code class="docutils literal notranslate"><span class="pre">remote_sha()</span></code> now always returns a character result (#379)</p></li>
+<li><p>Fix API call for private repositories in <code class="docutils literal notranslate"><span class="pre">install_gitlab</span></code>
+(&#64;aornugent, #359, #363)</p></li>
+<li><p>git submodules now work if the submodule file is empty (&#64;muschellij2, #234)</p></li>
+<li><p>git submodules now work if the R package is stored in a subfolder (&#64;pommedeterresautee, #233)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_gitlab()</span></code> no longer adds the access token twice to the request
+(&#64;aornugent, #363).</p></li>
+<li><p>Bitbucket dependencies now actually use the <code class="docutils literal notranslate"><span class="pre">BITBUCKET_USER</span></code> and
+<code class="docutils literal notranslate"><span class="pre">BITBUCKET_PASSWORD</span></code> environment variables (&#64;antoine-sachet, #347).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_deps()</span></code> now ignores trailing whitespaces around comparison operators
+in DESCRIPTION fields (&#64;LiNk-NY, #366)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-0-4">
+<h1>remotes 2.0.4<a class="headerlink" href="#remotes-2-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">update.package_dependencies()</span></code> now uses the pkg_type for the cran remote
+rather than a global type attribute, fixing errors when this global attribute
+is lost (#291, #304).</p></li>
+<li><p>Credentials are no longer passed to dependencies, as this breaks dependencies
+which use different credentials or hosts. If you have relied on this behavior
+a more robust way to provide the credentials is using the appropriate
+environment variables, e.g. <code class="docutils literal notranslate"><span class="pre">GITHUB_PAT</span></code>, <code class="docutils literal notranslate"><span class="pre">BITBUCKET_USER</span></code> etc.
+(&#64;antoine-sachet, #345).</p></li>
+<li><p>The hash of bitbucket hosts is now correctly retrieved (&#64;antoine-sachet, #344)</p></li>
+<li><p>Fix parsing of Additional_Repositories which have a leading newline
+(&#64;tmelliott, #251).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-0-3">
+<h1>remotes 2.0.3<a class="headerlink" href="#remotes-2-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The order of choices for <code class="docutils literal notranslate"><span class="pre">upgrade</span> <span class="pre">=</span> <span class="pre">&quot;ask&quot;</span></code> now puts the stable ones ‘All’,
+‘CRAN only’, ‘none’ first, so they always have the same numbers (#287).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_submodules()</span></code> now works with empty .gitmodules files (&#64;jsilve24, #329).</p></li>
+<li><p>remotes now understands the “standard” remote type, as produced by packages
+installed from CRAN using <code class="docutils literal notranslate"><span class="pre">pak</span></code> (#309)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_dev()</span></code> now supports ref/pull format, e.g.
+<code class="docutils literal notranslate"><span class="pre">install_dev('shiny&#64;v1.2-rc')</span></code> (&#64;mkearney, #279).</p></li>
+<li><p>Fix return type of <code class="docutils literal notranslate"><span class="pre">install_remote()</span></code> when there is a circular dependency (#225)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remote_package_name.github_remote()</span></code> now works properly on Windows (#248)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_bioc()</span></code> repositories now updated for the Bioconductor 3.8 release.
+(#239)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions now set the <code class="docutils literal notranslate"><span class="pre">R_LIBS*</span></code> environment variables for
+child processes correctly on Windows (&#64;HenrikBengtsson, #253)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions now support the <code class="docutils literal notranslate"><span class="pre">R_REMOTES_UPGRADE</span></code> environment
+variable, to set the default for the <code class="docutils literal notranslate"><span class="pre">upgrade</span></code> argument. See README for
+details (&#64;kevinushey, #240).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions perform basic HTTP authentication using HTTP
+headers now. This fixes an issue with <code class="docutils literal notranslate"><span class="pre">install_bitbucket()</span></code> and private
+repos (#255).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions now respect the <code class="docutils literal notranslate"><span class="pre">download.file.method</span></code> option,
+if <code class="docutils literal notranslate"><span class="pre">download_file()</span></code> is used for HTTP.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions now use the <em>libcurl</em> method, if the
+<code class="docutils literal notranslate"><span class="pre">download.file.method</span></code> option is not set to a different one, and libcurl
+is available. Before, the <em>wininet</em> method was preferred on Windows.
+If you rely on the proxy configuration of <em>wininet</em>, then you might
+want to set the <code class="docutils literal notranslate"><span class="pre">download.file.method</span></code> option, or use another way to
+set up proxies, see <code class="docutils literal notranslate"><span class="pre">?download.file</span></code>.</p></li>
+<li><p>Remotes without package names are now unconditionally installed (#246).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_github()</span></code> now includes a more informative error message when the
+status code is 404, asking the user to check that they have spelled the
+repo owner and repo correctly (included in the error message), and that
+they have the required permissions to access the repository.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_*</span></code> functions (via the underlying private <code class="docutils literal notranslate"><span class="pre">install</span></code> function) now set
+<code class="docutils literal notranslate"><span class="pre">RGL_USE_NULL=&quot;TRUE&quot;</span></code> in order to avoid errors when running headless
+and installing any package using <code class="docutils literal notranslate"><span class="pre">rgl</span></code> (&#64;jefferis, ##333)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-0-2">
+<h1>remotes 2.0.2<a class="headerlink" href="#remotes-2-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_deps()</span></code> now installs un-installed remotes packages even when
+<code class="docutils literal notranslate"><span class="pre">upgrade</span> <span class="pre">=</span> <span class="pre">&quot;never&quot;</span></code> (&#64;ankane, #227)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_version()</span></code> now removes metadata added as a byproduct of using
+<code class="docutils literal notranslate"><span class="pre">install_url()</span></code> internally() (#224)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install()</span></code> now avoids converting warnings to errors if
+<code class="docutils literal notranslate"><span class="pre">R_REMOTES_NO_ERRORS_FROM_WARNINGS</span></code> is unset and
+<code class="docutils literal notranslate"><span class="pre">_R_CHECK_FORCE_SUGGESTS_=false</span></code>. This avoids failures due to Suggested
+packages potentially being missing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_bitbucket()</span></code> now works properly with packages in subdirectories
+(#220)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_deps()</span></code> now installs un-installed packages even when <code class="docutils literal notranslate"><span class="pre">upgrade</span> <span class="pre">=</span> <span class="pre">&quot;never&quot;</span></code> (#218)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-0-1">
+<h1>remotes 2.0.1<a class="headerlink" href="#remotes-2-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_github()</span></code> now bundles a GitHub PAT which is used on Travis to avoid
+hitting the rate limit too frequently. It also contains a more informative
+error message when the rate limit is hit on how to setup a GitHub personal
+access token.</p></li>
+<li><p>The dialog when <code class="docutils literal notranslate"><span class="pre">upgrade</span> <span class="pre">=</span> <span class="pre">&quot;ask&quot;</span></code> now has a ‘CRAN only’ option, to update
+only CRAN packages.</p></li>
+<li><p>No longer include project specific .Rprofile code in the temporary .Rprofile when
+<code class="docutils literal notranslate"><span class="pre">R_REMOTES_NO_ERRORS_FROM_WARNINGS=false</span></code> (the default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update.package_deps()</span></code> no longer prompts to install uninstalled
+dependencies, they are always installed (#203).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">available_packages()</span></code>, <code class="docutils literal notranslate"><span class="pre">available_packages_set()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">available_packges_reset()</span></code> added to allow caching of the
+<code class="docutils literal notranslate"><span class="pre">available.packages()</span></code> database.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-2-0-0">
+<h1>remotes 2.0.0<a class="headerlink" href="#remotes-2-0-0" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_github()</span></code>’s previously deprecated <code class="docutils literal notranslate"><span class="pre">username</span></code> argument has been
+removed. (#142)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_deps()</span></code>’s <code class="docutils literal notranslate"><span class="pre">threads</span></code> argument has been removed, use the <code class="docutils literal notranslate"><span class="pre">Ncpus</span></code>
+argument instead (#153, #154)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_git()</span></code>’s <code class="docutils literal notranslate"><span class="pre">branch</span></code> argument has been renamed to <code class="docutils literal notranslate"><span class="pre">ref</span></code> and <code class="docutils literal notranslate"><span class="pre">branch</span></code>
+has been deprecated.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>New features<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>remotes now builds packages by default before installing them. This step
+uses the pkgbuild package, if available. If not, it calls <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">build</span></code>
+directly.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">install_dev()</span></code> to install the development version of a CRAN package,
+based on the URL and BugReports fields in the DESCRIPTION file (#144).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()*</span></code> functions now temporally put Rtools on the PATH when necessary,
+as long as the pkgbuild package is installed.</p></li>
+<li><p>remotes can be forced to use only its internal code by setting the
+environment variable <code class="docutils literal notranslate"><span class="pre">R_REMOTES_STANDALONE</span></code> = “true”. This is useful when
+installing optional dependencies of remotes on Windows, such as curl or git2r
+(#147)</p></li>
+<li><p>When installing, remotes now errors on warnings, to catch cases
+where packages are only partially installed. This often happens on
+windows when the package dll is opened in another R process (#113).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions now pass arguments, including authentication
+information and upgrade down to dependencies (#53, #86, #87).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions allow the selection of a subset of packages to
+upgrade, in interactive mode, when <code class="docutils literal notranslate"><span class="pre">upgrade</span> <span class="pre">=</span> <span class="pre">&quot;ask&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_git()</span></code> now supports passing credentials, when it is used with
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">=</span> <span class="pre">&quot;git2r&quot;</span></code> (#106)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions now return the name of the package(s) which were
+installed (#55).</p></li>
+<li><p>git submodules are now installed if they exist and a git client is
+available (#138, #133, #103, #82).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">install_gitlab()</span></code> and <code class="docutils literal notranslate"><span class="pre">install_bioc()</span></code> functions, to install
+<code class="docutils literal notranslate"><span class="pre">gitlab</span></code> and  <code class="docutils literal notranslate"><span class="pre">bioc</span></code> remote types.</p></li>
+<li><p>remotes now uses the same SHA updating logic for remotes as devtools,
+including checking if the SHA of the remote has changed since the last
+installation. (#135)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_url()</span></code> can now install package binaries on windows
+(r-lib/devtools#1765)</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Minor improvements and fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install_deps()</span></code> et al. now do not rewrite the <code class="docutils literal notranslate"><span class="pre">type</span></code> argument from <code class="docutils literal notranslate"><span class="pre">both</span></code>
+to <code class="docutils literal notranslate"><span class="pre">binary</span></code> to allow falling back to <code class="docutils literal notranslate"><span class="pre">source</span></code>. This fixes various
+installation failures.</p></li>
+<li><p>remotes now looks up GitHub package names locally, if possible, and
+uses the GitHub REST API (if the curl package is available, and not in
+standalone mode). This makes the remote lookup about 10x faster when the
+remote package has not changed since the last install.</p></li>
+<li><p>Using a GITHUB_PAT no longer prints diagnostic messages by
+default (r-lib/devtools#1752).</p></li>
+<li><p>remotes now always uses https URLs for R versions that support them
+(&#64;ankane, #139)</p></li>
+<li><p>Do not include the BioCextra repository in versions after it was deprecated
+(R 3.5+, Bioc 3.6+).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions now download tarballs (.tar.gz) files rather than zip
+archives (.zip). This results in generally smaller files and avoids issues
+with script permissions being lost and strange behavior of some external
+unzip programs on Windows (#96).</p></li>
+<li><p>Dependency parsing is now more robust to whitespace around the dependency
+specifications (#73).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">standardise_dep()</span></code> exported, for use in devtools.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_local()</span></code> now defaults to the current directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_bitbucket()</span></code> now correctly supports authentication, and the
+<code class="docutils literal notranslate"><span class="pre">subdir</span></code> argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions give a helpful warning when the package has long
+path names, on Windows. In this case building the package usually fails.
+(#84, #178).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions have now a more robust way of handling various
+tar programs on Windows (#172).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_()</span></code> functions now give a helpful warning on older R versions,
+on Windows, if <code class="docutils literal notranslate"><span class="pre">R.home()</span></code> contains a space character. Installation
+usually fails in this case.</p></li>
+<li><p>GitHub API errors now give better error messages, including data about
+the API rate limits.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-1-1-1">
+<h1>remotes 1.1.1<a class="headerlink" href="#remotes-1-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Accept HTTPS, SSH, or various browser URLs in GitHub repo specification,
+&#64;jennybc, #90, #109, #112</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-1-1-0">
+<h1>remotes 1.1.0<a class="headerlink" href="#remotes-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>URL encode GitHub references, to allow installing from non-alphanumeric
+branch or tags, &#64;krlmlr #38</p></li>
+<li><p>Better cooperation with proxy servers, and better download method
+selection on Windows, &#64;cderv, #45, #46</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install_deps()</span></code> supports tar balls, #47</p></li>
+<li><p>Allow training slash in GitHub repo specification, #54</p></li>
+<li><p>Work around on some Linux systems, where unzip is set to the empty
+string, &#64;HenrikBengtsson, #57</p></li>
+<li><p>Check for circular dependencies while installing, #31</p></li>
+<li><p>Updated Bioconductor repo URLs for newer BioC versions</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="remotes-1-0-0">
+<h1>remotes 1.0.0<a class="headerlink" href="#remotes-1-0-0" title="Link to this heading">#</a></h1>
+<p>First public release.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\remotes"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">remotes 2.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-2">remotes 2.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-1">remotes 2.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-4-0">remotes 2.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-3-0">remotes 2.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">Major changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-fixes">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-2-0">remotes 2.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions-and-features">New functions and features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-1-1">remotes 2.1.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-1-0">remotes 2.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-4">remotes 2.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-3">remotes 2.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-2">remotes 2.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-1">remotes 2.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-2-0-0">remotes 2.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Minor improvements and fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-1-1">remotes 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-1-0">remotes 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes-1-0-0">remotes 1.0.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

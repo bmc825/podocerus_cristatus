@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>googlesheets4 1.1.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/googlesheets4/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/googlesheets4/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>googlesheets4 1.1.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">googlesheets4 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-1-0">googlesheets4 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-up-with-gargle">Syncing up with gargle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-0-1">googlesheets4 1.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-matters">Internal matters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-0-0">googlesheets4 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-changes">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-3-0">googlesheets4 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-2-0">googlesheets4 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-naming-scheme">Function naming scheme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-sheets">Write Sheets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-sheet-operations">(Work)sheet operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#range-operations">Range operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#printing-a-sheet-id">Printing a Sheet ID</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes-and-additions">Other changes and additions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renamed-classes">Renamed classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-1-1">googlesheets4 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-1-0">googlesheets4 0.1.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-1-1-1">
+<h1>googlesheets4 1.1.1<a class="headerlink" href="#googlesheets4-1-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gs4_auth(subject</span> <span class="pre">=)</span></code> is a new argument that can be used with
+<code class="docutils literal notranslate"><span class="pre">gs4_auth(path</span> <span class="pre">=)</span></code>, i.e. when using a service account. The <code class="docutils literal notranslate"><span class="pre">path</span></code> and
+<code class="docutils literal notranslate"><span class="pre">subject</span></code> arguments are ultimately processed by
+<code class="docutils literal notranslate"><span class="pre">gargle::credentials_service_account()</span></code> and support the use of a service
+account to impersonate a normal user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gs4_scopes()</span></code> is a new function to access scopes relevant to the Sheets and
+Drive APIs. When called without arguments, <code class="docutils literal notranslate"><span class="pre">gs4_scopes()</span></code> returns a named
+vector of scopes, where the names are the associated short aliases.
+<code class="docutils literal notranslate"><span class="pre">gs4_scopes()</span></code> can also be called with a character vector; any element that’s
+recognized as a short alias is replaced with the associated full scope (#291).</p></li>
+<li><p>Various internal changes to sync up with gargle v1.5.0.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-1-1-0">
+<h1>googlesheets4 1.1.0<a class="headerlink" href="#googlesheets4-1-1-0" title="Link to this heading">#</a></h1>
+<section id="syncing-up-with-gargle">
+<h2>Syncing up with gargle<a class="headerlink" href="#syncing-up-with-gargle" title="Link to this heading">#</a></h2>
+<p>Version 1.3.0 of gargle introduced some changes around OAuth and googlesheets4 is syncing with up that:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gs4_oauth_client()</span></code> is a new function to replace the now-deprecated <code class="docutils literal notranslate"><span class="pre">gs4_oauth_app()</span></code>.</p></li>
+<li><p>The new <code class="docutils literal notranslate"><span class="pre">client</span></code> argument of <code class="docutils literal notranslate"><span class="pre">gs4_auth_configure()</span></code> replaces the now-deprecated <code class="docutils literal notranslate"><span class="pre">app</span></code> argument.</p></li>
+<li><p>The documentation of <code class="docutils literal notranslate"><span class="pre">gs4_auth_configure()</span></code> emphasizes that the preferred way to “bring your own OAuth client” is by providing the JSON downloaded from Google Developers Console.</p></li>
+</ul>
+</section>
+<section id="other">
+<h2>Other<a class="headerlink" href="#other" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">gs4_auth()</span></code> now warns if the user specifies both <code class="docutils literal notranslate"><span class="pre">email</span></code> and <code class="docutils literal notranslate"><span class="pre">path</span></code>, because this is almost always an error.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-1-0-1">
+<h1>googlesheets4 1.0.1<a class="headerlink" href="#googlesheets4-1-0-1" title="Link to this heading">#</a></h1>
+<p>The mere existence of an invalid named range no longer prevents googlesheets4 from dealing with a Sheet (#175).</p>
+<p>googlesheets4 now understands that Google Sheets can have 10 million cells (up from 5 million) (#257).</p>
+<section id="internal-matters">
+<h2>Internal matters<a class="headerlink" href="#internal-matters" title="Link to this heading">#</a></h2>
+<p>Help files below <code class="docutils literal notranslate"><span class="pre">man/</span></code> have been re-generated, so that they give rise to valid HTML5. (This is the impetus for this release, to keep the package safely on CRAN.)</p>
+<p>Examples now use <code class="docutils literal notranslate"><span class="pre">&#64;examplesIf</span></code> to express when a token or an interactive session is required for successful execution.</p>
+<p>Errors have been revised to (more often) reveal the most appropriate call, i.e. the high-level function called by the user as opposed to an internal helper (#255).</p>
+<p>Informative messages now route through <code class="docutils literal notranslate"><span class="pre">cli::cli_inform()</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">cli::cli_bullets()</span></code>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-1-0-0">
+<h1>googlesheets4 1.0.0<a class="headerlink" href="#googlesheets4-1-0-0" title="Link to this heading">#</a></h1>
+<section id="user-interface">
+<h2>User interface<a class="headerlink" href="#user-interface" title="Link to this heading">#</a></h2>
+<p>The user interface has gotten more stylish, thanks to the cli package (<a class="reference external" href="https://cli.r-lib.org">https://cli.r-lib.org</a>).</p>
+<p>All informational messages, warnings, and errors are now emitted via cli, which uses rlang’s condition functions under-the-hood.
+googlesheets4 now throws errors with class <code class="docutils literal notranslate"><span class="pre">&quot;googlesheets4_error&quot;</span></code> (#12).</p>
+<p><code class="docutils literal notranslate"><span class="pre">googlesheets4_quiet</span></code> is a new option to suppress informational messages from googlesheets4 (#163).
+Unless it’s explicitly set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, the default is to message.</p>
+<p><code class="docutils literal notranslate"><span class="pre">local_gs4_quiet()</span></code> and <code class="docutils literal notranslate"><span class="pre">with_gs4_quiet()</span></code> are <a class="reference external" href="https://withr.r-lib.org">withr-style</a> convenience helpers for setting <code class="docutils literal notranslate"><span class="pre">googlesheets4_quiet</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.</p>
+</section>
+<section id="other-changes">
+<h2>Other changes<a class="headerlink" href="#other-changes" title="Link to this heading">#</a></h2>
+<p>The deprecated <code class="docutils literal notranslate"><span class="pre">sheets_*()</span></code> functions have now been removed, as promised in the warning they have been throwing for over a year.
+No functionality has been removed, this is just the result of the function (re-)naming scheme adopted in googlesheets4 &gt;= 0.2.0.
+More details are in <a class="reference external" href="https://googlesheets4.tidyverse.org/articles/articles/function-class-names.html#previous-use-of-sheets-prefix">this developer documentation</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">na</span></code> argument of <code class="docutils literal notranslate"><span class="pre">read_sheet()</span></code> has become more capable and more consistent with readr.
+Specifically, <code class="docutils literal notranslate"><span class="pre">na</span> <span class="pre">=</span> <span class="pre">character()</span></code> (or the general lack of <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> among the <code class="docutils literal notranslate"><span class="pre">na</span></code> strings) results in cells with no data appearing as the empty string <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> within a character vector, as opposed to <code class="docutils literal notranslate"><span class="pre">NA</span></code> (#174).</p>
+<p>Explicit <code class="docutils literal notranslate"><span class="pre">NULL</span></code>s are now written properly, i.e. as an empty cell (#203).</p>
+<p><code class="docutils literal notranslate"><span class="pre">sheet_append()</span></code> no longer touches any aspect of cell formatting other than <code class="docutils literal notranslate"><span class="pre">numberFormat</span></code> (#204).</p>
+<p><code class="docutils literal notranslate"><span class="pre">gs4_example()</span></code> and <code class="docutils literal notranslate"><span class="pre">gs4_examples()</span></code> now learn the example Sheet ids from a Google Sheet.
+This should not change anything for users, but it means there is an API call the first time either of these functions is called.</p>
+</section>
+<section id="dependency-changes">
+<h2>Dependency changes<a class="headerlink" href="#dependency-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>cli is new in Imports.</p></li>
+<li><p>googlesheets4 Suggests testthat &gt;= 3.0.0 and, specifically, uses third edition features.</p></li>
+</ul>
+<p>R 3.4 is now the oldest version that is explicitly supported and tested, as per the <a class="reference external" href="https://www.tidyverse.org/blog/2019/04/r-version-support/">tidyverse policy</a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-0-3-0">
+<h1>googlesheets4 0.3.0<a class="headerlink" href="#googlesheets4-0-3-0" title="Link to this heading">#</a></h1>
+<p>All requests are now made with retry capability. Specifically, when a request fails due to a <code class="docutils literal notranslate"><span class="pre">429</span> <span class="pre">RESOURCE_EXHAUSTED</span></code> error, it is retried a few times, with suitable delays. Note that if it appears that you <em>personally</em> have exhausted your quota (more than 100 requests in 100 seconds), the initial waiting time is 100 seconds and this indicates you need to get your own OAuth app or service account.</p>
+<p>When googlesheets4 and googledrive are used together in the same session, we alert you if you’re logged in to these package with different Google identities.</p>
+<p><code class="docutils literal notranslate"><span class="pre">gs4_get()</span></code> retrieves information about protected ranges.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-0-2-0">
+<h1>googlesheets4 0.2.0<a class="headerlink" href="#googlesheets4-0-2-0" title="Link to this heading">#</a></h1>
+<p>googlesheets4 can now write and modify Sheets.</p>
+<p>Several new articles are available at <a class="reference external" href="https://googlesheets4.tidyverse.org/articles/index.html">googlesheets4.tidyverse.org</a>.</p>
+<section id="function-naming-scheme">
+<h2>Function naming scheme<a class="headerlink" href="#function-naming-scheme" title="Link to this heading">#</a></h2>
+<p>The universal <code class="docutils literal notranslate"><span class="pre">sheets_</span></code> prefix has been replaced by a scheme that conveys more information about the scope of the function. There are three prefixes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gs4_</span></code>: refers variously to the googlesheets4 package, v4 of the Google
+Sheets API, or to operations on one or more (spread)Sheets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_</span></code>: operations on one or more (work)sheets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range_</span></code>: operations on a range of cells</p></li>
+</ul>
+<p>The addition of write/edit functionality resulted in many new functions and the original naming scheme proved to be problematic. The article <a class="reference external" href="https://googlesheets4.tidyverse.org/articles/articles/function-class-names.html">Function and class names</a> contains more detail.</p>
+<p>Any function present in the previous CRAN release, v0.1.1, still works, but triggers a warning with strong encouragement to switch to the current name.</p>
+</section>
+<section id="write-sheets">
+<h2>Write Sheets<a class="headerlink" href="#write-sheets" title="Link to this heading">#</a></h2>
+<p>googlesheets4 now has very broad capabilities around Sheet creation and modification. These functions are ready for general use but are still marked experimental, as they may see some refinement based on user feedback.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gs4_create()</span></code> creates a new Google Sheet and, optionally, writes one or
+more data frames into it (#61).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_write()</span></code> (also available as <code class="docutils literal notranslate"><span class="pre">write_sheet()</span></code>) writes a data frame
+into a new or existing (work)sheet, inside an existing (or new)
+(spread)Sheet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_append()</span></code> adds rows to an existing data table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range_write()</span></code> writes to a cell range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range_flood()</span></code> “floods” all cells in a range with the same content.
+<code class="docutils literal notranslate"><span class="pre">range_clear()</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">range_flood()</span></code> for the special case
+of clearing cell values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range_delete()</span></code> deletes a range of cells.</p></li>
+</ul>
+</section>
+<section id="work-sheet-operations">
+<h2>(Work)sheet operations<a class="headerlink" href="#work-sheet-operations" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sheet_*()</span></code> family of functions operate on the (work)sheets inside an existing (spread)Sheet:</p>
+<ul class="simple">
+<li><p>(<code class="docutils literal notranslate"><span class="pre">sheet_write()</span></code> and <code class="docutils literal notranslate"><span class="pre">sheet_append()</span></code> are described above.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_properties()</span></code> returns a tibble of metadata with one row per
+sheet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_names()</span></code> returns sheet names.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_add()</span></code> adds one or more sheets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_copy()</span></code> copies a sheet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_delete()</span></code> deletes one or more sheets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_relocate()</span></code> moves sheets around.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_rename()</span></code> renames one sheet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sheet_resize()</span></code> changes the number of rows or columns in a sheet.</p></li>
+</ul>
+</section>
+<section id="range-operations">
+<h2>Range operations<a class="headerlink" href="#range-operations" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">range_speedread()</span></code> reads from a Sheet using its “export=csv” URL and, therefore, uses readr-style column type specification. It still supports fairly general range syntax and auth. For very large Sheets, this can be substantially faster than <code class="docutils literal notranslate"><span class="pre">read_sheet()</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">range_read_cells()</span></code> (formerly known as <code class="docutils literal notranslate"><span class="pre">sheets_cells()</span></code>) gains two new arguments that make it possible to get more data on more cells. By default, we get only the fields needed to parse cells that contain values. But <code class="docutils literal notranslate"><span class="pre">range_read_cells(cell_data</span> <span class="pre">=</span> <span class="pre">&quot;full&quot;,</span> <span class="pre">discard_empty</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> is now available if you want full cell data, including formatting, even for cells that have no value (#4).</p>
+<p><code class="docutils literal notranslate"><span class="pre">range_autofit()</span></code> adjusts column width or row height to fit the data. This only affects the display of a sheet and does not change values or dimensions.</p>
+</section>
+<section id="printing-a-sheet-id">
+<h2>Printing a Sheet ID<a class="headerlink" href="#printing-a-sheet-id" title="Link to this heading">#</a></h2>
+<p>The print method for <code class="docutils literal notranslate"><span class="pre">sheets_id</span></code> objects now attempts to reveal the current Sheet metadata available via <code class="docutils literal notranslate"><span class="pre">gs4_get()</span></code>, i.e. it makes an API call (but it should never error).</p>
+</section>
+<section id="other-changes-and-additions">
+<h2>Other changes and additions<a class="headerlink" href="#other-changes-and-additions" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">gs_formula()</span></code> implements a vctrs S3 class for storing Sheets formulas.</p>
+<p><code class="docutils literal notranslate"><span class="pre">gs4_fodder()</span></code> is a convenience function that creates a filler data frame you can use to make toy sheets you’re using to practice on or for a reprex.</p>
+</section>
+<section id="renamed-classes">
+<h2>Renamed classes<a class="headerlink" href="#renamed-classes" title="Link to this heading">#</a></h2>
+<p>The S3 class <code class="docutils literal notranslate"><span class="pre">sheets_Spreadsheet</span></code> is renamed to <code class="docutils literal notranslate"><span class="pre">googlesheets4_spreadsheet</span></code>, a consequence of rationalizing all internal and external classes (detailed in the article <a class="reference external" href="https://googlesheets4.tidyverse.org/articles/articles/function-class-names.html">Function and class names</a>). <code class="docutils literal notranslate"><span class="pre">googlesheets4_spreadsheet</span></code> is the class that holds metadata for a Sheet and it is connected to the API’s <a class="reference external" href="https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#resource:-spreadsheet"><code class="docutils literal notranslate"><span class="pre">Spreadsheet</span></code></a> schema. The return value of <code class="docutils literal notranslate"><span class="pre">gs4_get()</span></code> has this class.</p>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_sheet()</span></code> passes its <code class="docutils literal notranslate"><span class="pre">na</span></code> argument down to the helpers that parse cells, so that <code class="docutils literal notranslate"><span class="pre">na</span></code> actually has the documented effect (#73).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-0-1-1">
+<h1>googlesheets4 0.1.1<a class="headerlink" href="#googlesheets4-0-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Patch release to modify a test fixture, to be compatible with tibble v3.0.
+Related to tibble’s increased type strictness.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="googlesheets4-0-1-0">
+<h1>googlesheets4 0.1.0<a class="headerlink" href="#googlesheets4-0-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">NEWS.md</span></code> file to track changes to the package.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\googlesheets4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">googlesheets4 1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-1-0">googlesheets4 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-up-with-gargle">Syncing up with gargle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other">Other</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-0-1">googlesheets4 1.0.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-matters">Internal matters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-1-0-0">googlesheets4 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes">Other changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-changes">Dependency changes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-3-0">googlesheets4 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-2-0">googlesheets4 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-naming-scheme">Function naming scheme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-sheets">Write Sheets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-sheet-operations">(Work)sheet operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#range-operations">Range operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#printing-a-sheet-id">Printing a Sheet ID</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-changes-and-additions">Other changes and additions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renamed-classes">Renamed classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-1-1">googlesheets4 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#googlesheets4-0-1-0">googlesheets4 0.1.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1308 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pavo 2.9.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/pavo/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/pavo/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pavo 2.9.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">pavo 2.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-significant-changes">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features-and-bug-fixes">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-8-0">pavo 2.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-7-1">pavo 2.7.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-7-0">pavo 2.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-6-1">pavo 2.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-6-0">pavo 2.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-5-0">pavo 2.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-4-0">pavo 2.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-3-0">pavo 2.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-2-0">pavo 2.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-1-0">pavo 2.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-potentially-breaking-changes">NEW FEATURES AND POTENTIALLY BREAKING CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-0-0">pavo 2.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-4-0">pavo 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-3-1">pavo 1.3.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-3-0">pavo 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-2-0">pavo 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-1-0">pavo 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-0">pavo 1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-6">pavo 0.5-6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-5">pavo 0.5-5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-4">pavo 0.5-4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-2">pavo 0.5-2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-1">pavo 0.5-1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5">pavo 0.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-3-1">pavo 0.3-1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-3">pavo 0.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-model">VISUAL MODEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features">MINOR FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-1-2">pavo 0.1-2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">VISUAL MODEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">MINOR FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">BUG FIXES</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pavo-2-9-0">
+<h1>pavo 2.9.0<a class="headerlink" href="#pavo-2-9-0" title="Link to this heading">#</a></h1>
+<section id="new-features-and-significant-changes">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#new-features-and-significant-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a new function <code class="docutils literal notranslate"><span class="pre">simulate_spec()</span></code>, which allows for the flexible simulation of naturalistic spectra (inc. reflectance, irradiance, radiance, absorbance). See <code class="docutils literal notranslate"><span class="pre">?simulate_spec</span></code> for examples and information, and the handbook for further discussion.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.rspec()</span></code> now accepts a logical <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument (and <code class="docutils literal notranslate"><span class="pre">labels.cex</span></code>), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for ‘stacked’ plot types, but is now optional for both ‘overlay’ (the default) and ‘stacked’ spectral plots.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">wlmin</span></code> and <code class="docutils literal notranslate"><span class="pre">wlmax</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> are being deprecated in favour of a single <code class="docutils literal notranslate"><span class="pre">lim</span></code> argument, for consistency across functions.</p></li>
+</ul>
+</section>
+<section id="minor-features-and-bug-fixes">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#minor-features-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> has been rewritten for efficiency, and now only calculates the required variables when <code class="docutils literal notranslate"><span class="pre">subset</span></code> is used. As a result, the function is also slightly slower (0.5 x) when calculating the full set of variables, but much faster (10 x) when calculating a subset.</p></li>
+<li><p>Removed the start-up message.</p></li>
+<li><p>Removed the previously-deprecated <code class="docutils literal notranslate"><span class="pre">margins</span></code> argument from various colourspace plots.</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">rgl.triangles</span></code> with <code class="docutils literal notranslate"><span class="pre">triangles3d()</span></code> internally to avoid a deprecation issue.</p></li>
+<li><p>Fixed a bug in the categorical colourspace, so it now returns sensible category values when <code class="docutils literal notranslate"><span class="pre">x</span></code> and/or <code class="docutils literal notranslate"><span class="pre">y</span></code> is equal to 0.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-8-0">
+<h1>pavo 2.8.0<a class="headerlink" href="#pavo-2-8-0" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated documentation to fix broken HTML5 equation rendering</p></li>
+<li><p>Line width in the legend of <code class="docutils literal notranslate"><span class="pre">aggplot()</span></code> (as specified by <code class="docutils literal notranslate"><span class="pre">lwd</span></code>) is now consistent with line width on the plot (#235)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">procspec(spec,</span> <span class="pre">opt</span> <span class="pre">=</span> <span class="pre">&quot;smooth&quot;)</span></code> now works correctly with uninterpolated spectra. Previously, it was causing a shift of the spectra towards long-wavelengths (#234).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coldist()</span></code> now returns Euclidean distances when given data from the <code class="docutils literal notranslate"><span class="pre">ciexyz</span></code> model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.rspec()</span></code> now preserves numeric column names when converting from a tibble.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-7-1">
+<h1>pavo 2.7.1<a class="headerlink" href="#pavo-2-7-1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor release to avoid breaking changes to tests.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-7-0">
+<h1>pavo 2.7.0<a class="headerlink" href="#pavo-2-7-0" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>It is now possible to filter images according to the AcuityView 2.0 algorithm (Caves et al. 2018) in order to to model the visual acuity of animals, prior to analysis. The functionality is implemented in <code class="docutils literal notranslate"><span class="pre">procimg()</span></code>, with details and examples available in the function’s help documentation and the vignette.</p></li>
+<li><p>Added the argument <code class="docutils literal notranslate"><span class="pre">raw</span></code> to <code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code>. When <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by <code class="docutils literal notranslate"><span class="pre">boot.n</span></code>), rather than the summary statistics which are returned by default.</p></li>
+<li><p>Added the visual phenotype of the Vinegar fly <em>Drosophila melanogaster</em> (Sharkey et al. 2020). See <code class="docutils literal notranslate"><span class="pre">?vismodel()</span></code> or <code class="docutils literal notranslate"><span class="pre">?sensdata()</span></code> for instructions on selecting it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coldist()</span></code> now uses the package <code class="docutils literal notranslate"><span class="pre">farver</span></code> when calculating CIE2000 colour distances between points in the CIELab and CIELch spaces.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug where procimg() would fail when using resize/rotate followed by further options, on single images.</p></li>
+<li><p>vignettes have been moved to <a class="reference external" href="https://book.colrverse.com/">https://book.colrverse.com/</a> and now use a book format</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">plot.colspace(gamut</span> <span class="pre">=</span> <span class="pre">TRUE)</span></code> (as well as <code class="docutils literal notranslate"><span class="pre">triplot()</span></code>, <code class="docutils literal notranslate"><span class="pre">tcsplot()</span></code>, <code class="docutils literal notranslate"><span class="pre">tetraplot()</span></code>) where it would incorrectly display <code class="docutils literal notranslate"><span class="pre">&quot;Max</span> <span class="pre">gamut</span> <span class="pre">cannot</span> <span class="pre">be</span> <span class="pre">plotted.&quot;</span></code> and fail to plot the max gamut each time.</p></li>
+<li><p>Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2).</p></li>
+<li><p>Added an informative error message when raw quantum catch estimates are &lt; 1, and an attempt is made to calculate colour distances in the receptor-noise model using <code class="docutils literal notranslate"><span class="pre">noise</span> <span class="pre">=</span> <span class="pre">'quantum'</span></code>. Taking the root of negative values following log-transformation, as required when <code class="docutils literal notranslate"><span class="pre">noise</span> <span class="pre">=</span> <span class="pre">'quantum'</span></code>, would previously produce an uninformative error, which has been rectified.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">margins</span></code> argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard <code class="docutils literal notranslate"><span class="pre">par(mar</span> <span class="pre">=</span> <span class="pre">c())</span></code> pathway.</p></li>
+<li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code> would not run until supplied with receptor-noise model arguments (n, weber, weber.ref), even when not running the receptor-noise model.</p></li>
+<li><p>Fixed a bug where <code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code> would sometimes fail when given data from colourspace models containing lots of negative coordinate values. This was particularly common for the hexagon model.</p></li>
+<li><p>Improved safety and error handling in <code class="docutils literal notranslate"><span class="pre">adjacent()</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-6-1">
+<h1>pavo 2.6.1<a class="headerlink" href="#pavo-2-6-1" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor fix to a vignette to avoid installation issues.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">options()</span></code> and <code class="docutils literal notranslate"><span class="pre">par()</span></code> are now always set locally, including in vignettes and examples, as to prevent spillover of these changes in the user session</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-6-0">
+<h1>pavo 2.6.0<a class="headerlink" href="#pavo-2-6-0" title="Link to this heading">#</a></h1>
+<section id="id6">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code> and <code class="docutils literal notranslate"><span class="pre">adjacent()</span></code> now use a random number generator that generates statistically sound values, even when ran in parallel. The output of these functions is thus expected to slightly change, even if you set the seed before.</p></li>
+<li><p>The alphashape3d package has been moved to <code class="docutils literal notranslate"><span class="pre">Suggests</span></code>, which means it will not be installed automatically when you install pavo from CRAN and that you will need to install it yourself if you need it (for <code class="docutils literal notranslate"><span class="pre">vol(type</span> <span class="pre">=</span> <span class="pre">&quot;alpha&quot;)</span></code>, <code class="docutils literal notranslate"><span class="pre">vol(type</span> <span class="pre">=</span> <span class="pre">&quot;alpha&quot;)</span></code> and <code class="docutils literal notranslate"><span class="pre">voloverlap(type</span> <span class="pre">=</span> <span class="pre">&quot;alpha&quot;)</span></code>)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-5-0">
+<h1>pavo 2.5.0<a class="headerlink" href="#pavo-2-5-0" title="Link to this heading">#</a></h1>
+<section id="id7">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code class="docutils literal notranslate"><span class="pre">vol()</span></code>, <code class="docutils literal notranslate"><span class="pre">tcsvol()</span></code> and <code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code> gain a new argument <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">c(&quot;convex&quot;,</span> <span class="pre">&quot;alpha&quot;)</span></code> to decide how you want to compute the colour volume. Please refer to the vignette <code class="docutils literal notranslate"><span class="pre">vignette(&quot;pavo-5-alphashapes&quot;,</span>&#160;&#160;&#160; <span class="pre">package</span> <span class="pre">=</span> <span class="pre">&quot;pavo&quot;)</span></code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code class="docutils literal notranslate"><span class="pre">tcs</span></code> objects.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">getimg()</span></code> now imports image files with uppercase extensions (e.g., JPG or PNG), such as those produced by some camera brands or processing software.</p></li>
+<li><p>Maximum quantum catches computation (<code class="docutils literal notranslate"><span class="pre">data.maxqcatches</span></code> attribute) now works for segment “visual model” as well. As a side effect, this removes a warning that occurred when users ran <code class="docutils literal notranslate"><span class="pre">vismodel(...,</span> <span class="pre">visual</span> <span class="pre">=</span> <span class="pre">&quot;segment&quot;)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensmodel()</span></code> now accepts the argument <code class="docutils literal notranslate"><span class="pre">sensnames</span></code>, for specifying the names of the resulting sensitivity curves on-the-fly.</p></li>
+<li><p>CIE models now accept data created outside of <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code>, by allowing users to specify the illuminant and viewer sensitivity function used when estimating XYZ values (via <code class="docutils literal notranslate"><span class="pre">illum</span></code> and <code class="docutils literal notranslate"><span class="pre">visual</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">colspace()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code> is now laxer in its argument checks and accept objects that are neither <code class="docutils literal notranslate"><span class="pre">vismodel</span></code> or <code class="docutils literal notranslate"><span class="pre">colspace</span></code> objects. This means you can now use this function on quantum catches dataframe that you obtained outside of pavo, such as the MICA toolbox.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> now prints a more explicit error when the <code class="docutils literal notranslate"><span class="pre">by</span></code> argument value is not a multiple of the number of rows in the colspace object (i.e., the number of spectra)</p></li>
+<li><p>Added a continuous measure of hue to the output of the categorical model of Troje (1993)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">teal</span></code> example dataset columns have been renamed to add an additional zero in front of single digit numbers, so that column names now sort in the correct order by default.</p></li>
+<li><p>Some very small negative values in the built-in visual system data have been corrected .</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.rspec()</span></code> is now more lenient for wavelength trimming when <code class="docutils literal notranslate"><span class="pre">interp</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> and now works even if the specified <code class="docutils literal notranslate"><span class="pre">lims</span></code> do not correspond to actual wl values from the input object.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-4-0">
+<h1>pavo 2.4.0<a class="headerlink" href="#pavo-2-4-0" title="Link to this heading">#</a></h1>
+<section id="id9">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and S1V in <code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code>.</p></li>
+<li><p>several <code class="docutils literal notranslate"><span class="pre">plot()</span></code> functions for colspace (<code class="docutils literal notranslate"><span class="pre">triplot()</span></code>, <code class="docutils literal notranslate"><span class="pre">tcsplot()</span></code>, <code class="docutils literal notranslate"><span class="pre">tetraplot()</span></code>) gain a new <code class="docutils literal notranslate"><span class="pre">gamut</span></code> argument to plot the maximum gamut for a given visual system and illuminant. <code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> also now returns the maximum colour volume for a given visual system and illuminant that you can use to compare to the realised volume by a given dataset. More information in PR #180.</p></li>
+<li><p>parallel processing now relies on the <code class="docutils literal notranslate"><span class="pre">future</span></code> package, which offers windows and high performance computing (HPC) environments support. The progress bar is produced by the <code class="docutils literal notranslate"><span class="pre">progressr</span></code> package and can be customised as well. As a consequence, the <code class="docutils literal notranslate"><span class="pre">cores</span></code> argument in <code class="docutils literal notranslate"><span class="pre">getspec()</span></code>, <code class="docutils literal notranslate"><span class="pre">adjacent()</span></code> and <code class="docutils literal notranslate"><span class="pre">classify()</span></code> has been deprecated.</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed a plotting bug introduced in version 2.3.0 where it was required to run <code class="docutils literal notranslate"><span class="pre">projplot()</span></code> twice for the background grid to be displayed.</p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> where <code class="docutils literal notranslate"><span class="pre">NULL</span></code> was returned instead of <code class="docutils literal notranslate"><span class="pre">summary.data.frame()</span></code> for non-tcs colourspaces.</p></li>
+<li><p>fix partial matching warnings in examples and in <code class="docutils literal notranslate"><span class="pre">bootcooldist()</span></code></p></li>
+<li><p>the package has a new website at <code class="docutils literal notranslate"><span class="pre">pavo.colrverse.com</span></code></p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">coldist()</span></code>that prevented the calculation of achromatic contrast when using custom quantum catch data</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-3-0">
+<h1>pavo 2.3.0<a class="headerlink" href="#pavo-2-3-0" title="Link to this heading">#</a></h1>
+<section id="id11">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plot.rspec()</span></code> now adds a linear spectrum alongside the x-axis to show the hues corresponding to each wavelength (controlled by the <code class="docutils literal notranslate"><span class="pre">wl.guide</span></code> boolean argument).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cieplot()</span></code> (and therefore <code class="docutils literal notranslate"><span class="pre">plot.colspace()</span></code> for CIEXYZ model) now adds the background of the CIEXYZ colour space by default. This can be turned off by switching the <code class="docutils literal notranslate"><span class="pre">ciebg</span></code> argument to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code> uses a different algorithm to determine volume overlaps, which means:</p>
+<ul>
+<li><p>computation is now much more efficient</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code> now works for <code class="docutils literal notranslate"><span class="pre">trispace()</span></code> objects as well</p></li>
+<li><p>accordingly, first two arguments of <code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code> has been renamed <code class="docutils literal notranslate"><span class="pre">colsp1</span></code> and <code class="docutils literal notranslate"><span class="pre">colsp2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">tcsres1</span></code> and <code class="docutils literal notranslate"><span class="pre">tcsres2</span></code></p></li>
+<li><p>slow and possibly inaccurate <code class="docutils literal notranslate"><span class="pre">montecarlo</span></code> option has been deprecated</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>errors during argument checks in <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> now have more explicit messages.</p></li>
+<li><p>all <code class="docutils literal notranslate"><span class="pre">pavo</span></code> functions (excepted <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> and <code class="docutils literal notranslate"><span class="pre">spec2rgb()</span></code>) now work with sub-nm precision, for <code class="docutils literal notranslate"><span class="pre">rspec</span></code> objects with non-integer wavelengths.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> no longer fails for tcs objects with only one row.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> now works for monochromats as well.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">procspec(opt</span> <span class="pre">=</span> <span class="pre">&quot;bin&quot;)</span></code> no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coc()</span></code> and <code class="docutils literal notranslate"><span class="pre">categorical()</span></code> spaces now return Weber luminance contrast by default when passed through <code class="docutils literal notranslate"><span class="pre">coldist()</span></code>, rather than nothing (as per the original publications).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coldist()</span></code> can now take multiple values for <code class="docutils literal notranslate"><span class="pre">weber</span></code>, when Weber fractions are known for all receptor classes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> no longer errors for a single spectrum when the wavelength range does not contain 450-700nm</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-2-0">
+<h1>pavo 2.2.0<a class="headerlink" href="#pavo-2-2-0" title="Link to this heading">#</a></h1>
+<section id="id13">
+<h2>NEW FEATURES AND SIGNIFICANT CHANGES<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added k-medoids clustering as an option in <code class="docutils literal notranslate"><span class="pre">classify()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coldist()</span></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code class="docutils literal notranslate"><span class="pre">colspace()</span></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> directly on <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> objects, as previously.</p></li>
+</ul>
+</section>
+<section id="id14">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added a message to indicate what distance metric is being calculated during calls to <code class="docutils literal notranslate"><span class="pre">coldist()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vismodel()</span></code>, <code class="docutils literal notranslate"><span class="pre">colspace()</span></code>, and <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> now always return <code class="docutils literal notranslate"><span class="pre">lum</span></code> and <code class="docutils literal notranslate"><span class="pre">dL</span></code> columns, for consistency</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">irrad2flux()</span></code> and <code class="docutils literal notranslate"><span class="pre">flux2irrad()</span></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getimg()</span></code> can now import images from URL’s</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">cores</span></code> argument in <code class="docutils literal notranslate"><span class="pre">getimg()</span></code> is deprecated, as image import is vectorised</p></li>
+<li><p>fixed a small bug in <code class="docutils literal notranslate"><span class="pre">classify()</span></code> when using <code class="docutils literal notranslate"><span class="pre">refID</span></code> and <code class="docutils literal notranslate"><span class="pre">kcols</span></code> for multiple images</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">resize</span></code> argument in <code class="docutils literal notranslate"><span class="pre">procimg()</span></code> now takes a percentage, rather than scaling factor</p></li>
+<li><p>fixed a bug where <code class="docutils literal notranslate"><span class="pre">colspace(space</span> <span class="pre">=</span> <span class="pre">segment)</span></code> would return both a <code class="docutils literal notranslate"><span class="pre">B</span></code> and (redundant) <code class="docutils literal notranslate"><span class="pre">lum</span></code> column</p></li>
+<li><p>fixed a bug where the rod sensitivity of <em>Canis familiaris</em> was inaccessible through <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code></p></li>
+<li><p>fixed an issue in <code class="docutils literal notranslate"><span class="pre">getspec()</span></code> where badly encoded characters in some spectral files would cause failure</p></li>
+<li><p>fixed a bug where <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> would attempt to estimate receptor-noise weighted distances rather than cie-distances for <code class="docutils literal notranslate"><span class="pre">cielch</span></code> model results</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-1-0">
+<h1>pavo 2.1.0<a class="headerlink" href="#pavo-2-1-0" title="Link to this heading">#</a></h1>
+<section id="new-features-and-potentially-breaking-changes">
+<h2>NEW FEATURES AND POTENTIALLY BREAKING CHANGES<a class="headerlink" href="#new-features-and-potentially-breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added the argument <code class="docutils literal notranslate"><span class="pre">reclass</span></code> to <code class="docutils literal notranslate"><span class="pre">procimg()</span></code>, which allows users to interactively correct areas within images that have been misclassified</p></li>
+<li><p>added the rod sensitivity of <em>Canis familiaris</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">peakshape()</span></code> uses a completely different algorithm to find the FWHM. It now works as expected for spectra with multiple peaks. See <a class="reference external" href="https://github.com/rmaia/pavo/pull/137">PR #137</a> for a detailed overview of the changes.</p></li>
+<li><p>data used internally by pavo (<code class="docutils literal notranslate"><span class="pre">bgandilum</span></code>, <code class="docutils literal notranslate"><span class="pre">transmissiondata</span></code>, <code class="docutils literal notranslate"><span class="pre">ttvertex</span></code>, <code class="docutils literal notranslate"><span class="pre">vissyst</span></code>) is no longer exposed to users</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>new functions <code class="docutils literal notranslate"><span class="pre">is.vismodel()</span></code> and <code class="docutils literal notranslate"><span class="pre">is.colspace()</span></code> are exported to test whether an object is of class <code class="docutils literal notranslate"><span class="pre">vismodel</span></code> or <code class="docutils literal notranslate"><span class="pre">colspace</span></code>, respectively</p></li>
+<li><p>fixed a bug where images would sometimes be wrongly detected as user-classified in <code class="docutils literal notranslate"><span class="pre">as.rimg()</span></code></p></li>
+<li><p>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code class="docutils literal notranslate"><span class="pre">pfowl</span></code> and <code class="docutils literal notranslate"><span class="pre">avg.v</span></code> in <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> and <code class="docutils literal notranslate"><span class="pre">sensdata()</span></code>). This removes an unnecessary but harmless warning when <code class="docutils literal notranslate"><span class="pre">colspace()</span></code> was used to place quantum catches of such species in the tetrahedral colour space.</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">achro</span></code> argument in <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> has been changed for <code class="docutils literal notranslate"><span class="pre">achromatic</span></code> to better match the arguments from <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code>. Older scripts that use <code class="docutils literal notranslate"><span class="pre">achro</span></code> should not be affected and still work as before.</p></li>
+<li><p>the package <code class="docutils literal notranslate"><span class="pre">imager</span></code> is no longer a dependency, and is only loaded if using some features of <code class="docutils literal notranslate"><span class="pre">procimg()</span></code>.</p></li>
+<li><p>the package <code class="docutils literal notranslate"><span class="pre">mapproj</span></code> is no longer a dependency, and is only loaded if using <code class="docutils literal notranslate"><span class="pre">projplot()</span></code>.</p></li>
+<li><p>added the argument <code class="docutils literal notranslate"><span class="pre">labels.stack</span></code> to <code class="docutils literal notranslate"><span class="pre">plot.rspec</span></code>, which allows the use of custom spectra labels in stacked plots.</p></li>
+<li><p>users now receive a warning when interpolating beyond the limits of the data using <code class="docutils literal notranslate"><span class="pre">as.rspec</span></code>, and can control the behaviour with the new argument <code class="docutils literal notranslate"><span class="pre">exceed.limits</span></code>.</p></li>
+<li><p>all deprecated functions and arguments have now been fully removed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.rspec()</span></code> now accepts both numeric and character vectors to identify the wavelength column using <code class="docutils literal notranslate"><span class="pre">whichwl</span></code> (eg. <code class="docutils literal notranslate"><span class="pre">whichwl</span> <span class="pre">=</span> <span class="pre">&quot;wl&quot;</span></code>).\</p></li>
+<li><p>Reference images in <code class="docutils literal notranslate"><span class="pre">classify()</span></code> can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).\</p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">aggspec()</span></code> when wavelength column was previously removed by the user.</p></li>
+<li><p>fixed a bug where <code class="docutils literal notranslate"><span class="pre">cocplot()</span></code> would failed whenever <code class="docutils literal notranslate"><span class="pre">type</span></code> graphical parameter was specified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spec2rgb()</span></code> has been simplified to rely more on <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code>. As a result, output values may be slightly different but upon testing, we found that differences between the old and the new version were barely noticeable.</p></li>
+<li><p>the vignette have been split into three smaller parts, which should help new users to get started with pavo</p></li>
+<li><p>numerous under-the-hood changes for stability and speed, with thanks to three reviewers and an associate editor at MEE.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-2-0-0">
+<h1>pavo 2.0.0<a class="headerlink" href="#pavo-2-0-0" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>NEW FEATURES<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>image-based workflow for the combined analysis of colour and pattern geometry</p></li>
+<li><p>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getspec()</span></code> can now read Avantes binary files (<code class="docutils literal notranslate"><span class="pre">.TRM</span></code> files)</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Carotenoid chroma (S9) in <code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> has been fixed to (R700 - R450)/R700. This gives the same result as before but with a flipped sign, and better reflects the original formula in the literature.</p></li>
+<li><p>cieLAB values have been rescaled, and are expressed in the more standard range: L [0,100], ab [-128,127]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getspec()</span></code> has an additional argument <code class="docutils literal notranslate"><span class="pre">ignore.case</span></code> set to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> by default to ignore case in file extension matching</p></li>
+<li><p>fix a bug where <code class="docutils literal notranslate"><span class="pre">getspec()</span></code> would sometimes fail with files including numbers in scientific format</p></li>
+<li><p>add a new option in <code class="docutils literal notranslate"><span class="pre">tetraplot()</span></code> to add cone names (u,s,m,l)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-4-0">
+<h1>pavo 1.4.0<a class="headerlink" href="#pavo-1-4-0" title="Link to this heading">#</a></h1>
+<section id="id17">
+<h2>NEW FEATURES<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">getspec()</span></code> can now read OceanOptics <code class="docutils literal notranslate"><span class="pre">.ProcSpec</span></code> files</p></li>
+<li><p>added the visual system of <em>Ctenophorus ornatus</em>, the (trichromatic) ornate dragon lizard</p></li>
+</ul>
+</section>
+<section id="major-changes">
+<h2>MAJOR CHANGES<a class="headerlink" href="#major-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">getspecf()</span></code> (and the argument <code class="docutils literal notranslate"><span class="pre">fast</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> in <code class="docutils literal notranslate"><span class="pre">getspec()</span></code>) have been deprecated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> returned incorrect values for S7. If you use S7, please re-run your analyses</p></li>
+</ul>
+</section>
+<section id="id18">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.rspec()</span></code> now properly outputs <code class="docutils literal notranslate"><span class="pre">NA</span></code> for monotonically decreasing spectra</p></li>
+<li><p>fixed warning when <code class="docutils literal notranslate"><span class="pre">subset.rspec()</span></code> was provided with a logical vector</p></li>
+<li><p>fixed harmless warning when <code class="docutils literal notranslate"><span class="pre">summary.colspace()</span></code> was used on a tcs object</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">by</span></code> argument in <code class="docutils literal notranslate"><span class="pre">merge.rspec()</span></code> is no longer ignored</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code> when plot = TRUE</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> when transmission has more than one column</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">vismodel()</span></code> that applied von Kries correction to achromatic channel</p></li>
+<li><p>added argument <code class="docutils literal notranslate"><span class="pre">fill=FALSE</span></code> in <code class="docutils literal notranslate"><span class="pre">voloverlap()</span></code></p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">jndplot()</span></code> when suppressing the plotting of arrows</p></li>
+<li><p>better handling of subset data when using summary.colspace() and summary.vismodel()</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> when <code class="docutils literal notranslate"><span class="pre">noise</span> <span class="pre">=</span> <span class="pre">&quot;quantum&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">achro</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> were used</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">jndplot()</span></code> when <code class="docutils literal notranslate"><span class="pre">arrow</span> <span class="pre">=</span> <span class="pre">&quot;none&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">achro</span> <span class="pre">=</span> <span class="pre">TRUE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spec2rgb()</span></code> now takes into account the 390-400 nm wavelength range into account when possible</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.rspec()</span></code> no longer fails with tibbles</p></li>
+<li><p>bin option of <code class="docutils literal notranslate"><span class="pre">procspec()</span></code> now works for all values of bins</p></li>
+<li><p>non-relative quantum catches from dataframe object were not correctly scaled in “di”, “tri”, “categorical” and “coc” colorspaces</p></li>
+<li><p>fixed a bug in <code class="docutils literal notranslate"><span class="pre">colspace()</span></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</p></li>
+<li><p>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e. maxwell triangle)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-3-1">
+<h1>pavo 1.3.1<a class="headerlink" href="#pavo-1-3-1" title="Link to this heading">#</a></h1>
+<section id="new-functions">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#new-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bootcoldist()</span></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</p></li>
+</ul>
+</section>
+<section id="id19">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">coldist()</span></code> when fewer samples than the number of photoreceptors</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">getspec()</span></code> that would cause it to crash with errors</p></li>
+<li><p>fixed bug in <code class="docutils literal notranslate"><span class="pre">tetraplot()</span></code> when saving images</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-3-0">
+<h1>pavo 1.3.0<a class="headerlink" href="#pavo-1-3-0" title="Link to this heading">#</a></h1>
+<section id="id20">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates</p></li>
+<li><p>plot() methods for objects resulting from jnd2xyz()</p></li>
+<li><p>jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()</p></li>
+<li><p>coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix</p></li>
+<li><p>sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</p></li>
+</ul>
+</section>
+<section id="id21">
+<h2>MAJOR CHANGES<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>tetraplot() and cieplot() have been completely rewritten to allow finer viewing control</p></li>
+<li><p>tetraplot() allows forced perspective using size to denote distance</p></li>
+<li><p>voloverlap() and vol() have also been changed to work with the new tetraplot() options</p></li>
+<li><p>getspec() has been rewritten to be faster, more general, and allow parallel processing</p></li>
+<li><p>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</p></li>
+</ul>
+</section>
+<section id="id22">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug in coldist() on log-transformation when object was neither of class vismodel nor colspace</p></li>
+<li><p>fixed bug in dL calculation when input is a colspace object</p></li>
+<li><p>fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background</p></li>
+<li><p>fixed bug in colspace() models when using non-standard receptor names or ordering</p></li>
+<li><p>fixed bug in hexagon() model when calculating location &amp; metrics for achromatic stimuli</p></li>
+<li><p>fixed location of red vertex in tetraplot()</p></li>
+<li><p>fixed bug in the argument names for expanding text labels in colspace plots</p></li>
+<li><p>removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.</p></li>
+<li><p>changed default to achro=FALSE in coldist()</p></li>
+<li><p>replaced the modelled receptor sensitivities of the honeybee <em>Apis mellifera</em> with the empirical sensitivities from Peitsch et al (1992)</p></li>
+<li><p>the built-in ‘green’ background spectrum is no longer normalized</p></li>
+<li><p>removed wavelength limitations in the calculation of H3 from summary.rspec</p></li>
+<li><p>all visual systems (except CIE) have been normalized to have an integral of 1</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-2-0">
+<h1>pavo 1.2.0<a class="headerlink" href="#pavo-1-2-0" title="Link to this heading">#</a></h1>
+<section id="id23">
+<h2>MAJOR CHANGES<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added the CIELch model accessed via colspace(space = ‘cielch’)</p></li>
+<li><p>added the sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</p></li>
+</ul>
+</section>
+<section id="id24">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>vignettes have been amalgamated &amp; the single, main vignette is now up-to-date</p></li>
+<li><p>added more informative labels for the segment analysis plot</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-1-0">
+<h1>pavo 1.1.0<a class="headerlink" href="#pavo-1-1-0" title="Link to this heading">#</a></h1>
+<section id="id25">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</p></li>
+<li><p>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</p></li>
+</ul>
+</section>
+<section id="id26">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>the use of relative quantum catches is now optional in the categorical colorspace (though still produces a warning), for greater flexibility</p></li>
+<li><p>updated several functions to work when rspec object has only one spectrum</p></li>
+<li><p>fixed bug in voloverlap where interactive plots would result in error</p></li>
+<li><p>fixed incorrect labels in the maxwell triangle plot</p></li>
+<li><p>fixed a bug in as.rspec() in which lim was not applied when interpolate = FALSE</p></li>
+<li><p>fixed bug in aggplot() which resulted in error when using lty, lwd arguments</p></li>
+<li><p>warning if ocular media is being used in both vismodel() and sensmodel()</p></li>
+<li><p>added an ‘all’ option to the achromatic argument in vismodel()</p></li>
+<li><p>added the ability to calculate dL for cielab models in coldist()</p></li>
+<li><p>added some more informative messages and warnings</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-1-0">
+<h1>pavo 1.0<a class="headerlink" href="#pavo-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>See vignette for detailed description of changes.</p></li>
+</ul>
+<section id="id27">
+<h2>MAJOR CHANGES<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.</p></li>
+<li><p>coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.</p></li>
+<li><p>tcs() is deprecated, replaced by colspace().</p></li>
+</ul>
+</section>
+<section id="id28">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>colspace() replaces tcs() and introduces several new colorspaces</p></li>
+<li><p>plot() methods for several colspace() outputs, including a static tetrahedral colorspace</p></li>
+<li><p>projpoints() allows the plotting of points in a projplot() figure</p></li>
+<li><p>vol() draws volume polygons in static tetrahedral plots</p></li>
+<li><p>axistetra() draws reference x, y and z axis arrows in static tetrahedral plots</p></li>
+<li><p>legendtetra() adds legends to static tetrahedral plots</p></li>
+</ul>
+</section>
+<section id="id29">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>summary.colspace() for tcs spaces now returns relative color volume as well as absolute</p></li>
+<li><p>tcsvol() and voloverlap() now allow control for line width</p></li>
+<li><p>procspec() fixed error when attempting to smooth rspec object without column names</p></li>
+<li><p>procspec() handles smoothing before fixing negatives to avoid re-adding negatives when smoothing</p></li>
+<li><p>procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)</p></li>
+<li><p>peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700</p></li>
+<li><p>peakshape() returns warning if a spectrum contains duplicate reflectance values</p></li>
+<li><p>summary.rspec() works with single spectra</p></li>
+<li><p>aggplot() and aggspec() fixed bug on ordering of levels when they don’t match the sequence in the rspec object</p></li>
+<li><p>aggplot() added logical argument “legend” for automatically adding a legend to the plot</p></li>
+<li><p>vismodel() returns error if bkg=NULL</p></li>
+<li><p>getspec() patched to stop returning warnings in Yosemite</p></li>
+<li><p>getspec() has a faster (~5-10X), but less flexible, algorithm used when all input files are from the same source.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5-6">
+<h1>pavo 0.5-6<a class="headerlink" href="#pavo-0-5-6" title="Link to this heading">#</a></h1>
+<section id="bug-fixes">
+<h2>BUG FIXES<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug in calculation of dichromat contrast in coldist()</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5-5">
+<h1>pavo 0.5-5<a class="headerlink" href="#pavo-0-5-5" title="Link to this heading">#</a></h1>
+<section id="id30">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug in calculation of H3 in summary.rspec()</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5-4">
+<h1>pavo 0.5-4<a class="headerlink" href="#pavo-0-5-4" title="Link to this heading">#</a></h1>
+<section id="id31">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id31" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>changed default values for coldist()</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5-2">
+<h1>pavo 0.5-2<a class="headerlink" href="#pavo-0-5-2" title="Link to this heading">#</a></h1>
+<section id="id32">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id32" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5-1">
+<h1>pavo 0.5-1<a class="headerlink" href="#pavo-0-5-1" title="Link to this heading">#</a></h1>
+<section id="id33">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id33" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>vismodel() accepts matrix, data.frame or rspec objects for the illuminant, updated warning messages associated with this use</p></li>
+<li><p>vismodel() accepts user-defined achromatic receptors</p></li>
+<li><p>tcsplot(), tcsvol() &amp; tcspoints(): transparency control passed to user</p></li>
+<li><p>getspec() works with OceanView files</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-5">
+<h1>pavo 0.5<a class="headerlink" href="#pavo-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>updated citation()</p></li>
+</ul>
+<section id="id34">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id34" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>vismodel() vonkries = TRUE does not return a NULL result</p></li>
+<li><p>vismodel() works with a single spectrum object</p></li>
+<li><p>tcsplot() allows greater control of tetrahedron appearance</p></li>
+<li><p>summary.rspec() allows for user-defined minimum wavelength (for calculation of UV variables)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-3-1">
+<h1>pavo 0.3-1<a class="headerlink" href="#pavo-0-3-1" title="Link to this heading">#</a></h1>
+<section id="id35">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id35" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>irrad2flux() and flux2irrad() to convert illuminant measurements</p></li>
+</ul>
+</section>
+<section id="id36">
+<h2>MINOR FEATURES AND BUG FIXES<a class="headerlink" href="#id36" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>vismodel() less cryptic error messages</p></li>
+<li><p>as_rspec() fix message pertaining wavelength column</p></li>
+<li><p>getspec() now removes empty columns (generated by bad tabulation)</p></li>
+<li><p>plot.rspec() fix color labelling issue (previously, when user specified fewer colors than number of spectra, ‘stack’ and ‘overlay’ colored spectra differently)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-3">
+<h1>pavo 0.3<a class="headerlink" href="#pavo-0-3" title="Link to this heading">#</a></h1>
+<section id="id37">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id37" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>subset() class methods for rspec, vismodel and tcs</p></li>
+<li><p>summary() method for vismodel, returns attributes used in visual model</p></li>
+</ul>
+</section>
+<section id="visual-model">
+<h2>VISUAL MODEL<a class="headerlink" href="#visual-model" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>vismodel() output includes only Qi or fi (as selected by qcatch argument)</p></li>
+<li><p>vismodel() von Kries correction is now an optional argument</p></li>
+<li><p>coldist() subset argument for partial filtering</p></li>
+<li><p>Updated sensitivity curves</p></li>
+</ul>
+</section>
+<section id="minor-features">
+<h2>MINOR FEATURES<a class="headerlink" href="#minor-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>getspec() works with Avasoft 8 output</p></li>
+<li><p>aggspec() if no “by” argument is supplied, applies function to all spectra</p></li>
+</ul>
+</section>
+<section id="id38">
+<h2>BUG FIXES<a class="headerlink" href="#id38" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>tcs() accepts receptor names other than usml, issues warning</p></li>
+<li><p>aggplot() allows control for different line types per spectra</p></li>
+<li><p>voloverlap() now assigns darkgrey color for overlap if color vector is of length 1 or 2</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pavo-0-1-2">
+<h1>pavo 0.1-2<a class="headerlink" href="#pavo-0-1-2" title="Link to this heading">#</a></h1>
+<section id="id39">
+<h2>NEW FUNCTIONS<a class="headerlink" href="#id39" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>merge.rspec() combines rspec objects in a single object</p></li>
+</ul>
+</section>
+<section id="id40">
+<h2>VISUAL MODEL<a class="headerlink" href="#id40" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Changed vismodel() output: von Kries correction is now an optional argument, output includes only Qi and fi</p></li>
+<li><p>vismodel() accepts a scale parameter (multiplies illuminant in order to make it in flux units)</p></li>
+<li><p>coldist() includes option for receptor noise calculation</p></li>
+<li><p>Updated sensitivity curves</p></li>
+</ul>
+</section>
+<section id="id41">
+<h2>MINOR FEATURES<a class="headerlink" href="#id41" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>sensmodel() accepts user-defined ocular media transmission</p></li>
+<li><p>voloverlap() allows greater user control of plotting options</p></li>
+<li><p>voloverlap() includes Monte Carlo option for overlap calculation</p></li>
+<li><p>as.rspec() accepts “whichwl” argument for user-defined wavelength column selection</p></li>
+<li><p>as.rspec() includes “interp” argument; updated automatic search for wavelength column</p></li>
+<li><p>aggspec() aggregates spectra by multiple vectors (e.g. average spectra by species and sex using by=list(species,sex) )</p></li>
+<li><p>peakshape() gives plot titles, allows ask=TRUE and mfrow</p></li>
+</ul>
+</section>
+<section id="id42">
+<h2>BUG FIXES<a class="headerlink" href="#id42" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>explorespec() “free” argument fixed</p></li>
+<li><p>summary.rspec() S5 variable fixed; segments now divided by B1 (brightness-independent measure of saturation)</p></li>
+<li><p>summary.rspec() checks for positive values when bmaxneg is calculated, returns NA</p></li>
+<li><p>tcs() accepts “v” cone class</p></li>
+<li><p>aggspec() fixed matching of names</p></li>
+<li><p>procspec() works with rspec objects that include a single reflectance spectrum</p></li>
+<li><p>peakshape() minor fixes</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\pavo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">pavo 2.9.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-significant-changes">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features-and-bug-fixes">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-8-0">pavo 2.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-7-1">pavo 2.7.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-7-0">pavo 2.7.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-6-1">pavo 2.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-6-0">pavo 2.6.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-5-0">pavo 2.5.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-4-0">pavo 2.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-3-0">pavo 2.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-2-0">pavo 2.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">NEW FEATURES AND SIGNIFICANT CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-1-0">pavo 2.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-and-potentially-breaking-changes">NEW FEATURES AND POTENTIALLY BREAKING CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-2-0-0">pavo 2.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-4-0">pavo 1.4.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">NEW FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#major-changes">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-3-1">pavo 1.3.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-3-0">pavo 1.3.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-2-0">pavo 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-1-0">pavo 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-1-0">pavo 1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">MAJOR CHANGES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-6">pavo 0.5-6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-5">pavo 0.5-5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-4">pavo 0.5-4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-2">pavo 0.5-2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5-1">pavo 0.5-1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-5">pavo 0.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-3-1">pavo 0.3-1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">MINOR FEATURES AND BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-3">pavo 0.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-model">VISUAL MODEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-features">MINOR FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id38">BUG FIXES</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pavo-0-1-2">pavo 0.1-2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">NEW FUNCTIONS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">VISUAL MODEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id41">MINOR FEATURES</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">BUG FIXES</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

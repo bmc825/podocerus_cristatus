@@ -1,0 +1,937 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>bayesplot 1.11.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/bayesplot/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/bayesplot/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>bayesplot 1.11.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">bayesplot 1.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-11-0">bayesplot 1.11.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-10-0">bayesplot 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-9-0">bayesplot 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-8-1">bayesplot 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-8-0">bayesplot 1.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-2">bayesplot 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-1">bayesplot 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-0">bayesplot 1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-6-0">bayesplot 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-5-0">bayesplot 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-4-0">bayesplot 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-3-0">bayesplot 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-2-0">bayesplot 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-in-existing-functions">New features in existing functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-1-0">bayesplot 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features in existing functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New functions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-0-0">bayesplot 1.0.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-11-1">
+<h1>bayesplot 1.11.1<a class="headerlink" href="#bayesplot-1-11-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Limit maximum number of evaluation points in <code class="docutils literal notranslate"><span class="pre">ppc_pit_ecdf</span></code> functions by default to 1000. by &#64;TeemuSailynoja in #318</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-11-0">
+<h1>bayesplot 1.11.0<a class="headerlink" href="#bayesplot-1-11-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update for new ggplot2 release by &#64;teunbrand in #309</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">bins</span></code> argument to many histogram plots by &#64;paul-buerkner in #300</p></li>
+<li><p>Follow ggplot2 updates on <code class="docutils literal notranslate"><span class="pre">facet_grid()</span></code> and <code class="docutils literal notranslate"><span class="pre">facet_wrap()</span></code> by &#64;heavywatal in #305</p></li>
+<li><p>Better <code class="docutils literal notranslate"><span class="pre">ppc_loo_pit_qq</span></code> plots by &#64;avehtari in #307</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">prob</span></code> is numeric for intervals plots by &#64;tony-stone in #299</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">bins</span></code> and <code class="docutils literal notranslate"><span class="pre">breaks</span></code> arguments to more histogram and hex plots by &#64;heavywatal in #313</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">size</span></code> argument with <code class="docutils literal notranslate"><span class="pre">linewidth</span></code> for <code class="docutils literal notranslate"><span class="pre">geom_line</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_ridgeline</span></code> by &#64;heavywatal in #314</p></li>
+<li><p>All LOO plots now accept <code class="docutils literal notranslate"><span class="pre">psis_object</span></code> argument by &#64;jgabry in #311</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_pit_ecdf()</span></code> and <code class="docutils literal notranslate"><span class="pre">ppc_pit_ecdf_grouped()</span></code> now support discrete variables, and their default method for selecting the number of ECDF evaluation points has been updated. by &#64;TeemuSailynoja in #316</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-10-0">
+<h1>bayesplot 1.10.0<a class="headerlink" href="#bayesplot-1-10-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">mcmc_rank_ecdf()</span></code> for rank ecdf plots with confidence bands for
+assessing if two or more chains sample the same distribution (#282, &#64;TeemuSailynoja)</p></li>
+<li><p>New functions <code class="docutils literal notranslate"><span class="pre">ppc_pit_ecdf()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_pit_ecdf_grouped()</span></code>, PIT ecdf plots with
+confidence bands to assess if <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">yrep</span></code> contain samples from the same
+distribution. (#282, &#64;TeemuSailynoja)</p></li>
+<li><p>Several <code class="docutils literal notranslate"><span class="pre">ppc</span></code> and <code class="docutils literal notranslate"><span class="pre">ppd</span></code> functions now accept the new <code class="docutils literal notranslate"><span class="pre">linewidth</span></code> argument
+introduced in ggplot2 3.4.0: <code class="docutils literal notranslate"><span class="pre">ppc_bars()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_bars_grouped()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ppc_intervals()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_intervals_grouped()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppd_intervals()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ppd_intervals_grouped()</span></code>.</p></li>
+<li><p>Fix bug in how <code class="docutils literal notranslate"><span class="pre">mcmc_pairs()</span></code> detected hitting <code class="docutils literal notranslate"><span class="pre">max_treedepth</span></code>, thanks to &#64;dmphillippo. (#281)</p></li>
+<li><p>Fix failing tests due to changes in ggplot2 3.4.0 (#289)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-9-0">
+<h1>bayesplot 1.9.0<a class="headerlink" href="#bayesplot-1-9-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New module PPD (posterior/prior predictive distribution) with a lot of new
+plotting functions with <code class="docutils literal notranslate"><span class="pre">ppd_</span></code> prefix. These functions plot draws from the prior
+or posterior predictive distributions (PPD) without comparing to observed data
+(i.e., no <code class="docutils literal notranslate"><span class="pre">y</span></code> argument). Because these are not “checks” against the observed
+data we use PPD instead of PPC. These plots are essentially the same as the
+corresponding PPC plots but without showing any observed data (e.g.,
+<code class="docutils literal notranslate"><span class="pre">ppd_intervals()</span></code> is like <code class="docutils literal notranslate"><span class="pre">ppc_intervals()</span></code> but without plotting <code class="docutils literal notranslate"><span class="pre">y</span></code>). See
+<code class="docutils literal notranslate"><span class="pre">help(&quot;PPD-overview&quot;)</span></code> for details. (#151, #222)</p></li>
+<li><p>All PPC categories now have one or more <code class="docutils literal notranslate"><span class="pre">_data()</span></code> functions that return the
+data frame used for plotting (#97, #222). Many of these have already been in
+previous releases, but the new ones in this release are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_bars_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_binnned_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_scatter_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_scatter_avg_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_stat_data()</span></code></p></li>
+</ul>
+</li>
+<li><p>Many functions gain an argument <code class="docutils literal notranslate"><span class="pre">facet_args</span></code> for controlling ggplot2 faceting
+(many other functions have had this argument for a long time).
+The ones that just now got the argument are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_scatter()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_scatter_avg_grouped()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_hist()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_hist_grouped()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_scatter()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_binned()</span></code></p></li>
+</ul>
+</li>
+<li><p>New plotting function <code class="docutils literal notranslate"><span class="pre">ppc_km_overlay_grouped()</span></code>, the grouped variant of
+<code class="docutils literal notranslate"><span class="pre">ppc_km_overlay()</span></code>. (#260, &#64;fweber144)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_scatter()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_scatter_avg()</span></code>, and <code class="docutils literal notranslate"><span class="pre">ppc_scatter_avg_grouped()</span></code> gain an
+argument <code class="docutils literal notranslate"><span class="pre">ref_line</span></code>, which can be set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> to turn off the <code class="docutils literal notranslate"><span class="pre">x=y</span></code> line
+drawn behind the scatterplot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_ribbon()</span></code> and <code class="docutils literal notranslate"><span class="pre">ppc_ribbon_grouped()</span></code> gain argument <code class="docutils literal notranslate"><span class="pre">y_draw</span></code> that specifies whether the observed y should be plotted using a point, line, or both. (#257, &#64;charlesm93)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_*()</span></code> functions now support all draws formats from the <strong>posterior</strong> package. (#277, &#64;Ozan147)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_dens()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_dens_overlay()</span></code> gain arguments for controlling the
+the density calculation. (#258)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_hist()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_dens()</span></code> gain argument <code class="docutils literal notranslate"><span class="pre">alpha</span></code> for controlling transparency. (#244)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_areas_ridges()</span></code> gain an argument <code class="docutils literal notranslate"><span class="pre">border_size</span></code> for
+controlling the thickness of the ridgelines. (#224)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-8-1">
+<h1>bayesplot 1.8.1<a class="headerlink" href="#bayesplot-1-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix R cmd check error on linux for CRAN</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-8-0">
+<h1>bayesplot 1.8.0<a class="headerlink" href="#bayesplot-1-8-0" title="Link to this heading">#</a></h1>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> tries to use less vertical blank space. (#218, #230)</p></li>
+<li><p>Fix bug in <code class="docutils literal notranslate"><span class="pre">color_scheme_view()</span></code> minimal theme (#213).</p></li>
+<li><p>Fix error in <code class="docutils literal notranslate"><span class="pre">mcmc_acf()</span></code> for certain input types. (#244, #245, &#64;hhau)</p></li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New plotting functions <code class="docutils literal notranslate"><span class="pre">ppc_dens_overlay_grouped()</span></code> and <code class="docutils literal notranslate"><span class="pre">ppc_ecdf_overlay_grouped()</span></code>
+for plotting density and cumulative distributions of the posterior predictive
+distribution (versus observed data) by group. (#212)</p></li>
+<li><p>New plotting function <code class="docutils literal notranslate"><span class="pre">ppc_km_overlay()</span></code> for outcome variables that are<br />
+right-censored. Empirical CCDF estimates of <code class="docutils literal notranslate"><span class="pre">yrep</span></code> are compared with the
+Kaplan-Meier estimate of <code class="docutils literal notranslate"><span class="pre">y</span></code>. (#233, #234, &#64;fweber144)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_loo_pit_overlay()</span></code> now uses a boundary correction for an improved kernel
+density estimation. The new argument <code class="docutils literal notranslate"><span class="pre">boundary_correction</span></code> defaults to TRUE but
+can be set to FALSE to recover the old version of the plot. (#171, #235,
+&#64;ecoronado92)</p></li>
+<li><p>CmdStanMCMC objects (from CmdStanR) can now be used with extractor
+functions <code class="docutils literal notranslate"><span class="pre">nuts_params()</span></code>, <code class="docutils literal notranslate"><span class="pre">log_posterior()</span></code>, <code class="docutils literal notranslate"><span class="pre">rhat()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">neff_ratio()</span></code>. (#227)</p></li>
+<li><p>On the y axis, <code class="docutils literal notranslate"><span class="pre">ppc_loo_pit_qq(...,</span> <span class="pre">compare</span> <span class="pre">=</span> <span class="pre">&quot;normal&quot;)</span></code> now plots standard
+normal quantiles calculated from the PIT values (instead of the standardized
+PIT values). (#240, #243, &#64;fweber144)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_rank_overlay()</span></code> gains argument <code class="docutils literal notranslate"><span class="pre">facet_args</span></code>. (#221, &#64;hhau)</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code> the size<code class="docutils literal notranslate"><span class="pre">of</span> <span class="pre">the</span> <span class="pre">points</span> <span class="pre">and</span> <span class="pre">interval</span> <span class="pre">lines</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">set</span> <span class="pre">with</span></code>mcmc_intervals(…, outer_size, inner_size, point_size)`. (#215, #228, #229)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-7-2">
+<h1>bayesplot 1.7.2<a class="headerlink" href="#bayesplot-1-7-2" title="Link to this heading">#</a></h1>
+<p>Compatibility with dplyr 1.0.0 (#219)</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-7-1">
+<h1>bayesplot 1.7.1<a class="headerlink" href="#bayesplot-1-7-1" title="Link to this heading">#</a></h1>
+<p>Release requested by CRAN to fix errors at
+<a class="reference external" href="https://cran.r-project.org/web/checks/check_results_bayesplot.html">https://cran.r-project.org/web/checks/check_results_bayesplot.html</a> due to
+matrices also inheriting from “array” in R 4.0.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-7-0">
+<h1>bayesplot 1.7.0<a class="headerlink" href="#bayesplot-1-7-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">pars</span></code> argument of all MCMC plotting functions now supports tidy variable
+selection. See <code class="docutils literal notranslate"><span class="pre">help(&quot;tidy-params&quot;,</span> <span class="pre">package=&quot;bayesplot&quot;)</span></code> for details and
+examples. (#161, #183, #188)</p></li>
+<li><p>Two new plots have been added for inspecting the distribution of ranks.
+Rank histograms were introduced by the Stan team’s <a class="reference external" href="https://arxiv.org/abs/1903.08008">new paper on
+MCMC diagnostics</a>. (#178, #179)</p>
+<p><code class="docutils literal notranslate"><span class="pre">mcmc_rank_hist()</span></code>: A traditional traceplot (<code class="docutils literal notranslate"><span class="pre">mcmc_trace()</span></code>) visualizes how
+sampled values the MCMC chains mix over the course of sampling. A rank
+histogram (<code class="docutils literal notranslate"><span class="pre">mcmc_rank_hist()</span></code>) visualizes how the <em>ranks</em> of values from the
+chains mix together. An ideal plot would show the ranks mixing or overlapping
+in a uniform distribution.</p>
+<p><code class="docutils literal notranslate"><span class="pre">mcmc_rank_overlay()</span></code>: Instead of drawing each chain’s histogram in a separate
+panel, this plot draws the top edge of the chains’ histograms in a single
+panel.</p>
+</li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">mcmc_trace_data()</span></code>, which returns the data used for plotting the trace
+plots and rank histograms. (Advances #97)</p></li>
+<li><p><a class="reference external" href="https://colorbrewer2.org/">ColorBrewer</a> palettes are now available as color
+schemes via
+<a class="reference external" href="https://mc-stan.org/bayesplot/reference/bayesplot-colors.html"><code class="docutils literal notranslate"><span class="pre">color_scheme_set()</span></code></a>.
+For example, <code class="docutils literal notranslate"><span class="pre">color_scheme_set(&quot;brewer-Spectral&quot;)</span></code> will use the Spectral
+palette. (#177, #190)</p></li>
+<li><p>MCMC plots now also accept objects with an <code class="docutils literal notranslate"><span class="pre">as.array</span></code> method as
+input (e.g., stanfit objects). (#175, #184)</p></li>
+<li><p><a class="reference external" href="https://mc-stan.org/bayesplot/reference/MCMC-traces.html"><code class="docutils literal notranslate"><span class="pre">mcmc_trace()</span></code></a>
+gains an argument <code class="docutils literal notranslate"><span class="pre">iter1</span></code> which can be used to label the traceplot starting
+from the first iteration after warmup. (#14, #155, &#64;mcol)</p></li>
+<li><p><a class="reference external" href="https://mc-stan.org/bayesplot/reference/MCMC-intervals.html"><code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code></a>
+gains an argument <code class="docutils literal notranslate"><span class="pre">area_method</span></code> which controls how to draw the density
+curves. The default <code class="docutils literal notranslate"><span class="pre">&quot;equal</span> <span class="pre">area&quot;</span></code> constrains the heights so that the curves
+have the same area. As a result, a narrow interval will appear as a spike
+of density, while a wide, uncertain interval is spread thin over the <em>x</em> axis.
+Alternatively <code class="docutils literal notranslate"><span class="pre">&quot;equal</span> <span class="pre">height&quot;</span></code> will set the maximum height on each curve to
+the same value. This works well when the intervals are about the same width.
+Otherwise, that wide, uncertain interval will dominate the visual space
+compared to a narrow, less uncertain interval. A compromise between the two is
+<code class="docutils literal notranslate"><span class="pre">&quot;scaled</span> <span class="pre">height&quot;</span></code> which scales the curves from <code class="docutils literal notranslate"><span class="pre">&quot;equal</span> <span class="pre">height&quot;</span></code> using
+<code class="docutils literal notranslate"><span class="pre">height</span> <span class="pre">*</span> <span class="pre">sqrt(height)</span></code>. (#163, #169)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> correctly plots density curves where the point estimate
+does not include the highest point of the density curve.
+(#168, #169, &#64;jtimonen)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas_ridges()</span></code> draws the vertical line at <em>x</em> = 0 over the curves so
+that it is always visible.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> raise a warning if <code class="docutils literal notranslate"><span class="pre">prob_outer</span></code> is ever
+less than <code class="docutils literal notranslate"><span class="pre">prob</span></code>. It sorts these two values into the correct order. (#138)</p></li>
+<li><p>MCMC parameter names are now <em>always</em> converted to factors prior to
+plotting. We use factors so that the order of parameters in a plot matches
+the order of the parameters in the original MCMC data. This change fixes a
+case where factor-conversion failed. (#162, #165, &#64;wwiecek)</p></li>
+<li><p>The examples in
+<a class="reference external" href="https://mc-stan.org/bayesplot/reference/PPC-loo.html"><code class="docutils literal notranslate"><span class="pre">?ppc_loo_pit_overlay()</span></code></a>
+now work as expected. (#166, #167)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;viridisD&quot;</span></code> as an alternative name for <code class="docutils literal notranslate"><span class="pre">&quot;viridis&quot;</span></code> to the supported
+colors.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;viridisE&quot;</span></code> (the <a class="reference external" href="https://github.com/marcosci/cividis">cividis</a>
+version of viridis) to the supported colors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_bars()</span></code> and <code class="docutils literal notranslate"><span class="pre">ppc_bars_grouped()</span></code> now allow negative integers as input.
+(#172, &#64;jeffpollock9)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-6-0">
+<h1>bayesplot 1.6.0<a class="headerlink" href="#bayesplot-1-6-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<ul class="simple">
+<li><p>Loading <strong>bayesplot</strong> no longer overrides the ggplot theme! Rather, it sets
+a theme specific for <strong>bayesplot</strong>. Some packages using <strong>bayesplot</strong> may
+still override the default <strong>ggplot</strong> theme (e.g., <strong>rstanarm</strong> does but
+only until next release), but simply loading <strong>bayesplot</strong> itself will not.
+There are new functions for controlling the ggplot theme for <strong>bayesplot</strong>
+that work like their <strong>ggplot2</strong> counterparts but only affect plots made
+using <strong>bayesplot</strong>. Thanks to Malcolm Barrett. (#117, #149).</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot_theme_set()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot_theme_get()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot_theme_update()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot_theme_replace()</span></code></p></li>
+</ul>
+</li>
+<li><p>The <a class="reference external" href="https://mc-stan.org/bayesplot/articles/visual-mcmc-diagnostics.html">Visual MCMC Diagnostics
+vignette</a>
+has been reorganized and has a lot of useful new content thanks to Martin
+Modrák. (#144, #153)</p></li>
+<li><p>The <a class="reference external" href="https://mc-stan.org/bayesplot/reference/PPC-loo.html">LOO predictive
+checks</a> now require
+<strong>loo</strong> version <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">2.0.0</span></code>. (#139)</p></li>
+<li><p>Histogram plots gain a <code class="docutils literal notranslate"><span class="pre">breaks</span></code> argument that can be used as an alternative
+to <code class="docutils literal notranslate"><span class="pre">binwidth</span></code>. (#148)</p></li>
+<li><p><a class="reference external" href="https://mc-stan.org/bayesplot/reference/MCMC-scatterplots.html"><code class="docutils literal notranslate"><span class="pre">mcmc_pairs()</span></code></a>
+now has an argument <code class="docutils literal notranslate"><span class="pre">grid_args</span></code> to provide a way of passing optional
+arguments to <code class="docutils literal notranslate"><span class="pre">gridExtra::arrangeGrob()</span></code>. This can be used to add a title to
+the plot, for example. (#143)</p></li>
+<li><p><a class="reference external" href="https://mc-stan.org/bayesplot/reference/PPC-distributions.html"><code class="docutils literal notranslate"><span class="pre">ppc_ecdf_overlay()</span></code></a>
+gains an argument <code class="docutils literal notranslate"><span class="pre">discrete</span></code>, which is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> by default, but can be used
+to make the Geom more appropriate for discrete data. (#145)</p></li>
+<li><p><a class="reference external" href="https://mc-stan.org/bayesplot/reference/PPC-intervals.html">PPC intervals
+plots</a> and <a class="reference external" href="https://mc-stan.org/bayesplot/reference/PPC-loo.html">LOO
+predictive checks</a> now
+draw both an outer and an inner probability interval, which can be
+controlled through the new argument <code class="docutils literal notranslate"><span class="pre">prob_outer</span></code> and the already existing
+<code class="docutils literal notranslate"><span class="pre">prob</span></code>. This is consistent with what is produced by <code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code>.
+(#152, #154, &#64;mcol)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-5-0">
+<h1>bayesplot 1.5.0<a class="headerlink" href="#bayesplot-1-5-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<ul class="simple">
+<li><p>New package documentation website: <a class="reference external" href="https://mc-stan.org/bayesplot/">https://mc-stan.org/bayesplot/</a></p></li>
+<li><p>Two new plots that visualize posterior density using
+<a class="reference external" href="https://CRAN.R-project.org/package=ggridges" title="ggridges package">ridgelines</a>. These work well when parameters have similar
+values and similar densities, as in hierarchical models. (#104)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_dens_chains()</span></code> draws the kernel density of each sampling chain.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas_ridges()</span></code> draws the kernel density combined across chains.</p></li>
+<li><p>Both functions have a <code class="docutils literal notranslate"><span class="pre">_data()</span></code> function to return the data plotted by
+each function.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> have been rewritten. (#103)</p>
+<ul>
+<li><p>They now use a discrete <em>y</em>-axis. Previously, they used a continuous
+scale with numeric breaks relabelled with parameter names; this design<br />
+caused some unexpected behavior when customizing these plots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code> now uses geoms from the ggridges package to draw density
+curves.</p></li>
+</ul>
+</li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">mcmc_intervals_data()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_areas_data()</span></code> that return data
+plotted by <code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_areas()</span></code>. (Advances #97)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">ppc_data()</span></code> function returns the data plotted by many of the PPC plotting
+functions. (Advances #97)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">ppc_loo_pit_overlay()</span></code> function for a better LOO PIT predictive check.
+(#123)</p></li>
+<li><p>Started using <strong>vdiffr</strong> to add visual unit tests to the existing PPC unit
+tests. (#137)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-4-0">
+<h1>bayesplot 1.4.0<a class="headerlink" href="#bayesplot-1-4-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<ul class="simple">
+<li><p>New plotting function <code class="docutils literal notranslate"><span class="pre">mcmc_parcoord()</span></code> for parallel coordinates plots of
+MCMC draws (optionally including HMC/NUTS diagnostic information). (#108)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_scatter</span></code> gains an <code class="docutils literal notranslate"><span class="pre">np</span></code> argument for specifying NUTS parameters, which
+allows highlighting divergences in the plot. (#112)</p></li>
+<li><p>New functions with names ending with suffix <code class="docutils literal notranslate"><span class="pre">_data</span></code> don’t make the plots,
+they just return the data prepared for plotting (more of these to come in
+future releases):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_intervals_data()</span></code> (#101)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_ribbon_data()</span></code> (#101)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_parcoord_data()</span></code> (#108)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_rhat_data()</span></code> (#110)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_neff_data()</span></code> (#110)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_stat_grouped()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_stat_freqpoly_grouped()</span></code> gain a <code class="docutils literal notranslate"><span class="pre">facet_args</span></code>
+argument for controlling <strong>ggplot2</strong> faceting (many of the <code class="docutils literal notranslate"><span class="pre">mcmc_</span></code> functions
+already have this).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">divergences</span></code> argument to <code class="docutils literal notranslate"><span class="pre">mcmc_trace()</span></code> has been deprecated in favor
+of <code class="docutils literal notranslate"><span class="pre">np</span></code> (NUTS parameters) to match the other functions that have an <code class="docutils literal notranslate"><span class="pre">np</span></code>
+argument.</p></li>
+<li><p>Fixed an issue where duplicated rhat values would break <code class="docutils literal notranslate"><span class="pre">mcmc_rhat()</span></code> (#105).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-3-0">
+<h1>bayesplot 1.3.0<a class="headerlink" href="#bayesplot-1-3-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot::theme_default()</span></code> is now set as the default ggplot2 plotting theme
+when <strong>bayesplot</strong> is loaded, which makes changing the default theme using
+<code class="docutils literal notranslate"><span class="pre">ggplot2::theme_set()</span></code> possible. Thanks to &#64;gavinsimpson. (#87)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_hist()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_hist_by_chain()</span></code> now take a <code class="docutils literal notranslate"><span class="pre">freq</span></code> argument that
+defaults to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> (behavior is like <code class="docutils literal notranslate"><span class="pre">freq</span></code> argument to R’s <code class="docutils literal notranslate"><span class="pre">hist</span></code>
+function).</p></li>
+<li><p>Using a <code class="docutils literal notranslate"><span class="pre">ts</span></code> object for <code class="docutils literal notranslate"><span class="pre">y</span></code> in PPC plots no longer results in an error.
+Thanks to &#64;helske. (#94)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_intervals()</span></code> doesn’t use round lineends anymore as they slightly
+exaggerate the width of the intervals. Thanks to &#64;tjmahr. (#96)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-2-0">
+<h1>bayesplot 1.2.0<a class="headerlink" href="#bayesplot-1-2-0" title="Link to this heading">#</a></h1>
+<p>A lot of new stuff in this release. (GitHub issue/PR numbers in parentheses)</p>
+<section id="fixes">
+<h2>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Avoid error in some cases when <code class="docutils literal notranslate"><span class="pre">divergences</span></code> is specified in call to
+<code class="docutils literal notranslate"><span class="pre">mcmc_trace()</span></code> but there are not actually any divergent transitions.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">merge_chains</span></code> argument to <code class="docutils literal notranslate"><span class="pre">mcmc_nuts_energy()</span></code> now defaults to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p></li>
+</ul>
+</section>
+<section id="new-features-in-existing-functions">
+<h2>New features in existing functions<a class="headerlink" href="#new-features-in-existing-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">mcmc_*()</span></code> functions, transformations are recycled if <code class="docutils literal notranslate"><span class="pre">transformations</span></code>
+argument is specified as a single function rather than a named list. Thanks
+to &#64;tklebel. (#64)</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">ppc_violin_grouped()</span></code> there is now the option of showing <code class="docutils literal notranslate"><span class="pre">y</span></code> as a
+violin, points, or both. Thanks to &#64;silberzwiebel. (#74)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color_scheme_get()</span></code> now has an optional argument <code class="docutils literal notranslate"><span class="pre">i</span></code> for selecting only a
+subset of the colors.</p></li>
+<li><p>New color schemes: darkgray, orange, viridis, viridisA, viridisB, viridisC.
+The viridis schemes are better than the other schemes for trace plots (the
+colors are very distinct from each other).</p></li>
+</ul>
+</section>
+<section id="new-functions">
+<h2>New functions<a class="headerlink" href="#new-functions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_pairs()</span></code>, which is essentially a ggplot2+grid implementation of
+rstan’s <code class="docutils literal notranslate"><span class="pre">pairs.stanfit()</span></code> method. (#67)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_hex()</span></code>, which is similar to <code class="docutils literal notranslate"><span class="pre">mcmc_scatter()</span></code> but using <code class="docutils literal notranslate"><span class="pre">geom_hex()</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">geom_point()</span></code>. This can be used to avoid overplotting. (#67)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overlay_function()</span></code> convenience function. Example usage: add a Gaussian (or
+any distribution) density curve to a plot made with <code class="docutils literal notranslate"><span class="pre">mcmc_hist()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_recover_scatter()</span></code> and <code class="docutils literal notranslate"><span class="pre">mcmc_recover_hist()</span></code>, which are similar to
+<code class="docutils literal notranslate"><span class="pre">mcmc_recover_intervals()</span></code> and compare estimates to “true” values used to
+simulate data. (#81, #83)</p></li>
+<li><p>New PPC category <strong>Discrete</strong> with functions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_rootogram()</span></code> for use with models for count data. Thanks to
+&#64;paul-buerkner. (#28)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_bars()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_bars_grouped()</span></code> for use with models for ordinal,
+categorical and multinomial data. Thanks to &#64;silberzwiebel. (#73)</p></li>
+</ul>
+</li>
+<li><p>New PPC category <strong>LOO</strong> (thanks to suggestions from &#64;avehtari) with
+functions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_loo_pit()</span></code> for assessing the calibration of marginal predictions.
+(#72)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_loo_intervals()</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc_loo_ribbon()</span></code> for plotting intervals of the
+LOO predictive distribution. (#72)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-1-0">
+<h1>bayesplot 1.1.0<a class="headerlink" href="#bayesplot-1-1-0" title="Link to this heading">#</a></h1>
+<p>(GitHub issue/PR numbers in parentheses)</p>
+<section id="id1">
+<h2>Fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Images in vignettes should now render properly using <code class="docutils literal notranslate"><span class="pre">png</span></code> device. Thanks to
+TJ Mahr. (#51)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xaxis_title(FALSE)</span></code> and <code class="docutils literal notranslate"><span class="pre">yaxis_title(FALSE)</span></code> now set axis titles to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>
+rather than changing theme elements to <code class="docutils literal notranslate"><span class="pre">element_blank()</span></code>. This makes it
+easier to add axis titles to plots that don’t have them by default. Thanks
+to Bill Harris. (#53)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>New features in existing functions<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Add argument <code class="docutils literal notranslate"><span class="pre">divergences</span></code> to <code class="docutils literal notranslate"><span class="pre">mcmc_trace()</span></code> function. For models fit using
+HMC/NUTS this can be used to display divergences as a rug at the bottom of
+the trace plot. (#42)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">stat</span></code> argument for all <code class="docutils literal notranslate"><span class="pre">ppc_stat_*()</span></code> functions now accepts a function
+instead of only the name of a function. (#31)</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>New functions<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc_error_hist_grouped()</span></code> for plotting predictive errors by level of a
+grouping variable. (#40)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcmc_recover_intervals)(</span></code> for comparing MCMC estimates to “true” parameter
+values used to simulate the data. (#56)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesplot_grid()</span></code> for juxtaposing plots and enforcing shared axis limits.
+(#59)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="bayesplot-1-0-0">
+<h1>bayesplot 1.0.0<a class="headerlink" href="#bayesplot-1-0-0" title="Link to this heading">#</a></h1>
+<p>Initial CRAN release</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\bayesplot"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">bayesplot 1.11.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-11-0">bayesplot 1.11.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-10-0">bayesplot 1.10.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-9-0">bayesplot 1.9.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-8-1">bayesplot 1.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-8-0">bayesplot 1.8.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-2">bayesplot 1.7.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-1">bayesplot 1.7.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-7-0">bayesplot 1.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-6-0">bayesplot 1.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-5-0">bayesplot 1.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-4-0">bayesplot 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-3-0">bayesplot 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-2-0">bayesplot 1.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-in-existing-functions">New features in existing functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-functions">New functions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-1-0">bayesplot 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features in existing functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">New functions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesplot-1-0-0">bayesplot 1.0.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

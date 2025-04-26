@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\bmc82\AppData\Roaming\Python\Python313\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Convert images to base64 (assuming these return base64 data URIs)
+plot_priors_m3 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_m3.png")
+plot_priors_intercept_m3 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_intercept_m3.png")
+
+# Create the HTML 
+html_priors <- paste0("
+  <style>
+    .image-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 100%;
+    }
+
+    .image-container img {
+      flex: 1 1 48%;
+      max-width: 48%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+
+    @media screen and (max-width: 800px) {
+      .image-container img {
+        max-width: 100%;
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+
+  <div class='image-container'>
+    <img src='", plot_priors_m3, "' alt='Posterior Plot'>
+    <img src='", plot_priors_intercept_m3, "' alt='Interaction Plot'>
+  </div>
+")
+
+# Display the HTML
+IRdisplay::display_html(html_posteriors)
+
+------------------
+
+
+Error: object 'html_posteriors' not found
+Traceback:
+
+1. display_raw("text/html", FALSE, data, file, isolate_full_html(list(`text/html` = data)))
+2. prepare_content(isbinary, data, file)
+3. .handleSimpleError(function (cnd) 
+ . {
+ .     watcher$capture_plot_and_output()
+ .     cnd <- sanitize_call(cnd)
+ .     watcher$push(cnd)
+ .     switch(on_error, continue = invokeRestart("eval_continue"), 
+ .         stop = invokeRestart("eval_stop"), error = NULL)
+ . }, "object 'html_posteriors' not found", base::quote(eval(expr, 
+ .     envir)))
+

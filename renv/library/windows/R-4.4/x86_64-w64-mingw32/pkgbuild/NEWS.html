@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pkgbuild 1.4.6 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/pkgbuild/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/pkgbuild/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pkgbuild 1.4.6</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">pkgbuild 1.4.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-5">pkgbuild 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-4">pkgbuild 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-3">pkgbuild 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-2">pkgbuild 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-1">pkgbuild 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-0">pkgbuild 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-3-1">pkgbuild 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-3-0">pkgbuild 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-2-1">pkgbuild 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-2-0">pkgbuild 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-1-0">pkgbuild 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-8">pkgbuild 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-7">pkgbuild 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-6">pkgbuild 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-5">pkgbuild 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-4">pkgbuild 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-3">pkgbuild 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-2">pkgbuild 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-1">pkgbuild 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-0">pkgbuild 1.0.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-6">
+<h1>pkgbuild 1.4.6<a class="headerlink" href="#pkgbuild-1-4-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>No changes.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-5">
+<h1>pkgbuild 1.4.5<a class="headerlink" href="#pkgbuild-1-4-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild now does a better job at finding Rtools 4.3 and 4.4 if they
+were not installed from an installer.</p></li>
+<li><p>pkgbuild now detects Rtools correctly from the Windows registry
+again for Rtools 4.3 and 4.4</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-4">
+<h1>pkgbuild 1.4.4<a class="headerlink" href="#pkgbuild-1-4-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild now supports R 4.4.x and Rtools44 (#183).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-3">
+<h1>pkgbuild 1.4.3<a class="headerlink" href="#pkgbuild-1-4-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild now does not need the crayon, rprojroot and prettyunits
+packages.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-2">
+<h1>pkgbuild 1.4.2<a class="headerlink" href="#pkgbuild-1-4-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Running <code class="docutils literal notranslate"><span class="pre">bootstrap.R</span></code> now works with <code class="docutils literal notranslate"><span class="pre">pkgbuild_process</span></code>, so it also works
+from pak (<a class="github reference external" href="https://github.com/r-lib/pak/issues/508">r-lib/pak#508</a>).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-1">
+<h1>pkgbuild 1.4.1<a class="headerlink" href="#pkgbuild-1-4-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">Config/build/extra-sources</span></code> <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> option to make pkgbuild aware
+of extra source files to consider in <code class="docutils literal notranslate"><span class="pre">needs_compile()</span></code>.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">Config/build/bootstrap</span></code> <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> option. Set it to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> to run
+<code class="docutils literal notranslate"><span class="pre">Rscript</span> <span class="pre">bootstrap.R</span></code> in the package root prior to building the source
+package (#157, &#64;paleolimbot).</p></li>
+<li><p>pkgbuild now supports Rtools43.</p></li>
+<li><p>pkgbuild now always <em>appends</em> its extra compiler flags to the ones that
+already exist in the system and/or user <code class="docutils literal notranslate"><span class="pre">Makevars</span></code> files (#156).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-4-0">
+<h1>pkgbuild 1.4.0<a class="headerlink" href="#pkgbuild-1-4-0" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>pkgbuild can now avoid copying large package directories when building a
+source package. See the <code class="docutils literal notranslate"><span class="pre">PKG_BUILD_COPY_METHOD</span></code> environment variable in
+<code class="docutils literal notranslate"><span class="pre">?build</span></code> or the package README (#59).</p>
+<p>This is currently an experimental feature, and feedback is
+appreciated.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">build</span></code> warnings can now be turned into errors, by setting the
+<code class="docutils literal notranslate"><span class="pre">pkg.build_stop_for_warnings</span></code> option to <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or by setting the
+<code class="docutils literal notranslate"><span class="pre">PKG_BUILD_STOP_FOR_WARNINGS</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">true</span></code> (#114).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">need_compile()</span></code> now knows about Rust source code files, i.e. <code class="docutils literal notranslate"><span class="pre">Cargo.toml</span></code>
+and <code class="docutils literal notranslate"><span class="pre">*.rs</span></code> (#115).</p></li>
+<li><p>Now <code class="docutils literal notranslate"><span class="pre">pkgbuild::build()</span></code> will not clean up <code class="docutils literal notranslate"><span class="pre">inst/doc</span></code> by default if the
+<code class="docutils literal notranslate"><span class="pre">Config/build/clean-inst-doc</span></code> entry in <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code> is set to <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> (#128).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">PKG_BUILD_COLOR_DIAGNOSTICS</span></code> environment variable to opt out from
+colored compiler output (#141).</p></li>
+<li><p>pkgbuild now works with a full XCode installation if the XCode Command
+Line Tools are not installed, on macOS, in RStudio (#103).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-3-1">
+<h1>pkgbuild 1.3.1<a class="headerlink" href="#pkgbuild-1-3-1" title="Link to this heading">#</a></h1>
+<ul>
+<li><p>Accept Rtools40 for R 4.2, it works well, as long as the PATH includes
+both <code class="docutils literal notranslate"><span class="pre">${RTOOLS40_HOME}/usr/bin</span></code> and <code class="docutils literal notranslate"><span class="pre">${RTOOLS40_HOME}/ucrt64/bin</span></code>.
+E.g. <code class="docutils literal notranslate"><span class="pre">~/.Renviron</span></code> should contain now</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$</span><span class="si">{RTOOLS40_HOME}</span><span class="s2">\usr</span><span class="se">\b</span><span class="s2">in;$</span><span class="si">{RTOOLS40_HOME}</span><span class="s2">\ucrt64</span><span class="se">\b</span><span class="s2">in;$</span><span class="si">{PATH}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>to make Rtools40 work with both R 4.2.x (devel currently) and R 4.1.x and
+R 4.0.x.</p>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-3-0">
+<h1>pkgbuild 1.3.0<a class="headerlink" href="#pkgbuild-1-3-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild now supports Rtools 4.2.</p></li>
+<li><p>pkgbuild now returns the correct path for R 3.x (#96).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> now always returns the path of the built package (#108).</p></li>
+<li><p>pkgbuild output now looks better in <code class="docutils literal notranslate"><span class="pre">.Rmd</span></code> documents and in general in non-dynamic terminals. You can also force dynamic and non-dynamic output now (#64).</p></li>
+<li><p>pkgbuild does not build the PDF manual now if <code class="docutils literal notranslate"><span class="pre">pdflatex</span></code> is not installed, even if <code class="docutils literal notranslate"><span class="pre">manual</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (#123).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-2-1">
+<h1>pkgbuild 1.2.1<a class="headerlink" href="#pkgbuild-1-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Gábor Csárdi is now the maintainer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_setup_source</span></code> now considers both command-line build arguments, as
+well as parameters <code class="docutils literal notranslate"><span class="pre">vignettes</span></code> or <code class="docutils literal notranslate"><span class="pre">manual</span></code> when conditionally executing
+flag-dependent behaviors (&#64;dgkf, #120)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-2-0">
+<h1>pkgbuild 1.2.0<a class="headerlink" href="#pkgbuild-1-2-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>pkgbuild is now licensed as MIT (#106)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">debug</span></code> argument for more control over the compile options used (&#64;richfitz, #100)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkgbuild_process()</span></code> and <code class="docutils literal notranslate"><span class="pre">build()</span></code> now use colored compiler diagnostics if supported (#102)</p></li>
+<li><p>Avoid documentation link ambiguity in R 4.1 (#105)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-1-0">
+<h1>pkgbuild 1.1.0<a class="headerlink" href="#pkgbuild-1-1-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code> now supports automatic cpp11 registration if the package links to cpp11.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rtools_needed</span></code> returns correct version instead of “custom” (&#64;burgerga, #97)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-8">
+<h1>pkgbuild 1.0.8<a class="headerlink" href="#pkgbuild-1-0-8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixes for capability RStudio 1.2. and Rtools 40, R 4.0.0</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-7">
+<h1>pkgbuild 1.0.7<a class="headerlink" href="#pkgbuild-1-0-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Additional fixes for Rtools 40</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-6">
+<h1>pkgbuild 1.0.6<a class="headerlink" href="#pkgbuild-1-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Support for RTools 40 and custom msys2 toolchains that are explicitly set
+using the <code class="docutils literal notranslate"><span class="pre">CC</span></code> Makevars (#40).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-5">
+<h1>pkgbuild 1.0.5<a class="headerlink" href="#pkgbuild-1-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">check_build_tools()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">quiet</span></code> argument, to control when the message
+is displayed. The message is no longer displayed when <code class="docutils literal notranslate"><span class="pre">check_build_tools()</span></code>
+is called internally by pkgbuild functions. (#83)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-4">
+<h1>pkgbuild 1.0.4<a class="headerlink" href="#pkgbuild-1-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">clean_doc</span></code> argument, to control if the <code class="docutils literal notranslate"><span class="pre">inst/doc</span></code>
+directory is cleaned before building. (#79, #75)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> and <code class="docutils literal notranslate"><span class="pre">pkgbuild_process</span></code> now have standard output and error are
+correctly interleaved, by redirecting the standard error of build process
+to the standard output (&#64;gaborcsardi, #78).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">check_build_tools()</span></code> now has a more helpful error message which points you
+towards ways to debug the issue (#68).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pkgbuild_process</span></code> now do not set custom compiler flags, and it uses
+the user’s <code class="docutils literal notranslate"><span class="pre">Makevars</span></code> file (&#64;gaborcsardi, #76).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rtools_path()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">NA</span></code> on non-windows systems and also works when
+<code class="docutils literal notranslate"><span class="pre">has_rtools()</span></code> has not been run previously (#74).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-3">
+<h1>pkgbuild 1.0.3<a class="headerlink" href="#pkgbuild-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Tests which wrote to the package library are now skipped on CRAN.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> can now build a tar.gz file directly (#55)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-2">
+<h1>pkgbuild 1.0.2<a class="headerlink" href="#pkgbuild-1-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> and <code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code> gain a <code class="docutils literal notranslate"><span class="pre">register_routines</span></code> argument, to
+automatically register C routines with
+<code class="docutils literal notranslate"><span class="pre">tools::package_native_routines_registration_skeleton()</span></code> (#50)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> will now warn if trying to build packages on R versions &lt;= 3.4.2 on
+Windows with a space in the R installation directory (#49)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> will now message if a build contains long paths, which are unsupported on windows
+(#48)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code> no longer doubles output, a regression caused by the styling callback.
+(<a class="github reference external" href="https://github.com/r-lib/devtools/issues/1877">r-lib/devtools#1877</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> output is now styled like that in the rcmdcheck package
+(<a class="github reference external" href="https://github.com/r-lib/devtools/issues/1874">r-lib/devtools#1874</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> no longer sets compile flags (#46)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-1">
+<h1>pkgbuild 1.0.1<a class="headerlink" href="#pkgbuild-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Preliminary support for rtools 4.0 (#40)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code> now does not supply compiler flags if there is an existing
+user defined Makevars file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local_build_tools()</span></code> function added to provide a deferred equivalent to
+<code class="docutils literal notranslate"><span class="pre">with_build_tools()</span></code>. So you can add rtools to the PATH until the end of a
+function body.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="pkgbuild-1-0-0">
+<h1>pkgbuild 1.0.0<a class="headerlink" href="#pkgbuild-1-0-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add metadata to support Rtools 3.5 (#38).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> only uses the <code class="docutils literal notranslate"><span class="pre">--no-resave-data</span></code> argument in <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">build</span></code>
+if the <code class="docutils literal notranslate"><span class="pre">--resave-data</span></code> argument wasn’t supplied by the user
+(&#64;theGreatWhiteShark, #26)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build()</span></code> now cleans existing vignette files in <code class="docutils literal notranslate"><span class="pre">inst/doc</span></code> if they exist. (#10)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clean_dll()</span></code> also deletes <code class="docutils literal notranslate"><span class="pre">symbols.rds</span></code> which is created when <code class="docutils literal notranslate"><span class="pre">compile_dll()</span></code>
+is run inside of <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">check</span></code>.</p></li>
+<li><p>First argument of all functions is now <code class="docutils literal notranslate"><span class="pre">path</span></code> rather than <code class="docutils literal notranslate"><span class="pre">pkg</span></code>.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\pkgbuild"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">pkgbuild 1.4.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-5">pkgbuild 1.4.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-4">pkgbuild 1.4.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-3">pkgbuild 1.4.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-2">pkgbuild 1.4.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-1">pkgbuild 1.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-4-0">pkgbuild 1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-3-1">pkgbuild 1.3.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-3-0">pkgbuild 1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-2-1">pkgbuild 1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-2-0">pkgbuild 1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-1-0">pkgbuild 1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-8">pkgbuild 1.0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-7">pkgbuild 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-6">pkgbuild 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-5">pkgbuild 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-4">pkgbuild 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-3">pkgbuild 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-2">pkgbuild 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-1">pkgbuild 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgbuild-1-0-0">pkgbuild 1.0.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

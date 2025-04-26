@@ -1,0 +1,694 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Geneious Protocol &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04_Phylogenetic/Geneious_protocol';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Phylogenetic Analysis" href="Phylogenetic_analysis.html" />
+    <link rel="prev" title="Question 4" href="04_intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="04_intro.html">Question 4</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/04_Phylogenetic/Geneious_protocol.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Geneious Protocol</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methodology">Methodology</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-folder-organization">Step 1: Folder Organization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-add-primers">Step 2: Add Primers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-upload-and-prepare-raw-files">Step 3: Upload and Prepare Raw Files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-trim-poor-quality-bases">Step 4: Trim Poor-Quality Bases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-sequence-renaming">Step 5: Sequence Renaming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-assemble-contigs">Step 6: Assemble Contigs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-quality-control">Step 7: Quality Control</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-final-quality-check">Step 8: Final Quality Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-11-export-final-consensus-sequences">Step 11: Export Final Consensus Sequences</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="geneious-protocol">
+<h1>Geneious Protocol<a class="headerlink" href="#geneious-protocol" title="Link to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>This protocol provides a standardized method for building consensus sequences from raw sequence files using Geneious software. It includes steps for uploading raw files, assembling contigs, and conducting quality control during sequence analysis. The method is adapted from the <a class="reference external" href="https://sibarcodenetwork.readthedocs.io/en/latest/sequence_qc.html">SI Barcode Network Informatics Documentation</a> and Geneious tutorials.</p>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Standardizing sequence analysis methods ensures repeatability in research and transparency in methodology, which are essential for future studies and peer evaluations.</p>
+</section>
+<hr class="docutils" />
+<section id="methodology">
+<h2>Methodology<a class="headerlink" href="#methodology" title="Link to this heading">#</a></h2>
+<section id="step-1-folder-organization">
+<h3>Step 1: Folder Organization<a class="headerlink" href="#step-1-folder-organization" title="Link to this heading">#</a></h3>
+<p>Organize your workspace in Geneious. Suggested folder structure for <strong>each gene marker</strong>:</p>
+<ul class="simple">
+<li><p><strong>01_Raw Sequences</strong></p></li>
+<li><p><strong>02_Trimmed Sequences</strong></p></li>
+<li><p><strong>03_Assembled Sequences</strong></p></li>
+<li><p><strong>04_Final Sequences for Alignment</strong></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="step-2-add-primers">
+<h3>Step 2: Add Primers<a class="headerlink" href="#step-2-add-primers" title="Link to this heading">#</a></h3>
+<p>Add primer sequences to Geneious for use during trimming below.</p>
+<ol class="arabic simple">
+<li><p>Create new folder called “Primers”</p></li>
+<li><p>Go to <strong>Sequence - New Sequence</strong>.</p></li>
+<li><p>Copy the primer sequence into the respective field.</p></li>
+<li><p>In the “Name” field, enter the primer name (e.g., CYTB151F).</p></li>
+<li><p>In the “Description” field, enter “primer” plus the direction (e.g., primer forward).</p></li>
+<li><p>Change “Type” to “Primer”.</p></li>
+<li><p>Press OK.</p></li>
+<li><p>Repeat Steps 2-7 for each primer.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-3-upload-and-prepare-raw-files">
+<h3>Step 3: Upload and Prepare Raw Files<a class="headerlink" href="#step-3-upload-and-prepare-raw-files" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Upload raw sequence files into the <strong>01_Raw Sequences</strong> folder.</p></li>
+<li><p>Rename files to include sample ID, extraction ID, location, morph, and primer.<br />
+Example: <code class="docutils literal notranslate"><span class="pre">BFHL-4505_BC111_WA_RB_CYTB151F</span></code>.</p></li>
+<li><p>Set read directions for all sequences.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-4-trim-poor-quality-bases">
+<h3>Step 4: Trim Poor-Quality Bases<a class="headerlink" href="#step-4-trim-poor-quality-bases" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Copy sequences to the <strong>02_Trimmed Sequences</strong> folder.</p></li>
+<li><p>Use the <strong>Annotate &amp; Predict - Trim Ends…</strong> function:</p>
+<ul class="simple">
+<li><p>Check <strong>Annotate new trimmed regions</strong></p></li>
+<li><p>Check <strong>Trim primers</strong> and select your respective forward and reverse primers.</p></li>
+<li><p>Set Allow Mismatches to 2.</p></li>
+<li><p>Set Minimum Match Length to 10.</p></li>
+<li><p>Set <strong>Error Probability Limit</strong> to 0.05.</p></li>
+<li><p>Select <strong>Trim 5’ End</strong> and <strong>Trim 3’ End</strong>.</p></li>
+<li><p>Leave everything else unselected.</p></li>
+</ul>
+</li>
+<li><p>Review the trimming annotations and manually adjust if necessary. For good sequences or specific regions, create custom trim areas if needed.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-5-sequence-renaming">
+<h3>Step 5: Sequence Renaming<a class="headerlink" href="#step-5-sequence-renaming" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Copy sequences into a new folder with the same name followed by <strong>“_renamed”</strong>.</p></li>
+<li><p>Use <strong>Edit - Batch rename…</strong> to rename sequences for contig assembly. This will make the forward and reverse sequence names identical so that Geneious knows which ones to combine.</p>
+<ul class="simple">
+<li><p>First, remove the primer name and file extension from the end of the sequence name.</p>
+<ul>
+<li><p>Check <strong>Remove</strong> and enter the number of characters to remove from the end of the sequence name so that the primer name and file extension are removed.</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">BFHL-4505_BC111_WA_RB_CYTB151F.ab1</span></code> becomes <code class="docutils literal notranslate"><span class="pre">BFHL-4505_BC111_WA_RB</span></code></p></li>
+</ul>
+</li>
+<li><p>Second, remove the extraction name from the middle of the sequence name</p>
+<ul>
+<li><p>Under “Advanced”, check <strong>Regex</strong> and enter “(\w{5})_” in the <strong>Replace parts matching:</strong> field.</p></li>
+<li><p>Enter nothing in the <strong>With:</strong> field.</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">BFHL-4505_BC111_WA_RB</span></code> becomes <code class="docutils literal notranslate"><span class="pre">BFHL-4505_WA_RB</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-6-assemble-contigs">
+<h3>Step 6: Assemble Contigs<a class="headerlink" href="#step-6-assemble-contigs" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Assemble sequences into contigs based on read names (i.e., based on the first space). Use the following parameters:</p>
+<ul class="simple">
+<li><p><strong>Assembler:</strong> Geneious</p></li>
+<li><p><strong>Sensitivity:</strong> Highest Sensitivity/Slow</p></li>
+<li><p>Check <strong>Use existing trim regions</strong>.</p></li>
+<li><p><strong>Assembly Name:</strong> {Reads Name}</p></li>
+<li><p>Check <strong>Save assembly report</strong>.</p></li>
+<li><p>If desired, check <strong>Save in sub-folder</strong>.</p></li>
+<li><p>Check <strong>Save contigs</strong>.</p></li>
+<li><p>Set <strong>Don’t merge variants with coverage over approximately</strong> to 6</p></li>
+<li><p>Check <strong>Merge homopolymer variants</strong></p></li>
+</ul>
+</li>
+<li><p>Move assembly report and assemblies to the <strong>03_Assembled</strong> folder.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-7-quality-control">
+<h3>Step 7: Quality Control<a class="headerlink" href="#step-7-quality-control" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Manually review contigs in assembly report. Successful assemblies are those which have 75% HQ bases and above.</p>
+<ul class="simple">
+<li><p>Move assembled contigs with <span class="math notranslate nohighlight">\(\geq\)</span> 75% HQ bases to <strong>Contig_assembled_highquality</strong> subfolder.</p></li>
+<li><p>Move assembled contigs which have <span class="math notranslate nohighlight">\(\leq\)</span>75% HQ bases to <strong>Contig_assembled_lowquality</strong> subfolder</p></li>
+<li><p>Copy failed reads to <strong>Contig_not_assembled</strong> subfolder.</p></li>
+<li><p>Move failed reads which have <span class="math notranslate nohighlight">\(\geq\)</span>75% HQ bases to <strong>Contig_not_assembled_goodread</strong> subfolder</p></li>
+</ul>
+</li>
+<li><p>Address base call disagreements and gaps. For each sequence, use CTRL+D to look at each base call disagreement and gap region. Make sure that you agree with the Geneious calls. If not, edit accordingly.</p>
+<ul class="simple">
+<li><p>Check if gap is due to dye blob or error (i.e., a repeated base). This is likely caused by a chromatogram reading error where there a longer signal than usual was picked up due to dye.</p></li>
+<li><p>Check if gap is due to F and R alignment error. Shifts in the reading frame usually means a nucleotide or gap was added to one of the traces incorrectly. This type of error can usually be corrected by inspecting the properly aligned section of the sequence to determine the location of the mistake.</p></li>
+<li><p>If neither of the above, fill gap with the best-guess bp based on the chromatogram. Fill with heterozygous base, if unsure.</p></li>
+</ul>
+</li>
+<li><p>Align consensus sequences from contigs (ignore single reads for now). Analyzing the sequences’ alignment will inform of any further end trimming needed if the Geneious Prime Assembler neglected to remove primers or poor quality end regions.</p>
+<ul class="simple">
+<li><p>Go to <strong>Align/Assemble - Multiple Align…</strong>.</p></li>
+<li><p>Select <strong>Consensus Align</strong> in the top portion of the window.</p></li>
+<li><p>Set <strong>Threshold</strong> to 65% in the <strong>Consensus Options</strong> menu.</p></li>
+<li><p>In the dropdown <strong>Sequence alignment options</strong> menu, select <strong>MUSCLE alignment</strong></p></li>
+<li><p>Click “OK”.</p></li>
+<li><p>Rename alignment as “Contig alignment”.</p></li>
+<li><p>First, check for problematic sequences that are introducing gaps due to incorrect editing during Step 2. If any are present, right click on the sequence and select “Go to referenced sequence”, and re-edit accordingly.</p></li>
+<li><p>Check alignment ends for untrimmed primer regions or poor quality regions that need to be removed. Delete these areas and hit Save.</p></li>
+<li><p>Make sure there are no stop codons in the sequences.</p>
+<ul>
+<li><p>In the <strong>Display</strong> tab on the right, check <strong>Translation</strong> on “All Sequences”.</p></li>
+<li><p>Set <strong>Genetic Code:</strong> to “Invertebrate Mitochondrial”</p></li>
+<li><p>Set <strong>Relative to:</strong> to “Alignment”</p></li>
+<li><p>Try each reading frame and make sure there is one where there are no stop codons in any of your sequences. If not, inspect and edit your sequences like above until this is fixed.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Exit the alignment and generate consensus sequences from the final contig set.</p>
+<ul class="simple">
+<li><p>Select all sequences within the alignment.</p></li>
+<li><p>Right click and select <strong>Extract Regions…</strong>.</p></li>
+<li><p>Check <strong>Extract region as list of sequences</strong> and press OK.</p></li>
+<li><p>Move the resulting list to the <strong>Consensus_preliminary</strong> subfolder. Right click on the list and select <strong>Extract Sequences from List…</strong> to extract sequences into the folder. Delete the “Consensus” file and list file since you do not need these.</p></li>
+</ul>
+</li>
+<li><p>Copy high quality and chosen intermediate quality single reads to the same <strong>Consensus_preliminary</strong> folder. For each single read, go to <strong>Trim Ends..</strong> and check <strong>Remove existing trimmed regions from sequences</strong>. Hit OK.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-8-final-quality-check">
+<h3>Step 8: Final Quality Check<a class="headerlink" href="#step-8-final-quality-check" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Align final consensus sequences and good/intermediate single reads, and make sure everything looks OK.</p>
+<ul class="simple">
+<li><p>Go to <strong>Align/Assemble - Multiple Align…</strong>.</p></li>
+<li><p>Select <strong>MUSCLE Alignment</strong> in the top portion of the window.</p></li>
+<li><p>Click “OK”.</p></li>
+<li><p>Rename alignment file as “Consensus alignment”.</p></li>
+<li><p>Check alignment for gaps, untrimmed ends, and reading frame stop codons. You might have to <strong>reverse complement</strong> single reads and/or trim their ends more to match up with the contig consensus sequences.</p></li>
+</ul>
+</li>
+<li><p>BLAST sequences to ensure they belong to the target group. If doing this in Geneious, it is recommended to only BLAST small batches of 15 or less sequences at a time since it can become time consuming.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="step-11-export-final-consensus-sequences">
+<h3>Step 11: Export Final Consensus Sequences<a class="headerlink" href="#step-11-export-final-consensus-sequences" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Export consensus sequences into a single FASTA file.</p></li>
+<li><p>Proceed to further alignment and phylogenetic analyses using tools like MEGA.</p></li>
+</ol>
+<hr class="docutils" />
+<p>This structured approach ensures a robust and repeatable pipeline for sequence analysis using Geneious software.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./04_Phylogenetic"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Question 4</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Phylogenetic_analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Phylogenetic Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methodology">Methodology</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-folder-organization">Step 1: Folder Organization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-add-primers">Step 2: Add Primers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-upload-and-prepare-raw-files">Step 3: Upload and Prepare Raw Files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-trim-poor-quality-bases">Step 4: Trim Poor-Quality Bases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-sequence-renaming">Step 5: Sequence Renaming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-assemble-contigs">Step 6: Assemble Contigs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-quality-control">Step 7: Quality Control</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-final-quality-check">Step 8: Final Quality Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-11-export-final-consensus-sequences">Step 11: Export Final Consensus Sequences</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

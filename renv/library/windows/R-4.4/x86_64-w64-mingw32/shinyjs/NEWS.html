@@ -1,0 +1,986 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>shinyjs 2.1.0 (2021-12-20) &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/shinyjs/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/shinyjs/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>shinyjs 2.1.0 (2021-12-20)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">shinyjs 2.1.0 (2021-12-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-2-0-0-2020-08-24">shinyjs 2.0.0 (2020-08-24)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-1-1-2020-01-12">shinyjs 1.1 (2020-01-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-1-0-2018-01-08">shinyjs 1.0 (2018-01-08)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-9">shinyjs 0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-8">shinyjs 0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-7">shinyjs 0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6-2">shinyjs 0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6-1">shinyjs 0.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6">shinyjs 0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-3">shinyjs 0.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-2">shinyjs 0.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-1">shinyjs 0.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-0">shinyjs 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-4-1">shinyjs 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-4-0">shinyjs 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-3-2">shinyjs 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-3-0">shinyjs 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-6">shinyjs 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-5">shinyjs 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-4">shinyjs 0.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-3">shinyjs 0.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-2">shinyjs 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-1">shinyjs 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-0">shinyjs 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-4">shinyjs 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-3">shinyjs 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-2">shinyjs 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-1">shinyjs 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-0">shinyjs 0.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-3">shinyjs 0.0.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-2">shinyjs 0.0.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-1">shinyjs 0.0.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-0">shinyjs 0.0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-7-0">shinyjs 0.0.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-6">shinyjs 0.0.6.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-5">shinyjs 0.0.6.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-4">shinyjs 0.0.6.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-3">shinyjs 0.0.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-2">shinyjs 0.0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-0">shinyjs 0.0.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-5-0">shinyjs 0.0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-4-0">shinyjs 0.0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-3-3">shinyjs 0.0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-3-0">shinyjs 0.0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-2-1">shinyjs 0.0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-2-0">shinyjs 0.0.2.0</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="shinyjs-2-1-0-2021-12-20">
+<h1>shinyjs 2.1.0 (2021-12-20)<a class="headerlink" href="#shinyjs-2-1-0-2021-12-20" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New feature: you can now reset all inputs on the page by calling <code class="docutils literal notranslate"><span class="pre">reset()</span></code> with no arguments (#222)</p></li>
+<li><p>New feature: Add a <code class="docutils literal notranslate"><span class="pre">removeEvent()</span></code> function which removes events added to HTML elements with <code class="docutils literal notranslate"><span class="pre">onclick()</span></code> or <code class="docutils literal notranslate"><span class="pre">onevent()</span></code> (#244)</p></li>
+<li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">disable()</span></code> did not work on nested download buttons (#223)</p></li>
+<li><p>Fix bug: Don’t automatically namespace ID arguments in custom extendShinyjs functions (#229)</p></li>
+<li><p>Fix bug: ensure that <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code> functions don’t overwrite native {shinyjs} functions (#230)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-2-0-0-2020-08-24">
+<h1>shinyjs 2.0.0 (2020-08-24)<a class="headerlink" href="#shinyjs-2-0-0-2020-08-24" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>IMPORTANT CHANGE</strong> Remove commercial license (it only existed because some big companies asked for it, but it ended up being a bigger headache for 99% of the community)</p></li>
+<li><p><strong>BREAKING CHANGE</strong> When using <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code>, the <code class="docutils literal notranslate"><span class="pre">functions</span></code> parameter must always be provided.</p></li>
+<li><p><strong>BREAKING CHANGE</strong> When using <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code>, the <code class="docutils literal notranslate"><span class="pre">script</span></code> path parameter now behaves like any other Shiny web resource, which means it cannot be loaded from the local file system. The path must be discoverable by the browser, so it either needs to be a public URL, inside a <code class="docutils literal notranslate"><span class="pre">www</span></code> folder, or available via <code class="docutils literal notranslate"><span class="pre">addResourcePath()</span></code>.</p></li>
+<li><p>New feature: add a <code class="docutils literal notranslate"><span class="pre">refresh()</span></code> function (#205)</p></li>
+<li><p>New feature: add <code class="docutils literal notranslate"><span class="pre">asis</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">reset()</span></code> function, which works like it does in all other functions that support <code class="docutils literal notranslate"><span class="pre">asis</span></code> (#146)</p></li>
+<li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code> now works with any web URL or any resource path (#201)</p></li>
+<li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">reset()</span></code> didn’t work when a sliderInput was initialized with <code class="docutils literal notranslate"><span class="pre">value=NULL</span></code> (#207)</p></li>
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">V8</span></code> as a package dependency.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-1-1-2020-01-12">
+<h1>shinyjs 1.1 (2020-01-12)<a class="headerlink" href="#shinyjs-1-1-2020-01-12" title="Link to this heading">#</a></h1>
+<p>This update was 2 years in the making because it required a lot of testing by users to ensure none of these features cause any regression bugs in real apps.</p>
+<ul class="simple">
+<li><p><strong>BREAKING CHANGE</strong> The <code class="docutils literal notranslate"><span class="pre">includeShinyjs</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">runcodeUI()</span></code> is now deprecated</p></li>
+<li><p>Fix bug: shinyjs functions used inside a module with a <code class="docutils literal notranslate"><span class="pre">selector</span></code> argument instead of an <code class="docutils literal notranslate"><span class="pre">id</span></code> argument didn’t work (#175)</p></li>
+<li><p>Fix bug: shinyjs functions did not work with IDs that had a space in them (#176)</p></li>
+<li><p>Fix bug: non-selectize select inputs could not be disabled (#186)</p></li>
+<li><p>Fix bug: <code class="docutils literal notranslate"><span class="pre">click()</span></code> now works with download buttons (#198)</p></li>
+<li><p>New feature: added <code class="docutils literal notranslate"><span class="pre">asis</span></code> parameter to any function that takes an ID. When <code class="docutils literal notranslate"><span class="pre">asis=TRUE</span></code>, the ID will not be namespaced when inside a module (#118)</p></li>
+<li><p>New feature: added <code class="docutils literal notranslate"><span class="pre">id</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">runcode()</span></code>, allowing it to work inside Shiny modules (#184)</p></li>
+<li><p>New feature: <code class="docutils literal notranslate"><span class="pre">onevent()</span></code> returns the <code class="docutils literal notranslate"><span class="pre">offsetX</span></code> and <code class="docutils literal notranslate"><span class="pre">offsetY</span></code> event properties</p></li>
+<li><p>New feature: <code class="docutils literal notranslate"><span class="pre">onevent()</span></code> accepts a <code class="docutils literal notranslate"><span class="pre">properties</span></code> parameter that allows the user to retrieve additional properties that are not whitelisted by default (#159)</p></li>
+<li><p>New feature: <code class="docutils literal notranslate"><span class="pre">hide()</span></code>/<code class="docutils literal notranslate"><span class="pre">show()</span></code> now only bubble up the DOM tree to the nearest input container if the current element is an input (#153)</p></li>
+<li><p>Documentation: added documentation about <code class="docutils literal notranslate"><span class="pre">useShinyjs()</span></code> side effects and about including <code class="docutils literal notranslate"><span class="pre">shinyjs</span></code> in packages (#182)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-1-0-2018-01-08">
+<h1>shinyjs 1.0 (2018-01-08)<a class="headerlink" href="#shinyjs-1-0-2018-01-08" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>BREAKING CHANGE</strong> shiny version 1.0.0 is now required</p></li>
+<li><p><strong>BREAKING CHANGE</strong> All <code class="docutils literal notranslate"><span class="pre">colourInput</span></code>-related functions are now defunct because they are now in the <code class="docutils literal notranslate"><span class="pre">colourpicker</span></code> package</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">click()</span></code> function that simulates a user clicking on a button</p></li>
+<li><p>Bug fix: <code class="docutils literal notranslate"><span class="pre">reset()</span></code> wasn’t working on checkboxes/select inputs that had a comma in the value (#130)</p></li>
+<li><p>Bug fix: using <code class="docutils literal notranslate"><span class="pre">disabled()</span></code> on certain non-standard inputs (such as <code class="docutils literal notranslate"><span class="pre">shinyFiles</span></code>) had strange behaviour (#120)</p></li>
+<li><p>Bug fix: <code class="docutils literal notranslate"><span class="pre">logjs()</span></code>+<code class="docutils literal notranslate"><span class="pre">showLog()</span></code> wasn’t working when app first runs</p></li>
+<li><p>Bug fix: <code class="docutils literal notranslate"><span class="pre">reset()</span></code> wasn’t working on file inputs with an ID that contained a dot (#140)</p></li>
+<li><p>Moved default values of parameters to the R layer instead of being defined in javascript. This means that RStudio no longer complains of missing arguments and that autocompletion will show default values. (#80)</p></li>
+<li><p>Improve efficiency of <code class="docutils literal notranslate"><span class="pre">delay()</span></code> and <code class="docutils literal notranslate"><span class="pre">reset()</span></code> functions</p></li>
+<li><p>Improve documentation and website (<a class="reference external" href="https://deanattali.com/shinyjs">https://deanattali.com/shinyjs</a>)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-9">
+<h1>shinyjs 0.9<a class="headerlink" href="#shinyjs-0-9" title="Link to this heading">#</a></h1>
+<p>2016-12-26</p>
+<ul class="simple">
+<li><p>added support for shinyAce editor as the input for <code class="docutils literal notranslate"><span class="pre">runcodeUI()</span></code> (#93)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">showLog()</span></code> no longer needs to be specified in <code class="docutils literal notranslate"><span class="pre">useShinyjs()</span></code>, and it can be used by just calling it in the server code once (#105)</p></li>
+<li><p>fixed bug where <code class="docutils literal notranslate"><span class="pre">showLog()</span></code> would only show the last message if multiple messages were printed in succession (#99)</p></li>
+<li><p>fixed bug where date inputs could not be reset to empty (#100)</p></li>
+<li><p>fixed textArea inputs not getting disabled when disabling a parent element</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">showElement()</span></code>/<code class="docutils literal notranslate"><span class="pre">hideElement()</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleElement()</span></code> and <code class="docutils literal notranslate"><span class="pre">addCssClass</span></code> etc functions as synonyms for functions that are masked by S4 (compromise for #81)</p></li>
+<li><p>fixed broken <code class="docutils literal notranslate"><span class="pre">runExample(&quot;sandbox&quot;)</span></code> example</p></li>
+<li><p>added a website for shinyjs: <a class="reference external" href="https://deanattali.com/shinyjs/">https://deanattali.com/shinyjs/</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-8">
+<h1>shinyjs 0.8<a class="headerlink" href="#shinyjs-0-8" title="Link to this heading">#</a></h1>
+<p>2016-11-03</p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">runcodeUI()</span></code> and <code class="docutils literal notranslate"><span class="pre">runcodeServer()</span></code> functions that you can add to your app in order to run arbitrary R code interactively</p></li>
+<li><p>added <code class="docutils literal notranslate"><span class="pre">showLog()</span></code> function which lets you redirect all JavaScript logging statements to the R console, to make it easier and quicker to debug apps without having to open the JS console (#88)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onclick</span></code> and <code class="docutils literal notranslate"><span class="pre">onevent</span></code> now support callback functions, and the JavaScript Event object is passed to the callback (#92)</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">reset()</span></code> function now works on file inputs</p></li>
+<li><p>added <code class="docutils literal notranslate"><span class="pre">alert()</span></code> as an alias for <code class="docutils literal notranslate"><span class="pre">info()</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-7">
+<h1>shinyjs 0.7<a class="headerlink" href="#shinyjs-0-7" title="Link to this heading">#</a></h1>
+<p>2016-08-20</p>
+<ul class="simple">
+<li><p>All the colourpicker/colourInput related functions are now deprecated because I’ve made a more appropriate package for them <a class="reference external" href="https://github.com/daattali/colourpicker"><code class="docutils literal notranslate"><span class="pre">colourpicker</span></code></a></p></li>
+<li><p>Use updated colourpicker JS library that fixes bugs with new jquery version</p></li>
+<li><p>Add reset support for <code class="docutils literal notranslate"><span class="pre">passwordInput</span></code> and <code class="docutils literal notranslate"><span class="pre">textAreaInput</span></code> (#78)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-6-2">
+<h1>shinyjs 0.6.2<a class="headerlink" href="#shinyjs-0-6-2" title="Link to this heading">#</a></h1>
+<p>2016-07-25</p>
+<ul class="simple">
+<li><p>Improved UI of demo shiny apps and added social media meta tags and github fork ribbons</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-6-1">
+<h1>shinyjs 0.6.1<a class="headerlink" href="#shinyjs-0-6-1" title="Link to this heading">#</a></h1>
+<p>2016-05-09</p>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">selector</span></code> argument to <code class="docutils literal notranslate"><span class="pre">html()</span></code> function</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-6">
+<h1>shinyjs 0.6<a class="headerlink" href="#shinyjs-0-6" title="Link to this heading">#</a></h1>
+<p>2016-04-24</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">info()</span></code> function: don’t include surrounding quotations if not necessary (#59)</p></li>
+<li><p>added documentation for how to use <code class="docutils literal notranslate"><span class="pre">shinyjs</span></code> in HTML templates</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-5-3">
+<h1>shinyjs 0.5.3<a class="headerlink" href="#shinyjs-0-5-3" title="Link to this heading">#</a></h1>
+<p>2016-04-05</p>
+<ul class="simple">
+<li><p>Fixed bug with <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code> where it didn’t work when using a script and didn’t have <code class="docutils literal notranslate"><span class="pre">V8</span></code> installed (#64)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-5-2">
+<h1>shinyjs 0.5.2<a class="headerlink" href="#shinyjs-0-5-2" title="Link to this heading">#</a></h1>
+<p>2016-03-25</p>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">numCols</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">colourPicker()</span></code> gadget</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-5-1">
+<h1>shinyjs 0.5.1<a class="headerlink" href="#shinyjs-0-5-1" title="Link to this heading">#</a></h1>
+<p>2016-03-23</p>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">returnName</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">colourInput()</span></code>, which lets you get an R colour name instead of HEX value as the return value (#62)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-5-0">
+<h1>shinyjs 0.5.0<a class="headerlink" href="#shinyjs-0-5-0" title="Link to this heading">#</a></h1>
+<p>2016-03-19</p>
+<ul class="simple">
+<li><p>Added an awesome colour picker gadget and addin.  Use <code class="docutils literal notranslate"><span class="pre">colourPicker()</span></code> to open a gadget that lets you pick colours, or choose <em>Colour Picker</em> from the <em>Addins</em> menu to run it.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-4-1">
+<h1>shinyjs 0.4.1<a class="headerlink" href="#shinyjs-0-4-1" title="Link to this heading">#</a></h1>
+<p>2016-01-31</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">html()</span></code> function: don’t attempt to change innerHTML if the element does not exist</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-4-0">
+<h1>shinyjs 0.4.0<a class="headerlink" href="#shinyjs-0-4-0" title="Link to this heading">#</a></h1>
+<p>2016-01-16</p>
+<ul class="simple">
+<li><p><strong>BREAKING CHANGE</strong>: the <code class="docutils literal notranslate"><span class="pre">text</span></code> function has been renamed to <code class="docutils literal notranslate"><span class="pre">html</span></code> (#42)</p></li>
+<li><p>shinyjs now works with the new modules feature of Shiny (#50)</p></li>
+<li><p>Refactor how shinyjs R engine works: instead of using cool meta programming that minimizes code and sends each shinyjs function request straight to JS, add a thin layer or R code for each function. This allows us to check the arguments, run custom code for each function, it allows the documentation to show the arguments instead of them being <code class="docutils literal notranslate"><span class="pre">...</span></code>, and it fixes a few edge cases of calling shinyjs functions, such as calling shinyjs using <code class="docutils literal notranslate"><span class="pre">do.call()</span></code> (#51)</p></li>
+<li><p>Update vignette/readme to include FAQ</p></li>
+<li><p>Change internally the name of shinyjs functions to make the JavaScript function names more unique to avoid potential conflicts with user-defined JS functions</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-3-2">
+<h1>shinyjs 0.3.2<a class="headerlink" href="#shinyjs-0-3-2" title="Link to this heading">#</a></h1>
+<p>2016-01-08</p>
+<ul class="simple">
+<li><p>Show warning when using Shiny modules because they aren’t supported yet</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-3-0">
+<h1>shinyjs 0.3.0<a class="headerlink" href="#shinyjs-0-3-0" title="Link to this heading">#</a></h1>
+<p>2015-12-30</p>
+<ul class="simple">
+<li><p>bug fix: <code class="docutils literal notranslate"><span class="pre">hidden()</span></code> now works when used on an element with a <code class="docutils literal notranslate"><span class="pre">display</span></code> CSS property</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-6">
+<h1>shinyjs 0.2.6<a class="headerlink" href="#shinyjs-0-2-6" title="Link to this heading">#</a></h1>
+<p>2015-12-14</p>
+<ul class="simple">
+<li><p>bug fix: <code class="docutils literal notranslate"><span class="pre">show</span></code>/<code class="docutils literal notranslate"><span class="pre">hide</span></code> always trigger shown/hidden events</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-5">
+<h1>shinyjs 0.2.5<a class="headerlink" href="#shinyjs-0-2-5" title="Link to this heading">#</a></h1>
+<p>2015-12-14</p>
+<ul class="simple">
+<li><p>small UI change to colourInput demo shiny app</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-4">
+<h1>shinyjs 0.2.4<a class="headerlink" href="#shinyjs-0-2-4" title="Link to this heading">#</a></h1>
+<p>2015-12-01</p>
+<ul class="simple">
+<li><p>Support <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code> for users that cannot install the <code class="docutils literal notranslate"><span class="pre">V8</span></code> package</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-3">
+<h1>shinyjs 0.2.3<a class="headerlink" href="#shinyjs-0-2-3" title="Link to this heading">#</a></h1>
+<p>2015-11-05</p>
+<ul class="simple">
+<li><p>Updated README</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-2">
+<h1>shinyjs 0.2.2<a class="headerlink" href="#shinyjs-0-2-2" title="Link to this heading">#</a></h1>
+<p>2015-09-15</p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">html</span></code> argument to <code class="docutils literal notranslate"><span class="pre">useShinyjs()</span></code>, which adds support for using shinyjs in shiny apps that are built with index.html instead of using Shiny UI (more details in the README)</p></li>
+<li><p>refactored internally how shinyjs resources are handled so that the resource path is now prefixed with “shinyjs” or “shinyjs-extend” instead of a random string</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-1">
+<h1>shinyjs 0.2.1<a class="headerlink" href="#shinyjs-0-2-1" title="Link to this heading">#</a></h1>
+<p>2015-09-13</p>
+<ul class="simple">
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">debug</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">useShinyjs</span></code> that will cause detailed debugging messages to be printed to the JavaScript console when turned on</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-2-0">
+<h1>shinyjs 0.2.0<a class="headerlink" href="#shinyjs-0-2-0" title="Link to this heading">#</a></h1>
+<p>2015-09-05</p>
+<ul class="simple">
+<li><p>version bump for CRAN submission</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-1-4">
+<h1>shinyjs 0.1.4<a class="headerlink" href="#shinyjs-0-1-4" title="Link to this heading">#</a></h1>
+<p>2015-09-05</p>
+<ul class="simple">
+<li><p>refactor JavaScript code to remove code duplication and add better internal documentation</p></li>
+<li><p>bug fix: <code class="docutils literal notranslate"><span class="pre">disabled</span></code> now works with all input types</p></li>
+<li><p>bug fix: <code class="docutils literal notranslate"><span class="pre">enable</span></code>/<code class="docutils literal notranslate"><span class="pre">disable</span></code> did not work on <code class="docutils literal notranslate"><span class="pre">selectInput</span></code>, <code class="docutils literal notranslate"><span class="pre">sliderInput</span></code>, and <code class="docutils literal notranslate"><span class="pre">actionButton</span></code></p></li>
+<li><p>bug fix: resetting a slider input with a range did not reset the end point, only the start point</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-1-3">
+<h1>shinyjs 0.1.3<a class="headerlink" href="#shinyjs-0-1-3" title="Link to this heading">#</a></h1>
+<p>2015-09-05</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">onclick</span></code> and <code class="docutils literal notranslate"><span class="pre">onevent</span></code> now work with dynamically generated elements. Not a trivial fix, but enough people requested it that it was important</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-1-2">
+<h1>shinyjs 0.1.2<a class="headerlink" href="#shinyjs-0-1-2" title="Link to this heading">#</a></h1>
+<p>2015-09-04</p>
+<p><strong>Lots of big changes</strong></p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">delay</span></code> function, which allows you to run code after a specified amount of time has elapsed</p></li>
+<li><p><strong>BREAKING CHANGE</strong> - removed <code class="docutils literal notranslate"><span class="pre">delay</span></code> parameter from <code class="docutils literal notranslate"><span class="pre">hide</span></code>/<code class="docutils literal notranslate"><span class="pre">show</span></code>/<code class="docutils literal notranslate"><span class="pre">toggle</span></code> because the same behaviour can now be achieved using the <code class="docutils literal notranslate"><span class="pre">delay</span></code> function (if you previously used <code class="docutils literal notranslate"><span class="pre">show(id</span> <span class="pre">=</span> <span class="pre">&quot;text&quot;,</span> <span class="pre">delay</span> <span class="pre">=</span> <span class="pre">2)</span></code>, you can now use <code class="docutils literal notranslate"><span class="pre">delay(2000,</span> <span class="pre">show(&quot;text&quot;))</span></code>)</p></li>
+<li><p>added <code class="docutils literal notranslate"><span class="pre">onevent</span></code> function, which is similar to <code class="docutils literal notranslate"><span class="pre">onclick</span></code> but can be used for many other different events</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code> now works with dynamically generated elements (inputs that are created with <code class="docutils literal notranslate"><span class="pre">renderUI</span></code>)</p></li>
+<li><p>make <code class="docutils literal notranslate"><span class="pre">disabled</span></code> work for dynamically generated elements</p></li>
+<li><p>removed defunc <code class="docutils literal notranslate"><span class="pre">resettable</span></code> function</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-1-1">
+<h1>shinyjs 0.1.1<a class="headerlink" href="#shinyjs-0-1-1" title="Link to this heading">#</a></h1>
+<p>2015-08-19</p>
+<ul class="simple">
+<li><p>better debugging: when a shinyjs JavaScript function is called with a mix of both named and unnamed arguments (which is not allowed), tell the user what function exactly was called. This is done because sometimes a different package doesn’t properly namespace its function calls and end up accidentally calling shinyjs functions, which results in weird bugs.</p></li>
+<li><p>add comments to the <code class="docutils literal notranslate"><span class="pre">onclick</span></code> documentation, to make it clear that it can’t work with dynamic UIs</p></li>
+<li><p>improved documentation</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-1-0">
+<h1>shinyjs 0.1.0<a class="headerlink" href="#shinyjs-0-1-0" title="Link to this heading">#</a></h1>
+<p>2015-08-12</p>
+<ul class="simple">
+<li><p>add support for <code class="docutils literal notranslate"><span class="pre">shinyjs.init</span></code> function when using <code class="docutils literal notranslate"><span class="pre">extendShinyjs</span></code> that runs when the page loads. This provides the user a way to register event handlers or do some initializations that automatically run on page load rather than calling it manually in the server</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">disabled</span></code> function that initializes a Shiny input in a disabled state</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">rmd</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">useShinyjs</span></code> that lets you use shinyjs inside interactive R markdown documents (default is FALSE to favour regular Shiny apps)</p></li>
+<li><p>the bulk of the shinyjs JavaScript code is no longer embeded in the HTML as text and is instead linked to as a file. This makes the Shiny app’s HTML much cleaner and smaller</p></li>
+<li><p>use htmltools dependency system for handling javascript/css dependencies</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-8-3">
+<h1>shinyjs 0.0.8.3<a class="headerlink" href="#shinyjs-0-0-8-3" title="Link to this heading">#</a></h1>
+<p>2015-07-30</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">disable</span></code>/<code class="docutils literal notranslate"><span class="pre">enable</span></code> now work for <code class="docutils literal notranslate"><span class="pre">downloadButton</span></code> elements</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-8-2">
+<h1>shinyjs 0.0.8.2<a class="headerlink" href="#shinyjs-0-0-8-2" title="Link to this heading">#</a></h1>
+<p>2015-07-23</p>
+<ul class="simple">
+<li><p>You no longer need to define the server function with the <code class="docutils literal notranslate"><span class="pre">session</span></code> parameter! A shiny server function defined as <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">function(input,</span> <span class="pre">output)</span> <span class="pre">{...}</span></code> can work with <code class="docutils literal notranslate"><span class="pre">shinyjs</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-8-1">
+<h1>shinyjs 0.0.8.1<a class="headerlink" href="#shinyjs-0-0-8-1" title="Link to this heading">#</a></h1>
+<p>2015-07-17</p>
+<ul class="simple">
+<li><p>Fix bug where periods in element names weren’t working for some shinyjs functions</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-8-0">
+<h1>shinyjs 0.0.8.0<a class="headerlink" href="#shinyjs-0-0-8-0" title="Link to this heading">#</a></h1>
+<p>2015-06-30</p>
+<ul class="simple">
+<li><p>added an option to allow only a predefined list of colours to select from in <code class="docutils literal notranslate"><span class="pre">colourInput</span></code> (feature request from Hadley and other Twitter users)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-7-0">
+<h1>shinyjs 0.0.7.0<a class="headerlink" href="#shinyjs-0-0-7-0" title="Link to this heading">#</a></h1>
+<p>2015-06-23</p>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">selector</span></code> param to the <code class="docutils literal notranslate"><span class="pre">disable</span></code>/<code class="docutils literal notranslate"><span class="pre">enable</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleState</span></code> functions and the
+<code class="docutils literal notranslate"><span class="pre">addClass</span></code>/<code class="docutils literal notranslate"><span class="pre">removeClass</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleClass</span></code> functions so that multiple elements can
+be targeted in batch</p></li>
+<li><p>added <code class="docutils literal notranslate"><span class="pre">transparentText</span></code> param to <code class="docutils literal notranslate"><span class="pre">colourInput</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-6">
+<h1>shinyjs 0.0.6.6<a class="headerlink" href="#shinyjs-0-0-6-6" title="Link to this heading">#</a></h1>
+<p>2015-06-22</p>
+<ul class="simple">
+<li><p>added a demo app using <code class="docutils literal notranslate"><span class="pre">colourInput</span></code> that’s available via <code class="docutils literal notranslate"><span class="pre">runExample</span></code> and <a class="reference external" href="https://daattali.com/shiny/colourInput/">on my shiny server</a></p></li>
+<li><p>add a transparency option to <code class="docutils literal notranslate"><span class="pre">colourInput</span></code></p></li>
+<li><p>complete refactor of <code class="docutils literal notranslate"><span class="pre">colourInput</span></code> using a better library that I modified to work well with shiny inputs</p></li>
+<li><p>including multiple <code class="docutils literal notranslate"><span class="pre">useShinyjs()</span></code> or <code class="docutils literal notranslate"><span class="pre">extendShinyjs()</span></code> will not result in duplicated HTML anymore. This can be useful if the UI is including a few external UI pieces and they independently make a call to <code class="docutils literal notranslate"><span class="pre">useShinyjs()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-5">
+<h1>shinyjs 0.0.6.5<a class="headerlink" href="#shinyjs-0-0-6-5" title="Link to this heading">#</a></h1>
+<p>2015-06-17</p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">colourInput</span></code> that can be used as an input element to select colours, and its corresponding <code class="docutils literal notranslate"><span class="pre">updateColourInput</span></code>. This doesn’t really fit the <code class="docutils literal notranslate"><span class="pre">shinyjs</span></code> model of running JS functions, this feels like something very different from the rest of the functions in this package, it might move somewhere else in the future.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-4">
+<h1>shinyjs 0.0.6.4<a class="headerlink" href="#shinyjs-0-0-6-4" title="Link to this heading">#</a></h1>
+<p>2015-05-30</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hidden</span></code> can now accept multiple tags or a tagList or a list of tags (previously only a single tags was allowed)</p></li>
+<li><p>allow <code class="docutils literal notranslate"><span class="pre">hide</span></code>/<code class="docutils literal notranslate"><span class="pre">show</span></code>/<code class="docutils literal notranslate"><span class="pre">toggle</span></code> to be run on any JQuery selector, not only on a single ID</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-3">
+<h1>shinyjs 0.0.6.3<a class="headerlink" href="#shinyjs-0-0-6-3" title="Link to this heading">#</a></h1>
+<p>2015-05-28</p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">delay</span></code> argument to <code class="docutils literal notranslate"><span class="pre">hide</span></code>/<code class="docutils literal notranslate"><span class="pre">show</span></code>/<code class="docutils literal notranslate"><span class="pre">toggle</span></code> so that you can now hide
+or show an element after a short delay instead of immediately. Useful for
+showing a message for a few seconds and then fading it away.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-2">
+<h1>shinyjs 0.0.6.2<a class="headerlink" href="#shinyjs-0-0-6-2" title="Link to this heading">#</a></h1>
+<p>2015-05-27</p>
+<ul class="simple">
+<li><p>added <code class="docutils literal notranslate"><span class="pre">text</span></code> argument to <code class="docutils literal notranslate"><span class="pre">extendShinyjs</span></code> so that JavaScript code can be provided
+as a string instead of in a separate file. Useful if your JS code is very short
+and simple and you don’t want to create a new file</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-6-0">
+<h1>shinyjs 0.0.6.0<a class="headerlink" href="#shinyjs-0-0-6-0" title="Link to this heading">#</a></h1>
+<p>2015-05-25</p>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">extendShinyjs</span></code> function - allow users to add their own JavaScript functions
+that can be called as if they are regular R code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">disable</span></code> and <code class="docutils literal notranslate"><span class="pre">enable</span></code> now work for ALL shiny input types</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show</span></code> and <code class="docutils literal notranslate"><span class="pre">hide</span></code> now work for any HTML tag including all shiny input types</p></li>
+<li><p>better <code class="docutils literal notranslate"><span class="pre">onclick</span></code> behaviour - when set on a shiny input, trigger the event
+when any part of the input is clicked</p></li>
+<li><p>improve implementation of <code class="docutils literal notranslate"><span class="pre">reset</span></code> and simplify function call to it</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-5-0">
+<h1>shinyjs 0.0.5.0<a class="headerlink" href="#shinyjs-0-0-5-0" title="Link to this heading">#</a></h1>
+<p>2015-05-23</p>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">reset</span></code> function that allows input elements to be reset to their original values</p></li>
+<li><p>add function <code class="docutils literal notranslate"><span class="pre">runjs</span></code> to run arbitrary javascript code (not recommended to use in published shiny apps)</p></li>
+<li><p>relax R version requirement to 3.1.0</p></li>
+<li><p>look for session object in all parent frames, so that shinyjs functions can work from helper functions and not only from within the main server function</p></li>
+<li><p>refacor internal code</p></li>
+<li><p>update example apps and vignette to include <code class="docutils literal notranslate"><span class="pre">reset</span></code> function and <code class="docutils literal notranslate"><span class="pre">condition</span></code> param in <code class="docutils literal notranslate"><span class="pre">toggle</span></code> functions</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-4-0">
+<h1>shinyjs 0.0.4.0<a class="headerlink" href="#shinyjs-0-0-4-0" title="Link to this heading">#</a></h1>
+<p>2015-04-24</p>
+<ul class="simple">
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">condition</span></code> argument to <code class="docutils literal notranslate"><span class="pre">toggle</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleState</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleClass</span></code> that allows
+you to pass a boolean condition to determine if to show/hide (enable/disable, etc)
+based on that condition. Useful to do things like
+<code class="docutils literal notranslate"><span class="pre">toggleState(id</span> <span class="pre">=</span> <span class="pre">&quot;submitBtn&quot;,</span> <span class="pre">condition</span> <span class="pre">=</span> <span class="pre">nchar(input$text)</span> <span class="pre">&gt;=</span> <span class="pre">3)</span></code></p></li>
+<li><p>fix <code class="docutils literal notranslate"><span class="pre">hidden</span></code> so that if there are elements created dynamically using <code class="docutils literal notranslate"><span class="pre">renderUI</span></code>,
+shiny will render them when they are made visible</p></li>
+<li><p>better implementation of <code class="docutils literal notranslate"><span class="pre">toggle</span></code></p></li>
+<li><p>using <code class="docutils literal notranslate"><span class="pre">enable</span></code>/<code class="docutils literal notranslate"><span class="pre">disable</span></code>/<code class="docutils literal notranslate"><span class="pre">toggleState</span></code> on a selectize input works</p></li>
+<li><p>better implementation of <code class="docutils literal notranslate"><span class="pre">toggleState</span></code></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-3-3">
+<h1>shinyjs 0.0.3.3<a class="headerlink" href="#shinyjs-0-0-3-3" title="Link to this heading">#</a></h1>
+<p>2015-04-21</p>
+<p>CRAN resubmission</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-3-0">
+<h1>shinyjs 0.0.3.0<a class="headerlink" href="#shinyjs-0-0-3-0" title="Link to this heading">#</a></h1>
+<p>2015-04-18</p>
+<ul class="simple">
+<li><p>bugfixes to <code class="docutils literal notranslate"><span class="pre">onclick()</span></code> (evaluate expressions in the correct environment)</p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">alert()</span></code> to <code class="docutils literal notranslate"><span class="pre">info()</span></code> because when the app was deployed in a Shiny Server (<a class="reference external" href="http://shinyapps.io">shinyapps.io</a> or my own shiny server), it was printing the alret twice - probably because shiny server somehow intercepts the <code class="docutils literal notranslate"><span class="pre">alert</span></code> call too</p></li>
+<li><p>rename <code class="docutils literal notranslate"><span class="pre">innerHTML()</span></code> to <code class="docutils literal notranslate"><span class="pre">text()</span></code> to make it more understandable for the average user</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">add</span></code> param to <code class="docutils literal notranslate"><span class="pre">onclick()</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">add</span></code> param to <code class="docutils literal notranslate"><span class="pre">text()</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">inlineCSS()</span></code> function to easily add inline CSS to a Shiny app</p></li>
+<li><p>add documentation to all functions</p></li>
+<li><p>add “demo” example app that provides a safe way to  experiment with shinyjs by providing a predetermined set of functions to run</p></li>
+<li><p>add “basic” example app that shows how some <code class="docutils literal notranslate"><span class="pre">shinyjs</span></code> functions can be used
+together in a real (very simply) Shiny app</p></li>
+<li><p>add vignette and README, get ready for CRAN submission</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-2-1">
+<h1>shinyjs 0.0.2.1<a class="headerlink" href="#shinyjs-0-0-2-1" title="Link to this heading">#</a></h1>
+<p>2015-04-02</p>
+<p>New function: <strong>onclick</strong> - allows the user to run an R expression (including
+<em>shinyjs</em> expressions) when a specific element in the Shiny app is clicked.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="shinyjs-0-0-2-0">
+<h1>shinyjs 0.0.2.0<a class="headerlink" href="#shinyjs-0-0-2-0" title="Link to this heading">#</a></h1>
+<p>2015-04-02</p>
+<p>The user is no longer required to set the shiny session or to pass it into any
+function calls. Every <em>shinyjs</em> function will try to dynamically figure out the
+correct Shiny session to use.  The previous code with explicit sessions is still
+in the codebase but has been commented out so that it’ll be easy to switch back
+to it in the near future in case the new approach doesn’t always work.</p>
+<p>This has been a pending change for a while but I was hesitant to use it because
+I still don’t <em>fully</em> understand the call stack and I’m not 100% sure this will
+always be correct. But it does make sense to me and it seems to work so I’ll
+give it a go.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\shinyjs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">shinyjs 2.1.0 (2021-12-20)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-2-0-0-2020-08-24">shinyjs 2.0.0 (2020-08-24)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-1-1-2020-01-12">shinyjs 1.1 (2020-01-12)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-1-0-2018-01-08">shinyjs 1.0 (2018-01-08)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-9">shinyjs 0.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-8">shinyjs 0.8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-7">shinyjs 0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6-2">shinyjs 0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6-1">shinyjs 0.6.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-6">shinyjs 0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-3">shinyjs 0.5.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-2">shinyjs 0.5.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-1">shinyjs 0.5.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-5-0">shinyjs 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-4-1">shinyjs 0.4.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-4-0">shinyjs 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-3-2">shinyjs 0.3.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-3-0">shinyjs 0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-6">shinyjs 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-5">shinyjs 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-4">shinyjs 0.2.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-3">shinyjs 0.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-2">shinyjs 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-1">shinyjs 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-2-0">shinyjs 0.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-4">shinyjs 0.1.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-3">shinyjs 0.1.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-2">shinyjs 0.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-1">shinyjs 0.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-1-0">shinyjs 0.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-3">shinyjs 0.0.8.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-2">shinyjs 0.0.8.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-1">shinyjs 0.0.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-8-0">shinyjs 0.0.8.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-7-0">shinyjs 0.0.7.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-6">shinyjs 0.0.6.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-5">shinyjs 0.0.6.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-4">shinyjs 0.0.6.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-3">shinyjs 0.0.6.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-2">shinyjs 0.0.6.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-6-0">shinyjs 0.0.6.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-5-0">shinyjs 0.0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-4-0">shinyjs 0.0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-3-3">shinyjs 0.0.3.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-3-0">shinyjs 0.0.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-2-1">shinyjs 0.0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shinyjs-0-0-2-0">shinyjs 0.0.2.0</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

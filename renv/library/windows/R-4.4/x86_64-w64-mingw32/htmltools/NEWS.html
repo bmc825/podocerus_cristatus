@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>htmltools 0.5.8.1 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/htmltools/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/htmltools/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>htmltools 0.5.8.1</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">htmltools 0.5.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-8">htmltools 0.5.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-7">htmltools 0.5.7</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-6-1">htmltools 0.5.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-6">htmltools 0.5.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#possibly-breaking-changes">Possibly breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements">Minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-5">htmltools 0.5.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-4">htmltools 0.5.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-3">htmltools 0.5.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-2">htmltools 0.5.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Breaking Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-improvements">New Features &amp; Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-1-1">htmltools 0.5.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-1">htmltools 0.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New Features &amp; Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Breaking Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-0">htmltools 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-4-0">htmltools 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3-6">htmltools 0.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3-5">htmltools 0.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3">htmltools 0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-9">htmltools 0.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-7">htmltools 0.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-6">htmltools 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-5">htmltools 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-4">htmltools 0.2.4</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-8-1">
+<h1>htmltools 0.5.8.1<a class="headerlink" href="#htmltools-0-5-8-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">capturePlot()</span></code>s examples are now only run when <code class="docutils literal notranslate"><span class="pre">interactive()</span></code>. (#429)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-8">
+<h1>htmltools 0.5.8<a class="headerlink" href="#htmltools-0-5-8" title="Link to this heading">#</a></h1>
+<section id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The fill CSS attached to fillable containers and fill items with <code class="docutils literal notranslate"><span class="pre">bindFillRole()</span></code> now uses a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers">CSS cascade layer</a> named <code class="docutils literal notranslate"><span class="pre">htmltools</span></code> to reduce the precedence order of the fill CSS. (#425)</p></li>
+<li><p>Improved documentation for boolean attributes in <code class="docutils literal notranslate"><span class="pre">tagAppendAttributes()</span></code> to note that they can be set via an <code class="docutils literal notranslate"><span class="pre">NA</span></code> value, e.g. <code class="docutils literal notranslate"><span class="pre">tagAppendAttributes(div(),</span> <span class="pre">contenteditable</span> <span class="pre">=</span> <span class="pre">NA)</span></code> creates <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">contenteditable&gt;&lt;/div&gt;</span></code>. (thanks &#64;russHyde, #427)</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h2>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bindFillRole()</span></code> now attaches its <code class="docutils literal notranslate"><span class="pre">HTMLDependency()</span></code> to fill items, thus reducing the possibility of filling layout breaking due to missing CSS. (#421)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-7">
+<h1>htmltools 0.5.7<a class="headerlink" href="#htmltools-0-5-7" title="Link to this heading">#</a></h1>
+<section id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">save_html()</span></code> is now an S3 generic, allowing for more customization over how certain classes are saved to an HTML file. (#411)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Improvements<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fill items no longer set <code class="docutils literal notranslate"><span class="pre">overflow:</span> <span class="pre">auto</span></code> or <code class="docutils literal notranslate"><span class="pre">width:</span> <span class="pre">100%</span></code> by default. (#401)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">css()</span></code> now fully supports setting custom CSS properties (or CSS variables) via inline styles. When the name of a value passed to <code class="docutils literal notranslate"><span class="pre">css()</span></code> starts with <code class="docutils literal notranslate"><span class="pre">--</span></code>, it will be treated as a custom CSS property and absolutely no changes will be made to the variable. For example, <code class="docutils literal notranslate"><span class="pre">css(&quot;--font_size&quot;</span> <span class="pre">=</span> <span class="pre">&quot;3em&quot;)</span></code> returns <code class="docutils literal notranslate"><span class="pre">--font_size:3em;</span></code> while <code class="docutils literal notranslate"><span class="pre">css(font_size</span> <span class="pre">=</span> <span class="pre">&quot;3em&quot;)</span></code> will return <code class="docutils literal notranslate"><span class="pre">font-size:3em</span></code>. (#402)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{htmltools}</span></code> now requires <code class="docutils literal notranslate"><span class="pre">{rlang}</span></code> version 1.0.0 or higher. (#403)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-6-1">
+<h1>htmltools 0.5.6.1<a class="headerlink" href="#htmltools-0-5-6-1" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h2>Improvements<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code> no longer throws an error when attempting to traverse a NULL value with r-devel. (#407)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-6">
+<h1>htmltools 0.5.6<a class="headerlink" href="#htmltools-0-5-6" title="Link to this heading">#</a></h1>
+<section id="possibly-breaking-changes">
+<h2>Possibly breaking changes<a class="headerlink" href="#possibly-breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #386: Fillable containers no longer set <code class="docutils literal notranslate"><span class="pre">overflow:</span> <span class="pre">auto</span></code> by default. Instead, they set <code class="docutils literal notranslate"><span class="pre">min-width</span></code> and <code class="docutils literal notranslate"><span class="pre">min-height</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> to ensure that fill items a constrained in the fillable container without clipping their direct children. (#387)</p></li>
+<li><p>Closed #370: Non-fill items in fillable containers no longer grow or shrink and instead respect their intrinsic size. Use <code class="docutils literal notranslate"><span class="pre">height</span></code> to control the height of non-fill items in fillable containers and <code class="docutils literal notranslate"><span class="pre">min-height</span></code> and <code class="docutils literal notranslate"><span class="pre">max-height</span></code> on fill items to limit how much they are allowed to grow or shrink within a fillable container. (#391)</p></li>
+</ul>
+</section>
+<section id="minor-improvements">
+<h2>Minor improvements<a class="headerlink" href="#minor-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #375: calling <code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code> or a function that returns an <code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code> object (e.g., <code class="docutils literal notranslate"><span class="pre">fontawesome::fa_html_dependency()</span></code>) in an R chunk in an R Markdown or knitr-powered Quarto document will now include the dependency rather than printing the object structure. If you want to print the object structure, you can use <code class="docutils literal notranslate"><span class="pre">print()</span></code> or <code class="docutils literal notranslate"><span class="pre">str()</span></code>. (#376)</p></li>
+<li><p>Closed #124: <code class="docutils literal notranslate"><span class="pre">includeHTML()</span></code> will now issue a warning if it detects that the file passed to it contains a complete HTML document. <code class="docutils literal notranslate"><span class="pre">includeHTML()</span></code> is designed to include HTML fragments where the contents of the file can be written directly into the current app or document, but subtle errors can occur when the file contains a complete HTML document. In most cases, you should instead use <code class="docutils literal notranslate"><span class="pre">tags$iframe()</span></code> to embed external documents. (#382)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-5">
+<h1>htmltools 0.5.5<a class="headerlink" href="#htmltools-0-5-5" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h2>Bug fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #355: <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code> was failing to select elements with tag names that contained hyphens. (&#64;slodge, #302)</p></li>
+<li><p>Closed #366: <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code>’s <code class="docutils literal notranslate"><span class="pre">find()</span></code> method no longer errors out when tags contain language objects. (#366)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-4">
+<h1>htmltools 0.5.4<a class="headerlink" href="#htmltools-0-5-4" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h2>New Features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a new <code class="docutils literal notranslate"><span class="pre">bindFillRole()</span></code> function for modifying <code class="docutils literal notranslate"><span class="pre">tag()</span></code> object(s) into tags that are allowed to grow and shrink when their parent is opinionated about their height. See <code class="docutils literal notranslate"><span class="pre">help(bindFillRole,</span> <span class="pre">&quot;htmltools&quot;)</span></code> for documentation and examples. Note the primary motivation for adding these functions is to power <code class="docutils literal notranslate"><span class="pre">{bslib}</span></code>’s new <code class="docutils literal notranslate"><span class="pre">card()</span></code> API (in particular, <a class="reference external" href="https://rstudio.github.io/bslib/articles/cards.html#responsive-sizing">responsive sizing</a>) as well as the new <code class="docutils literal notranslate"><span class="pre">fill</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">shiny::plotOutput()</span></code>, <code class="docutils literal notranslate"><span class="pre">shiny::imageOutput()</span></code>, <code class="docutils literal notranslate"><span class="pre">shiny::uiOutput()</span></code>, <code class="docutils literal notranslate"><span class="pre">htmlwidgets::sizingPolicy()</span></code>, and <code class="docutils literal notranslate"><span class="pre">htmlwidgets::shinyWidgetOutput()</span></code>. (#343)</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>Bug fixes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #331: <code class="docutils literal notranslate"><span class="pre">copyDependencyToDir()</span></code> creates <code class="docutils literal notranslate"><span class="pre">outputDir</span></code> recursively, which happens in Quarto or when <code class="docutils literal notranslate"><span class="pre">lib_dir</span></code> points to a nested directory. (&#64;gadenbuie, #332)</p></li>
+<li><p>Closed #346: <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code>’s <code class="docutils literal notranslate"><span class="pre">$remove()</span></code>, <code class="docutils literal notranslate"><span class="pre">$after()</span></code>, <code class="docutils literal notranslate"><span class="pre">$before()</span></code>, <code class="docutils literal notranslate"><span class="pre">$replaceWith()</span></code> had a bug that prevented expected behavior when sibling children values where not tag elements. (#348)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-3">
+<h1>htmltools 0.5.3<a class="headerlink" href="#htmltools-0-5-3" title="Link to this heading">#</a></h1>
+<section id="breaking-changes">
+<h2>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #305: <code class="docutils literal notranslate"><span class="pre">htmlPreserve()</span></code> no longer uses <em>inline</em> code blocks for Pandoc’s raw attribute feature when used inside a <em>non</em>-inline knitr/rmarkdown code chunk, and as a result, in this case, an additional <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag is no longer wrapped around the HTML content. (#306)</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>Bug fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #301: <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code> was failing to copy all <code class="docutils literal notranslate"><span class="pre">tagList()</span></code> html dependencies within nest child tag lists. <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code> will now relocate html dependencies as child objects. (#302)</p></li>
+<li><p>Closed #290: htmltools previously did not specify which version of fastmap to use, and would fail to install with an old version of fastmap. (#291)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">copyDependencyToDir()</span></code> no longer creates empty directories for dependencies that do not have any files. (&#64;gadenbuie, #276)</p></li>
+<li><p>Closed #320: <code class="docutils literal notranslate"><span class="pre">copyDependencyToDir()</span></code> now works with dependencies with specified attributes. (&#64;dmurdoch, #321)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-2">
+<h1>htmltools 0.5.2<a class="headerlink" href="#htmltools-0-5-2" title="Link to this heading">#</a></h1>
+<section id="id8">
+<h2>Breaking Changes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #205: When calling <code class="docutils literal notranslate"><span class="pre">tagGetAttribute(x)</span></code> on an object with a non-atomic attribute, a list of untouched values will be returned. It is still recommended to only store character values inside attributes. (#212)</p></li>
+</ul>
+</section>
+<section id="new-features-improvements">
+<h2>New Features &amp; Improvements<a class="headerlink" href="#new-features-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{htmltools}</span></code> now has its own <code class="docutils literal notranslate"><span class="pre">{pkgdown}</span></code> site hosted at <a class="reference external" href="https://rstudio.github.io/htmltools/">https://rstudio.github.io/htmltools/</a>.</p></li>
+<li><p>The new <code class="docutils literal notranslate"><span class="pre">tagQuery()</span></code> function provides a <a class="reference external" href="https://jquery.com/">jQuery</a> inspired interface to query and/or modify HTML <code class="docutils literal notranslate"><span class="pre">tag()</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">div()</span></code>) or <code class="docutils literal notranslate"><span class="pre">tagList()</span></code> objects. To learn more, see the <a class="reference external" href="https://rstudio.github.io/htmltools/articles/tagQuery.html">{pkgdown} article</a>. (#208)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">tagAddRenderHook()</span></code> for delaying modification of a tag object until it is rendered. A list of render-time hooks may also be added via the new <code class="docutils literal notranslate"><span class="pre">.renderHook</span></code> argument added to all <code class="docutils literal notranslate"><span class="pre">tag()</span></code> functions. (#215)</p></li>
+<li><p>Closed #243: Added <code class="docutils literal notranslate"><span class="pre">withTags(.noWS)</span></code> to change the default whitespace behavior for all tags within the call to <code class="docutils literal notranslate"><span class="pre">withTags()</span></code>. (#245)</p></li>
+<li><p>Closed #251: Added <code class="docutils literal notranslate"><span class="pre">.cssSelector</span></code> parameters to tag modifying functions such as <code class="docutils literal notranslate"><span class="pre">tagAppendChildren()</span></code> or <code class="docutils literal notranslate"><span class="pre">tagAppendChildren()</span></code>. The <code class="docutils literal notranslate"><span class="pre">.cssSelector</span></code> allows you to target particular (inner) tags of interest. See <code class="docutils literal notranslate"><span class="pre">tagAppendChildren()</span></code> for examples. (#224)</p></li>
+<li><p>Closed #225: Added <code class="docutils literal notranslate"><span class="pre">tagInsertChildren()</span></code> to be able to insert child tag objects at a particular location. (#224)</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>Bug Fixes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>When retrieving a tag attribute using <code class="docutils literal notranslate"><span class="pre">tagGetAttribute(tag,</span> <span class="pre">attr)</span></code>, <code class="docutils literal notranslate"><span class="pre">NA</span></code> values will be removed before combining remaining attribute values. If all attribute values are <code class="docutils literal notranslate"><span class="pre">NA</span></code>, then a single <code class="docutils literal notranslate"><span class="pre">NA</span></code> value will be returned. (#212)</p></li>
+<li><p>Closed #197: Fixed rendering of boolean attributes in <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags rendered via <code class="docutils literal notranslate"><span class="pre">renderDependencies()</span></code> (#197, thanks &#64;atusy).</p></li>
+<li><p>Closed #222: Unnamed attributes are no longer allowed to be appended via <code class="docutils literal notranslate"><span class="pre">tagAppendAttribs()</span></code>. When trying to print unnamed tag attribs, a better error message is provided. (#229)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-1-1">
+<h1>htmltools 0.5.1.1<a class="headerlink" href="#htmltools-0-5-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Added shiny as a suggested package.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-1">
+<h1>htmltools 0.5.1<a class="headerlink" href="#htmltools-0-5-1" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>New Features &amp; Improvements<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added a new <code class="docutils literal notranslate"><span class="pre">tagFunction()</span></code> for generating <code class="docutils literal notranslate"><span class="pre">tags</span></code> and/or <code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code>s conditional on the rendering context. For an example, see <code class="docutils literal notranslate"><span class="pre">?tagFunction</span></code>. (#180)</p></li>
+<li><p>Closed #104: <code class="docutils literal notranslate"><span class="pre">save_html()</span></code>’s <code class="docutils literal notranslate"><span class="pre">file</span></code> argument now properly handles relative paths. (&#64;haozhu233, #105, #192)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_html()</span></code> now has a <code class="docutils literal notranslate"><span class="pre">lang</span></code> parameter that can be used to set the lang attribute of <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code>. (&#64;ColinFay, #185)</p></li>
+<li><p>Closed #101: <code class="docutils literal notranslate"><span class="pre">htmlDependency</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">renderDependencies</span></code> now allow the <code class="docutils literal notranslate"><span class="pre">script</span></code> argument to be given as a named list containing the elements: <code class="docutils literal notranslate"><span class="pre">src</span></code>, <code class="docutils literal notranslate"><span class="pre">integrity</span></code>, <code class="docutils literal notranslate"><span class="pre">crossorigin</span></code>. (&#64;matthewstrasiotto, #188)</p></li>
+<li><p>Closed #189: <code class="docutils literal notranslate"><span class="pre">validateCssUnit()</span></code> now accepts <code class="docutils literal notranslate"><span class="pre">fit-content</span></code>. (#190)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">htmlPreserve()</span></code> can now optionally use the Pandoc <code class="docutils literal notranslate"><span class="pre">raw_attribute</span></code> extension to enclose HTML.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>Breaking Changes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Closed #161: <code class="docutils literal notranslate"><span class="pre">parseCssColors(x)</span></code> now requires <code class="docutils literal notranslate"><span class="pre">x</span></code> to be a character vector (it no longer accepts a <code class="docutils literal notranslate"><span class="pre">list()</span></code> of strings) and an error is no longer thrown when <code class="docutils literal notranslate"><span class="pre">mustWork</span> <span class="pre">=</span> <span class="pre">FALSE</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> contains <code class="docutils literal notranslate"><span class="pre">NA</span></code> value(s). (#194)</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>Bug fixes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">print(as.tags(x))</span></code> no longer results in error when <code class="docutils literal notranslate"><span class="pre">x</span></code> is a generic <code class="docutils literal notranslate"><span class="pre">list()</span></code> of tag-like objects. (#181)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-5-0">
+<h1>htmltools 0.5.0<a class="headerlink" href="#htmltools-0-5-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tags</span></code> is now generated by a script which collects all
+<a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTML</a> and
+<a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element">SVG</a> element tags
+documented in <a class="reference external" href="https://developer.mozilla.org">MDN Web Docs</a>.  This feature
+only appends to the existing set of <code class="docutils literal notranslate"><span class="pre">tags</span></code> (#159)</p></li>
+<li><p>Removed the Rcpp dependency and the compiled code now uses C rather than C++ (#158)</p></li>
+<li><p>BREAKING CHANGE: Fixed #57, #153: <code class="docutils literal notranslate"><span class="pre">htmlTemplate</span></code> output no longer inserts
+extra whitespace around  replacement values. (#154)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HTML()</span></code> now takes <code class="docutils literal notranslate"><span class="pre">.noWS</span></code> argument, which can be used to suppress surrounding
+whitespace (similar to the new argument for tags in htmltools 0.4.0). (#154)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">css()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> when no non-empty properties are
+specified. (#145)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_html(tags$body(...))</span></code> no longer results in double <body> tags being
+written to the .html file. (Note that <code class="docutils literal notranslate"><span class="pre">save_html(tags$html(...))</span></code> is not
+supported at this time.) (#145)</p></li>
+<li><p>Trailing commas now permitted in <code class="docutils literal notranslate"><span class="pre">...</span></code> arguments to <code class="docutils literal notranslate"><span class="pre">css()</span></code>, <code class="docutils literal notranslate"><span class="pre">tagList()</span></code>, and
+the var-arg mutation functions: <code class="docutils literal notranslate"><span class="pre">tagAppendAttributes()</span></code>, <code class="docutils literal notranslate"><span class="pre">tagSetChildren()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">tagAppendChildren()</span></code>. (#145)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">capturePlot</span></code> and <code class="docutils literal notranslate"><span class="pre">plotTag</span></code> functions, for easily creating image files
+and HTML <img> tags (respectively) from plot expressions. (#150)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">parseCssColors</span></code> function, for normalizing the various CSS color formats
+into #RRGGBB(AA) strings. (#155)</p></li>
+<li><p>Fixed #156: Now <code class="docutils literal notranslate"><span class="pre">extractPreserveChunks()</span></code> handles strings contain Emoji Unicode strings correctly on Windows. (#157)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">.noWS</span></code> parameter for suppressing whitespace can now take an <code class="docutils literal notranslate"><span class="pre">&quot;inside&quot;</span></code>
+value (equivalent to <code class="docutils literal notranslate"><span class="pre">c(&quot;after-start&quot;,</span> <span class="pre">&quot;before-end&quot;)</span></code>). (#163)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-4-0">
+<h1>htmltools 0.4.0<a class="headerlink" href="#htmltools-0-4-0" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fixed #128: Added support for trailing commas in tagLists and the predefined
+tags. (#135)</p></li>
+<li><p>Added some HTML tag functions to <code class="docutils literal notranslate"><span class="pre">tags</span></code> that were missing. (#111)</p></li>
+<li><p>Updated RcppExports for new version of Rcpp. (#93)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as.character.shiny.tags()</span></code> will handle non-ASCII attributes correctly if they
+are not encoded in native encoding.</p></li>
+<li><p>Fixed #99: <code class="docutils literal notranslate"><span class="pre">NA</span></code> attributes were sometimes rendered as <code class="docutils literal notranslate"><span class="pre">&quot;NA&quot;</span></code> in the HTML,
+instead of being blank. (#100)</p></li>
+<li><p>The error message for trailing commas in tag functions now provides context
+and useful information. (#109)</p></li>
+<li><p>Stopped using inline styles to set background color for <code class="docutils literal notranslate"><span class="pre">save_html</span></code>, as doing so
+makes it difficult to override using other CSS rules. (#123)</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">.noWS</span></code> argument to <code class="docutils literal notranslate"><span class="pre">tag()</span></code> and <code class="docutils literal notranslate"><span class="pre">tags</span></code> which can be used to suppress
+the automatically generated whitespace around a particular tag. (#131)</p></li>
+<li><p>Added a shim for <code class="docutils literal notranslate"><span class="pre">system.file()</span></code> so that htmltools works with <code class="docutils literal notranslate"><span class="pre">htmlDependency</span></code>
+objects created by a package that was loaded with <code class="docutils literal notranslate"><span class="pre">devtools::load_all()</span></code>.
+(#129)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validateCssUnit()</span></code> now accepts <code class="docutils literal notranslate"><span class="pre">ch</span></code>, <code class="docutils literal notranslate"><span class="pre">rem</span></code>, and <code class="docutils literal notranslate"><span class="pre">calc()</span></code>. (#134)</p></li>
+<li><p>Fixed #125: <code class="docutils literal notranslate"><span class="pre">print.html</span></code> removes html dependencies. (#126)</p></li>
+<li><p>Stopped extra carriage returns from being inserted by <code class="docutils literal notranslate"><span class="pre">save_html</span></code> on Windows.
+(#137)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-3-6">
+<h1>htmltools 0.3.6<a class="headerlink" href="#htmltools-0-3-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">validateCssUnit()</span></code> now accepts viewport units (vw, vh, vmin, vmax). (#56)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">restorePreserveChunks()</span></code> marks the output with the correct encoding now
+(UTF-8).</p></li>
+<li><p>Length-0 attributes are now dropped, like NULLs. (#65)</p></li>
+<li><p>Fixed #69: On Windows, <code class="docutils literal notranslate"><span class="pre">renderDocument()</span></code> did not mark output as UTF-8 if the
+head was UTF-8 but body was ASCII. (#71)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-3-5">
+<h1>htmltools 0.3.5<a class="headerlink" href="#htmltools-0-3-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as.character</span></code> now returns a character vector with no other attributes.
+Previously it returned a character vector of class ‘html’. (#31, #41)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">htmlTemplate</span></code> now can use a string as a template instead of requiring a
+file. (#41, #43)</p></li>
+<li><p>HTML dependencies can now be added inline, instead of needing to use
+<code class="docutils literal notranslate"><span class="pre">attachDependencies()</span></code>. (#40, #42)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code> gained a new argument <code class="docutils literal notranslate"><span class="pre">all_files</span></code> to indicate whether all
+files under the src directory should be copied when rendering dependencies,
+or only those specified in the dependency objects. (#48)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">copyDependencyToDir()</span></code> will always completely overwrite the target directory
+when copying HTML dependency files to make sure all dependency files are
+definitely updated in the target directory when the original dependency
+directory has been updated. In the past, the dependency files were not updated
+if they already existed. (#36)</p></li>
+<li><p>The version number in the directory name of an HTML dependency can be
+suppressed by setting options(htmltools.dir.version = FALSE) when the
+dependency is copied via <code class="docutils literal notranslate"><span class="pre">copyDependencyToDir()</span></code>. (#37)</p></li>
+<li><p>Performance improvement rendering tags, by switching from <code class="docutils literal notranslate"><span class="pre">readLines</span></code> to
+<code class="docutils literal notranslate"><span class="pre">readChar</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-3">
+<h1>htmltools 0.3<a class="headerlink" href="#htmltools-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">css</span></code> function for conveniently forming CSS declaration strings.</p></li>
+<li><p>Add template support, with the <code class="docutils literal notranslate"><span class="pre">htmlTemplate()</span></code>, <code class="docutils literal notranslate"><span class="pre">renderDocument()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">suppressDependencies()</span></code> functions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-2-9">
+<h1>htmltools 0.2.9<a class="headerlink" href="#htmltools-0-2-9" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add check that <code class="docutils literal notranslate"><span class="pre">htmlDependency()</span></code> isn’t called with an absolute path when a
+binary package is built. (#22)</p></li>
+<li><p>Allow HTML content to include UTF-8, Latin1, and system encoded content. All
+will be converted to UTF-8 using enc2utf8() at render time. (#21)</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">tagGetAttribute()</span></code> and <code class="docutils literal notranslate"><span class="pre">tagHasAttribute()</span></code> functions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-2-7">
+<h1>htmltools 0.2.7<a class="headerlink" href="#htmltools-0-2-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add “append” parameter to attachDependencies, to allow adding dependencies,
+instead of replacing them.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-2-6">
+<h1>htmltools 0.2.6<a class="headerlink" href="#htmltools-0-2-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Add “attachment” parameter to htmlDependency, which can be used to allow any
+file in the dependency directory to be available via URL at runtime.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-2-5">
+<h1>htmltools 0.2.5<a class="headerlink" href="#htmltools-0-2-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Explicit library(htmltools) is no longer required for tags to be rendered in
+knitr/rmarkdown documents.</p></li>
+<li><p>Added “viewer” parameter to html_print.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="htmltools-0-2-4">
+<h1>htmltools 0.2.4<a class="headerlink" href="#htmltools-0-2-4" title="Link to this heading">#</a></h1>
+<p>Initial release</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\htmltools"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">htmltools 0.5.8.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-8">htmltools 0.5.8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improvements">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-7">htmltools 0.5.7</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-6-1">htmltools 0.5.6.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-6">htmltools 0.5.6</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#possibly-breaking-changes">Possibly breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements">Minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-5">htmltools 0.5.5</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-4">htmltools 0.5.4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-3">htmltools 0.5.3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-2">htmltools 0.5.2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Breaking Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-improvements">New Features &amp; Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-1-1">htmltools 0.5.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-1">htmltools 0.5.1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">New Features &amp; Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Breaking Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-5-0">htmltools 0.5.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-4-0">htmltools 0.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3-6">htmltools 0.3.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3-5">htmltools 0.3.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-3">htmltools 0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-9">htmltools 0.2.9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-7">htmltools 0.2.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-6">htmltools 0.2.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-5">htmltools 0.2.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#htmltools-0-2-4">htmltools 0.2.4</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

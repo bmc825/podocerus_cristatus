@@ -1,0 +1,877 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>httr2 1.1.0 &#8212; Chapter 3 Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'renv/library/windows/R-4.4/x86_64-w64-mingw32/httr2/NEWS';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-light" alt="Chapter 3 Data Analysis - Home"/>
+    <img src="../../../../../../_static/Podocerus_bw.png" class="logo__image only-dark pst-js-only" alt="Chapter 3 Data Analysis - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../intro.html">
+                    Data Analysis of P. cristatus
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../scripts/Load_Packages.html">Load Packages</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../01_Population/01_intro.html">Question 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/01_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Clustering.html">Cluster Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../01_Population/Population_structure.html">Population Structure Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../02_Occurrence/02_intro.html">Question 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/02_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_1.html">Model 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_2.html">Model 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_3.html">Model 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../02_Occurrence/Model_exp.html">Substrate Experiment Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../03_Camouflage/03_intro.html">Question 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/03_data_cleaning.html">Data Cleaning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_4.html">Model 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_5.html">Model 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../03_Camouflage/Model_6.html">Model 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../04_Phylogenetic/04_intro.html">Question 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Geneious_protocol.html">Geneious Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../04_Phylogenetic/Phylogenetic_analysis.html">Phylogenetic Analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../../../_sources/renv/library/windows/R-4.4/x86_64-w64-mingw32/httr2/NEWS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>httr2 1.1.0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">httr2 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lifecycle-changes">Lifecycle changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-7">httr2 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-6">httr2 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-5">httr2 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-4">httr2 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-3">httr2 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-2">httr2 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-1">httr2 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-0">httr2 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-lifecycle">Function lifecycle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-requests">Multiple requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oauth-features">OAuth features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-new-features">Other new features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-3">httr2 0.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-2">httr2 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-1">httr2 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-0">httr2 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-1-1">httr2 0.1.1</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="httr2-1-1-0">
+<h1>httr2 1.1.0<a class="headerlink" href="#httr2-1-1-0" title="Link to this heading">#</a></h1>
+<section id="lifecycle-changes">
+<h2>Lifecycle changes<a class="headerlink" href="#lifecycle-changes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> is superseded in favor of <code class="docutils literal notranslate"><span class="pre">req_perform_connection()</span></code>,
+which is no longer experimental (#625).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">with_mock()</span></code> and <code class="docutils literal notranslate"><span class="pre">local_mock()</span></code> are defunct and will be removed in the next
+release.</p></li>
+</ul>
+</section>
+<section id="new-features">
+<h2>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">is_online()</span></code> wraps <code class="docutils literal notranslate"><span class="pre">curl::has_internet()</span></code>, making it easy to tell if you’re
+currently online (#512).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_headers_redacted()</span></code> makes it easier to redact sensitive headers (#561).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> implements “circuit breaking”, which immediatelys error after
+multiple failures to the same server (e.g. because the server is down)
+(#370).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_relative()</span></code> navigates to a relative URL (#449).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_request()</span></code> returns the request associated with a response; this can
+be useful when debugging (#604).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_stream_is_complete()</span></code> checks if data remains in the stream (#559).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url_modify()</span></code>, <code class="docutils literal notranslate"><span class="pre">url_modify_query()</span></code>, and <code class="docutils literal notranslate"><span class="pre">url_modify_relative()</span></code> modify
+URLs (#464); <code class="docutils literal notranslate"><span class="pre">url_query_parse()</span></code> and <code class="docutils literal notranslate"><span class="pre">url_query_build()</span></code> parse and build
+query strings (#425).</p></li>
+</ul>
+</section>
+<section id="bug-fixes-and-minor-improvements">
+<h2>Bug fixes and minor improvements<a class="headerlink" href="#bug-fixes-and-minor-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>OAuth response parsing errors now have a dedicated <code class="docutils literal notranslate"><span class="pre">httr2_oauth_parse</span></code> error
+class that includes the original response object (&#64;atheriel, #596).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">curl_translate()</span></code> converts cookie headers to <code class="docutils literal notranslate"><span class="pre">req_cookies_set()</span></code> (#431)
+and JSON data to <code class="docutils literal notranslate"><span class="pre">req_body_json_modify()</span></code> calls (#258).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print.request()</span></code> escapes <code class="docutils literal notranslate"><span class="pre">{}</span></code> in headers (#586).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_auth_aws_v4()</span></code> formats the AWS Authorization header correctly (#627).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">max_tries</span> <span class="pre">=</span> <span class="pre">2</span></code> when nethier <code class="docutils literal notranslate"><span class="pre">max_tries</span></code> nor
+<code class="docutils literal notranslate"><span class="pre">max_seconds</span></code> is set. If you want to disable retries, set <code class="docutils literal notranslate"><span class="pre">max_tries</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_connection()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">verbosity</span></code> argument, which is useful for
+understanding exactly how data is streamed back to you (#599).
+<code class="docutils literal notranslate"><span class="pre">req_perform_promise()</span></code> also gains a <code class="docutils literal notranslate"><span class="pre">verbosity</span></code> argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> can control how spaces are encoded with <code class="docutils literal notranslate"><span class="pre">.space</span></code> (#432).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_link_url()</span></code> handles multiple <code class="docutils literal notranslate"><span class="pre">Link</span></code> headers (#587).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_stream_sse()</span></code> will warn if it recieves a partial event.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url_parse()</span></code> parses relative URLs with new <code class="docutils literal notranslate"><span class="pre">base_url</span></code> argument (#449) and
+the uses faster and more correct <code class="docutils literal notranslate"><span class="pre">curl::curl_parse_url()</span></code> (#577).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-7">
+<h1>httr2 1.0.7<a class="headerlink" href="#httr2-1-0-7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_promise()</span></code> upgraded to use event-driven async based on waiting efficiently on curl socket activity (#579).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_oauth_token_exchange()</span></code> and <code class="docutils literal notranslate"><span class="pre">oauth_flow_token_exchange()</span></code> functions implement the OAuth token exchange protocol from RFC 8693 (&#64;atheriel, #460).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-6">
+<h1>httr2 1.0.6<a class="headerlink" href="#httr2-1-0-6" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix stochastic test failure, particularly on CRAN (#572)</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">oauth_cache_clear()</span></code> is an exported end point to clear the OAuth cache.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_auth_aws_v4()</span></code> signs request using AWS’s special format (#562, #566).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> no longer retrieves anything but <code class="docutils literal notranslate"><span class="pre">GET</span></code> requests from the cache.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">resp_stream_aws()</span></code> to retrieve AWS’s special streaming format. With thanks to <a class="github reference external" href="https://github.com/lifion/lifion-aws-event-stream/">lifion/lifion-aws-event-stream</a> for a simple reference implementation.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-5">
+<h1>httr2 1.0.5<a class="headerlink" href="#httr2-1-0-5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> and <code class="docutils literal notranslate"><span class="pre">req_perform_promise()</span></code> now correctly set up the method and body (#549).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-4">
+<h1>httr2 1.0.4<a class="headerlink" href="#httr2-1-0-4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_file()</span></code> now works with files &gt;64kb once more (#524) and no longer leaks a connection if the response doesn’t complete succesfully (#534).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_*()</span></code> now give informative error if you attempt to change the body type (#451).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> now re-caches the response if the body is hasn’t been modified but the headers have changed (#442). It also works better when <code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> sets a path (#442).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_cookie_set()</span></code> allows you to set client side cookies (#369).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> no longer displays a progress bar when sleeping during tests. You can override this behaviour by setting the option <code class="docutils literal notranslate"><span class="pre">httr2_progress</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_iterative()</span></code> is no longer experimental.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_perform_connection()</span></code> for working with streaming data. Unlike <code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> which uses callbacks, <code class="docutils literal notranslate"><span class="pre">req_perform_connection()</span></code> returns a regular response object with a connection as the body. Unlike <code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> it supports <code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> (with &#64;jcheng5, #519).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> no longer treates low-level HTTP failures the same way as transient errors by default. You can return to the previous behaviour with <code class="docutils literal notranslate"><span class="pre">retry_on_error</span> <span class="pre">=</span> <span class="pre">TRUE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_body_html()</span></code> and <code class="docutils literal notranslate"><span class="pre">resp_body_xml()</span></code> now work when <code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> is given a path (#448).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">resp_stream_bytes()</span></code>, <code class="docutils literal notranslate"><span class="pre">resp_stream_lines()</span></code>, and <code class="docutils literal notranslate"><span class="pre">resp_stream_sse()</span></code> for streaming chunk from a connection response  (#519).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-3">
+<h1>httr2 1.0.3<a class="headerlink" href="#httr2-1-0-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jwt_encode_hmac()</span></code> now calls correct underlying function
+<code class="docutils literal notranslate"><span class="pre">jose::jwt_encode_hmac()</span></code> and has correct default size parameter value
+(&#64;denskh, #508).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> now prunes cache <em>before</em> checking if a given key exists,
+eliminating the occassional error about reading from an invalid RDS file.
+It also no longer tests for existence then later reads the cache, avoiding
+potential race conditions.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_perform_promise()</span></code> creates a <code class="docutils literal notranslate"><span class="pre">promises::promise</span></code> so a request can
+run in the background (#501, &#64;gergness).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> now respects error handling in <code class="docutils literal notranslate"><span class="pre">req_error()</span></code>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-2">
+<h1>httr2 1.0.2<a class="headerlink" href="#httr2-1-0-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_file()</span></code> now only opens a connection when the request actually needs data. In particular, this makes it work better with <code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> (#487).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> no longer fails if the <code class="docutils literal notranslate"><span class="pre">rds</span></code> files are somehow corrupted and now defaults the <code class="docutils literal notranslate"><span class="pre">debug</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">httr2_cache_debug</span></code> option to make it easier to debug caching buried in other people’s code (#486).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_password()</span></code> now only asks for your password once (#498).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> now works correctly with <code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> (#447) and now works when downloading 0 byte files (#478)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> no longer applies the <code class="docutils literal notranslate"><span class="pre">callback</span></code> to unsuccessful
+responses, instead creating a regular response. It also now sets <code class="docutils literal notranslate"><span class="pre">last_request()</span></code> and <code class="docutils literal notranslate"><span class="pre">last_response()</span></code> (#479).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> now allows you to opt out of escaping for multi-value parameters (#404).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-1">
+<h1>httr2 1.0.1<a class="headerlink" href="#httr2-1-0-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">round</span> <span class="pre">=</span> <span class="pre">c(&quot;byte&quot;,</span> <span class="pre">&quot;line&quot;)</span></code> argument to control
+how the stream is rounded (#437).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> gives a clearer error if <code class="docutils literal notranslate"><span class="pre">after</span></code> returns the wrong type of
+value (#385).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_template()</span></code> now works when you have a bare <code class="docutils literal notranslate"><span class="pre">:</span></code> in a template that
+uses “uri” style (#389).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_timeout()</span></code> now resets the value of <code class="docutils literal notranslate"><span class="pre">connecttimeout</span></code> set by curl.
+This ensures that you can use <code class="docutils literal notranslate"><span class="pre">req_timeout()</span></code> to increase the connection
+timeout past 10s (#395).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url_parse()</span></code> is considerably faster thanks to performance optimisations
+by and discussion with &#64;DyfanJones (#429).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-1-0-0">
+<h1>httr2 1.0.0<a class="headerlink" href="#httr2-1-0-0" title="Link to this heading">#</a></h1>
+<section id="function-lifecycle">
+<h2>Function lifecycle<a class="headerlink" href="#function-lifecycle" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">local_mock()</span></code> and <code class="docutils literal notranslate"><span class="pre">with_mock()</span></code> have been deprecated in favour of
+<code class="docutils literal notranslate"><span class="pre">local_mocked_responses()</span></code> and <code class="docutils literal notranslate"><span class="pre">with_mocked_responses()</span></code> (#301).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multi_req_perform()</span></code> is deprecated in favour of <code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code>.
+<code class="docutils literal notranslate"><span class="pre">req_stream()</span></code> is deprecated in favour of <code class="docutils literal notranslate"><span class="pre">req_perform_stream()</span></code> (#314).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_flow_auth_code()</span></code> deprecates <code class="docutils literal notranslate"><span class="pre">host_name</span></code> and <code class="docutils literal notranslate"><span class="pre">port</span></code> arguments in favour
+of using <code class="docutils literal notranslate"><span class="pre">redirect_uri</span></code>. It also deprecates <code class="docutils literal notranslate"><span class="pre">host_ip</span></code> since it seems unlikely
+that changing this is ever useful.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_flow_auth_code_listen()</span></code> now takes a single <code class="docutils literal notranslate"><span class="pre">redirect_uri</span></code> argument
+instead of separate <code class="docutils literal notranslate"><span class="pre">host_ip</span></code> and <code class="docutils literal notranslate"><span class="pre">port</span></code> arguments. This is a breaking change
+but I don’t expect anyone to call this function directly (which was confirmed
+by a GitHub search) so I made the change without deprecation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_form()</span></code> and <code class="docutils literal notranslate"><span class="pre">req_body_multipart()</span></code> now require data <code class="docutils literal notranslate"><span class="pre">...</span></code>;
+they no longer accept a single list for compatibility with the 0.1.0
+API.</p></li>
+</ul>
+</section>
+<section id="multiple-requests">
+<h2>Multiple requests<a class="headerlink" href="#multiple-requests" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_perform_sequential()</span></code> performs a known set of requests
+sequentially. It has an interface similar to <code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> but
+with no limitations, and the cost of being slower (#361).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_perform_iterative()</span></code> performs multiple requests, where each request
+is derived from the previous response (&#64;mgirlich, #8).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code> replaces <code class="docutils literal notranslate"><span class="pre">multi_req_perform()</span></code> to match the new
+naming scheme (#314). It gains a <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform_iterative()</span></code>, <code class="docutils literal notranslate"><span class="pre">req_perform_parallel()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">req_perform_sequential()</span></code> share a new error handling strategy. By
+default, errors will be bubbled up, but you can choose an alternative
+strategy with the <code class="docutils literal notranslate"><span class="pre">on_error</span></code> argument (#372).</p></li>
+<li><p>A new family of functions <code class="docutils literal notranslate"><span class="pre">resps_successes()</span></code>, <code class="docutils literal notranslate"><span class="pre">resps_failures()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">resps_requests()</span></code> and <code class="docutils literal notranslate"><span class="pre">resps_data()</span></code> make it easier to work with lists of
+responses (#357). Behind the scenes, these work because the request is now
+stored in the response (or error) object (#357).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resp_body_json()</span></code> and <code class="docutils literal notranslate"><span class="pre">resp_body_xml()</span></code> now cache the parsed values so
+that you can use them repeatedly without worrying about the performance cost.
+This supports the design <code class="docutils literal notranslate"><span class="pre">req_perform_iterative()</span></code> by avoiding the need to
+carefully pass around a parsed object.</p></li>
+</ul>
+</section>
+<section id="oauth-features">
+<h2>OAuth features<a class="headerlink" href="#oauth-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A new <code class="docutils literal notranslate"><span class="pre">vignette(&quot;oauth&quot;)</span></code> gives many more details about how OAuth works and
+how to use it with httr2 (#234), and the OAuth docs have been overhauled to
+make it more clear that you should use <code class="docutils literal notranslate"><span class="pre">req_oauth_*()</span></code>, not <code class="docutils literal notranslate"><span class="pre">oauth_*()</span></code> (#330).</p></li>
+<li><p>If you are using an OAuth token with a refresh token, and that refresh
+token has expired, then httr2 will now re-run the entire flow to get
+you a new token (#349).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">oauth_cache_path()</span></code> returns the path that httr2 uses for caching OAuth
+tokens. Additionally, you can now change the cache location by setting the
+<code class="docutils literal notranslate"><span class="pre">HTTR2_OAUTH_CACHE</span></code> env var. This is now more obvious to the user, because
+httr2 now informs the user whenever a token is cached.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_flow_auth_code()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">redirect_uri</span></code> argument rather than deriving
+this URL automatically from the <code class="docutils literal notranslate"><span class="pre">host_name</span></code> and <code class="docutils literal notranslate"><span class="pre">port</span></code> (#248). It uses
+this argument to automatically choose which strategy to use to get the
+auth code, either launching a temporary web server or, new, allowing you to
+manually enter the details with the help of a custom JS/HTML page hosted
+elsewhere, or by copying and pasting the URL you’re redirected to
+(&#64;fh-mthomson, #326). The temporary web server now also respects the path
+component of <code class="docutils literal notranslate"><span class="pre">redirect_uri</span></code>, if the API needs a specific path (#149).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">oauth_token_cached()</span></code> allows you to get an OAuth token while still
+taking advantage of httr2’s caching and auto-renewal features. For expert
+use only (#328).</p></li>
+</ul>
+</section>
+<section id="other-new-features">
+<h2>Other new features<a class="headerlink" href="#other-new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>&#64;mgirlich is now a httr2 contributor in recognition of his many contributions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> gains <code class="docutils literal notranslate"><span class="pre">max_n</span></code>, <code class="docutils literal notranslate"><span class="pre">max_size</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_age</span></code> arguments to
+automatically prune the cache. By default, the cache will stay under 1 GB
+(#207).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_body_json_modify()</span></code> allows you to iteratively modify a JSON
+body of a request.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_cookie_preserve()</span></code> lets you use a file to share cookies across
+requests (#223).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">req_progress()</span></code> adds a progress bar to long downloads or uploads (#20).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">resp_check_content_type()</span></code> to check response content types (#190).
+<code class="docutils literal notranslate"><span class="pre">resp_body_json()</span></code> and friends give better errors if no <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code>
+header is present in the response (#284).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">resp_has_body()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> depending on whether
+or not the response has a body (#205).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">resp_url()</span></code>, <code class="docutils literal notranslate"><span class="pre">resp_url_path()</span></code>, <code class="docutils literal notranslate"><span class="pre">resp_url_queries()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">resp_url_query()</span></code> to extract various part of the response url (#57).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">.multi</span></code> parameter that controls what happens when
+you supply multiple values in a vector. The default will continue to error
+but you can use <code class="docutils literal notranslate"><span class="pre">.multi</span> <span class="pre">=</span> <span class="pre">&quot;comma&quot;</span></code> to separate with commas, <code class="docutils literal notranslate"><span class="pre">&quot;pipe&quot;</span></code> to
+separate with <code class="docutils literal notranslate"><span class="pre">|</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;explode&quot;</span></code> to generate one parameter for each
+value (e.g. <code class="docutils literal notranslate"><span class="pre">?a=1&amp;a=2</span></code>) (#350).</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">secret_encrypt_file()</span></code> and <code class="docutils literal notranslate"><span class="pre">secret_decrypt_file()</span></code> for encrypting and
+decrypting files (#237).</p></li>
+</ul>
+</section>
+<section id="minor-improvements-and-bug-fixes">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#minor-improvements-and-bug-fixes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The httr2 examples now only run on R 4.2 and later so that we can use
+the base pipe and lambda syntax (#345).</p></li>
+<li><p>OAuth errors containing a url now correctly display that URL
+(instead of the string “uri”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">curl_translate()</span></code> now uses the base pipe, and produces escapes with single
+quotes or raw strings in case double quotes can’t be used (&#64;mgirlich, #264).
+It gains the argument <code class="docutils literal notranslate"><span class="pre">simplify_headers</span></code> that removes some common but
+unimportant headers, like <code class="docutils literal notranslate"><span class="pre">Sec-Fetch-Dest</span></code> or <code class="docutils literal notranslate"><span class="pre">sec-ch-ua-mobile</span></code>
+(&#64;mgirlich, #256). It also parses the query components of the url
+(&#64;mgirlich, #259) and works with multiline commands from the clipboard
+(&#64;mgirlich, #254).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local_mocked_responses()</span></code> and <code class="docutils literal notranslate"><span class="pre">with_mocked_responses()</span></code> now accept a
+list of responses which will be returned in sequence. They also now correctly
+trigger errors when the mocked response represents an HTTP failure (#252).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_flow_refresh()</span></code> now only warns, not errors, if the <code class="docutils literal notranslate"><span class="pre">refresh_token</span></code>
+changes, making it a little easier to use in manual workflows (#186).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">obfuscated()</span></code> values now display their original call when printed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_json()</span></code> gains custom content <code class="docutils literal notranslate"><span class="pre">type</span></code> argument
+and respects custom content-type set in header (&#64;mgirlich, #189).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_cache()</span></code> now combine the headers of the new response with the headers
+of the cached response. In particular, this fixes <code class="docutils literal notranslate"><span class="pre">resp_body_json/xml/html()</span></code>
+on cached responses (&#64;mgirlich, #277).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> now throws error with class <code class="docutils literal notranslate"><span class="pre">httr2_failure/httr2_error</span></code> if
+the request fails, and that error now captures the curl error as the parent.
+If the request succeeds, but the response is an HTTP error, that error
+now also has super class <code class="docutils literal notranslate"><span class="pre">httr2_error</span></code>. This means that all errors thrown by
+httr2 now inherit from the <code class="docutils literal notranslate"><span class="pre">httr2_error</span></code> class. See new docs in <code class="docutils literal notranslate"><span class="pre">?req_error()</span></code>
+for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform()</span></code>’s progress bar can be suppressed by setting
+<code class="docutils literal notranslate"><span class="pre">options(httr2_progress</span> <span class="pre">=</span> <span class="pre">FALSE)</span></code> (#251). Progress bars displayed while
+waiting for some time to pass now tell you why they’re waiting (#206).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_bearer_jwt()</span></code> now includes the claim in the cache key (#192).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_device()</span></code> now takes a <code class="docutils literal notranslate"><span class="pre">auth_url</span></code> parameter making it usable
+(#331, &#64;taerwin).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> gains a <code class="docutils literal notranslate"><span class="pre">.multi</span></code> parameter that controls what happens when
+you supply multiple values in a vector. The default will continue to error
+but you can use <code class="docutils literal notranslate"><span class="pre">.multi</span> <span class="pre">=</span> <span class="pre">&quot;comma&quot;</span></code> to separate with commas, <code class="docutils literal notranslate"><span class="pre">&quot;pipe&quot;</span></code> to
+separate with <code class="docutils literal notranslate"><span class="pre">|</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;explode&quot;</span></code> to generate one parameter for each
+value (e.g. <code class="docutils literal notranslate"><span class="pre">?a=1&amp;a=2</span></code>) (#350).</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-0-2-3">
+<h1>httr2 0.2.3<a class="headerlink" href="#httr2-0-2-3" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>New <code class="docutils literal notranslate"><span class="pre">example_url()</span></code> to launch a local server, making tests and examples
+more robust.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">throttle_status()</span></code> to make it a little easier to verify what’s happening
+with throttling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_refresh()</span></code> now respects the <code class="docutils literal notranslate"><span class="pre">refresh_token</span></code> for caching
+(&#64;mgirlich, #178).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> now always sleeps before a request, rather than after it.
+It also gains an <code class="docutils literal notranslate"><span class="pre">error_call</span></code> argument and communicates more clearly
+where the error occurred (&#64;mgirlich, #187).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_path()</span></code> and <code class="docutils literal notranslate"><span class="pre">req_url_path_append()</span></code> can now handle <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or empty
+<code class="docutils literal notranslate"><span class="pre">...</span></code> and the elements of <code class="docutils literal notranslate"><span class="pre">...</span></code> can also have length &gt; 1 (&#64;mgirlich, #177).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sys_sleep()</span></code> (used by <code class="docutils literal notranslate"><span class="pre">req_retry()</span></code> and <code class="docutils literal notranslate"><span class="pre">req_throttle()</span></code>) gains a progress
+bar (#202).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-0-2-2">
+<h1>httr2 0.2.2<a class="headerlink" href="#httr2-0-2-2" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">curl_translate()</span></code> can now handle curl copied from Chrome developer tools
+(&#64;mgirlich, #161).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_*()</span></code> can now refresh OAuth tokens. One, two, or even more times!
+(&#64;jennybc, #166)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_device()</span></code> can now work in non-interactive environments,
+as intendend (&#64;flahn, #170)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_oauth_refresh()</span></code> and <code class="docutils literal notranslate"><span class="pre">oauth_flow_refresh()</span></code> now use the envvar
+<code class="docutils literal notranslate"><span class="pre">HTTR2_REFRESH_TOKEN</span></code>, not <code class="docutils literal notranslate"><span class="pre">HTTR_REFRESH_TOKEN</span></code> (&#64;jennybc, #169).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_proxy()</span></code> now uses the appropriate authentication option (&#64;jl5000).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> can now opt out of escaping with <code class="docutils literal notranslate"><span class="pre">I()</span></code> (&#64;boshek, #152).</p></li>
+<li><p>Can now print responses where content type is the empty string
+(&#64;mgirlich, #163).</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-0-2-1">
+<h1>httr2 0.2.1<a class="headerlink" href="#httr2-0-2-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>“Wrapping APIs” is now an article, not a vignette.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_template()</span></code> now appends the path instead of replacing it (&#64;jchrom, #133)</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-0-2-0">
+<h1>httr2 0.2.0<a class="headerlink" href="#httr2-0-2-0" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2>New features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_form()</span></code>, <code class="docutils literal notranslate"><span class="pre">req_body_multipart()</span></code>, and <code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> now
+support multiple arguments with the same name (#97, #107).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_form()</span></code>, <code class="docutils literal notranslate"><span class="pre">req_body_multipart()</span></code>, now match the interface of
+<code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code>, taking name-value pairs in <code class="docutils literal notranslate"><span class="pre">...</span></code>. Supplying a single
+<code class="docutils literal notranslate"><span class="pre">list()</span></code> is now deprecated and will be removed in a future version.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_body_json()</span></code> now overrides the existing JSON body, rather than
+attempting to merge with the previous value (#95, #115).</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">req_proxy()</span></code> (owenjonesuob, #77).</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Minor improvements and bug fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">httr_path</span></code> class renamed to <code class="docutils literal notranslate"><span class="pre">httr2_path</span></code> to correctly match package name
+(#99).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oauth_flow_device()</span></code> gains PKCE support (&#64;flahn, #92), and
+the interactive flow is a little more user friendly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_error()</span></code> can now correct force successful HTTP statuses to fail (#98).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_headers()</span></code> will now override <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> set by <code class="docutils literal notranslate"><span class="pre">req_body_*()</span></code> (#116).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_throttle()</span></code> correctly sets throttle rate (&#64;jchrom, #101).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_url_query()</span></code> never uses scientific notation for queries (#93).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_perform()</span></code> now respects <code class="docutils literal notranslate"><span class="pre">httr::with_verbose()</span></code> (#85).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response()</span></code> now defaults <code class="docutils literal notranslate"><span class="pre">body</span></code> to <code class="docutils literal notranslate"><span class="pre">raw(0)</span></code> for consistency with real
+responses (#100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">req_stream()</span></code> no longer throws an error for non 200 http status codes (&#64;DMerch, #137)</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="httr2-0-1-1">
+<h1>httr2 0.1.1<a class="headerlink" href="#httr2-0-1-1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Fix R CMD check failures on CRAN</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">NEWS.md</span></code> file to track changes to the package.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./renv\library\windows\R-4.4\x86_64-w64-mingw32\httr2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">httr2 1.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lifecycle-changes">Lifecycle changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes-and-minor-improvements">Bug fixes and minor improvements</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-7">httr2 1.0.7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-6">httr2 1.0.6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-5">httr2 1.0.5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-4">httr2 1.0.4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-3">httr2 1.0.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-2">httr2 1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-1">httr2 1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-1-0-0">httr2 1.0.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-lifecycle">Function lifecycle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-requests">Multiple requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oauth-features">OAuth features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-new-features">Other new features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-improvements-and-bug-fixes">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-3">httr2 0.2.3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-2">httr2 0.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-1">httr2 0.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-2-0">httr2 0.2.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">New features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Minor improvements and bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#httr2-0-1-1">httr2 0.1.1</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Brittany Cummings
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
