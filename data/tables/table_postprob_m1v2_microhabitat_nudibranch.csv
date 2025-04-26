@@ -1,0 +1,11 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Other Hydroids:Nudibranch effect > 0)",0.9485
+"2","P(Sertulariidae:Nudibranch effect > 0)",0.38155
+"3","P(Hydrallmania:Nudibranch effect > 0)",0.10655
+"4","P(Lafoea:Nudibranch effect > 0)",0.9535
+"5","P(Sertulariidae_Bryozoa:Nudibranch effect > 0)",0.547
+"6","P(Other Hydroids:Nudibranch effect < 0)",0.0515
+"7","P(Sertulariidae:Nudibranch effect < 0)",0.61845
+"8","P(Hydrallmania:Nudibranch effect < 0)",0.89345
+"9","P(Lafoea:Nudibranch effect < 0)",0.0465
+"10","P(Sertulariidae_Bryozoa:Nudibranch effect < 0)",0.453

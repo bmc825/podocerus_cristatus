@@ -1,0 +1,3450 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R");
+
+# Source the graphing functions
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/01_graphing_functions.R", local = knitr:::knit_global())
+```
+
+# Population Structure Statistical Analyses
+
+## Questions
+
+- How does P. cristatus abundance, sex ratios, and morph ratios change with environmental factors (**microhabitat**, **site**)? 
+- How does P. cristatus size change with sex and lifestage?
+- How does female P. cristatus size change with fecundity?
+- How does aeolid nudibranch abundance change with these same environmental factors (**microhabitat**, **site**)?
+
+## Objective
+
+- Test for differences in abundance, sex ratios, and morph ratios between different microhabitats and sites. 
+- Test for differences in size (**body length**, **dorsal surface area**) between sexes. 
+- Test for differences in size (**body length**, **dorsal surface area**) between lifestages. 
+- Test for relationship of body size to fecundity in females.
+
+
+## Method
+
+### 1. Load cleaned data.
+
+We start by loading the cleaned data from the "01_data_cleaning" pipeline. This data has already undergone transformations and contains relevant metrics for our models.
+
+
+
+```{r}
+data_pop_clean_lifestage <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_lifestage.csv")
+
+data_pop_clean_sex <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_sex.csv")
+
+data_pop_clean_sex_SA <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_sex_SA.csv")
+
+data_pop_clean_morph <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_morph.csv")
+
+data_pop_clean_fecundity <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_fecundity.csv")
+
+data_pop_clean_fecundity_SA <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_fecundity_SA.csv")
+
+data_count_clean <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_count_clean.csv")
+
+data_microhabitat_count_clean <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_microhabitat_count_clean.csv")
+
+```
+
+### 2. Prepare data.
+
+Make sure R recognizes categorical variables as factors and continuous variables as numeric.
+
+
+```{r}
+# Convert continuous variables to numeric, if not already done so
+# Define the columns to convert to numeric
+columns_to_convert_pop <- c("Size", "Fecundity", "Surface_area")
+columns_to_convert_count <- c("Count_Pod", "Count_Pod_F", "Count_Pod_M", "Count_Pod_Bright", "Count_Pod_Other", "Count_Pod_RB", "Count_Pod_W", "Count_Nudie_Aeolid", "Count_Nudie_Dorid")
+columns_to_convert_microhabitat_count <- c("Count")
+
+# Convert columns
+data_pop_clean_lifestage <- data_pop_clean_lifestage %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_pop_clean_sex <- data_pop_clean_sex %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_pop_clean_sex_SA <- data_pop_clean_sex_SA %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_pop_clean_morph <- data_pop_clean_morph %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_pop_clean_fecundity <- data_pop_clean_fecundity %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_pop_clean_fecundity_SA <- data_pop_clean_fecundity_SA %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_count_clean <- data_count_clean %>%
+    mutate(across(all_of(columns_to_convert_count), as.numeric))
+
+data_microhabitat_count_clean <- data_microhabitat_count_clean %>%
+    mutate(across(all_of(columns_to_convert_microhabitat_count), as.numeric))
+
+
+# Convert binary/categorical variables to factors, if not already done so
+# Define the columns to convert to factor
+columns_to_convert_pop <- c("Sex", "Lifestage", "Morph", "Morph2")
+columns_to_convert_count <- c("Site", "Microhabitat", "Microhabitat_cat")
+columns_to_convert_microhabitat_count <- c("Site", "Quadrat", "Microhabitat_original", "Microhabitat", "Microhabitat_cat", "Group_1", "Group_2")
+
+# Convert columns
+data_pop_clean_lifestage <- data_pop_clean_lifestage %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_pop_clean_sex <- data_pop_clean_sex %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_pop_clean_sex_SA <- data_pop_clean_sex_SA %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_pop_clean_morph <- data_pop_clean_morph %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_pop_clean_fecundity <- data_pop_clean_fecundity %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_pop_clean_fecundity_SA <- data_pop_clean_fecundity_SA %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_count_clean <- data_count_clean %>%
+    mutate(across(all_of(columns_to_convert_count), as.factor))
+
+data_microhabitat_count_clean <- data_microhabitat_count_clean %>%
+    mutate(across(all_of(columns_to_convert_microhabitat_count), as.factor))
+
+```
+
+### 2. Normality Tests
+In this section, we test whether the continuous variables meet normality assumptions. If the p-value is less than or equal to 0.05, the null hypothesis of normality is rejected, indicating that the data does not fit a normal distribution. In this case, we will default to non-parametric tests.
+
+#### **Individual-Level Normality Checks**
+
+
+```{r}
+# Test normality of continuous variables (Size, Fecundity, etc.)
+# from the individually-cleaned datasets
+#--------------------------------------
+# Sex comparisons
+sw_sex_m_size <- shapiro.test(subset(data_pop_clean_sex, Sex == "M")$Size)
+sw_sex_f_size <- shapiro.test(subset(data_pop_clean_sex, Sex == "F")$Size)
+
+# Surface Area (SA)
+sw_sex_m_size_SA <- shapiro.test(subset(data_pop_clean_sex_SA, Sex == "M")$Size)
+sw_sex_f_size_SA <- shapiro.test(subset(data_pop_clean_sex_SA, Sex == "F")$Size)
+
+# Lifestage comparisons
+sw_adult_size <- shapiro.test(subset(data_pop_clean_lifestage, Lifestage == "A")$Size)
+sw_juvenile_size <- shapiro.test(subset(data_pop_clean_lifestage, Lifestage == "J")$Size)
+
+# Morph2 comparisons
+sw_morph_RB <- shapiro.test(subset(data_pop_clean_morph, Morph2 == "RB")$Size)
+sw_morph_W <- shapiro.test(subset(data_pop_clean_morph, Morph2 == "W")$Size)
+sw_morph_Bright <- shapiro.test(subset(data_pop_clean_morph, Morph2 == "Bright")$Size)
+sw_morph_Other <- shapiro.test(subset(data_pop_clean_morph, Morph2 == "Other")$Size)
+
+# Fecundity
+sw_fecundity <- shapiro.test(data_pop_clean_fecundity$Fecundity)
+```
+
+
+```{r}
+# Create the summary table manually from the test results
+shapiro_summary <- data.frame(
+  Group = c(
+    "Males (Body Length)",
+    "Females (Body Length)",
+    "Males (Surface Area)",
+    "Females (Surface Area)",
+    "Adults (Body Length)",
+    "Juveniles (Body Length)",
+    "Morph2 RB (Body Length)",
+    "Morph2 W (Body Length)",
+    "Morph2 Bright (Body Length)",
+    "Morph2 Other (Body Length)",
+    "Fecundity (Females)"
+  ),
+  n = c(
+    length(subset(data_pop_clean_sex, Sex == "M")$Size),
+    length(subset(data_pop_clean_sex, Sex == "F")$Size),
+    length(subset(data_pop_clean_sex_SA, Sex == "M")$Size),
+    length(subset(data_pop_clean_sex_SA, Sex == "F")$Size),
+    length(subset(data_pop_clean_lifestage, Lifestage == "A")$Size),
+    length(subset(data_pop_clean_lifestage, Lifestage == "J")$Size),
+    length(subset(data_pop_clean_morph, Morph2 == "RB")$Size),
+    length(subset(data_pop_clean_morph, Morph2 == "W")$Size),
+    length(subset(data_pop_clean_morph, Morph2 == "Bright")$Size),
+    length(subset(data_pop_clean_morph, Morph2 == "Other")$Size),
+    length(data_pop_clean_fecundity$Fecundity)
+  ),
+  W_statistic = c(
+    sw_sex_m_size$statistic,
+    sw_sex_f_size$statistic,
+    sw_sex_m_size_SA$statistic,
+    sw_sex_f_size_SA$statistic,
+    sw_adult_size$statistic,
+    sw_juvenile_size$statistic,
+    sw_morph_RB$statistic,
+    sw_morph_W$statistic,
+    sw_morph_Bright$statistic,
+    sw_morph_Other$statistic,
+    sw_fecundity$statistic
+  ),
+  p_value = c(
+    sw_sex_m_size$p.value,
+    sw_sex_f_size$p.value,
+    sw_sex_m_size_SA$p.value,
+    sw_sex_f_size_SA$p.value,
+    sw_adult_size$p.value,
+    sw_juvenile_size$p.value,
+    sw_morph_RB$p.value,
+    sw_morph_W$p.value,
+    sw_morph_Bright$p.value,
+    sw_morph_Other$p.value,
+    sw_fecundity$p.value
+  ),
+  Method = c(
+    sw_sex_m_size$method,
+    sw_sex_f_size$method,
+    sw_sex_m_size_SA$method,
+    sw_sex_f_size_SA$method,
+    sw_adult_size$method,
+    sw_juvenile_size$method,
+    sw_morph_RB$method,
+    sw_morph_W$method,
+    sw_morph_Bright$method,
+    sw_morph_Other$method,
+    sw_fecundity$method
+  )
+)
+
+shapiro_summary$p_value <- ifelse(
+  shapiro_summary$p_value < 0.001, 
+  "< 0.001", 
+  round(shapiro_summary$p_value, 3)
+)
+
+# Create the table as HTML
+shapiro_count_table <- shapiro_summary %>%
+  kbl(
+    caption = "Shapiro-Wilk Normality Test Results for Count Data",
+    digits = 3,
+    align = 'lcccl'
+  ) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert it to raw HTML
+
+# Display the table in Jupyter
+# IRdisplay::display_html(shapiro_count_table)
+```
+
+#### **Count Data Normality Checks**
+
+
+```{r}
+# Test normality of count data (pods, nudibranchs, morphs)
+#--------------------------------------
+sw_count <- shapiro.test(data_count_clean$Count_Pod)
+sw_count_M <- shapiro.test(data_count_clean$Count_Pod_M)
+sw_count_F <- shapiro.test(data_count_clean$Count_Pod_F)
+sw_count_Bright <- shapiro.test(data_count_clean$Count_Pod_Bright)
+sw_count_Other <- shapiro.test(data_count_clean$Count_Pod_Other)
+sw_count_RB <- shapiro.test(data_count_clean$Count_Pod_RB)
+sw_count_W <- shapiro.test(data_count_clean$Count_Pod_W)
+sw_count_Nudie <- shapiro.test(data_count_clean$Count_Nudie_Aeolid)
+```
+
+
+```{r}
+# Create the summary table manually from the test results
+shapiro_count_summary <- data.frame(
+  Group = c(
+    "Total Count",
+    "Male Count",
+    "Female Count",
+    "Bright Morph2 Count",
+    "Other Morph2 Count",
+    "RB Morph Count",
+    "W Morph Count",
+    "Aeolid Nudibranch Count"
+  ),
+  n = c(
+    length(data_count_clean$Count_Pod),
+    length(data_count_clean$Count_Pod_M),
+    length(data_count_clean$Count_Pod_F),
+    length(data_count_clean$Count_Pod_Bright),
+    length(data_count_clean$Count_Pod_Other),
+    length(data_count_clean$Count_Pod_RB),
+    length(data_count_clean$Count_Pod_W),
+    length(data_count_clean$Count_Nudie_Aeolid)
+  ),
+  W_statistic = c(
+    sw_count$statistic,
+    sw_count_M$statistic,
+    sw_count_F$statistic,
+    sw_count_Bright$statistic,
+    sw_count_Other$statistic,
+    sw_count_RB$statistic,
+    sw_count_W$statistic,
+    sw_count_Nudie$statistic
+  ),
+  p_value = c(
+    sw_count$p.value,
+    sw_count_M$p.value,
+    sw_count_F$p.value,
+    sw_count_Bright$p.value,
+    sw_count_Other$p.value,
+    sw_count_RB$p.value,
+    sw_count_W$p.value,
+    sw_count_Nudie$p.value
+  ),
+  Method = c(
+    sw_count$method,
+    sw_count_M$method,
+    sw_count_F$method,
+    sw_count_Bright$method,
+    sw_count_Other$method,
+    sw_count_RB$method,
+    sw_count_W$method,
+    sw_count_Nudie$method
+  )
+)
+
+shapiro_count_summary$p_value <- ifelse(
+  shapiro_count_summary$p_value < 0.001, 
+  "< 0.001", 
+  round(shapiro_count_summary$p_value, 3)
+)
+
+# Create the table as HTML
+shapiro_count_table <- shapiro_count_summary %>%
+  kbl(
+    caption = "Shapiro-Wilk Normality Test Results for Count Data",
+    digits = 3,
+    align = 'lcccl'
+  ) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert it to raw HTML
+
+# Display the table in Jupyter
+# IRdisplay::display_html(shapiro_count_table)
+```
+
+### 3. Size Investigation
+Here, we explore differences in size by sex, lifestage, color morph, and fecundity. We retain the original code and visualizations.
+
+#### **Body Length Comparison (M vs. F)**
+
+
+```{r}
+#--------------------------------------
+# Summaries
+summary_table <- data_pop_clean_sex %>%
+  mutate(Sex = recode(Sex,
+                        "M" = "Male",
+                        "F" = "Female")) %>%
+  group_by(Sex) %>%
+  summarise(
+    n = n(),
+    Mean_Length = mean(Size, na.rm = TRUE),
+    SD_Length = sd(Size, na.rm = TRUE),
+    Min_Length = min(Size, na.rm = TRUE),
+    SD_Length = max(Size, na.rm = TRUE)
+  )
+```
+
+
+```{r}
+html_table <- summary_table %>%
+  kbl(caption = "Summary Statistics for Body Length") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+# Run Wilcoxon rank-sum test
+wilcox_result <- wilcox.test(Size ~ Sex, data = data_pop_clean_sex)
+```
+
+
+```{r}
+
+# Format Wilcoxon result as a tibble
+wilcox_table <- tibble(
+  Sex = c("Female", "Male"),
+  Test = "Wilcoxon rank-sum",
+  Statistic = round(wilcox_result$statistic, 3),
+  P_value = signif(wilcox_result$p.value, 3)
+)
+```
+
+
+```{r}
+
+# Create formatted HTML table
+html_table <- kbl(wilcox_table, caption = "Wilcoxon Rank-Sum Test Summary") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Plot for Male vs Female sizes
+#--------------------------------------
+plot_sex_size <- ggplot(data_pop_clean_sex, aes(x = Size, fill = Sex)) +
+  geom_histogram(position = "identity", binwidth = 0.5, boundary = 0, alpha = 0.5, color = "black", linewidth = 0.6) +
+  scale_fill_manual(values = c("F" = "#E41A1C", "M" = "#999999")) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_sex$Size)), 
+                                  ceiling(max(data_pop_clean_sex$Size)), 
+                                  by = 1)) +  
+  labs(title = NULL, 
+       x = "Body Length (mm)", 
+       y = "Frequency") +
+  ggtitle("A") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.major.y = element_blank(), 
+    panel.grid.minor.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.minor.y = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_size.png", plot = plot_sex_size, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_sex_size <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_size.png")
+
+# Create the HTML (vertical display)
+html_plot_sex_size <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_size, "' alt='Plots of Size by Sex'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_size)
+```
+
+#### **Surface Area Comparison (M vs. F)**
+
+
+```{r}
+#--------------------------------------
+summary_table <- data_pop_clean_sex_SA %>%
+  mutate(Sex = recode(Sex,
+                        "M" = "Male",
+                        "F" = "Female")) %>%
+  group_by(Sex) %>%
+  summarise(
+    n = n(),
+    Mean_SA = mean(Surface_area, na.rm = TRUE),
+    SD_SA = sd(Surface_area, na.rm = TRUE),
+    Min_SA = min(Surface_area, na.rm = TRUE),
+    SD_SA = max(Surface_area, na.rm = TRUE)
+  )
+```
+
+
+```{r}
+html_table <- summary_table %>%
+  kbl(caption = "Summary Statistics for Dorsal Surface Area") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Run Wilcoxon rank-sum test
+wilcox_result <- wilcox.test(Surface_area ~ Sex, data = data_pop_clean_sex_SA)
+```
+
+
+```{r}
+
+# Format Wilcoxon result as a tibble
+wilcox_table <- tibble(
+  Sex = c("Female", "Male"),
+  Test = "Wilcoxon rank-sum",
+  Statistic = round(wilcox_result$statistic, 3),
+  P_value = signif(wilcox_result$p.value, 3)
+)
+```
+
+
+```{r}
+
+# Create formatted HTML table
+html_table <- kbl(wilcox_table, caption = "Wilcoxon Rank-Sum Test Summary") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Plot
+plot_sex_SA <- ggplot(data_pop_clean_sex_SA, aes(x = Surface_area, fill = Sex)) +
+  geom_histogram(position = "identity", binwidth = 0.5, boundary = 0, alpha = 0.5, color = "black", linewidth = 0.6) +
+  scale_fill_manual(values = c("F" = "#E41A1C", "M" = "#999999")) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_sex_SA$Surface_area)), 
+                                  ceiling(max(data_pop_clean_sex_SA$Surface_area)), 
+                                  by = 1)) +  
+  labs(title = NULL, 
+       x = expression("Surface area" ~ (mm^2)), 
+       y = "Frequency") +
+  ggtitle("B") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.major.y = element_blank(), 
+    panel.grid.minor.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.minor.y = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_SA.png", plot = plot_sex_SA, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_sex_SA <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_SA.png")
+
+
+# Create the HTML (vertical display)
+html_plot_sex_SA <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_SA, "' alt='Plot of Surface Area by Sex'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_SA)
+```
+
+#### **Body Length vs. Surface Area (M vs. F)**
+
+
+```{r}
+# Run Spearman correlations
+cor_m <- cor.test(
+  data_pop_clean_sex_SA$Size[data_pop_clean_sex_SA$Sex == "M"],
+  data_pop_clean_sex_SA$Surface_area[data_pop_clean_sex_SA$Sex == "M"],
+  method = "spearman"
+)
+
+cor_f <- cor.test(
+  data_pop_clean_sex_SA$Size[data_pop_clean_sex_SA$Sex == "F"],
+  data_pop_clean_sex_SA$Surface_area[data_pop_clean_sex_SA$Sex == "F"],
+  method = "spearman"
+)
+```
+
+
+```{r}
+
+# Format as a tibble
+spearman_table <- tibble(
+  Sex = c("Female", "Male"),
+  Method = c(cor_m$method, cor_f$method),
+  Statistic = round(c(cor_m$statistic, cor_f$statistic), 3),
+  Rho = round(c(cor_m$estimate, cor_f$estimate), 3),
+  P_value = signif(c(cor_m$p.value, cor_f$p.value), 4)
+)
+```
+
+
+```{r}
+
+# Create HTML table
+html_table <- kbl(spearman_table, caption = "Spearman Correlation Between Size and Surface Area") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Scatter plot
+plot_size_vs_SA <- ggplot(data_pop_clean_sex_SA, aes(x = Size, y = Surface_area, color = Sex, fill = Sex)) +
+  geom_point(size = 2, shape = 21, stroke = 0.6) +  # Scatter points with fill color
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed") +  # Trend lines by sex
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_sex_SA$Size, na.rm = TRUE)),
+                                  ceiling(max(data_pop_clean_sex_SA$Size, na.rm = TRUE)),
+                                  by = 1)) +
+  scale_color_manual(values = c("M" = "black", "F" = "black")) +
+  scale_fill_manual(values = c("M" = "#999999", "F" = "#f38c8c")) +
+  labs(title = NULL, 
+       x = "Body Length (mm)", 
+       y = expression("Surface area" ~ (mm^2))) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+    )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_size_vs_SA.png", plot = plot_size_vs_SA, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_size_vs_SA <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_size_vs_SA.png")
+
+# Create the HTML (vertical display)
+html_plot_size_vs_SA <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_size_vs_SA, "' alt='Plot of Size vs Surface Area'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_size_vs_SA)
+```
+
+#### **Body Length Comparison (Adults vs. Juveniles)**
+
+
+```{r}
+#--------------------------------------
+summary_table <- data_pop_clean_lifestage %>%
+  mutate(Lifestage = recode(Lifestage,
+                        "A" = "Adult",
+                        "J" = "Juvenile")) %>%
+  group_by(Lifestage) %>%
+  summarise(
+    n = n(),
+    Mean_Length = mean(Size, na.rm = TRUE),
+    SD_Length = sd(Size, na.rm = TRUE),
+    Min_Length = min(Size, na.rm = TRUE),
+    SD_Length = max(Size, na.rm = TRUE)
+  )
+```
+
+
+```{r}
+html_table <- summary_table %>%
+  kbl(caption = "Summary Statistics for Size based on Lifestage") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+# Wilcoxon rank-sum test
+wilcox_result <- wilcox.test(Size ~ Lifestage, data = data_pop_clean_lifestage)
+```
+
+
+```{r}
+# Format Wilcoxon result as a tibble
+wilcox_table <- tibble(
+  Lifestage = c("Adult", "Juvenile"),
+  Test = "Wilcoxon rank-sum",
+  Statistic = round(wilcox_result$statistic, 3),
+  P_value = signif(wilcox_result$p.value, 3)
+)
+```
+
+
+```{r}
+
+# Create formatted HTML table
+html_table <- kbl(wilcox_table, caption = "Wilcoxon Rank-Sum Test Summary") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Plot for Adult vs. Juvenile sizes
+plot_lifestage_size <- ggplot(data_pop_clean_lifestage, aes(x = Size, fill = Lifestage)) +
+  geom_histogram(position = "identity", binwidth = 0.5, boundary = 0, alpha = 0.5, color = "black", linewidth = 0.6) +
+  scale_fill_manual(values = c("A" = "#0072B2", "J" = "#E69F00")) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_lifestage$Size)), 
+                                  ceiling(max(data_pop_clean_lifestage$Size)), 
+                                  by = 1)) +  
+  labs(title = NULL, 
+       x = "Size (mm)", 
+       y = "Frequency") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.major.y = element_blank(), 
+    panel.grid.minor.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.minor.y = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_lifestage_size.png", plot = plot_lifestage_size, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_lifestage_size <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_lifestage_size.png")
+
+# Create the HTML (vertical display)
+html_plot_lifestage_size <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    width: 48%; 
+    height: auto; 
+    display: block; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_lifestage_size, "' alt='Plot of Size by Lifestage'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_lifestage_size)
+```
+
+#### **Body Length Comparison (Morphs)**
+
+
+```{r}
+#--------------------------------------
+summary_table <- data_pop_clean_morph %>%
+  mutate(Morph2 = recode(Morph2,
+                        "RB" = "Red-Beige",
+                        "W" = "White",
+                        "Bright" = "Bright",
+                        "Other" = "Other")) %>%
+  group_by(Morph2) %>%
+  summarise(
+    n = n(),
+    Mean_Length = mean(Size, na.rm = TRUE),
+    SD_Length = sd(Size, na.rm = TRUE),
+    Min_Length = min(Size, na.rm = TRUE),
+    SD_Length = max(Size, na.rm = TRUE)
+  )
+
+```
+
+
+```{r}
+html_table <- summary_table %>%
+  kbl(caption = "Summary Statistics for Size based on Morph") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+# Kruskal-Wallis and Dunn's
+kw_result <- kruskal.test(Size ~ Morph2, data = data_pop_clean_morph)
+dunn_result <- dunnTest(Size ~ Morph2, data = data_pop_clean_morph, method = "bonferroni")
+```
+
+
+```{r}
+# Format Kruskal-Wallis result as a one-row tibble
+kw_table <- tibble(
+  Test = "Kruskal-Wallis",
+  Statistic = round(kw_result$statistic, 3),
+  Df = kw_result$parameter,
+  P_value = signif(kw_result$p.value, 3)
+)
+
+# Get Dunn’s test table
+dunn_table <- dunn_result$res %>%
+  rename(
+    Comparison = Comparison,
+    Z = Z,
+    P_unadjusted = P.unadj,
+    P_bonferroni = P.adj
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+```
+
+
+```{r}
+
+# Combine both: show Kruskal result above Dunn’s table
+html_table <- list(
+  kbl(kw_table, caption = "Kruskal-Wallis Test Summary") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria"),
+  
+  kbl(dunn_table, caption = "Dunn’s Post Hoc Test (Bonferroni-adjusted)") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria")
+) %>%
+  lapply(as.character) %>%
+  paste(collapse = "<br><br>")  # add spacing between tables
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Relabel Morph levels directly
+data_pop_clean_morph_renamed <- data_pop_clean_morph %>%
+  mutate(Morph2 = recode(Morph2,
+                        "RB" = "Red-Beige",
+                        "W" = "White",
+                        "Bright" = "Bright",
+                        "Other" = "Other"))
+
+data_pop_clean_morph_renamed$Morph2 <- factor(data_pop_clean_morph_renamed$Morph2,
+    levels = c("Red-Beige", "White", "Bright", "Other")
+)
+
+plot_morph_size <- ggplot(data_pop_clean_morph_renamed, aes(x = Size, fill = Morph2)) +
+  geom_histogram(binwidth = 0.5, boundary = 0, color = "black", alpha = 0.6) +
+  facet_wrap(~ Morph2, nrow = 2) +
+  scale_fill_manual(values = c("Red-Beige" = "indianred", "White" = "lightblue4", "Bright" = "darkorange", "Other" = "#009E73")) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_morph_renamed$Size)), 
+                                  ceiling(max(data_pop_clean_morph_renamed$Size)), 
+                                  by = 1)) +  
+  labs(title = NULL, 
+       x = "Size (mm)", 
+       y = "Frequency") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.major.y = element_blank(), 
+    panel.grid.minor.x = element_line(color = "gray70", linetype = "dashed", linewidth = 0.3),
+    panel.grid.minor.y = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_size.png", plot = plot_morph_size, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_morph_size <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_size.png")
+
+# Create the HTML (vertical display)
+html_plot_morph_size <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_morph_size, "' alt='Plot of Size by Morph'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_morph_size)
+```
+
+#### **Fecundity vs. Size (Females Only)**
+
+
+```{r}
+# Run Spearman correlations
+cor_f_size <- cor.test(
+  data_pop_clean_fecundity$Fecundity,
+  data_pop_clean_fecundity$Size,
+  method = "spearman"
+)
+
+cor_f_SA <- cor.test(
+  data_pop_clean_fecundity$Fecundity,
+  data_pop_clean_fecundity$Surface_area,
+  method = "spearman"
+)
+```
+
+
+```{r}
+
+# Format as a tibble
+spearman_table <- tibble(
+  Parameter = c("Body Length", "Surface Area"),
+  Method = c(cor_f_size$method, cor_f_SA$method),
+  Statistic = round(c(cor_f_size$statistic, cor_f_SA$statistic), 3),
+  Rho = round(c(cor_f_size$estimate, cor_f_SA$estimate), 3),
+  P_value = signif(c(cor_f_size$p.value, cor_f_SA$p.value), 4)
+)
+
+```
+
+
+```{r}
+
+# Create HTML table
+html_table <- kbl(spearman_table, caption = "Spearman Correlation Between Fecundity and Female Size Parameters") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Scatter plots
+# BODY LENGTH
+plot_size_vs_fecundity <- ggplot(data_pop_clean_fecundity, aes(x = Size, y = Fecundity)) +
+  geom_point(color = "black", fill = "#f38c8c", size = 2, shape = 21, stroke = 0.6) +  # Scatter points
+  geom_smooth(method = "lm", color = "black", linetype = "dashed", se = FALSE) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_fecundity$Size)), 
+                                  ceiling(max(data_pop_clean_fecundity$Size)), 
+                                  by = 1)) +
+  labs(title = NULL, 
+       x = "Body Length (mm)", 
+       y = "Number of eggs/female") +
+  theme_bw(base_size = 8) +
+  ggtitle("C") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+    )
+
+# SURFACE AREA
+plot_SA_vs_fecundity <- ggplot(data_pop_clean_fecundity_SA, aes(x = Surface_area, y = Fecundity)) +
+  geom_point(color = "black", fill = "#f38c8c", size = 2, shape = 21, stroke = 0.6) +  # Scatter points
+  geom_smooth(method = "lm", color = "black", linetype = "dashed", se = FALSE) +
+  scale_x_continuous(breaks = seq(floor(min(data_pop_clean_fecundity_SA$Surface_area)), 
+                                  ceiling(max(data_pop_clean_fecundity_SA$Surface_area)), 
+                                  by = 1)) +
+  labs(title = NULL, 
+       x = expression("Surface area" ~ (mm^2)), 
+       y = "Number of eggs/female") +
+  theme_bw(base_size = 8) +
+  ggtitle("D") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+    )
+
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/fecundity_plot_size.png", plot = plot_size_vs_fecundity, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/fecundity_plot_SA.png", plot = plot_SA_vs_fecundity, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+fecundity_plot_size <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/fecundity_plot_size.png")
+
+fecundity_plot_SA <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/fecundity_plot_SA.png")
+
+
+# Create the HTML (vertical display)
+html_fecundity <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", fecundity_plot_size, "' alt='Plot of Fecundity by Size'>
+<img src='", fecundity_plot_SA, "' alt='Plot of Fecundity by SA'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_fecundity)
+```
+
+### 4. Count Data Investigations
+
+#### **Total Counts by Sex and Morph**
+
+First, we will just compare the total number of pods by sex and morph.
+
+
+```{r}
+# Count individuals by Sex
+sex_counts <- data_pop_clean_morph %>%
+  filter(!is.na(Sex)) %>%
+  group_by(Sex) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(Sex = factor(Sex, levels = c("M", "F")))
+
+# Set colors for Sex
+pod_colors <- c("M" = "#999999", "F" = "#f38c8c")
+
+# Plot by Sex
+plot_sex_abundance <- ggplot(sex_counts, aes(x = Sex, y = Count, fill = Sex)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), 
+           color = "black", width = 0.8) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    x = "Sex",
+    y = "Total count",
+    fill = "Sex"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+# Save the plot
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_abundance.png", plot = plot_sex_abundance, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_sex_abundance <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_abundance.png")
+
+# Create the HTML (vertical display)
+html_plot_sex_count <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_abundance, "' alt='Plot of Abundance by Sex'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_count)
+```
+
+
+```{r}
+# Count morphs within each group
+morph_counts_nested <- data_pop_clean_morph %>%
+  filter(!is.na(Morph), !is.na(Morph2)) %>%
+  group_by(Morph2, Morph) %>%
+  summarise(Count = n(), .groups = "drop")
+
+
+
+# Recode and reorder Group
+morph_counts_nested_clean <- morph_counts_nested %>%
+  mutate(
+    Morph2 = recode(Morph2,
+      "Bright" = "Bright",
+      "Other"  = "Other",
+      "RB"     = "Red-Beige",
+      "W"      = "White"
+    ),
+    Morph2 = factor(Morph2, levels = c("Red-Beige", "White", "Other", "Bright"))
+  )
+
+pod_colors <- c("Red-Beige" = "indianred", "White" = "lightblue4", "Bright" = "darkorange", "Other" = "#009E73")
+
+
+# Plot by Group
+plot_morph_abundance <- ggplot(morph_counts_nested_clean, aes(x = Morph2, y = Count, fill = Morph2)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  scale_fill_manual(
+    values = pod_colors
+  ) +
+  labs(
+    x = "Morph",
+    y = "Total count",
+    fill = "Morph2"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_abundance.png", plot = plot_morph_abundance, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_morph_abundance <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_abundance.png")
+
+# Create the HTML (vertical display)
+html_plot_morph_count <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_morph_abundance, "' alt='Plot of Abundance by Morph'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_morph_count)
+```
+
+#### **Total Microhabitat Counts**
+
+We will also look at the total number of microhabitat types across all quadrats. This isn't necessary - it's just for our reference.
+
+
+```{r}
+# Define custom order for microhabitat categories
+custom_order <- c("Algae", "Sertulariidae_BRYO", "Sertulariidae", "Lafoea", "Hydrallmania","Other" )
+
+# Count microhabitat and set the factor order
+microhabitat_counts <- data_microhabitat_count_clean %>%
+  group_by(Microhabitat, Group_2) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(Microhabitat = factor(Microhabitat, levels = custom_order))
+
+# New labels
+microhabitat_labels <- c(
+    "Algae" = "R",
+    "Sertulariidae_BRYO" = "BH",
+    "Sertulariidae" = "SH",
+    "Lafoea" = "LH",
+    "Hydrallmania" = "HH",
+    "Other" = "OH"
+    )
+
+# Optional: Set custom colors (if you want consistent palette)
+ microhabitat_colors <- c(
+   "Sertulariidae" = "#E66101",
+   "Sertulariidae_BRYO" = "#0283d9",
+   "Other" = "#E66101",
+   "Hydrallmania" = "#E66101",
+   "Algae" = "#a6291e",
+   "Lafoea" = "#E66101"
+ )
+
+# Plot with top strip labels
+plot_microhabitat_abundance <- ggplot(microhabitat_counts, aes(x = Microhabitat, y = Count, fill = Microhabitat)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), 
+           color = "black", width = 0.8) +
+  geom_text(
+    aes(label = Group_2, y = Count + 4),
+    size = 2.5,
+    fontface = "bold",
+    color = "black"
+  ) +
+  scale_fill_manual(values = microhabitat_colors) +
+  scale_x_discrete(labels = microhabitat_labels) +
+  labs(
+    x = "Microhabitat",
+    y = "Total count",
+    fill = "Microhabitat"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+# Save the plot
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_microhabitat_abundance.png",
+       plot = plot_microhabitat_abundance, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_microhabitat_abundance <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_microhabitat_abundance.png")
+
+# Create the HTML (vertical display)
+html_plot_microhabitat_count <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_microhabitat_abundance, "' alt='Plot of Abundance by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_microhabitat_count)
+```
+
+
+```{r}
+# Define custom order for microhabitat categories
+custom_order <- c("Algae", "Sertulariidae_BRYO", "Sertulariidae", "Lafoea", "Hydrallmania", "Other")
+
+# Summarize counts by Site and Microhabitat
+microhabitat_counts_by_site <- data_microhabitat_count_clean %>%
+  group_by(Site, Microhabitat, Group_2) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(Microhabitat = factor(Microhabitat, levels = custom_order))
+
+# Define axis labels
+microhabitat_labels <- c(
+  "Algae" = "R",
+  "Sertulariidae_BRYO" = "BH",
+  "Sertulariidae" = "SH",
+  "Lafoea" = "LH",
+  "Hydrallmania" = "HH",
+  "Other" = "OH"
+)
+
+# Define custom colors
+microhabitat_colors <- c(
+  "Sertulariidae" = "#E66101",
+  "Sertulariidae_BRYO" = "#0283d9",
+  "Other" = "#E66101",
+  "Hydrallmania" = "#E66101",
+  "Algae" = "#a6291e",
+  "Lafoea" = "#E66101"
+)
+
+# Generate faceted plot
+plot_microhabitat_by_site <- ggplot(microhabitat_counts_by_site, aes(x = Microhabitat, y = Count, fill = Microhabitat)) +
+  geom_bar(stat = "identity", color = "black", width = 0.8) +
+  geom_text(
+    aes(label = Group_2, y = Count + 3),
+    size = 2.5,
+    fontface = "bold",
+    color = "black"
+  ) +
+  scale_fill_manual(values = microhabitat_colors) +
+  scale_x_discrete(labels = microhabitat_labels) +
+  labs(
+    x = "Microhabitat",
+    y = "Total count",
+    fill = "Microhabitat"
+  ) +
+  facet_wrap(~ Site, scales = "free_y") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    strip.text = element_text(face = "bold", size = 8),
+    legend.position = "none"
+  )
+
+# Save the plot
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_microhabitat_by_site.png",
+       plot = plot_microhabitat_by_site, width = 6, height = 4, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+plot_microhabitat_by_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_microhabitat_by_site.png")
+
+# Create the HTML (vertical display)
+html_plot_microhabitat_by_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_microhabitat_by_site, "' alt='Plot of Abundance by Microhabitat by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_microhabitat_by_site)
+```
+
+#### **Mean Pod Counts**
+
+Next, we analyze overall Pod counts and the distribution of morphs and nudibranchs across sites and microhabitats. We will use Kruskal-Wallis and Dunn's post-hoc tests for comparing raw counts, and chi-square tests for comparing ratios.
+
+
+```{r}
+#--------------------------------------
+pod_counts_combined <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    n = n(),
+    Mean_Count = mean(Count_Pod, na.rm = TRUE),
+    SD_Count = sd(Count_Pod, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+html_table <- pod_counts_combined %>%
+  kbl(caption = "Summary Statistics for Pod Count by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+# Kruskal-Wallis and Dunn's
+kw_result <- kruskal.test(Count_Pod ~ Site, data = data_count_clean)
+dunn_result <- dunnTest(Count_Pod ~ Site, data = data_count_clean, method = "bonferroni")
+```
+
+
+```{r}
+
+# Format Kruskal-Wallis result as a one-row tibble
+kw_table <- tibble(
+  Test = "Kruskal-Wallis",
+  Statistic = round(kw_result$statistic, 3),
+  Df = kw_result$parameter,
+  P_value = signif(kw_result$p.value, 3)
+)
+
+# Get Dunn’s test table
+dunn_table <- dunn_result$res %>%
+  rename(
+    Comparison = Comparison,
+    Z = Z,
+    P_unadjusted = P.unadj,
+    P_bonferroni = P.adj
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+```
+
+
+```{r}
+
+# Combine both: show Kruskal result above Dunn’s table
+html_table <- list(
+  kbl(kw_table, caption = "Kruskal-Wallis Test Summary") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria"),
+  
+  kbl(dunn_table, caption = "Dunn’s Post Hoc Test (Bonferroni-adjusted)") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria")
+) %>%
+  lapply(as.character) %>%
+  paste(collapse = "<br><br>")  # add spacing between tables
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+# Cleaned and corrected data prep
+pod_counts_combined_clean <- pod_counts_combined %>%
+  mutate(
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "PG", "J", "SJ"))
+  )
+
+plot_count_site <- ggplot(pod_counts_combined_clean, aes(x = Site, y = Mean_Count, fill = Site)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Mean_Count, ymax = Mean_Count + SD_Count), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = rep("black", length(unique(pod_counts_combined_clean$Site)))) +
+  labs(
+    title = NULL,
+    x = "Site",
+    y = expression("Mean number of " * italic("P. cristatus")),
+    fill = "Site"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_count_site.png", plot = plot_count_site, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_count_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_count_site.png")
+
+# Create the HTML (vertical display)
+html_plot_count_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_count_site, "' alt='Plot of Count by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_count_site)
+```
+
+#### **Sex Ratio by Site**
+
+
+```{r}
+#--------------------------------------
+# Compute sex proportions per quadrat within each Site
+sex_prop_long <- data_count_clean %>%
+  mutate(
+    Total = Count_Pod_M + Count_Pod_F
+  ) %>%
+  filter(Total > 0) %>%
+  mutate(
+    Male     = Count_Pod_M / Total,
+    Female   = Count_Pod_F / Total,
+  ) %>%
+  pivot_longer(
+    cols = c(Male, Female),
+    names_to = "Sex",
+    values_to = "Proportion"
+  )
+
+# Summarize mean ± SD/SE per sex per site
+sex_summary <- sex_prop_long %>%
+  group_by(Site, Sex) %>%
+  summarise(
+    Mean = mean(Proportion, na.rm = TRUE),
+    SD = sd(Proportion, na.rm = TRUE),
+    N = n(),
+    SE = SD / sqrt(N),
+    .groups = "drop"
+  )
+
+```
+
+
+```{r}
+html_table <- sex_summary %>%
+  kbl(caption = "Summary Statistics for Sex Proportions") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Chi-squared test on sex proportions per site
+sex_ratio_table <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    Male = sum(Count_Pod_M, na.rm = TRUE),
+    Female = sum(Count_Pod_F, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+# Create contingency matrix and run chi-square test
+sex_matrix <- sex_ratio_table %>%
+  column_to_rownames("Site") %>%
+  as.matrix()
+
+sex_chi_test <- chisq.test(sex_matrix)
+
+# Format chi-square result as a tibble
+chi_table <- tibble(
+  Test = "Chi-squared Test",
+  X_squared = round(sex_chi_test$statistic, 3),
+  Df = sex_chi_test$parameter,
+  P_value = signif(sex_chi_test$p.value, 4)
+)
+
+```
+
+
+```{r}
+# Create and display the HTML table
+html_table <- kbl(chi_table, caption = "Chi-squared Test of Sex Ratio by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Colors by sex
+pod_colors <- c("Male" = "#999999", "Female" = "#f38c8c")
+
+# Cleaned and corrected data prep
+sex_summary_clean <- sex_summary %>%
+  filter(Sex %in% c("Male", "Female")) %>%  # ensure only valid morphs
+  mutate(
+    Sex= factor(Sex, levels = c("Male", "Female")),
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "J", "PG", "SJ"))
+  )
+
+# Plot
+plot_sex_site <- ggplot(sex_summary_clean, aes(x = Site, y = Mean, fill = Sex)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.7, color = "black") +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + SD),
+                width = 0.3, position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    x = "Site",
+    y = expression("Mean Proportion of " * italic("P. cristatus")),
+    fill = "Sex"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_site.png", plot = plot_sex_site, width = 3, height = 3, units = "in", dpi = 300)
+
+  
+```
+
+
+```{r}
+# Convert images to base64
+plot_sex_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_site.png")
+
+# Create the HTML (vertical display)
+html_plot_sex_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_site, "' alt='Plot of Sex Ratio by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_site)
+```
+
+#### **Morph Ratio by Site**
+
+
+```{r}
+#--------------------------------------
+# Compute morph proportions per quadrat within each Site
+morph_prop_long <- data_count_clean %>%
+  mutate(
+    Total = Count_Pod_RB + Count_Pod_W + Count_Pod_Bright + Count_Pod_Other
+  ) %>%
+  filter(Total > 0) %>%
+  mutate(
+    Red_Beige     = Count_Pod_RB / Total,
+    White   = Count_Pod_W / Total,
+    Bright     = Count_Pod_Bright / Total,
+    Other   = Count_Pod_Other / Total,
+  ) %>%
+  pivot_longer(
+    cols = c(Red_Beige, White, Bright, Other),
+    names_to = "Morph2",
+    values_to = "Proportion"
+  )
+
+# Summarize mean ± SD/SE per morph per site
+morph_summary <- morph_prop_long %>%
+  group_by(Site, Morph2) %>%
+  summarise(
+    Mean = mean(Proportion, na.rm = TRUE),
+    SD = sd(Proportion, na.rm = TRUE),
+    N = n(),
+    SE = SD / sqrt(N),
+    .groups = "drop"
+  )
+
+```
+
+
+```{r}
+
+html_table <- morph_summary %>%
+  kbl(caption = "Summary Statistics for Morph Proportions") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Chi-squared test on morph proportions per site
+morph_ratio_table <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    Red_Beige = sum(Count_Pod_RB, na.rm = TRUE),
+    White = sum(Count_Pod_W, na.rm = TRUE),
+    Bright = sum(Count_Pod_Bright, na.rm = TRUE),
+    Other = sum(Count_Pod_Other, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Create contingency matrix and run chi-square test
+morph_matrix <- morph_ratio_table %>%
+  column_to_rownames("Site") %>%
+  as.matrix()
+
+morph_chi_test <- chisq.test(morph_matrix)
+```
+
+
+```{r}
+
+# Format chi-square result as a tibble
+chi_table <- tibble(
+  Test = "Chi-squared Test",
+  X_squared = round(morph_chi_test$statistic, 3),
+  Df = morph_chi_test$parameter,
+  P_value = signif(morph_chi_test$p.value, 4)
+)
+```
+
+
+```{r}
+
+# Create and display the HTML table
+html_table <- kbl(chi_table, caption = "Chi-squared Test of Morph Ratio by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+pod_colors <- c("Red_Beige" = "indianred", "White" = "lightblue4", "Bright" = "darkorange", "Other" = "#009E73")
+
+# Cleaned and corrected data prep
+morph_summary_clean <- morph_summary %>%
+  filter(Morph2 %in% c("Red_Beige", "White", "Bright", "Other")) %>%  # ensure only valid morphs
+  mutate(
+    Morph2 = factor(Morph2, levels = c("Red_Beige", "White", "Bright", "Other")),
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "J", "PG", "SJ"))
+  )
+
+# Plot
+plot_morph_site <- ggplot(morph_summary_clean, aes(x = Site, y = Mean, fill = Morph2)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.7, color = "black") +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + SD),
+                width = 0.3, position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    x = "Site",
+    y = expression("Mean Proportion of " * italic("P. cristatus")),
+    fill = "Sex"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_site.png", plot = plot_morph_site, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_morph_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_site.png")
+
+# Create the HTML (vertical display)
+html_plot_morph_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_morph_site, "' alt='Plot of Morph Ratio by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_morph_site)
+```
+
+#### **Aeolid Nudibranch Counts by Site**
+
+
+```{r}
+#--------------------------------------
+nudie_counts_combined <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    n = n(),
+    Mean_Count = mean(Count_Nudie_Aeolid, na.rm = TRUE),
+    SD_Count = sd(Count_Nudie_Aeolid, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+html_table <- nudie_counts_combined %>%
+  kbl(caption = "Summary Statistics for Aeolid Nudibranch Count by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Kruskal-Wallis and Dunn's
+kw_result <- kruskal.test(Count_Nudie_Aeolid ~ Site, data = data_count_clean)
+dunn_result <- dunnTest(Count_Nudie_Aeolid ~ Site, data = data_count_clean, method = "bonferroni")
+
+# Format Kruskal-Wallis result as a one-row tibble
+kw_table <- tibble(
+  Test = "Kruskal-Wallis",
+  Statistic = round(kw_result$statistic, 3),
+  Df = kw_result$parameter,
+  P_value = signif(kw_result$p.value, 3)
+)
+
+# Get Dunn’s test table
+dunn_table <- dunn_result$res %>%
+  rename(
+    Comparison = Comparison,
+    Z = Z,
+    P_unadjusted = P.unadj,
+    P_bonferroni = P.adj
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+
+```
+
+
+```{r}
+
+# Combine both: show Kruskal result above Dunn’s table
+html_table <- list(
+  kbl(kw_table, caption = "Kruskal-Wallis Test Summary") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria"),
+  
+  kbl(dunn_table, caption = "Dunn’s Post Hoc Test (Bonferroni-adjusted)") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria")
+) %>%
+  lapply(as.character) %>%
+  paste(collapse = "<br><br>")  # add spacing between tables
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+# Cleaned and corrected data prep
+nudie_counts_combined_clean <- nudie_counts_combined %>%
+  mutate(
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "J", "PG", "SJ"))
+  )
+
+plot_nudie_site <- ggplot(nudie_counts_combined_clean, aes(x = Site, y = Mean_Count, fill = Site)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Mean_Count, ymax = Mean_Count + SD_Count), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = rep("darkgrey", length(unique(nudie_counts_combined_clean$Site)))) +
+  labs(title = NULL, 
+       x = "Site", 
+       y = "Mean number of aeolid nudibranchs", 
+       fill = "Site") +
+  theme_bw(base_size = 8) +
+  ggtitle("C") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_site.png", plot = plot_nudie_site, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_nudie_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_site.png")
+
+# Create the HTML (vertical display)
+html_plot_nudie_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_nudie_site, "' alt='Plot of Nudibranch count by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_nudie_site)
+```
+
+
+```{r}
+# Extra visualization of Aeolid nudibranchs by type (done on log scale to see data better)
+#--------------------------------------
+
+nudie_counts_combined <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    Mean_Nudie_Dendronotus_Count = mean(Count_Nudie_Dendronotus, na.rm = TRUE),
+    SD_Nudie_Dendronotus_Count = sd(Count_Nudie_Dendronotus, na.rm = TRUE),
+    Mean_Nudie_Doto_Count = mean(Count_Nudie_Doto, na.rm = TRUE),
+    SD_Nudie_Doto_Count = sd(Count_Nudie_Doto, na.rm = TRUE),
+    Mean_Nudie_Aeolid_Other_Count = mean(Count_Nudie_Aeolid_Other, na.rm = TRUE),
+    SD_Nudie_Aeolid_Other_Count = sd(Count_Nudie_Aeolid_Other, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(cols = c(Mean_Nudie_Dendronotus_Count, Mean_Nudie_Doto_Count, Mean_Nudie_Aeolid_Other_Count), names_to = "Taxon", values_to = "Mean_Count") %>%
+  pivot_longer(cols = c(SD_Nudie_Dendronotus_Count, SD_Nudie_Doto_Count, SD_Nudie_Aeolid_Other_Count), names_to = "SD_Taxon", values_to = "SD_Count") %>%
+  filter(Taxon == gsub("SD_", "Mean_", SD_Taxon))
+
+nudie_ratio_table <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    Dendronotus = sum(Count_Nudie_Dendronotus, na.rm = TRUE),
+    Doto = sum(Count_Nudie_Doto, na.rm = TRUE),
+    Aeolid_Other = sum(Count_Nudie_Aeolid_Other, na.rm = TRUE)
+  )
+
+```
+
+
+```{r}
+html_table <- nudie_ratio_table %>%
+  kbl(caption = "Summary Statistics for Nudibranch Count by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+
+nudie_colors <- c("Mean_Nudie_Dendronotus_Count" = "#b26f1e", "Mean_Nudie_Doto_Count" = "#000000", "Mean_Nudie_Aeolid_Other_Count" = "#681fc2")
+
+nudie_counts_combined$Taxon <- factor(nudie_counts_combined$Taxon,
+                                    levels = c("Mean_Nudie_Dendronotus_Count", "Mean_Nudie_Doto_Count", "Mean_Nudie_Aeolid_Other_Count"))
+
+# Cleaned and corrected data prep
+nudie_counts_combined_clean <- nudie_counts_combined %>%
+  mutate(
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "J", "PG", "SJ"))
+  )
+
+plot_nudie_types_site <- ggplot(nudie_counts_combined_clean, aes(x = Site, y = log(1 + Mean_Count), fill = Taxon)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black") +
+  geom_errorbar(aes(ymin = log(1 + Mean_Count), ymax = log(1 + Mean_Count + SD_Count)), width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = nudie_colors, labels = c("Mean_Nudie_Dendronotus_Count" = "Dendronotus", "Mean_Nudie_Doto_Count" = "Doto", "Mean_Nudie_Aeolid_Other_Count" = "Other Aeolid")) +
+  labs(title = NULL, 
+       x = "Site", 
+       y = "log(1 + Mean number of nudibranchs)", 
+       fill = "Taxon") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = c(0.2, 0.8),
+    legend.text = element_text(size = 8),
+    legend.key.size = unit(0.2, "in")
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_types_site.png", plot = plot_nudie_types_site, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_nudie_types_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_types_site.png")
+
+# Create the HTML (vertical display)
+html_plot_nudie_types_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_nudie_types_site, "' alt='Plot of Nudibranch count by Site and Taxon'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_nudie_types_site)
+```
+
+### Microhabitat-Level Comparisons
+
+#### **Mean Counts by Microhabitat**
+
+
+```{r}
+#--------------------------------------
+pod_counts_combined <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    n = n(),
+    Mean_Count = mean(Count_Pod, na.rm = TRUE),
+    SD_Count = sd(Count_Pod, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+html_table <- pod_counts_combined %>%
+  kbl(caption = "Summary Statistics for Pod Count by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Kruskal-Wallis and Dunn's
+kw_result <- kruskal.test(Count_Pod ~ Microhabitat, data = data_count_clean)
+dunn_result <- dunnTest(Count_Pod ~ Microhabitat, data = data_count_clean, method = "bonferroni")
+
+# Format Kruskal-Wallis result as a one-row tibble
+kw_table <- tibble(
+  Test = "Kruskal-Wallis",
+  Statistic = round(kw_result$statistic, 3),
+  Df = kw_result$parameter,
+  P_value = signif(kw_result$p.value, 3)
+)
+
+# Get Dunn’s test table
+dunn_table <- dunn_result$res %>%
+  rename(
+    Comparison = Comparison,
+    Z = Z,
+    P_unadjusted = P.unadj,
+    P_bonferroni = P.adj
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+```
+
+
+```{r}
+
+# Combine both: show Kruskal result above Dunn’s table
+html_table <- list(
+  kbl(kw_table, caption = "Kruskal-Wallis Test Summary") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria"),
+  
+  kbl(dunn_table, caption = "Dunn’s Post Hoc Test (Bonferroni-adjusted)") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria")
+) %>%
+  lapply(as.character) %>%
+  paste(collapse = "<br><br>")  # add spacing between tables
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Define custom order for microhabitat categories
+custom_order <- c("Algae", "Sertulariidae_BRYO", "Sertulariidae", "Lafoea", "Hydrallmania","Other" )
+
+pod_counts_combined_clean <- pod_counts_combined %>%
+  mutate(Microhabitat = factor(Microhabitat, levels = custom_order))
+
+ microhabitat_colors <- c(
+   "Sertulariidae" = "#E66101",
+   "Sertulariidae_BRYO" = "#0283d9",
+   "Other" = "#E66101",
+   "Hydrallmania" = "#E66101",
+   "Algae" = "#a6291e",
+   "Lafoea" = "#E66101"
+ )
+
+microhabitat_labels <- c(
+    "Algae" = "R",
+    "Sertulariidae_BRYO" = "BH",
+    "Sertulariidae" = "SH",
+    "Lafoea" = "LH",
+    "Hydrallmania" = "HH",
+    "Other" = "OH"
+    )
+
+
+plot_count_microhabitat <- ggplot(pod_counts_combined_clean, aes(x = Microhabitat, y = Mean_Count, fill = Microhabitat)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Mean_Count, ymax = Mean_Count + SD_Count), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = microhabitat_colors) +
+  scale_x_discrete(labels = microhabitat_labels) +
+  labs(
+    title = NULL,
+    x = "Microhabitat",
+    y = expression("Mean number of " * italic("P. cristatus")),
+    fill = "Microhabitat"
+  ) +
+  theme_bw(base_size = 8) +
+  ggtitle("B") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_count_microhabitat.png", plot = plot_count_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+plot_count_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_count_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_count_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_count_microhabitat, "' alt='Plot of Count by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_count_microhabitat)
+```
+
+
+#### **Sex Ratio by Microhabitat**
+
+
+```{r}
+
+#--------------------------------------
+# Compute sex proportions per quadrat within each Microhabitat
+sex_prop_long <- data_count_clean %>%
+  mutate(
+    Total = Count_Pod_M + Count_Pod_F
+  ) %>%
+  filter(Total > 0) %>%
+  mutate(
+    Male     = Count_Pod_M / Total,
+    Female   = Count_Pod_F / Total,
+  ) %>%
+  pivot_longer(
+    cols = c(Male, Female),
+    names_to = "Sex",
+    values_to = "Proportion"
+  )
+
+# Summarize mean ± SD/SE per sex per microhabitat
+sex_summary <- sex_prop_long %>%
+  group_by(Microhabitat, Sex) %>%
+  summarise(
+    Mean = mean(Proportion, na.rm = TRUE),
+    SD = sd(Proportion, na.rm = TRUE),
+    N = n(),
+    SE = SD / sqrt(N),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+html_table <- sex_summary %>%
+  kbl(caption = "Summary Statistics for Sex Proportions") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Chi-squared test on sex proportions per microhabitat
+sex_ratio_table <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    Male = sum(Count_Pod_M, na.rm = TRUE),
+    Female = sum(Count_Pod_F, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Create contingency matrix and run chi-square test
+sex_matrix <- sex_ratio_table %>%
+  column_to_rownames("Microhabitat") %>%
+  as.matrix()
+
+sex_chi_test <- chisq.test(sex_matrix)
+```
+
+
+```{r}
+
+# Format chi-square result as a tibble
+chi_table <- tibble(
+  Test = "Chi-squared Test",
+  X_squared = round(sex_chi_test$statistic, 3),
+  Df = sex_chi_test$parameter,
+  P_value = signif(sex_chi_test$p.value, 4)
+)
+```
+
+
+```{r}
+
+# Create and display the HTML table
+html_table <- kbl(chi_table, caption = "Chi-squared Test of Sex Ratio by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Define sex colors and label background colors
+pod_colors <- c("Male" = "#999999", "Female" = "#f38c8c")
+label_colors <- c("R" = "#a6291e", "BH" = "#0283d9", "SH" = "#E66101", 
+                  "LH" = "#E66101", "H" = "#E66101", "OH" = "#E66101")
+
+# Prepare data
+sex_summary_clean <- sex_summary %>%
+  filter(Sex %in% c("Male", "Female")) %>%
+  mutate(
+    Sex = factor(Sex, levels = c("Male", "Female")),
+    Microhabitat = recode(Microhabitat,
+      "Sertulariidae" = "SH",
+      "Sertulariidae_BRYO" = "BH",
+      "Algae" = "R",
+      "Hydrallmania" = "H",
+      "Lafoea" = "LH",
+      "Other" = "OH"),
+    Microhabitat = factor(Microhabitat, levels = c("R", "BH", "SH", "LH", "H", "OH"))
+  )
+
+# Base plot
+plot_sex_microhabitat <- ggplot(sex_summary_clean, aes(x = Microhabitat, y = Mean, fill = Sex)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.7, color = "black") +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + SD), width = 0.3,
+                position = position_dodge(width = 0.7)) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    x = "Microhabitat",
+    y = expression("Mean number of " * italic("P. cristatus")),
+    fill = "Sex"
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_text(size = 8, face = "bold", margin = margin(t = 6)),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.margin = margin(5.5, 5.5, 30, 5.5),  # More space for boxes
+    legend.position = "none"
+  )
+
+# Add thick background boxes behind x-axis labels
+x_positions <- 1:length(levels(sex_summary_clean$Microhabitat))
+x_labels <- levels(sex_summary_clean$Microhabitat)
+
+for (i in seq_along(x_labels)) {
+  plot_sex_microhabitat <- plot_sex_microhabitat +
+    annotation_custom(
+      grob = rectGrob(gp = gpar(fill = label_colors[[x_labels[i]]], col = NA)),
+      xmin = x_positions[i] - 0.4,
+      xmax = x_positions[i] + 0.4,
+      ymin = -0.25,  # lower bound of box
+      ymax = -0.02   # upper bound = thicker box
+    )
+}
+
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_microhabitat.png", plot = plot_sex_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+  
+# Convert images to base64
+plot_sex_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_sex_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_microhabitat, "' alt='Plot of Sex Ratio by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_microhabitat)
+
+```
+
+
+#### **Morph Ratio by Microhabitat**
+
+
+
+```{r}
+
+#--------------------------------------
+# Compute morph proportions per quadrat within each Microhabitat
+morph_prop_long <- data_count_clean %>%
+  mutate(
+    Total = Count_Pod_RB + Count_Pod_W + Count_Pod_Bright + Count_Pod_Other
+  ) %>%
+  filter(Total > 0) %>%
+  mutate(
+    Red_Beige     = Count_Pod_RB / Total,
+    White   = Count_Pod_W / Total,
+    Bright     = Count_Pod_Bright / Total,
+    Other   = Count_Pod_Other / Total,
+  ) %>%
+  pivot_longer(
+    cols = c(Red_Beige, White, Bright, Other),
+    names_to = "Morph2",
+    values_to = "Proportion"
+  )
+
+# Summarize mean ± SD/SE per morph per microhabitat
+morph_summary <- morph_prop_long %>%
+  group_by(Microhabitat, Morph2) %>%
+  summarise(
+    Mean = mean(Proportion, na.rm = TRUE),
+    SD = sd(Proportion, na.rm = TRUE),
+    N = n(),
+    SE = SD / sqrt(N),
+    .groups = "drop"
+  )
+```
+
+
+```{r}
+
+html_table <- morph_summary %>%
+  kbl(caption = "Summary Statistics for Morph Proportions") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+# Chi-squared test on morph proportions per microhabitat
+morph_ratio_table <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    Red_Beige = sum(Count_Pod_RB, na.rm = TRUE),
+    White = sum(Count_Pod_W, na.rm = TRUE),
+    Bright = sum(Count_Pod_Bright, na.rm = TRUE),
+    Other = sum(Count_Pod_Other, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Create contingency matrix and run chi-square test
+morph_matrix <- morph_ratio_table %>%
+  column_to_rownames("Microhabitat") %>%
+  as.matrix()
+
+morph_chi_test <- chisq.test(morph_matrix)
+```
+
+
+```{r}
+
+# Format chi-square result as a tibble
+chi_table <- tibble(
+  Test = "Chi-squared Test",
+  X_squared = round(morph_chi_test$statistic, 3),
+  Df = morph_chi_test$parameter,
+  P_value = signif(morph_chi_test$p.value, 4)
+)
+```
+
+
+```{r}
+
+# Create and display the HTML table
+html_table <- kbl(chi_table, caption = "Chi-squared Test of Morph Ratio by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+pod_colors <- c("Red_Beige" = "indianred", "White" = "lightblue4", "Bright" = "darkorange", "Other" = "#009E73")
+
+# Cleaned and corrected data prep
+morph_summary_clean <- morph_summary %>%
+  filter(Morph2 %in% c("Red_Beige", "White", "Bright", "Other")) %>%  # ensure only valid morphs
+  mutate(
+    Morph2 = factor(Morph2, levels = c("Red_Beige", "White", "Bright", "Other")),
+    Microhabitat = recode(Microhabitat,
+                          "Sertulariidae" = "SH",
+                          "Sertulariidae_BRYO" = "BH",
+                          "Algae" = "R",
+                          "Hydrallmania" = "H",
+                          "Lafoea" = "LH",
+                          "Other" = "OH"),
+    Microhabitat = factor(Microhabitat, levels = c("R", "BH", "SH", "LH", "H", "OH"))
+  )
+
+# Plot
+plot_morph_microhabitat <- ggplot(morph_summary_clean, aes(x = Microhabitat, y = Mean, fill = Morph2)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.7, color = "black") +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + SD),
+                width = 0.3, position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    x = "Microhabitat",
+    y = expression("Mean Proportion of " * italic("P. cristatus")),
+    fill = "Sex"
+  ) +
+  ggtitle("R") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_microhabitat.png", plot = plot_morph_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+plot_morph_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_morph_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_morph_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_morph_microhabitat, "' alt='Plot of Morph Ratio by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_morph_microhabitat)
+
+```
+
+
+#### **Aeolid Nudibranch Counts by Microhabitat**
+
+
+
+```{r}
+
+#--------------------------------------
+nudie_counts_combined <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    n = n(),
+    Mean_Count = mean(Count_Nudie_Aeolid, na.rm = TRUE),
+    SD_Count = sd(Count_Nudie_Aeolid, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+```
+
+
+```{r}
+
+html_table <- nudie_counts_combined %>%
+  kbl(caption = "Summary Statistics for Aeolid Nudibranch Count by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Kruskal-Wallis and Dunn's
+kw_result <- kruskal.test(Count_Nudie_Aeolid ~ Microhabitat, data = data_count_clean)
+dunn_result <- dunnTest(Count_Nudie_Aeolid ~ Microhabitat, data = data_count_clean, method = "bonferroni")
+
+# Format Kruskal-Wallis result as a one-row tibble
+kw_table <- tibble(
+  Test = "Kruskal-Wallis",
+  Statistic = round(kw_result$statistic, 3),
+  Df = kw_result$parameter,
+  P_value = signif(kw_result$p.value, 3)
+)
+
+# Get Dunn’s test table
+dunn_table <- dunn_result$res %>%
+  rename(
+    Comparison = Comparison,
+    Z = Z,
+    P_unadjusted = P.unadj,
+    P_bonferroni = P.adj
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+```
+
+
+```{r}
+
+# Combine both: show Kruskal result above Dunn’s table
+html_table <- list(
+  kbl(kw_table, caption = "Kruskal-Wallis Test Summary") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria"),
+  
+  kbl(dunn_table, caption = "Dunn’s Post Hoc Test (Bonferroni-adjusted)") %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria")
+) %>%
+  lapply(as.character) %>%
+  paste(collapse = "<br><br>")  # add spacing between tables
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+
+# Define custom order for microhabitat categories
+custom_order <- c("Algae", "Sertulariidae_BRYO", "Sertulariidae", "Lafoea", "Hydrallmania","Other" )
+
+nudie_counts_combined_clean <- nudie_counts_combined %>%
+  mutate(Microhabitat = factor(Microhabitat, levels = custom_order))
+
+ microhabitat_colors <- c(
+   "Sertulariidae" = "#E66101",
+   "Sertulariidae_BRYO" = "#0283d9",
+   "Other" = "#E66101",
+   "Hydrallmania" = "#E66101",
+   "Algae" = "#a6291e",
+   "Lafoea" = "#E66101"
+ )
+
+microhabitat_labels <- c(
+    "Algae" = "R",
+    "Sertulariidae_BRYO" = "BH",
+    "Sertulariidae" = "SH",
+    "Lafoea" = "LH",
+    "Hydrallmania" = "HH",
+    "Other" = "OH"
+    )
+
+
+
+plot_nudie_microhabitat <- ggplot(nudie_counts_combined_clean, aes(x = Microhabitat, y = Mean_Count, fill = Microhabitat)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Mean_Count, ymax = Mean_Count + SD_Count), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = microhabitat_colors) +
+  scale_x_discrete(labels = microhabitat_labels) +
+  labs(title = NULL, 
+       x = "Microhabitat", 
+       y = "Mean number of aeolid nudibranchs", 
+       fill = "Microhabitat") +
+  theme_bw(base_size = 8) +
+  ggtitle("C") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_microhabitat.png", plot = plot_nudie_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_nudie_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_nudie_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_nudie_microhabitat, "' alt='Plot of Nudibranch count by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_nudie_microhabitat)
+```
+
+
+```{r}
+
+# Extra visualization of Aeolid nudibranchs by type (done on log scale to see data better)
+#--------------------------------------
+
+nudie_counts_combined <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    Mean_Nudie_Dendronotus_Count = mean(Count_Nudie_Dendronotus, na.rm = TRUE),
+    SD_Nudie_Dendronotus_Count = sd(Count_Nudie_Dendronotus, na.rm = TRUE),
+    Mean_Nudie_Doto_Count = mean(Count_Nudie_Doto, na.rm = TRUE),
+    SD_Nudie_Doto_Count = sd(Count_Nudie_Doto, na.rm = TRUE),
+    Mean_Nudie_Aeolid_Other_Count = mean(Count_Nudie_Aeolid_Other, na.rm = TRUE),
+    SD_Nudie_Aeolid_Other_Count = sd(Count_Nudie_Aeolid_Other, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(cols = c(Mean_Nudie_Dendronotus_Count, Mean_Nudie_Doto_Count, Mean_Nudie_Aeolid_Other_Count), names_to = "Taxon", values_to = "Mean_Count") %>%
+  pivot_longer(cols = c(SD_Nudie_Dendronotus_Count, SD_Nudie_Doto_Count, SD_Nudie_Aeolid_Other_Count), names_to = "SD_Taxon", values_to = "SD_Count") %>%
+  filter(Taxon == gsub("SD_", "Mean_", SD_Taxon))
+
+nudie_ratio_table <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    Dendronotus = sum(Count_Nudie_Dendronotus, na.rm = TRUE),
+    Doto = sum(Count_Nudie_Doto, na.rm = TRUE),
+    Aeolid_Other = sum(Count_Nudie_Aeolid_Other, na.rm = TRUE)
+  )
+
+```
+
+
+```{r}
+
+html_table <- nudie_ratio_table %>%
+  kbl(caption = "Summary Statistics for Nudibranch Count by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+
+nudie_colors <- c("Mean_Nudie_Dendronotus_Count" = "#b26f1e", "Mean_Nudie_Doto_Count" = "#000000", "Mean_Nudie_Aeolid_Other_Count" = "#681fc2")
+
+nudie_counts_combined$Taxon <- factor(nudie_counts_combined$Taxon,
+                                    levels = c("Mean_Nudie_Dendronotus_Count", "Mean_Nudie_Doto_Count", "Mean_Nudie_Aeolid_Other_Count"))
+
+# Cleaned and corrected data prep
+nudie_counts_combined_clean <- nudie_counts_combined %>%
+  mutate(
+    Microhabitat = recode(Microhabitat,
+                          "Sertulariidae" = "SH",
+                          "Sertulariidae_BRYO" = "BH",
+                          "Algae" = "R",
+                          "Hydrallmania" = "H",
+                          "Lafoea" = "LH",
+                          "Other" = "OH"),
+    Microhabitat = factor(Microhabitat, levels = c("R", "BH", "SH", "LH", "H", "OH"))
+  )
+
+plot_nudie_types_microhabitat <- ggplot(nudie_counts_combined_clean, aes(x = Microhabitat, y = log(1 + Mean_Count), fill = Taxon)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black") +
+  geom_errorbar(aes(ymin = log(1 + Mean_Count), ymax = log(1 + Mean_Count + SD_Count)), width = 0.3, position = position_dodge(width = 0.9)) +
+  scale_fill_manual(values = nudie_colors, labels = c("Mean_Nudie_Dendronotus_Count" = "Dendronotus", "Mean_Nudie_Doto_Count" = "Doto", "Mean_Nudie_Aeolid_Other_Count" = "Other Aeolid")) +
+  labs(title = NULL, 
+       x = "Microhabitat", 
+       y = "log(1 + Mean number of nudibranchs)", 
+       fill = "Taxon") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = c(0.2, 0.8),
+    legend.text = element_text(size = 8),
+    legend.key.size = unit(0.2, "in")
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_types_microhabitat.png", plot = plot_nudie_types_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+plot_nudie_types_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_nudie_types_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_nudie_types_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_nudie_types_microhabitat, "' alt='Plot of Nudibranch count by Microhabitat and Taxon'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_nudie_types_microhabitat)
+```
+
+### 5. Morph Ratios Within Sex
+Here, we check whether color morph distributions differ between males and females.
+
+
+```{r}
+#--------------------------------------
+# Compute morph proportions per quadrat within each Site
+morph_prop_long <- data_count_clean %>%
+  mutate(Quadrat = row_number()) %>%
+  pivot_longer(
+    cols = starts_with("Count_Pod_") & !c("Count_Pod_M", "Count_Pod_F"),
+    names_to = "Morph2",
+    names_prefix = "Count_Pod_",
+    values_to = "Count"
+  ) %>%
+  pivot_longer(
+    cols = c(Count_Pod_M, Count_Pod_F),
+    names_to = "Sex",
+    values_to = "Sex_Count"
+  ) %>%
+  mutate(
+    Sex = recode(Sex,
+                 "Count_Pod_M" = "Male",
+                 "Count_Pod_F" = "Female"),
+    Proportion = Count / Sex_Count
+  ) %>%
+  filter(!is.na(Proportion), is.finite(Proportion), Sex_Count > 0)
+
+# Summarize mean ± SD/SE per morph per site
+morph_summary <- morph_prop_long %>%
+  group_by(Sex, Morph2) %>%
+  summarise(
+    Mean = mean(Proportion, na.rm = TRUE),
+    SD = sd(Proportion, na.rm = TRUE),
+    N = n(),
+    SE = SD / sqrt(N),
+    .groups = "drop"
+  )
+
+```
+
+
+```{r}
+
+
+html_table <- morph_summary %>%
+  kbl(caption = "Summary Statistics for Morph Proportions by Sex") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+
+morph_ratio_table <- tibble(
+  Sex = c("Male", "Female"),
+  Red_Beige = c(sum(data_count_clean$Count_Pod_RB[data_count_clean$Count_Pod_M > 0], na.rm = TRUE), sum(data_count_clean$Count_Pod_RB[data_count_clean$Count_Pod_F > 0], na.rm = TRUE)),
+  White = c(sum(data_count_clean$Count_Pod_W[data_count_clean$Count_Pod_M > 0], na.rm = TRUE), sum(data_count_clean$Count_Pod_W[data_count_clean$Count_Pod_F > 0], na.rm = TRUE)),
+  Bright = c(sum(data_count_clean$Count_Pod_Bright[data_count_clean$Count_Pod_M > 0], na.rm = TRUE), sum(data_count_clean$Count_Pod_Bright[data_count_clean$Count_Pod_F > 0], na.rm = TRUE)),
+  Other = c(sum(data_count_clean$Count_Pod_Other[data_count_clean$Count_Pod_M > 0], na.rm = TRUE), sum(data_count_clean$Count_Pod_Other[data_count_clean$Count_Pod_F > 0], na.rm = TRUE))
+)
+
+# Create contingency matrix and run chi-square
+morph_matrix <- morph_ratio_table %>%
+  column_to_rownames("Sex") %>%
+  as.matrix()
+
+morph_chi_test <- chisq.test(morph_matrix)
+
+```
+
+
+```{r}
+# Format test result as a tibble
+chi_table <- tibble(
+  Test = "Chi-squared Test",
+  X_squared = round(morph_chi_test$statistic, 3),
+  Df = morph_chi_test$parameter,
+  P_value = signif(morph_chi_test$p.value, 4)
+)
+```
+
+
+```{r}
+
+# Create and display the HTML table
+html_table <- kbl(chi_table, caption = "Chi-squared Test of Morph Ratio by Sex") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML (Jupyter/Quarto)
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+pod_colors <- c("Male" = "#999999", "Female" = "#f38c8c")
+
+plot_sex_morph <- ggplot(morph_summary, aes(x = Morph2, y = Mean, fill = Sex)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Mean, ymax = Mean + SD), 
+                width = 0.3, position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = pod_colors) +
+  labs(
+    title = NULL,
+    x = "Color Morph",
+    y = expression("Mean Proportion of " * italic("P. cristatus")),
+    fill = "Sex"
+  ) +
+  ggtitle("R") +
+  theme_bw(base_size = 8) +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_morph.png", plot = plot_sex_morph, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_sex_morph <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_sex_morph.png")
+
+
+
+# Create the HTML (vertical display)
+html_plot_sex_morph <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_sex_morph, "' alt='Plot of Mean Proportion by Morph and Sex'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_sex_morph)
+```
+
+### 6. Occurrence Data
+Here, we exclude normality checks and statistical tests for binary presence/absence. We simply visualize occurrence data to guide future GLM analyses.
+
+#### **Pod Occurrence by Site**
+
+
+```{r}
+# Calculate proportion present and SD per site
+pod_presence_combined <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(
+    Proportion_Presence = mean(Pod_Presence, na.rm = TRUE),
+    SD_Presence = sd(Pod_Presence, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Add number of quadrats per site
+quadrat_totals <- data_count_clean %>%
+  group_by(Site) %>%
+  summarise(Quadrat_Total = n(), .groups = "drop")
+
+# Combine into final table
+pod_presence_combined <- pod_presence_combined %>%
+  left_join(quadrat_totals, by = "Site")
+
+```
+
+
+```{r}
+
+# Format as pretty HTML table
+html_table <- pod_presence_combined %>%
+  kbl(caption = "Summary Statistics for Podocerus cristatus Presence by Site") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Cleaned and corrected data prep
+pod_presence_combined_clean <- pod_presence_combined %>%
+  mutate(
+    Site = recode(Site,
+                    "J" = "J",
+                    "PG" = "PG",
+                    "SJ" = "SJ",
+                    "LK" = "LK"),
+    Site = factor(Site, levels = c("LK", "J", "PG", "SJ"))
+  )
+
+plot_occurrence_site <- ggplot(pod_presence_combined_clean, aes(x = Site, y = Proportion_Presence, fill = Site)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Proportion_Presence, ymax = Proportion_Presence + SD_Presence), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  geom_text(aes(label = paste0("n = ", Quadrat_Total), 
+                y = 1.05),
+            vjust = 0, size = 2) +
+  scale_fill_manual(values = rep("black", length(unique(pod_presence_combined_clean$Site)))) +
+  labs(title = NULL, 
+       x = "Site", 
+       y = expression("Proportion Quadrats with " * italic("P. cristatus")),
+       fill = "Site") +
+  theme_bw(base_size = 8) +
+  ggtitle("S") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_occurrence_site.png", plot = plot_occurrence_site, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_occurrence_site <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_occurrence_site.png")
+
+# Create the HTML (vertical display)
+html_plot_occurrence_site <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_occurrence_site, "' alt='Plot of Pod Occurrence by Site'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_occurrence_site)
+```
+
+#### **Pod Occurrence by Microhabitat**
+
+
+```{r}
+# Calculate proportion present and SD per site
+pod_presence_combined <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(
+    Proportion_Presence = mean(Pod_Presence, na.rm = TRUE),
+    SD_Presence = sd(Pod_Presence, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Add number of quadrats per site
+quadrat_totals <- data_count_clean %>%
+  group_by(Microhabitat) %>%
+  summarise(Quadrat_Total = n(), .groups = "drop")
+
+# Combine into final table
+pod_presence_combined <- pod_presence_combined %>%
+  left_join(quadrat_totals, by = "Microhabitat")
+
+
+```
+
+
+```{r}
+# Format as pretty HTML table
+html_table <- pod_presence_combined %>%
+  kbl(caption = "Summary Statistics for Podocerus cristatus Presence by Microhabitat") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()
+
+# Display in HTML
+# IRdisplay::display_html(html_table)
+
+```
+
+
+```{r}
+
+# Cleaned and corrected data prep
+pod_presence_combined_clean <- pod_presence_combined %>%
+  mutate(
+    Microhabitat = recode(Microhabitat,
+                          "Sertulariidae" = "SH",
+                          "Sertulariidae_BRYO" = "BH",
+                          "Algae" = "R",
+                          "Hydrallmania" = "H",
+                          "Lafoea" = "LH",
+                          "Other" = "OH"),
+    Microhabitat = factor(Microhabitat, levels = c("R", "BH", "SH", "LH", "H", "OH"))
+  )
+
+plot_occurrence_microhabitat <- ggplot(pod_presence_combined_clean, aes(x = Microhabitat, y = Proportion_Presence, fill = Microhabitat)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), color = "black", width = 0.8) +
+  geom_errorbar(aes(ymin = Proportion_Presence, ymax = Proportion_Presence + SD_Presence), 
+                width = 0.3, position = position_dodge(width = 0.9)) +
+  geom_text(aes(label = paste0("n = ", Quadrat_Total), 
+                y = 1.05),
+            vjust = 0, size = 2) +
+  scale_fill_manual(values = rep("black", length(unique(pod_presence_combined_clean$Microhabitat)))) +
+  labs(title = NULL, 
+       x = NULL, 
+       y = expression("Proportion Quadrats with " * italic("P. cristatus")), 
+       fill = "Microhabitat") +
+  theme_bw(base_size = 8) +
+  ggtitle("S") +
+  theme(
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(), 
+    panel.background = element_rect(fill = "white", color = "black"),
+    axis.text.x = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    plot.title = element_text(size = 10),
+    legend.position = "none"
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_occurrence_microhabitat.png", plot = plot_occurrence_microhabitat, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_occurrence_microhabitat <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_occurrence_microhabitat.png")
+
+# Create the HTML (vertical display)
+html_plot_occurrence_microhabitat <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_occurrence_microhabitat, "' alt='Plot of Pod Occurrence by Microhabitat'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_plot_occurrence_microhabitat)
+```
+
+### 9. Summary and Next Steps
+Finally, we summarize the major findings and outline where we go from here.
+- Size is significantly different for males and females
+- Size is directly related to fecundity in females
+- Pod abundance varies significantly across some sites and microhabitats but not between males and females within sites or microhabitats.
+- Microhabitat type may play a key role in shaping P. cristatus population distribution.
+- Nudibranch distribution may influence P. cristatus occurrence, but it varies by site and microhabitat.
+- We will apply a GLMM to account for site, microhabitat, and nudibranch presence.

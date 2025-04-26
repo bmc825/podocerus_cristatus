@@ -1,0 +1,9 @@
+"Hypothesis","PosteriorProbability"
+"1","P(10 mm acuity effect GabRat > 0)",1
+"2","P(20 mm acuity effect GabRat > 0)",1
+"3","P(10 mm acuity effect GabRat < 0)",0
+"4","P(20 mm acuity effect GabRat < 0)",0
+"5","P(10 mm acuity effect GabRat > 0)",1
+"6","P(20 mm acuity effect GabRat > 0)",1
+"7","P(10 mm acuity effect GabRat < 0)",0
+"8","P(20 mm acuity effect GabRat < 0)",0

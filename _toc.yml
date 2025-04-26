@@ -1,0 +1,44 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+  - file: scripts/Load_Packages
+    title: Load Packages
+  - file: 01_Population/01_intro
+    sections:
+      - file: 01_Population/01_data_cleaning
+        title: Data Cleaning
+      - file: 01_Population/Clustering
+        title: Cluster Analysis
+      - file: 01_Population/Population_structure
+        title: Population Structure Analysis
+  - file: 02_Occurrence/02_intro
+    sections:
+      - file: 02_Occurrence/02_data_cleaning
+        title: Data Cleaning
+      - file: 02_Occurrence/Model_1
+        title: Model 1
+      - file: 02_Occurrence/Model_2
+        title: Model 2
+      - file: 02_Occurrence/Model_3
+        title: Model 3
+      - file: 02_Occurrence/Model_exp
+        title: Substrate Experiment Model
+  - file: 03_Camouflage/03_intro
+    sections:
+      - file: 03_Camouflage/03_data_cleaning
+        title: Data Cleaning
+      - file: 03_Camouflage/Model_4
+        title: Model 4
+      - file: 03_Camouflage/Model_5
+        title: Model 5
+      - file: 03_Camouflage/Model_6
+        title: Model 6
+  - file: 04_Phylogenetic/04_intro
+    sections:
+      - file: 04_Phylogenetic/Geneious_protocol
+        title: Geneious Protocol
+      - file: 04_Phylogenetic/Phylogenetic_analysis
+        title: Phylogenetic Analysis

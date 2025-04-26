@@ -1,0 +1,6 @@
+"Parameter","Rhat","Model"
+"b_Intercept",1,"R_c_diff"
+"b_SexF",1,"R_c_diff"
+"b_Microhabitat_AssociationPresent",1,"R_c_diff"
+"b_Viewpoint10",1,"R_c_diff"
+"b_Viewpoint20",1,"R_c_diff"

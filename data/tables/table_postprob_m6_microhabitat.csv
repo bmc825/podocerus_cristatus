@@ -1,0 +1,7 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Microhabitat Red Algae effect GabRat > 0)",0.4621
+"2","P(Microhabitat Hydroid with Bryozoa effect GabRat > 0)",0.40675
+"3","P(Microhabitat Red Algae effect GabRat < 0)",0.5379
+"4","P(Microhabitat Hydroid with Bryozoa effect GabRat < 0)",0.59325
+"5","P(Microhabitat Association effect GabRat > 0)",1
+"6","P(Microhabitat Association effect GabRat < 0)",0

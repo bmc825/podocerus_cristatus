@@ -1,0 +1,13 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Size effect e_max > 0)",0
+"2","P(Size effect e_max < 0)",1
+"3","P(Size effect Filter_max > 0)",0.9993
+"4","P(Size effect Filter_max < 0)",7e-04
+"5","P(Size effect e_prop > 0)",0
+"6","P(Size effect e_prop < 0)",1
+"7","P(Size effect R_c > 0)",0.0418
+"8","P(Size effect R_c < 0)",0.9582
+"9","P(Size effect G_c > 0)",0
+"10","P(Size effect G_c < 0)",1
+"11","P(Size effect B_c > 0)",0
+"12","P(Size effect B_c < 0)",1

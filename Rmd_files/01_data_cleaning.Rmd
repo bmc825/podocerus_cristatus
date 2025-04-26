@@ -1,0 +1,561 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R");
+```
+
+# Data Cleaning for Clustering and Population Structure Analyses
+
+## Overview
+
+This pipeline focuses on preparing a dataset for cluster analyses and population structure analyses. The main goal is to clean and format the data, ensuring it meets the requirements of the analyses, while correcting issues like negative reflectance values. These steps make the dataset consistent, interpretable, and suitable for statistical modeling.
+
+### 1. Load data
+We start by loading the raw data from the RESULTS_COLOR_ALL.xlsx and BMC_BCPD_2021_FieldSurvey.xlsx files. These datasets contain information about the dorsal body color patterns and populations of Podocerus cristatus.
+
+
+
+```{r}
+data_color <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/RESULTS_COLOR_ALL.xlsx", sheet = "Data")
+
+data_pop <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/RESULTS_COLOR_ALL.xlsx", sheet = "Data")
+
+data_count <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/BMC_BCPD_2021_FieldSurvey.xlsx", sheet = "Data_count")
+
+data_microhabitat_count <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/BMC_BCPD_2021_FieldSurvey.xlsx", sheet = "Microhabitat")
+```
+
+---
+### 2. Correct reflectance values
+
+Reflectance values (R, G, B) must be positive to apply log transformations in downstream models. Any negative values are shifted by adding a constant value of 3.
+
+
+```{r}
+# Add 3 to the values in columns R_0, G_0, and B_0
+data_color <- data_color %>%
+    mutate(
+        R_0_corrected = R_0 + 3,
+        G_0_corrected = G_0 + 3,
+        B_0_corrected = B_0 + 3
+    )
+
+# Inspect some data to make sure changes are ok
+html_table <- data_color %>%
+  dplyr::select(R_0, R_0_corrected, G_0, G_0_corrected, B_0, B_0_corrected) %>%
+  drop_na() %>%
+  slice(1:10) %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  knitr::kable(format = "html", caption = "Corrected Reflectance Data (first 10 rows)") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  as.character()  # Explicitly convert to an HTML string
+
+# Render the table in JupyterLab
+# IRdisplay::display_html(html_table)
+```
+
+---
+
+### 3. Clean data
+
+The dataset is cleaned in several steps:
+
+1. **Remove Poor-Quality Data**: Exclude bad photos and irrelevant rows.
+2. **Select Variables**: Keep only the columns relevant to cluster analysis and Model 1.
+3. **Filter Rows**: Subset data by lifestage.
+4. **Rename Columns**: Simplify and clarify variable names.
+5. **Format Variables**: Convert continuous variables to numeric and categorical ones to factors.
+6. **Remove Missing Values**: Ensure no NAs remain in critical columns.
+
+
+```{r}
+
+# Step 1: delete bad photos
+data_color <- subset(data_color, !(Good_photo_quality %in% c("N")))
+
+
+# Step 2: Select variables of interest
+data_c1_subset <- data_color %>%
+    dplyr::select(BCPD, Lifestage, Sex, Morph_original, maxPower_lum_0, maxFreq_lum_0, propPower_lum_0, R_0_corrected, G_0_corrected, B_0_corrected)
+
+data_pop_subset <- data_pop %>% dplyr::select(BCPD, Lifestage, Sex, Body_Length, Morph, Morph2, Eggs, area)
+
+data_count_subset <- data_count %>% dplyr::select(Site, Quadrat, Microhabitat, Microhabitat_cat, Count_Pod, Count_Pod_F, Count_Pod_M, Count_Pod_Bright, Count_Pod_Other, Count_Pod_RB, Count_Pod_W, Count_Nudie_Aeolid, Count_Nudie_Dorid, Count_Nudie_Dendronotus, Count_Nudie_Doto, Count_Nudie_Aeolid_Other)
+
+data_microhabitat_count_subset <- data_microhabitat_count %>% dplyr::select(Site, Quadrat, Microhabitat, Microhabitat_cat, Microhabitat_original, Group_1, Group_2, Count)
+
+# Step 3: Rename variables for clarity
+data_c1_subset_renamed <- data_c1_subset %>%
+    rename(
+        e_max = maxPower_lum_0,
+        Filter_max = maxFreq_lum_0,
+        e_prop = propPower_lum_0,
+        R_c = R_0_corrected,
+        G_c = G_0_corrected,
+        B_c = B_0_corrected
+    )
+
+# Rename variables for clarity
+data_pop_subset_renamed <- data_pop_subset %>%
+    rename(
+        Size = Body_Length,
+        Fecundity = Eggs,
+        Surface_area = area
+    )
+
+
+# Step 4: Convert continuous variables to numeric, if not already done so
+# Define the columns to convert to numeric
+columns_to_convert_c1 <- c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")
+columns_to_convert_pop <- c("Size", "Fecundity", "Surface_area")
+columns_to_convert_count <- c("Count_Pod", "Count_Pod_F", "Count_Pod_M", "Count_Pod_Bright", "Count_Pod_Other", "Count_Pod_RB", "Count_Pod_W", "Count_Nudie_Aeolid", "Count_Nudie_Dorid", "Count_Nudie_Dendronotus", "Count_Nudie_Doto", "Count_Nudie_Aeolid_Other")
+columns_to_convert_microhabitat_count <- c("Count")
+
+# Convert columns
+data_c1_subset_renamed <- data_c1_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_c1), as.numeric))
+
+data_pop_subset_renamed <- data_pop_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_pop), as.numeric))
+
+data_count_subset <- data_count_subset %>%
+    mutate(across(all_of(columns_to_convert_count), as.numeric))
+
+data_microhabitat_count_subset <- data_microhabitat_count_subset %>%
+    mutate(across(all_of(columns_to_convert_microhabitat_count), as.numeric))
+
+
+# Step 5: Convert binary/categorical variables to factors, if not already done so
+# Define the columns to convert to factor
+columns_to_convert_c1 <- c("Sex", "Morph_original")
+columns_to_convert_pop <- c("Sex", "Lifestage", "Morph", "Morph2")
+columns_to_convert_count <- c("Site", "Microhabitat", "Microhabitat_cat")
+columns_to_convert_microhabitat <- c("Site", "Quadrat", "Microhabitat_original", "Microhabitat", "Microhabitat_cat", "Group_1", "Group_2")
+
+# Convert columns
+data_c1_subset_renamed <- data_c1_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_c1), as.factor))
+
+data_pop_subset_renamed <- data_pop_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_pop), as.factor))
+
+data_count_subset <- data_count_subset %>%
+    mutate(across(all_of(columns_to_convert_count), as.factor))
+
+data_microhabitat_count_subset <- data_microhabitat_count_subset %>%
+    mutate(across(all_of(columns_to_convert_microhabitat), as.factor))
+
+
+# Step 6: delete NA rows and filter
+data_c1_clean <- data_c1_subset_renamed %>%
+    filter(!is.na(e_max)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Sex))
+
+data_pop_clean_lifestage <- data_pop_subset_renamed %>%
+    filter(!is.na(Lifestage)) %>%
+    filter(!is.na(Sex)) %>%
+    filter(!is.na(Size))
+
+data_pop_clean_sex <- data_pop_subset_renamed %>%
+    filter(!is.na(Sex)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Size))
+
+data_pop_clean_sex_SA <- data_pop_subset_renamed %>%
+    filter(!is.na(Sex)) %>%
+    filter(!is.na(Surface_area)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Size))
+
+data_pop_clean_morph <- data_pop_subset_renamed %>%
+    filter(!is.na(Morph)) %>%
+    filter(!is.na(Morph2)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Size))
+
+data_pop_clean_fecundity <- data_pop_subset_renamed %>%
+    filter(!is.na(Fecundity)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Size))
+
+data_pop_clean_fecundity_SA <- data_pop_subset_renamed %>%
+    filter(!is.na(Fecundity)) %>%
+    filter(!is.na(Surface_area)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Size))
+
+# NOTE: "NAs introduced by coercion" isn't an error. It's just a warning to let you know that some strings don't represent numbers. Those are correctly changed to NA.
+
+
+data_microhabitat_count_clean <- data_microhabitat_count_subset %>%
+    filter(!is.na(Microhabitat)) %>%
+    filter(!is.na(Microhabitat_cat)) %>%
+    filter(!is.na(Microhabitat_original)) %>%
+    filter(!is.na(Site)) %>%
+    filter(!is.na(Quadrat))
+
+# Add presence/absence columns to count data
+data_count_clean <- data_count_subset %>%
+  mutate(Pod_Presence = ifelse(Count_Pod > 0, 1, 0)) %>%
+  mutate(
+    Pod_M_Presence = ifelse(Count_Pod_M > 0, 1, 0),
+    Pod_F_Presence = ifelse(Count_Pod_F > 0, 1, 0)) %>%
+  mutate(
+    Pod_Bright_Presence = ifelse(Count_Pod_Bright > 0, 1, 0),
+    Pod_Other_Presence = ifelse(Count_Pod_Other > 0, 1, 0),
+    Pod_RB_Presence = ifelse(Count_Pod_RB > 0, 1, 0),
+    Pod_W_Presence = ifelse(Count_Pod_W > 0, 1, 0)) %>%
+  mutate(
+    Nudie_Presence = ifelse(Count_Nudie_Aeolid > 0, 1, 0),
+    Nudie_Dendronotus_Presence = ifelse(Count_Nudie_Dendronotus > 0, 1, 0),
+    Nudie_Doto_Presence = ifelse(Count_Nudie_Doto > 0, 1, 0),
+    Nudie_Aeolid_Other_Presence = ifelse(Count_Nudie_Aeolid_Other > 0, 1, 0)) %>%
+  filter(!is.na(Site)) %>%
+  filter(!is.na(Microhabitat))
+
+```
+
+
+```{r}
+table_1 <- data_c1_clean %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  kbl(caption = "Raw Data for Clustering") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_1 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_1, "</div>
+")
+
+
+
+table_2 <- data_pop_clean_lifestage %>%
+  kbl(caption = "Raw Data for Population Structure (Lifestage)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_2 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_2, "</div>
+")
+
+
+table_3 <- data_pop_clean_sex %>%
+  kbl(caption = "Raw Data for Population Structure (Sex)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_3 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_3, "</div>
+")
+
+
+table_4 <- data_pop_clean_sex_SA %>%
+  kbl(caption = "Raw Data for Population Structure (Sex vs Surface Area)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_4 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_4, "</div>
+")
+
+
+table_5 <- data_pop_clean_morph %>%
+  kbl(caption = "Raw Data for Population Structure (Morph)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_5 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_5, "</div>
+")
+
+
+table_6 <- data_pop_clean_fecundity %>%
+  kbl(caption = "Raw Data for Population Structure (Fecundity)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_6 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_6, "</div>
+")
+
+
+table_7 <- data_pop_clean_fecundity_SA %>%
+  kbl(caption = "Raw Data for Population Structure (Fecundity vs Surface Area)") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_7 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_7, "</div>
+")
+
+
+table_8 <- data_count_clean %>%
+  kbl(caption = "Raw Data for Population Counts") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_8 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_8, "</div>
+")
+
+
+table_9 <- data_microhabitat_count_clean %>%
+  kbl(caption = "Raw Data for Microhabitat Counts") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_9 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_9, "</div>
+")
+
+```
+
+
+```{r}
+
+my_tabs <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4,
+#tab5:checked ~ #content5,
+#tab6:checked ~ #content6,
+#tab7:checked ~ #content7,
+#tab8:checked ~ #content8,
+#tab9:checked ~ #content9 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1:checked + label[for="tab1"],
+#tab2:checked + label[for="tab2"],
+#tab3:checked + label[for="tab3"],
+#tab4:checked + label[for="tab4"],
+#tab5:checked + label[for="tab5"],
+#tab6:checked + label[for="tab6"],
+#tab7:checked + label[for="tab7"],
+#tab8:checked + label[for="tab8"],
+#tab9:checked + label[for="tab9"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab1" checked>
+  <label class="tab-label" for="tab1">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab2">
+  <label class="tab-label" for="tab2">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab3">
+  <label class="tab-label" for="tab3">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab4">
+  <label class="tab-label" for="tab4">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab5">
+  <label class="tab-label" for="tab5">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab6">
+  <label class="tab-label" for="tab6">Table 6</label>
+
+  <!-- 7) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab7">
+  <label class="tab-label" for="tab7">Table 7</label>
+
+  <!-- 8) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab8">
+  <label class="tab-label" for="tab8">Table 8</label>
+
+  <!-- 9) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab9">
+  <label class="tab-label" for="tab9">Table 9</label>
+
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1">REPLACE_WITH_table_1</div>
+  <div class="tab-content" id="content2">REPLACE_WITH_table_2</div>
+  <div class="tab-content" id="content3">REPLACE_WITH_table_3</div>
+  <div class="tab-content" id="content4">REPLACE_WITH_table_4</div>
+  <div class="tab-content" id="content5">REPLACE_WITH_table_5</div>
+  <div class="tab-content" id="content6">REPLACE_WITH_table_6</div>
+  <div class="tab-content" id="content7">REPLACE_WITH_table_7</div>
+  <div class="tab-content" id="content8">REPLACE_WITH_table_8</div>
+  <div class="tab-content" id="content9">REPLACE_WITH_table_9</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs <- gsub("REPLACE_WITH_table_1", table_1, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_2", table_2, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_3", table_3, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_4", table_4, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_5", table_5, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_6", table_6, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_7", table_7, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_8", table_8, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_9", table_9, my_tabs)
+
+# IRdisplay::display_html(my_tabs)
+```
+
+---
+
+### 3. Export cleaned data
+
+The cleaned datasets are saved as .csv files for downstream analyses.
+
+
+```{r}
+write.csv(data_c1_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_c1_clean.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_lifestage, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_lifestage.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_sex, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_sex.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_sex_SA, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_sex_SA.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_morph, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_morph.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_fecundity, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_fecundity.csv", row.names = FALSE)
+
+write.csv(data_pop_clean_fecundity_SA, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_pop_clean_fecundity_SA.csv", row.names = FALSE)
+
+write.csv(data_count_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_count_clean.csv", row.names = FALSE)
+
+write.csv(data_microhabitat_count_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_microhabitat_count_clean.csv", row.names = FALSE)
+```

@@ -1,0 +1,2301 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R")
+
+# Source the custom graphing functions
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/01_graphing_functions.R")
+```
+
+# Model 4
+
+---
+
+## Question
+
+How do intrinsic factors (*sex*, *size*) influence *P. cristatus* dorsal body color patterns?
+
+---
+## Objective
+
+Test for the effect of *sex* and *size* on *P. cristatus* dorsal body color pattern metrics.
+
+---
+## Method
+
+### 1. Load cleaned data.
+
+We start by loading the cleaned data from the "03_data_cleaning" pipeline. This data has already undergone transformations and contains relevant metrics for our models.
+
+
+```{r}
+data_m4_clean <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_m4_clean.csv")
+```
+
+
+---
+
+### 2. Prepare data for modeling.
+
+#### **Categorical predictors**
+
+For categorical and binary predictors, R_c automatically dummy-codes the variables. For binary variables, such as Sex (0 = Female, 1 = Male), R_c sets the baseline to 0 unless specified otherwise. This ensures comparisons are made relative to the baseline group.
+
+#### **Continuous predictors**
+
+We standardize continuous predictors, such as Fecundity, by centering and scaling them (dividing by two standard deviations). This improves interpretability, aligning their coefficients with those of binary predictors, as suggested by Gelman (2008).
+
+
+
+```{r}
+# Convert categorical variables to factors
+columns_to_convert_m4 <- c("Sex")
+
+data_m4_clean <- data_m4_clean %>%
+    mutate(across(all_of(columns_to_convert_m4), as.factor))
+
+# Set reference category for categorical predictors
+data_m4_clean$Sex <- relevel(data_m4_clean$Sex, ref = "M")
+
+
+# Convert continuous variables to numeric
+columns_to_convert_m4 <- c("Size", "e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")
+
+data_m4_clean <- data_m4_clean %>%
+    mutate(across(all_of(columns_to_convert_m4), as.numeric))
+
+# Standardize continuous variables
+data_m4_clean <-
+    data_m4_clean %>%
+    mutate(Size_center = (Size - mean(Size)) / (2 * sd(Size)))
+```
+
+---
+
+### 3. Visualize response variable distributions
+
+To understand the distributions of our response variables, we plot density curves. This helps confirm whether a Gamma distribution is appropriate for modeling, as Gamma is suited for positively skewed, continuous data.
+
+
+```{r}
+#| label: m4 - visualize response variable ranges
+
+p_response_m4_e_max <- data_m4_clean %>%
+    ggplot(aes(x = e_max)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "e_max") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+p_response_m4_Filter_max <- data_m4_clean %>%
+    ggplot(aes(x = Filter_max)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "Filter_max") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+p_response_m4_e_prop <- data_m4_clean %>%
+    ggplot(aes(x = e_prop)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "e_prop") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+p_response_m4_R_c <- data_m4_clean %>%
+    ggplot(aes(x = R_c)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "R_c") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+p_response_m4_G_c <- data_m4_clean %>%
+    ggplot(aes(x = G_c)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "G_c") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+p_response_m4_B_c <- data_m4_clean %>%
+    ggplot(aes(x = B_c)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "B_c") +
+    theme_bw(base_size = 8) +
+    theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = "white", color = "black"),
+        axis.text.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        plot.title = element_text(size = 10),
+        legend.position = "none"
+    )
+
+# Combine plots for easy visualization
+plot_m4_dorsalbody_patterns <- ggarrange(
+    p_response_m4_e_max,
+    p_response_m4_Filter_max,
+    p_response_m4_e_prop,
+    p_response_m4_R_c,
+    p_response_m4_G_c,
+    p_response_m4_B_c,
+    ncol = 3,
+    nrow = 2
+)
+
+annotate_figure(
+    plot_m4_dorsalbody_patterns,
+    top = text_grob("Ranges of response variables")
+)
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_m4_dorsalbody_patterns.png", plot = plot_m4_dorsalbody_patterns, width = 6, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+plot_m4_dorsalbody_patterns <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_m4_dorsalbody_patterns.png")
+
+# Create the HTML 
+html_dorsalbody_patterns <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_m4_dorsalbody_patterns, "' alt='Dorsal Body Pattern Metrics'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_dorsalbody_patterns)
+```
+
+---
+
+### 4. Justification for GLMs and Bayesian methods
+
+#### **Why GLMs?**
+
+Generalized Linear Models (GLMs) are used because our response variables are continuous, non-negative, and right-skewed, which violates the assumptions of linear regression. The Gamma distribution with a log link function allows us to model these variables appropriately.
+
+
+#### **Why Bayesian methods?**
+
+Bayesian GLMs were chosen over frequentist approaches because:
+
+-   **Sparse data**: Bayesian methods handle sparse datasets more robustly.
+
+-   **Priors**: They allow us to incorporate prior knowledge, improving model performance.
+
+-   **Posterior distributions**: Bayesian models provide posterior distributions, offering a full view of parameter uncertainty.
+
+
+---
+
+### 4. Define priors
+
+#### **What are priors?**
+
+In Bayesian statistics, priors represent our beliefs about parameter values before analyzing the data. These beliefs are mathematically expressed as probability distributions. Priors guide the model, especially when data are sparse or when the signal-to-noise ratio is low.
+
+
+#### **Why priors matter:**
+
+-   **Prevent overfitting**: Priors discourage extreme parameter estimates unless strongly supported by the data.
+
+-   **Balance restrictiveness and flexibility**: Weakly informative priors let the data dominate while providing reasonable bounds.
+
+-   **Leverage existing knowledge**: Informative priors incorporate previous research or domain expertise, improving accuracy in well-studied systems.
+
+
+
+#### **How priors work in this analysis:**
+We combine the priors (representing initial beliefs) with the likelihood of the observed data to compute posterior distributions, which reflect updated beliefs after observing the data.
+
+The general formula is:
+
+$$
+\begin{aligned}
+\text{Posterior } \alpha \text{ Likelihood} * \text{Prior}
+\end{aligned}
+$$
+
+
+
+#### **Model family and formula**
+
+The response variables (**e_max**, **Filter_max**, **e_prop**, **R**, **G**, **B**) are continuous and positively skewed. We model these variables using a Gamma distribution with a log link function:
+
+$$
+\begin{aligned}
+y_{i} &\sim \text{Gamma}(\mu_{i}, \phi)
+\end{aligned}
+$$
+
+The mean $\mu_i$ (on the log scale) is modeled as:
+
+$$
+\begin{aligned}
+& \log(\mu_{i}) = \alpha + \beta x_{i} \\
+\end{aligned}
+$$
+
+Where:
+
+-   **$y_{i}$**: Response variable for observation $i$
+
+-   **$\mu_{i}$**: Mean of the Gamma distribution for $i$ (on the log scale)
+
+-   **$\phi$**: Shape parameter (controls variability)
+
+-   **$\alpha$**: Intercept, mean value of $\log(\mu)$ when predictors are at baseline
+
+-   **$beta$**: Coefficient/slope for predictor $x_{i}$, representing the effect of $x_{i}$ on $\log(\mu)$
+
+
+
+#### **Chosen priors and rationale**
+
+**Intercept ($\alpha$)**: The intercept represents the mean of the response variable when all predictors are at their baseline values. Since our response variables are continuous and positively skewed, we use weakly informative priors for the intercept based on the log-transformed range of each variable. This ensures that the intercept (1) reflects realistic values for the response variable, and (2) allows for moderate variation around the mean without encouraging extreme values. For each response variable, we use the following priors:
+
+-   **e_max**: $N(0, 0.5)$
+    
+    -   $N(0, 0.5)$ is a normal distribution with a mean of 0 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{0}=1$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between -1.414 and 1.414, on the log scale. On the original scale, the values lie roughly between $e^{-1.414} \approx 0.243$ to $e^{1.414} \approx 4.11$.
+        
+-   **Filter_max**: $N(4.61, 0.5)$
+    
+    -   $N(4.61, 0.5)$ is a normal distribution with a mean of 4.61 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{4.61}=100$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between 3.196 and 6.024, on the log scale. On the original scale, the values lie roughly between $e^{3.196} \approx 24.4$ to $e^{6.024} \approx 413.2$.
+        
+-   **e_prop**: $N(-2.3, 0.5)$
+    
+    -   $N(-2.3, 0.5)$ is a normal distribution with a mean of -2.3 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{-2.3}=0.1$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between -3.714 and -0.886, on the log scale. On the original scale, the values lie roughly between $e^{-3.714} \approx 0.024$ to $e^{-0.886} \approx 0.412$.
+
+-   **R, G, B**: $N(2.3, 0.5)$
+    
+    -   $N(2.3, 0.5)$ is a normal distribution with a mean of 2.3 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{2.3}=10$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between 0.886 and 3.714, on the log scale. On the original scale, the values lie roughly between $e^{0.886} \approx 2.43$ to $e^{3.714} \approx 41$.
+
+    These priors ensure the intercept reflects realistic values for the response variables while allowing for moderate variability.
+
+
+
+**Slope ($\beta$)**: The slope reflects the rate of change in $\log(\mu)$ for a one-unit change in the predictor. On the original scale, this translates to:
+
+$$
+\begin{aligned}
+\frac{y_{x+1}}{y_x} &= \frac{e^{(\alpha + \beta(x+1))}}{e^{(\alpha + \beta x)}} \\
+&= \frac{e^{(\alpha + \beta x + \beta)}}{e^{(\alpha + \beta x)}} \\
+&= e^{(\alpha + \beta x)} \times \frac{e^{\beta}}{e^{(\alpha + \beta x)}} \\
+&= e^{\beta} \\
+& \quad \quad \quad \text{OR} \\
+& \text{Scaling factor} = e^{\beta}
+\end{aligned}
+$$
+
+
+For example:
+
+-   If $\beta = 0.1$, a one-unit increase in the predictor scales $\mu$ by $e^{0.1} \approx 1.10$ (a 10% increase).
+
+-   If $\beta = -0.1$, a one-unit increase scales $\mu$ by $e^{-0.1} \approx 0.91$ (a 9% decrease).
+
+We don't know how our predictors will affect the response, so we use a weakly informative prior:
+
+$$
+\begin{aligned}
+\beta \approx N(0,0.5)
+\end{aligned}
+$$
+
+This prior assumes no effect of the predictor on average ($e^{0} = 1$, and allows moderate positive or negative effects, spanning approximately $[-1, 1]$ on the log scale ($e^{-1} \approx 0.37$ to $e^{1} \approx 2.72$ on the original scale). So $\mu$ of each response variable will not exceed a minimum of $\mu * 0.37$ and maximum of $\mu * 2.72$.
+
+
+
+**Shape parameter ($\phi$)**: In a Gamma distribution, variability is tied to the shape parameter ($\phi$) that governs how the spread relates to the mean. Smaller $\phi$ values indicate greater variability. We will set the shape parameter to a weakly informative $\gamma(0.01, 0.01)$ which makes most probability mass concentrated near zero with a long tail so that the data will drive the distribution of variability values.
+
+$$
+\begin{aligned}
+\phi \approx \text{Gamma}(0.01,0.01)
+\end{aligned}
+$$
+
+This ensures strictly positive values but keeps a wide range of plausible variability values.
+
+![alt text](C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images_html/precision_graph.png)
+
+
+#### **Visualizing priors**
+
+To validate these priors, we run models sampling only from the priors (sample_prior = "only") and inspect their outputs to ensure they align with our expectations.
+
+>**Note:** We will run these models in RStudio to be consistent because the rstan package sometimes does not like Jupyter. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_max
+m4_priors_e_max <- brm(
+    family = Gamma(link = "log"),
+    formula = e_max ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(1), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_e_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_e_max.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# Filter_max
+m4_priors_Filter_max <- brm(
+    family = Gamma(link = "log"),
+    formula = Filter_max ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(100), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_Filter_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_Filter_max.rds")
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_prop
+m4_priors_e_prop <- brm(
+    family = Gamma(link = "log"),
+    formula = e_prop ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(0.10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_e_prop, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_e_prop.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# R
+m4_priors_R_c <- brm(
+    family = Gamma(link = "log"),
+    formula = R_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_R_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_R_c.rds")
+
+# Set seed for reproducibility
+set.seed(5678)
+# G
+m4_priors_G_c <- brm(
+    family = Gamma(link = "log"),
+    formula = G_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_G_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_G_c.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# B
+m4_priors_B_c <- brm(
+    family = Gamma(link = "log"),
+    formula = B_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4_priors_B_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_B_c.rds")
+```
+
+
+```{r}
+# Load models
+m4_priors_e_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_e_max.rds")
+m4_priors_Filter_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_Filter_max.rds")
+m4_priors_e_prop <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_e_prop.rds")
+m4_priors_R_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_R_c.rds")
+m4_priors_G_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_G_c.rds")
+m4_priors_B_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4_priors_B_c.rds")
+
+# Extract results
+prior_samples_m4_e_max <- as_draws_df(m4_priors_e_max)
+prior_samples_m4_Filter_max <- as_draws_df(m4_priors_Filter_max)
+prior_samples_m4_e_prop <- as_draws_df(m4_priors_e_prop)
+prior_samples_m4_R_c <- as_draws_df(m4_priors_R_c)
+prior_samples_m4_G_c <- as_draws_df(m4_priors_G_c)
+prior_samples_m4_B_c <- as_draws_df(m4_priors_B_c)
+```
+
+
+```{r}
+# List of datasets and labels
+prior_samples <- list(
+    e_max = prior_samples_m4_e_max,
+    Filter_max = prior_samples_m4_Filter_max,
+    e_prop = prior_samples_m4_e_prop,
+    R_c = prior_samples_m4_R_c,
+    G_c = prior_samples_m4_G_c,
+    B_c = prior_samples_m4_B_c
+)
+
+# Custom labels for predictors
+custom_labels_priors <- c(
+    "b_Size_center" = "Size",
+    "b_SexF" = "Sex"
+)
+
+# Custom labels for intercept
+custom_labels_priors_intercept <- c(
+    "b_Intercept" = "Intercept"
+)
+
+# Generate predictor plots
+prior_plots <- lapply(
+    names(prior_samples),
+    function(label) {
+        generate_posterior_plot(
+            prior_samples[[label]],
+            regex_pars = c(
+              "b_Size_center", 
+              "b_SexF"
+              ),
+            x_range = c(-5, 5),
+            custom_labels = custom_labels_priors,
+            axis_title_y = label %in% c("e_max", "R_c")
+        )
+    }
+)
+names(prior_plots) <- names(prior_samples)
+
+# Generate intercept plots
+prior_plots_intercept <- lapply(
+    names(prior_samples),
+    function(label) {
+        generate_posterior_plot(
+            prior_samples[[label]],
+            regex_pars = c("b_Intercept"),
+            x_range = c(-6, 6),
+            custom_labels = custom_labels_priors_intercept,
+            axis_title_y = label %in% c("e_max", "R_c")
+        )
+    }
+)
+names(prior_plots_intercept) <- names(prior_samples)
+
+# Add grey bars with labels for each plot
+prior_plots_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    prior_plots,
+    names(prior_plots),
+    SIMPLIFY = FALSE
+)
+
+prior_plots_intercept_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    prior_plots_intercept,
+    names(prior_plots_intercept),
+    SIMPLIFY = FALSE
+)
+
+
+# Combine predictor plots into a 2x3 grid
+plot_priors_m4 <- patchwork::wrap_plots(
+    prior_plots_with_bars[c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+# Combine intercept plots into a 2x3 grid
+plot_priors_intercept_m4 <- patchwork::wrap_plots(
+    prior_plots_intercept_with_bars[c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+# Add a unified x-axis label for predictor plots
+plot_priors_m4 <- plot_priors_m4 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.55, size = 10))
+    )
+
+# Add a unified x-axis label for intercept plots
+plot_priors_intercept_m4 <- plot_priors_intercept_m4 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.5, size = 10))
+    )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_m4.png", plot = plot_priors_m4, width = 6, height = 4.5, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_intercept_m4.png", plot = plot_priors_intercept_m4, width = 6, height = 4.5, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64 (assuming these return base64 data URIs)
+plot_priors_m4 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_m4.png")
+plot_priors_intercept_m4 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_intercept_m4.png")
+
+# Create the HTML 
+html_priors <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+<div class='image-row'>
+  <img src='", plot_priors_m4, "' alt='Prior Plot'>
+</div>
+<div class='image-row'>
+  <img src='", plot_priors_intercept_m4, "' alt='Intercept Prior Plot'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_priors)
+
+
+```
+
+---
+
+### 6. Run final models
+
+Now that we have finalized the model parameters, we fit models using the actual data and compare them to null models to assess the significance of predictors.
+
+>**Note:** We will run these models in RStudio to be consistent because the rstan package sometimes does not like Jupyter. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_e_max <- brm(
+    family = Gamma(link = "log"),
+    formula = e_max ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(1), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_e_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_max.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_max (Size & Sex)
+m4v1_e_max <- brm(
+    family = Gamma(link = "log"),
+    formula = e_max ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(1), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_e_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_max.rds")
+```
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_Filter_max <- brm(
+    family = Gamma(link = "log"),
+    formula = Filter_max ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(100), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_Filter_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_Filter_max.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# Filter_max (Size & Sex)
+m4v1_Filter_max <- brm(
+    family = Gamma(link = "log"),
+    formula = Filter_max ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(100), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_Filter_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_Filter_max.rds")
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_e_prop <- brm(
+    family = Gamma(link = "log"),
+    formula = e_prop ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(0.10), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_e_prop, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_prop.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_prop (Size & Sex)
+m4v1_e_prop <- brm(
+    family = Gamma(link = "log"),
+    formula = e_prop ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(0.10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_e_prop, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_prop.rds")
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_R_c <- brm(
+    family = Gamma(link = "log"),
+    formula = R_c ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_R_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_R_c.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# R (Size & Sex)
+m4v1_R_c <- brm(
+    family = Gamma(link = "log"),
+    formula = R_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_R_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_R_c.rds")
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_G_c <- brm(
+    family = Gamma(link = "log"),
+    formula = G_c ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_G_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_G_c.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# G (Size & Sex)
+m4v1_G_c <- brm(
+    family = Gamma(link = "log"),
+    formula = G_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_G_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_G_c.rds")
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m4v0_B_c <- brm(
+    family = Gamma(link = "log"),
+    formula = B_c ~ 1,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v0_B_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_B_c.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# B (Size & Sex)
+m4v1_B_c <- brm(
+    family = Gamma(link = "log"),
+    formula = B_c ~ 1 + Size_center + Sex,
+    data = data_m4_clean,
+    prior = c(
+        prior(normal(log(10), 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(0.01, 0.01), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m4v1_B_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_B_c.rds")
+```
+
+###*Model comparison*
+
+Use LOO to compare models and check to see which predictors perform best. Our question is exploratory so we will compare models with only sex, only size, and both sex and size to see which performs best.
+
+
+>**Note:** We will added loo to these models in RStudio. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+
+# Add LOO to models
+m4v0_e_max <- add_criterion(m4v0_e_max, "loo", moment_match = TRUE)
+m4v1_e_max <- add_criterion(m4v1_e_max, "loo", moment_match = TRUE)
+
+m4v0_Filter_max <- add_criterion(m4v0_Filter_max, "loo", moment_match = TRUE)
+m4v1_Filter_max <- add_criterion(m4v1_Filter_max, "loo", moment_match = TRUE)
+
+m4v0_e_prop <- add_criterion(m4v0_e_prop, "loo", moment_match = TRUE)
+m4v1_e_prop <- add_criterion(m4v1_e_prop, "loo", moment_match = TRUE)
+
+m4v0_R_c <- add_criterion(m4v0_R_c, "loo", moment_match = TRUE)
+m4v1_R_c <- add_criterion(m4v1_R_c, "loo", moment_match = TRUE)
+
+m4v0_G_c <- add_criterion(m4v0_G_c, "loo", moment_match = TRUE)
+m4v1_G_c <- add_criterion(m4v1_G_c, "loo", moment_match = TRUE)
+
+m4v0_B_c <- add_criterion(m4v0_B_c, "loo", moment_match = TRUE)
+m4v1_B_c <- add_criterion(m4v1_B_c, "loo", moment_match = TRUE)
+
+# Save models with loo so you don't have to do this again
+saveRDS(m4v0_e_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_max.rds")
+saveRDS(m4v1_e_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_max.rds")
+
+saveRDS(m4v0_Filter_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_Filter_max.rds")
+saveRDS(m4v1_Filter_max, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_Filter_max.rds")
+
+saveRDS(m4v0_e_prop, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_prop.rds")
+saveRDS(m4v1_e_prop, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_prop.rds")
+
+saveRDS(m4v0_R_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_R_c.rds")
+saveRDS(m4v1_R_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_R_c.rds")
+
+saveRDS(m4v0_G_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_G_c.rds")
+saveRDS(m4v1_G_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_G_c.rds")
+
+saveRDS(m4v0_B_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_B_c.rds")
+saveRDS(m4v1_B_c, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_B_c.rds")
+
+```
+
+
+```{r}
+# Load models
+m4v0_e_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_max.rds")
+m4v0_Filter_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_Filter_max.rds")
+m4v0_e_prop <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_e_prop.rds")
+m4v0_R_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_R_c.rds")
+m4v0_G_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_G_c.rds")
+m4v0_B_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v0_B_c.rds")
+
+
+m4v1_e_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_max.rds")
+m4v1_Filter_max <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_Filter_max.rds")
+m4v1_e_prop <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_e_prop.rds")
+m4v1_R_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_R_c.rds")
+m4v1_G_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_G_c.rds")
+m4v1_B_c <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m4v1_B_c.rds")
+
+```
+
+
+```{r}
+
+# Compare models
+loo1 <- loo_compare(m4v0_e_max, m4v1_e_max)
+loo2 <- loo_compare(m4v0_Filter_max, m4v1_Filter_max)
+loo3 <- loo_compare(m4v0_e_prop, m4v1_e_prop)
+loo4 <- loo_compare(m4v0_R_c, m4v1_R_c)
+loo5 <- loo_compare(m4v0_G_c, m4v1_G_c)
+loo6 <- loo_compare(m4v0_B_c, m4v1_B_c)
+```
+
+
+```{r}
+# Convert to dataframe
+df_loo1 <- as.data.frame(loo1) %>%
+  rownames_to_column(var = "Model")
+df_loo2 <- as.data.frame(loo2) %>%
+  rownames_to_column(var = "Model")
+df_loo3 <- as.data.frame(loo3) %>%
+  rownames_to_column(var = "Model")
+df_loo4 <- as.data.frame(loo4) %>%
+  rownames_to_column(var = "Model")
+df_loo5 <- as.data.frame(loo5) %>%
+  rownames_to_column(var = "Model")
+df_loo6 <- as.data.frame(loo6) %>%
+  rownames_to_column(var = "Model")
+
+# Save loo as tables
+write.table(df_loo1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_e_max.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_Filter_max.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo3, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_e_prop.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo4, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_R_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo5, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_G_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo6, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m4_B_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_loo <- minimal_html_table(df_loo1, caption = "LOO values - Dorsal Body e_max")
+table_2_loo <- minimal_html_table(df_loo2, caption = "LOO values - Dorsal Body Filter_max")
+table_3_loo <- minimal_html_table(df_loo3, caption = "LOO values - Dorsal Body e_prop")
+table_4_loo <- minimal_html_table(df_loo4, caption = "LOO values - Dorsal Body R Reflectance")
+table_5_loo <- minimal_html_table(df_loo5, caption = "LOO values - Dorsal Body G Reflectance")
+table_6_loo <- minimal_html_table(df_loo6, caption = "LOO values - Dorsal Body B Reflectance")
+
+my_tabs_loo <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_loo:checked ~ #content1_loo,
+#tab2_loo:checked ~ #content2_loo,
+#tab3_loo:checked ~ #content3_loo,
+#tab4_loo:checked ~ #content4_loo,
+#tab5_loo:checked ~ #content5_loo,
+#tab6_loo:checked ~ #content6_loo {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_loo:checked + label[for="tab1_loo"],
+#tab2_loo:checked + label[for="tab2_loo"],
+#tab3_loo:checked + label[for="tab3_loo"],
+#tab4_loo:checked + label[for="tab4_loo"],
+#tab5_loo:checked + label[for="tab5_loo"],
+#tab6_loo:checked + label[for="tab6_loo"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab1_loo" checked>
+  <label class="tab-label" for="tab1_loo">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab2_loo">
+  <label class="tab-label" for="tab2_loo">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab3_loo">
+  <label class="tab-label" for="tab3_loo">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab4_loo">
+  <label class="tab-label" for="tab4_loo">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab5_loo">
+  <label class="tab-label" for="tab5_loo">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_loo" id="tab6_loo">
+  <label class="tab-label" for="tab6_loo">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_loo">REPLACE_WITH_table_1</div>
+  <div class="tab-content" id="content2_loo">REPLACE_WITH_table_2</div>
+  <div class="tab-content" id="content3_loo">REPLACE_WITH_table_3</div>
+  <div class="tab-content" id="content4_loo">REPLACE_WITH_table_4</div>
+  <div class="tab-content" id="content5_loo">REPLACE_WITH_table_5</div>
+  <div class="tab-content" id="content6_loo">REPLACE_WITH_table_6</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_loo <- gsub("REPLACE_WITH_table_1", table_1_loo, my_tabs_loo)
+my_tabs_loo <- gsub("REPLACE_WITH_table_2", table_2_loo, my_tabs_loo)
+my_tabs_loo <- gsub("REPLACE_WITH_table_3", table_3_loo, my_tabs_loo)
+my_tabs_loo <- gsub("REPLACE_WITH_table_4", table_4_loo, my_tabs_loo)
+my_tabs_loo <- gsub("REPLACE_WITH_table_5", table_5_loo, my_tabs_loo)
+my_tabs_loo <- gsub("REPLACE_WITH_table_6", table_6_loo, my_tabs_loo)
+
+# IRdisplay::display_html(my_tabs_loo)
+```
+
+#### **Visualize posteriors**
+
+We extract the final model results and visualize the posteriors of our model parameters to get an idea of the significance of the results. This is what we did above when we were evaluating our priors.
+
+
+```{r}
+# Extract results
+
+posterior_samples_m4_e_max <- as_draws_df(m4v1_e_max)
+posterior_samples_m4_Filter_max <- as_draws_df(m4v1_Filter_max)
+posterior_samples_m4_e_prop <- as_draws_df(m4v1_e_prop)
+posterior_samples_m4_R_c <- as_draws_df(m4v1_R_c)
+posterior_samples_m4_G_c <- as_draws_df(m4v1_G_c)
+posterior_samples_m4_B_c <- as_draws_df(m4v1_B_c)
+```
+
+
+```{r}
+
+# List of datasets and labels
+posterior_samples <- list(
+    e_max = posterior_samples_m4_e_max,
+    Filter_max = posterior_samples_m4_Filter_max,
+    e_prop = posterior_samples_m4_e_prop,
+    R_c = posterior_samples_m4_R_c,
+    G_c = posterior_samples_m4_G_c,
+    B_c = posterior_samples_m4_B_c
+)
+
+# Custom labels for predictors
+custom_labels_posteriors <- c(
+    "b_Size_center" = "Size",
+    "b_SexF" = "Sex"
+)
+
+
+# Generate predictor plots
+posterior_plots <- lapply(
+    names(posterior_samples),
+    function(label) {
+        generate_posterior_plot(
+            posterior_samples[[label]],
+            regex_pars = c(
+                "b_Size_center",
+                "b_SexF"
+            ),
+            x_range = c(-1, 1),
+            custom_labels = custom_labels_posteriors,
+            axis_title_y = label %in% c("e_max", "R_c")
+        )
+    }
+)
+names(posterior_plots) <- names(posterior_samples)
+
+
+
+# Add grey bars with labels for each plot
+posterior_plots_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    posterior_plots,
+    names(posterior_plots),
+    SIMPLIFY = FALSE
+)
+
+
+
+# Combine predictor plots into a 2x3 grid
+plot_posteriors_m4 <- patchwork::wrap_plots(
+    posterior_plots_with_bars[c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+
+
+# Add a unified x-axis label for predictor plots
+plot_posteriors_m4 <- plot_posteriors_m4 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.55, size = 10))
+    )
+
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m4.png", plot = plot_posteriors_m4, width = 6, height = 4.5, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_posteriors_m4 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m4.png")
+
+
+# Create the HTML
+html_posteriors <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+
+  <img src='", plot_posteriors_m4, "' alt='Posterior Plot'>
+
+")
+
+
+# Display the HTML
+# IRdisplay::display_html(html_posteriors)
+
+```
+
+The graph of the posteriors gives us an idea of the significance of each predictor. We need to follow up with an evaluation of the model performance before we can trust these results.
+
+---
+
+### 7. Evaluate model performance
+
+#### **Trace plots**
+
+Visualize parameter sampling across iterations to confirm convergence. Each chain should wander around the same mean value without any strong upward or downward trends. "fuzzy caterpillar" or "horizontal band." 
+
+
+
+```{r}
+# Generate trace plots for all models
+trace_plots_m4v1_e_max <- generate_trace_plot(
+  model = m4v1_e_max,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+trace_plots_m4v1_Filter_max <- generate_trace_plot(
+  model = m4v1_Filter_max,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+trace_plots_m4v1_e_prop <- generate_trace_plot(
+  model = m4v1_e_prop,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+trace_plots_m4v1_R_c <- generate_trace_plot(
+  model = m4v1_R_c,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+trace_plots_m4v1_G_c <- generate_trace_plot(
+  model = m4v1_G_c,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+trace_plots_m4v1_B_c <- generate_trace_plot(
+  model = m4v1_B_c,
+  regex_pars = c("b_Size_center", "b_SexF"),
+  plot_title = NULL,
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,  # Increase axis title size
+  axis_text_size = 8    # Increase axis tick label size
+)
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_e_max.png", plot = trace_plots_m4v1_e_max, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_Filter_max.png", plot = trace_plots_m4v1_Filter_max, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_e_prop.png", plot = trace_plots_m4v1_e_prop, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_R_c.png", plot = trace_plots_m4v1_R_c, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_G_c.png", plot = trace_plots_m4v1_G_c, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_B_c.png", plot = trace_plots_m4v1_B_c, width = 6, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64 (if not already done)
+trace_plots_m4v1_e_max <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_e_max.png")
+trace_plots_m4v1_Filter_max <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_Filter_max.png")
+trace_plots_m4v1_e_prop <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_e_prop.png")
+trace_plots_m4v1_R_c <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_R_c.png")
+trace_plots_m4v1_G_c <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_G_c.png")
+trace_plots_m4v1_B_c <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m4v1_B_c.png")
+
+
+# Create the HTML (horizontal + vertical display)
+html_trace_plots <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns per row */
+    gap: 3px;
+    padding: 3px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", trace_plots_m4v1_e_max, "' alt='e_max Plot'>
+  <img src='", trace_plots_m4v1_Filter_max, "' alt='Filter_max Plot'>
+  <img src='", trace_plots_m4v1_e_prop, "' alt='e_prop Plot'>
+  <img src='", trace_plots_m4v1_R_c, "' alt='R Reflectance Plot'>
+  <img src='", trace_plots_m4v1_G_c, "' alt='G Reflectance Plot'>
+  <img src='", trace_plots_m4v1_B_c, "' alt='B Reflectance Plot'>
+</div>
+")
+
+# IRdisplay::display_html(html_trace_plots)
+```
+
+#### **Posterior predictive checks**
+
+Simulate data based on the models and compare to observed data to verify goodness-of-fit. We do this using "pp_check". The observed data (black line/dots) should sit comfortably within the distribution of simulated data (colored areas or lines)
+
+
+```{r}
+# Generate posterior predictive check plots for all models
+pp_check_plots_m4v1_e_max <-  generate_pp_check(
+  model = m4v1_e_max,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_max Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m4v1_Filter_max <-  generate_pp_check(
+  model = m4v1_Filter_max,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "Filter_max Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m4v1_e_prop <-  generate_pp_check(
+  model = m4v1_e_prop,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_prop Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m4v1_R_c <-  generate_pp_check(
+  model = m4v1_R_c,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "R Reflectance Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m4v1_G_c <-  generate_pp_check(
+  model = m4v1_G_c,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "G Reflectance Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m4v1_B_c <-  generate_pp_check(
+  model = m4v1_B_c,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "B Reflectance Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_e_max.png", plot = pp_check_plots_m4v1_e_max, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_Filter_max.png", plot = pp_check_plots_m4v1_Filter_max, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_e_prop.png", plot = pp_check_plots_m4v1_e_prop, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_R_c.png", plot = pp_check_plots_m4v1_R_c, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_G_c.png", plot = pp_check_plots_m4v1_G_c, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_B_c.png", plot = pp_check_plots_m4v1_B_c, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+pp_check_plots_m4v1_e_max <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_e_max.png")
+pp_check_plots_m4v1_Filter_max     <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_Filter_max.png")
+pp_check_plots_m4v1_e_prop    <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_e_prop.png")
+pp_check_plots_m4v1_R_c <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_R_c.png")
+pp_check_plots_m4v1_G_c     <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_G_c.png")
+pp_check_plots_m4v1_B_c    <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m4v1_B_c.png")
+
+
+# HTML & CSS grid layout
+html_pp_check_plots <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 15px;
+    padding: 10px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", pp_check_plots_m4v1_e_max, "' alt='e_max Plot'>
+  <img src='", pp_check_plots_m4v1_Filter_max, "' alt='Filter_max Plot'>
+  <img src='", pp_check_plots_m4v1_e_prop, "' alt='e_prop Plot'>
+  <img src='", pp_check_plots_m4v1_R_c, "' alt='R Reflectance Plot'>
+  <img src='", pp_check_plots_m4v1_G_c, "' alt='G Reflectance Plot'>
+  <img src='", pp_check_plots_m4v1_B_c, "' alt='B Reflectance Plot'>
+</div>
+")
+
+# IRdisplay::display_html(html_pp_check_plots)
+```
+
+#### **Check convergence**
+
+Check that all $\hat{R}$ values are close to 1, indicating good convergence.
+
+
+```{r}
+# Create a helper function
+extract_rhat <- function(model, model_name) {
+  rhat(model) %>%
+    as.data.frame() %>%
+    rownames_to_column(var = "Parameter") %>%
+    dplyr::filter(startsWith(Parameter, "b_")) %>%   # <-- keep only b_ terms
+    dplyr::rename(Rhat = 2) %>%
+    dplyr::mutate(Model = model_name) %>%
+    dplyr::mutate(across(where(is.numeric), ~ signif(.x, digits = 3)))
+}
+
+# Extract for each model group
+rhat1 <- extract_rhat(m4v1_e_max,   "e_max")
+rhat2 <- extract_rhat(m4v1_Filter_max,    "Filter_max")
+rhat3 <- extract_rhat(m4v1_e_prop,  "e_prop")
+rhat4 <- extract_rhat(m4v1_R_c,          "R_c")
+rhat5 <- extract_rhat(m4v1_G_c,          "G_c")
+rhat6 <- extract_rhat(m4v1_B_c,          "B_c")
+
+```
+
+
+```{r}
+
+# Save tables
+write.table(rhat1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_e_max.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_Filter_max.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat3, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_e_prop.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat4, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_R_c.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat5, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_G_c.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat6, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m4v1_B_c.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_rhat <- minimal_html_table(rhat1, caption = "Rhat values - e_max")
+table_2_rhat <- minimal_html_table(rhat2, caption = "Rhat values - Filter_max")
+table_3_rhat <- minimal_html_table(rhat3, caption = "Rhat values - e_prop")
+table_4_rhat <- minimal_html_table(rhat4, caption = "Rhat values - R")
+table_5_rhat <- minimal_html_table(rhat5, caption = "Rhat values - G")
+table_6_rhat <- minimal_html_table(rhat6, caption = "Rhat values - B")
+
+
+my_tabs_rhat <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_rhat:checked ~ #content1_rhat,
+#tab2_rhat:checked ~ #content2_rhat,
+#tab3_rhat:checked ~ #content3_rhat,
+#tab4_rhat:checked ~ #content4_rhat,
+#tab5_rhat:checked ~ #content5_rhat,
+#tab6_rhat:checked ~ #content6_rhat {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_rhat:checked + label[for="tab1_rhat"],
+#tab2_rhat:checked + label[for="tab2_rhat"],
+#tab3_rhat:checked + label[for="tab3_rhat"],
+#tab4_rhat:checked + label[for="tab4_rhat"],
+#tab5_rhat:checked + label[for="tab5_rhat"],
+#tab6_rhat:checked + label[for="tab6_rhat"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab1_rhat" checked>
+  <label class="tab-label" for="tab1_rhat">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab2_rhat">
+  <label class="tab-label" for="tab2_rhat">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab3_rhat">
+  <label class="tab-label" for="tab3_rhat">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab4_rhat">
+  <label class="tab-label" for="tab4_rhat">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab5_rhat">
+  <label class="tab-label" for="tab5_rhat">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_rhat" id="tab6_rhat">
+  <label class="tab-label" for="tab6_rhat">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_rhat">REPLACE_WITH_table_1</div>
+  <div class="tab-content" id="content2_rhat">REPLACE_WITH_table_2</div>
+  <div class="tab-content" id="content3_rhat">REPLACE_WITH_table_3</div>
+  <div class="tab-content" id="content4_rhat">REPLACE_WITH_table_4</div>
+  <div class="tab-content" id="content5_rhat">REPLACE_WITH_table_5</div>
+  <div class="tab-content" id="content6_rhat">REPLACE_WITH_table_6</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_rhat <- gsub("REPLACE_WITH_table_1", table_1_rhat, my_tabs_rhat)
+my_tabs_rhat <- gsub("REPLACE_WITH_table_2", table_2_rhat, my_tabs_rhat)
+my_tabs_rhat <- gsub("REPLACE_WITH_table_3", table_3_rhat, my_tabs_rhat)
+my_tabs_rhat <- gsub("REPLACE_WITH_table_4", table_4_rhat, my_tabs_rhat)
+my_tabs_rhat <- gsub("REPLACE_WITH_table_5", table_5_rhat, my_tabs_rhat)
+my_tabs_rhat <- gsub("REPLACE_WITH_table_6", table_6_rhat, my_tabs_rhat)
+
+# IRdisplay::display_html(my_tabs_rhat)
+
+```
+
+#### **Check uncertainty**
+
+Extract parameter estimates and their confidence intervals to assess the significance of the predictors on color pattern metrics. We check 85% and 95% confidence intervals. Summaries are displayed in tables for all models. 
+
+
+```{r}
+# Extract summaries for each variable
+extract_summary <- function(model, prob_85, prob_95) {
+    summary_85 <- summary(model, prob = prob_85)
+    summary_95 <- summary(model, prob = prob_95)
+
+    as.data.frame(summary_85$fixed) %>%
+        dplyr::select("Estimate", "Est.Error", "l-85% CI", "u-85% CI") %>%
+        mutate(
+            "l-95% CI" = summary_95$fixed$`l-95% CI`,
+            "u-95% CI" = summary_95$fixed$`u-95% CI`
+        ) %>%
+        mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+        rownames_to_column(var = "Parameter") # Add rownames as Parameter column
+}
+
+uncertainty1 <- extract_summary(m4v1_e_max, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty2 <- extract_summary(m4v1_Filter_max, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty3 <- extract_summary(m4v1_e_prop, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty4 <- extract_summary(m4v1_R_c, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty5 <- extract_summary(m4v1_G_c, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty6 <- extract_summary(m4v1_B_c, prob_85 = 0.85, prob_95 = 0.95)
+
+```
+
+
+```{r}
+
+# Save tables
+write.table(uncertainty1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_e_max.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_Filter_max.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty3, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_e_prop.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty4, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_R_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty5, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_G_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty6, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m4v1_B_c.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_uncertainty <- minimal_html_table(uncertainty1, caption = "Uncertainty values - e_max")
+table_2_uncertainty <- minimal_html_table(uncertainty2, caption = "Uncertainty values - Filter_max")
+table_3_uncertainty <- minimal_html_table(uncertainty3, caption = "Uncertainty values - e_prop")
+table_4_uncertainty <- minimal_html_table(uncertainty4, caption = "Uncertainty values - R")
+table_5_uncertainty <- minimal_html_table(uncertainty5, caption = "Uncertainty values - G")
+table_6_uncertainty <- minimal_html_table(uncertainty6, caption = "Uncertainty values - B")
+
+
+my_tabs_uncertainty <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_uncertainty:checked ~ #content1_uncertainty,
+#tab2_uncertainty:checked ~ #content2_uncertainty,
+#tab3_uncertainty:checked ~ #content3_uncertainty,
+#tab4_uncertainty:checked ~ #content4_uncertainty,
+#tab5_uncertainty:checked ~ #content5_uncertainty,
+#tab6_uncertainty:checked ~ #content6_uncertainty {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_uncertainty:checked + label[for="tab1_uncertainty"],
+#tab2_uncertainty:checked + label[for="tab2_uncertainty"],
+#tab3_uncertainty:checked + label[for="tab3_uncertainty"],
+#tab4_uncertainty:checked + label[for="tab4_uncertainty"],
+#tab5_uncertainty:checked + label[for="tab5_uncertainty"],
+#tab6_uncertainty:checked + label[for="tab6_uncertainty"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab1_uncertainty" checked>
+  <label class="tab-label" for="tab1_uncertainty">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab2_uncertainty">
+  <label class="tab-label" for="tab2_uncertainty">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab3_uncertainty">
+  <label class="tab-label" for="tab3_uncertainty">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab4_uncertainty">
+  <label class="tab-label" for="tab4_uncertainty">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab5_uncertainty">
+  <label class="tab-label" for="tab5_uncertainty">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty" id="tab6_uncertainty">
+  <label class="tab-label" for="tab6_uncertainty">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_uncertainty">REPLACE_WITH_table_1</div>
+  <div class="tab-content" id="content2_uncertainty">REPLACE_WITH_table_2</div>
+  <div class="tab-content" id="content3_uncertainty">REPLACE_WITH_table_3</div>
+  <div class="tab-content" id="content4_uncertainty">REPLACE_WITH_table_4</div>
+  <div class="tab-content" id="content5_uncertainty">REPLACE_WITH_table_5</div>
+  <div class="tab-content" id="content6_uncertainty">REPLACE_WITH_table_6</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_1", table_1_uncertainty, my_tabs_uncertainty)
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_2", table_2_uncertainty, my_tabs_uncertainty)
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_3", table_3_uncertainty, my_tabs_uncertainty)
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_4", table_4_uncertainty, my_tabs_uncertainty)
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_5", table_5_uncertainty, my_tabs_uncertainty)
+my_tabs_uncertainty <- gsub("REPLACE_WITH_table_6", table_6_uncertainty, my_tabs_uncertainty)
+
+# IRdisplay::display_html(my_tabs_uncertainty)
+
+```
+
+---
+
+#### **Check posterior probabilities**
+
+Now we can evaluate our hypotheses using the posterior distributions of the model parameters. Remember, we are concerned with two things:
+1. Is there a difference between females and males? (Sex effect)
+2. Is size associated with the color pattern metric? (Size effect)
+
+We will calculate the posterior probability of these effects.
+
+
+```{r}
+##### **Posterior Probability of Size Effect**
+
+draws_e_max <- as_draws_df(m4v1_e_max)
+draws_Filter_max <- as_draws_df(m4v1_Filter_max)
+draws_e_prop <- as_draws_df(m4v1_e_prop)
+draws_R_c <- as_draws_df(m4v1_R_c)
+draws_G_c <- as_draws_df(m4v1_G_c)
+draws_B_c <- as_draws_df(m4v1_B_c)
+
+# Posterior probability that females have a **higher** value than males
+pp_size_e_max_positive <- mean(draws_e_max$b_Size_center > 0)
+pp_size_Filter_max_positive <- mean(draws_Filter_max$b_Size_center > 0)
+pp_size_e_prop_positive <- mean(draws_e_prop$b_Size_center > 0)
+pp_size_R_c_positive <- mean(draws_R_c$b_Size_center > 0)
+pp_size_G_c_positive <- mean(draws_G_c$b_Size_center > 0)
+pp_size_B_c_positive <- mean(draws_B_c$b_Size_center > 0)
+
+# Posterior probability that females have a **lower** value than males
+pp_size_e_max_negative <- mean(draws_e_max$b_Size_center < 0)
+pp_size_Filter_max_negative <- mean(draws_Filter_max$b_Size_center < 0)
+pp_size_e_prop_negative <- mean(draws_e_prop$b_Size_center < 0)
+pp_size_R_c_negative <- mean(draws_R_c$b_Size_center < 0)
+pp_size_G_c_negative <- mean(draws_G_c$b_Size_center < 0)
+pp_size_B_c_negative <- mean(draws_B_c$b_Size_center < 0)
+
+
+# Create a summary table
+pp_summary_m4_size <- data.frame(
+  Hypothesis = c(
+    "P(Size effect e_max > 0)",
+    "P(Size effect e_max < 0)",
+    "P(Size effect Filter_max > 0)",
+    "P(Size effect Filter_max < 0)",
+    "P(Size effect e_prop > 0)",
+    "P(Size effect e_prop < 0)",
+    "P(Size effect R_c > 0)",
+    "P(Size effect R_c < 0)",
+    "P(Size effect G_c > 0)",
+    "P(Size effect G_c < 0)",
+    "P(Size effect B_c > 0)",
+    "P(Size effect B_c < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_size_e_max_positive,
+    pp_size_e_max_negative,
+    pp_size_Filter_max_positive,
+    pp_size_Filter_max_negative,
+    pp_size_e_prop_positive,
+    pp_size_e_prop_negative,
+    pp_size_R_c_positive,
+    pp_size_R_c_negative,
+    pp_size_G_c_positive,
+    pp_size_G_c_negative,
+    pp_size_B_c_positive,
+    pp_size_B_c_negative
+  )
+)
+
+# Save table
+write.table(pp_summary_m4_size, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_postprob_m4v1_size.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Generate HTML table
+html_table <- minimal_html_table(pp_summary_m4_size, caption = "Posterior probabilities for Size Effect")
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+
+```{r}
+##### **Posterior Probability of Sex Effect**
+
+draws_e_max <- as_draws_df(m4v1_e_max)
+draws_Filter_max <- as_draws_df(m4v1_Filter_max)
+draws_e_prop <- as_draws_df(m4v1_e_prop)
+draws_R_c <- as_draws_df(m4v1_R_c)
+draws_G_c <- as_draws_df(m4v1_G_c)
+draws_B_c <- as_draws_df(m4v1_B_c)
+
+# Posterior probability that females have a **higher** value than males
+pp_sex_e_max_positive <- mean(draws_e_max$b_SexF > 0)
+pp_sex_Filter_max_positive <- mean(draws_Filter_max$b_SexF > 0)
+pp_sex_e_prop_positive <- mean(draws_e_prop$b_SexF > 0)
+pp_sex_R_c_positive <- mean(draws_R_c$b_SexF > 0)
+pp_sex_G_c_positive <- mean(draws_G_c$b_SexF > 0)
+pp_sex_B_c_positive <- mean(draws_B_c$b_SexF > 0)
+
+# Posterior probability that females have a **lower** value than males
+pp_sex_e_max_negative <- mean(draws_e_max$b_SexF < 0)
+pp_sex_Filter_max_negative <- mean(draws_Filter_max$b_SexF < 0)
+pp_sex_e_prop_negative <- mean(draws_e_prop$b_SexF < 0)
+pp_sex_R_c_negative <- mean(draws_R_c$b_SexF < 0)
+pp_sex_G_c_negative <- mean(draws_G_c$b_SexF < 0)
+pp_sex_B_c_negative <- mean(draws_B_c$b_SexF < 0)
+
+
+# Create a summary table
+pp_summary_m4_sex <- data.frame(
+  Hypothesis = c(
+    "P(Sex effect e_max > 0)",
+    "P(Sex effect e_max < 0)",
+    "P(Sex effect Filter_max > 0)",
+    "P(Sex effect Filter_max < 0)",
+    "P(Sex effect e_prop > 0)",
+    "P(Sex effect e_prop < 0)",
+    "P(Sex effect R_c > 0)",
+    "P(Sex effect R_c < 0)",
+    "P(Sex effect G_c > 0)",
+    "P(Sex effect G_c < 0)",
+    "P(Sex effect B_c > 0)",
+    "P(Sex effect B_c < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_sex_e_max_positive,
+    pp_sex_e_max_negative,
+    pp_sex_Filter_max_positive,
+    pp_sex_Filter_max_negative,
+    pp_sex_e_prop_positive,
+    pp_sex_e_prop_negative,
+    pp_sex_R_c_positive,
+    pp_sex_R_c_negative,
+    pp_sex_G_c_positive,
+    pp_sex_G_c_negative,
+    pp_sex_B_c_positive,
+    pp_sex_B_c_negative
+  )
+)
+
+# Save table
+write.table(pp_summary_m4_sex, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_postprob_m4v1_sex.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+```
+
+
+```{r}
+# Generate HTML table
+html_table <- minimal_html_table(pp_summary_m4_sex, caption = "Posterior probabilities for Sex Effect")
+
+# Display it as HTML
+# IRdisplay::display_html(html_table)
+```
+
+---
+
+### 8. Summarize results
+
+The predictors Sex and Size (body length) are significant for most color variables at 85% and 95% confidence intervals. So our data shows that Size & Sex do affect the dominant color marking complexity, size, pattern diversity (i.e., how much dominant color marking dominates other markings), and color reflectance (R, G, B) of dorsal bodies.
+
+#### **Make final figures**
+
+We will generate tidy figures for the Results section of our report/paper.
+
+
+
+```{r}
+##### FINAL PLOT FOR WNAN PAPER
+
+# Updated predictors list with source model per group
+predictors_list <- list(
+  list(
+    name = "Sex",
+    model = "m1",
+    baseline = tibble(parameter = "Males", mean = 0),
+    order = c("Males", "b_SexF"),
+    labels = c("Males" = "Male", "b_SexF" = "Female"),
+    regex_pars = c("^b_SexF$")
+  ),
+  list(
+    name = "Size",
+    model = "m1",
+    baseline = NULL,
+    order = c("b_Size_center"),
+    labels = c("b_Size_center" = "Body length"),
+    regex_pars = c("^b_Size_center$")
+  )
+)
+
+# Posterior samples by color metric
+posterior_samples_all <- list(
+  `e[max]`      = posterior_samples_m4_e_max,
+  `Filter[max]` = posterior_samples_m4_Filter_max,
+  `e[prop]`     = posterior_samples_m4_e_prop,
+  `R[c]`        = posterior_samples_m4_R_c,
+  `G[c]`        = posterior_samples_m4_G_c,
+  `B[c]`        = posterior_samples_m4_B_c
+)
+
+# Extract posterior draws for each predictor and response
+extract_effects <- function(posterior_df, predictor_cfg, response) {
+  matched_cols <- posterior_df %>%
+    dplyr::select(matches(paste(predictor_cfg$regex_pars, collapse = "|"))) %>%
+    colnames()
+
+  if (length(matched_cols) == 0) {
+    stop(paste("No columns matched for predictor:", predictor_cfg$name))
+  }
+
+  draws <- posterior_df %>%
+    dplyr::select(all_of(matched_cols)) %>%
+    pivot_longer(cols = everything(), names_to = "parameter", values_to = "value") %>%
+    mutate(
+      label = predictor_cfg$labels[parameter],
+      predictor = predictor_cfg$name,
+      group = predictor_cfg$name,       # ✅ for color
+      response = response               # ✅ for facet
+    )
+
+  if (!is.null(predictor_cfg$baseline)) {
+    baseline <- predictor_cfg$baseline %>%
+      mutate(
+        label = predictor_cfg$labels[parameter],
+        predictor = predictor_cfg$name,
+        group = predictor_cfg$name,
+        response = response,
+        value = mean
+      )
+    out <- bind_rows(draws, baseline)
+  } else {
+    out <- draws
+  }
+
+  return(out)
+}
+
+# Build combined plot data
+plot_data_m4 <- map_dfr(
+  names(posterior_samples_all),
+  function(response) {
+    map_dfr(
+      predictors_list,
+      function(predictor_cfg) {
+        extract_effects(
+          posterior_df = posterior_samples_all[[response]],
+          predictor_cfg = predictor_cfg,
+          response = response
+        )
+      }
+    )
+  }
+)
+
+# Relabel panel headers with parsed expressions (for subscripts)
+plot_data_m4$response <- factor(
+  plot_data_m4$response,
+  levels = c("e[max]", "Filter[max]", "e[prop]", "R[c]", "G[c]", "B[c]"),
+  labels = c("e[max]", "Filter[max]", "e[prop]", "R[c]", "G[c]", "B[c]")
+)
+
+# Force desired y-axis order: Male (bottom), then Female, then Body length
+label_order_m4 <- c("Male", "Female", "Body length")
+plot_data_m4$label <- factor(plot_data_m4$label, levels = label_order_m4)
+
+# Final plot
+final_plot_posteriors_m4 <- ggplot(plot_data_m4, aes(x = value, y = label, fill = group, color = group)) +
+  stat_halfeye(
+    .width = c(0.85, 0.95),
+    slab_alpha = 0.4,
+    interval_size_range = c(0.75, 0),
+    normalize = "groups",
+    slab_linewidth = 0.6,
+    point_size = 1.25
+  ) +
+  geom_point(
+    data = filter(plot_data_m4, !is.na(value) & !is.na(mean)),
+    aes(x = mean),  # ✅ Color by group
+    inherit.aes = TRUE,
+    size = 0.75,
+    shape = 21
+  ) +
+  geom_vline(xintercept = 0, size = 0.6, linetype = 3, color = "red") +
+  facet_wrap(~ response, ncol = 3, labeller = label_parsed) +  # ✅ using 'response' for facet
+  scale_fill_manual(
+    values = c(
+      "Sex" = "purple",
+      "Size" = "darkgrey"
+    )
+  ) +
+  scale_color_manual(  # ✅ Matching colors for points
+    values = c(
+      "Sex" = "purple",
+      "Size" = "darkgrey"
+    )
+  ) +
+  labs(
+    x = "Effect size (logit scale)",
+    y = NULL
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    strip.text = element_text(face = "bold", size = 10),
+    axis.text.y = element_text(size = 8),
+    panel.spacing = unit(0.5, "lines"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    legend.position = "none"
+  )
+
+
+# Save the final plot
+ggsave(
+  "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/final_plot_posteriors_m4.png",
+  plot = final_plot_posteriors_m4,
+  width = 8.5, height = 4.5, units = "in", dpi = 300
+)
+
+
+```
+
+
+```{r}
+
+# Convert images to base64
+final_plot_posteriors_m4 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/final_plot_posteriors_m4.png")
+
+# Create the HTML 
+html_m4_posteriors_WNAN_final <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+<div class='image-row'>
+  <img src='", final_plot_posteriors_m4, "' alt='Final Microhabitat Posterior Plot'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_m4_posteriors_WNAN_final)
+```

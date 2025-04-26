@@ -1,0 +1,843 @@
+```{r}
+
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R")
+# Source the custom graphing functions
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/01_graphing_functions.R")
+```
+
+
+# Phylogenetic Analysis
+
+---
+
+## Question
+
+How do color types vary with geographic location and species-level genetic markers?
+
+---
+
+## Objective
+
+Investigate the influence of **color types** and **geographic location** on *P. cristatus* species-level genetic diversity.
+
+---
+
+## Method
+*Note: If running the commands below in Rstudio or VS Code, highlight and use Ctrl+Alt+Enter to copy and run the command in the terminal.*
+
+
+
+### 1. Clean and assemble sequence data.
+
+Before conducting a phylogenetic analysis on sequence data, it is essential to clean and assemble the raw sequence reads. Since we are working with Sanger data and a limited number of markers, this process will be performed manually using Geneious software.
+
+Refer to the "Geneious Sequence Analysis Protocol" for detailed instructions on completing this process.
+
+
+
+---
+
+### 2. Upload genetic data to remote server.
+
+The phylogenetic pipeline is easier to do if we use Joe's servers since everything is already installed on his computers. Thus, we will upload our CO1, CYTB, and H3 sequence data to the servers using ```scp``` in commandline or manually via Cyberduck. *If needed, we can do this on our local computer (either through terminal or software), but we would need to install MEGA and IQ-TREE first.*
+
+
+
+scp [local_directory]/[FOLDER_CONTAINING_CO1_FASTA_SEQUENCES]/*.fasta
+bcummings@10.251.34.23:/bwdata3/bcummings/PODOCERUS/00-DATA/CO1
+
+scp [local_directory]/[FOLDER_CONTAINING_CYTB_FASTA_SEQUENCES]/*.fasta
+bcummings@10.251.34.23:/bwdata3/bcummings/PODOCERUS/00-DATA/CYTB
+
+scp [local_directory]/[FOLDER_CONTAINING_H3_FASTA_SEQUENCES]/*.fasta bcummings@10.251.34.23:/bwdata3/bcummings/PODOCERUS/00-DATA/H3
+
+
+### 3. Navigate to data on server.
+
+Log into remote server and navigate to folder containing sequence files.
+
+
+
+```bash
+ssh bcummings@10.251.34.217
+
+cd /bwdata3/bcummings/PODOCERUS/00-DATA/
+```
+
+
+
+### 4. Sequence Alignment & Filtering
+
+We will generate multiple sequence alignments for each genetic marker. To assess the robustness of this dataset to gap filtering, we will generate two gap-filtered alignments and one unfiltered alignment. 
+
+#### Concatenation
+
+First, concatenate the sequences into one file.
+
+
+
+```bash
+# CO1
+cat /bwdata3/bcummings/PODOCERUS/00-DATA/CO1/*.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CO1_sequences.fasta
+
+# CYTB
+cat /bwdata3/bcummings/PODOCERUS/00-DATA/CYTB/*.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CYTB_sequences.fasta
+
+# H3
+cat /bwdata3/bcummings/PODOCERUS/00-DATA/H3/*.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/H3_sequences.fasta
+
+
+
+# CO1 ONLY, NO OUTGROUPS (for ASAP species delimitation below)
+
+find /bwdata3/bcummings/PODOCERUS/00-DATA/CO1/ -type f -name "*.fasta" ! -iname "A_gigantea.fasta" ! -iname "BCBC-0012_FL_nomorph.fasta" ! -iname "BCQ-022_NZ_nomorph.fasta" -print | xargs cat > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CO1_sequences_no_outgroups.fasta
+
+# CYTB ONLY, NO OUTGROUPS (for ASAP species delimitation below)
+
+find /bwdata3/bcummings/PODOCERUS/00-DATA/CYTB/ -type f -name "*.fasta" ! -iname "A_gigantea.fasta" ! -iname "BCBC-0012_FL_nomorph.fasta" ! -iname "BCQ-022_NZ_nomorph.fasta" -print | xargs cat > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CYTB_sequences_no_outgroups.fasta
+
+# H3 ONLY, NO OUTGROUPS (for ASAP species delimitation below)
+
+find /bwdata3/bcummings/PODOCERUS/00-DATA/H3/ -type f -name "*.fasta" ! -iname "A_gigantea.fasta" ! -iname "BCBC-0012_FL_nomorph.fasta" ! -iname "BCQ-022_NZ_nomorph.fasta" -print | xargs cat > /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/H3_sequences_no_outgroups.fasta
+
+```
+
+
+
+#### Multiple Sequence Alignment
+
+We will generate multiple sequence alignments using MAFFT. We will use the 
+L-INS-i alignment strategy which uses an iterative refinement method incorporating local pairwise alignment information. This method is recommended by the author for alignments <200 sequences of variable lengths.
+
+
+
+```bash
+# CO1
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CO1_sequences.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CO1_MSA.fasta
+
+
+# CO1, NO OUTGROUPS (for ASAP species delimitation below)
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CO1_sequences_no_outgroups.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CO1_no_outgroups_MSA.fasta
+
+
+# CYTB
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CYTB_sequences.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CYTB_MSA.fasta
+
+
+# CYTB, NO OUTGROUPS (for ASAP species delimitation below)
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/CYTB_sequences_no_outgroups.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CYTB_no_outgroups_MSA.fasta
+
+
+# H3
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/H3_sequences.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/H3_MSA.fasta
+
+
+# H3, NO OUTGROUPS (for ASAP species delimitation below)
+mafft --localpair --maxiterate 1000 /bwdata3/bcummings/PODOCERUS/01-MAFFT/input/H3_sequences_no_outgroups.fasta > /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/H3_no_outgroups_MSA.fasta
+
+```
+
+
+
+#### Gap Filtering
+
+Gap-filtered alignments will be generated using ClipKIT (Steenwyk 2020) and TrimAl (Capella-Gutiérrez et al 2009) which are chosen for their ability to preserve phylogenetically informative sites and produce more accurate topologies relative to other methods in empirical and simulated tests. Trimming parameters are chosen based on the highest performing settings from benchmark tests (Steenwyk 2020). Specifically, ClipKIT will be used in "-smart-gap" mode, which dynamically adjusts gap thresholds to minimize over-trimming in highly divergent sequences; and TrimAl will be used in "-gappyout" mode, which uses the distribution of alignment gap scores to identify and remove columns with high gap content. 
+
+
+
+```bash
+##### no gap filtering
+
+# CO1
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CO1_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CO1_MSA.fasta
+
+# CYTB
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CYTB_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CYTB_MSA.fasta
+
+# H3
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/H3_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/H3_MSA.fasta
+
+
+
+# CO1, NO OUTGROUPS (for ASAP species delimitation below)
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CO1_no_outgroups_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CO1_no_outgroups_MSA.fasta
+
+# CYTB, NO OUTGROUPS (for ASAP species delimitation below)
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/CYTB_no_outgroups_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CYTB_no_outgroups_MSA.fasta
+
+# H3, NO OUTGROUPS (for ASAP species delimitation below)
+cp /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/H3_no_outgroups_MSA.fasta /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/H3_no_outgroups_MSA.fasta
+
+
+```
+
+
+
+```bash
+##### ClipKit (NOTE: only on nzinga)
+
+cd /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/
+
+# CO1
+clipkit "CO1_MSA.fasta" -m smart-gap -l -o "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/CO1_MSA.clipkit.fa"
+
+# CYTB
+clipkit "CYTB_MSA.fasta" -m smart-gap -l -o "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/CYTB_MSA.clipkit.fa"
+
+# H3
+clipkit "H3_MSA.fasta" -m smart-gap -l -o "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/H3_MSA.clipkit.fa"
+
+```
+
+
+
+```bash
+##### TrimAl
+
+cd /bwdata3/bcummings/PODOCERUS/01-MAFFT/output/
+
+# CO1
+trimal -in "CO1_MSA.fasta" -out "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/CO1_MSA.trimal.fa" -gappyout
+
+# CYTB
+trimal -in "CYTB_MSA.fasta" -out "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/CYTB_MSA.trimal.fa" -gappyout
+
+# H3
+trimal -in "H3_MSA.fasta" -out "/bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/H3_MSA.trimal.fa" -gappyout
+
+```
+
+
+### 5. Format Sequences
+
+Use ```{r}ename_fasta_headers.pl```` script to remove all text following the first string in the file deflines. This allows for concatenatation of sequences based on species name in the next section.
+
+
+
+```bash
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none_no_outgroups
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/clipkit
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/trimal
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal
+
+
+# CO1
+cd /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CO1_MSA.fasta CO1_MSA_renamed.fa
+
+cd /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none_no_outgroups
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CO1_no_outgroups_MSA.fasta CO1_no_outgroups_MSA_renamed.fa
+
+cd /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/clipkit
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/CO1_MSA.clipkit.fa CO1_MSA_renamed.clipkit.fa
+
+cd /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/trimal
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/CO1_MSA.trimal.fa CO1_MSA_renamed.trimal.fa
+
+
+
+# CYTB
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CYTB_MSA.fasta CYTB_MSA_renamed.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/CYTB_no_outgroups_MSA.fasta CYTB_no_outgroups_MSA_renamed.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/CYTB_MSA.clipkit.fa CYTB_MSA_renamed.clipkit.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/CYTB_MSA.trimal.fa CYTB_MSA_renamed.trimal.fa
+
+
+
+
+# H3
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/H3_MSA.fasta H3_MSA_renamed.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/none/H3_no_outgroups_MSA.fasta H3_no_outgroups_MSA_renamed.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/clipkit/H3_MSA.clipkit.fa H3_MSA_renamed.clipkit.fa
+
+perl /bwdata3/bcummings/SCRIPTS/rename_fasta_headers.pl /bwdata3/bcummings/PODOCERUS/02-GAPFILTERING/trimal/H3_MSA.trimal.fa H3_MSA_renamed.trimal.fa
+
+```
+
+
+### 6. Concatenate and Partition Genes
+
+For each set of genes (unfiltered, ClipKit gap-filtered, TrimAl gap-filtered), we will a use slightly modified version of the ```fasta2phylomatrix.pl``` script (available as a script within the JFR Perl Modules distribution (as of v1.1):  https://github.com/josephryan/JFR-PerlModules) to concatenate sequences across individuals and generate a partition file which specifies the starting and ending positions of each gene within the sequence matrix. Then we will use the custom script ```partition_to_nexus_edit.pl``` to convert the partition file to .nex format.
+
+
+
+```bash
+
+# CO1 + CYTB + H3
+perl /bwdata3/bcummings/SCRIPTS/fasta2phylomatrix_edit.pl --dir=/bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none --partition=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/partitions.txt > /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/concatenated.fa
+
+perl /bwdata3/bcummings/SCRIPTS/partition_to_nexus_edit.pl --input=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/partitions.txt --output=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/partitions.nex
+
+
+perl /bwdata3/bcummings/SCRIPTS/fasta2phylomatrix_edit.pl --dir=/bwdata3/bcummings/PODOCERUS/04-PARTITION/input/clipkit --partition=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/partitions.clipkit.txt > /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/concatenated.clipkit.fa
+
+perl /bwdata3/bcummings/SCRIPTS/partition_to_nexus_edit.pl --input=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/partitions.clipkit.txt --output=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/partitions.clipkit.nex
+
+
+perl /bwdata3/bcummings/SCRIPTS/fasta2phylomatrix_edit.pl --dir=/bwdata3/bcummings/PODOCERUS/04-PARTITION/input/trimal --partition=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/partitions.trimal.txt > /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/concatenated.trimal.fa
+
+perl /bwdata3/bcummings/SCRIPTS/partition_to_nexus_edit.pl --input=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/partitions.trimal.txt --output=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/partitions.trimal.nex
+
+
+
+# CO1 + CYTB + H3, NO OUTGROUPS (for species delimitation below) -- this is for guide tree for constructing input tree for PTP & mPTP below
+
+perl /bwdata3/bcummings/SCRIPTS/fasta2phylomatrix_edit.pl --dir=/bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none_no_outgroups --partition=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/partitions_no_outgroups.txt > /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/concatenated_no_outgroups.fa
+
+perl /bwdata3/bcummings/SCRIPTS/partition_to_nexus_edit.pl --input=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/partitions_no_outgroups.txt --output=/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/partitions_no_outgroups.nex
+
+
+# CO1 (for PTP & mPTP species delimitation below since we can exclude outgroups in those programs)
+## NO CONCATENATION OR PARTITION FILES NEEDED FOR THIS ONE. JUST COPY IT OVER.
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_CO1
+
+cp /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none/CO1_MSA_renamed.fa /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_CO1/CO1.fa
+
+
+# CO1, NO OUTGROUPS (for ASAP species delimitation below since we cannot exclude outgroups in that program)
+## NO CONCATENATION OR PARTITION FILES NEEDED FOR THIS ONE. JUST COPY IT OVER.
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups
+
+cp /bwdata3/bcummings/PODOCERUS/04-PARTITION/input/none_no_outgroups/CO1_no_outgroups_MSA_renamed.fa /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/CO1_no_outgroups.fa
+
+```
+
+
+
+### 7. Build Species Trees
+
+We will use our full gene sets to generate concatenated supermatrices which will be used in IQ-TREE (Nguyen et al 2014) to estimate species trees using maximum-likelihood (ML) methods. The matrices will be partitioned by gene region. We will compare trees constructed from partitioned supermatrices generated from nucleotide data (-st DNA). We will use ModelFinder (-m MFP+MERGE) (Kalyaanamoorthy et al 2017) to find the best partition scheme and evolutionary substitution model for each partition.
+
+We will construct a total of 3 species trees (1 gap-unfiltered, 2 gap-filtered), and compare the topology to determine how robust the data is to gap-filtering. If topology is the same, we will choose the gap-unfiltered tree as our final species tree to minimize data loss. We will then run the CO1 gene trees using this concatenated species tree as a guide tree.
+
+
+```bash
+
+#ALL DATA
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none
+mkdir -p /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1
+mkdir -p /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_no_outgroups
+mkdir -p /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/clipkit
+mkdir -p /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/trimal
+
+
+# CO1 + CYTB + H3
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/concatenated.fa -spp /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none/partitions.nex -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre nogapfiltering
+
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/clipkit
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/concatenated.clipkit.fa -spp /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/clipkit/partitions.clipkit.nex -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre clipkit
+
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/trimal
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/concatenated.trimal.fa -spp /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/trimal/partitions.trimal.nex -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre trimal
+
+
+
+
+# CO1 + CYTB + H3, NO OUTGROUPS (for species delimitation below) -- this is for guide tree for constructing input tree for PTP & mPTP below
+
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_no_outgroups
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/concatenated_no_outgroups.fa -spp /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/partitions_no_outgroups.nex -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre nogapfiltering_no_outgroups
+
+# CO1 (for PTP & mPTP species delimitation below since we can exclude outgroups in those programs)
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_CO1/CO1.fa -g /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none/nogapfiltering.treefile -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre nogapfiltering_CO1
+
+# CO1, NO OUTGROUPS (for ASAP species delimitation below since we cannot exclude outgroups in that program)
+cd /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_no_outgroups
+iqtree -s /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/CO1_no_outgroups.fa -g /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_no_outgroups/nogapfiltering_no_outgroups.treefile -m MFP+MERGE -st DNA -bb 1000 -nt AUTO -pre nogapfiltering_CO1_no_outgroups
+
+```
+
+
+
+If you are on a remote server, download tree files to local computer.
+
+
+
+```bash
+logout
+
+# CO1 + CYTB + H3
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none/nogapfiltering.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3"
+
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/clipkit/clipkit.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3"
+
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/trimal/trimal.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3"
+
+
+# CO1 + CYTB + H3, NO OUTGROUPS (for species delimitation below) -- this is for guide tree for constructing input tree for PTP & mPTP below
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1/nogapfiltering_CO1.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1"
+
+# CO1 (for PTP & mPTP species delimitation below)
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1/nogapfiltering_CO1.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1"
+
+# CO1, NO OUTGROUPS (for ASAP species delimitation below)
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_no_outgroups/nogapfiltering_CO1_no_outgroups.contree "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_no_outgroups"
+
+```
+
+
+
+### 8. Visualize Species Trees
+
+Use R (shown below) or FigTree software to visualize final species tree topologies.
+
+
+```{r}
+
+
+# Load necessary libraries
+library(ape)
+library(ggtree)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+
+# Load trees with bootstrap values
+tree <- read.tree("C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/nogapfiltering.contree")
+
+tree.clipkit <- read.tree("C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/clipkit.contree")
+
+tree.trimal <- read.tree("C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/trimal.contree")
+
+# Load metadata
+metadata <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/metadata.csv")
+
+
+# Root trees
+outgroup <- c("A_gigantea")
+rooted_tree <- root(tree, outgroup, resolve.root = TRUE)
+rooted_tree.clipkit <- root(tree.clipkit, outgroup, resolve.root = TRUE)
+rooted_tree.trimal <- root(tree.trimal, outgroup, resolve.root = TRUE)
+
+# Create ggtree objects
+tree <- ggtree(rooted_tree) + ggtitle("Podocerus cristatus Species Tree (no gap filtering)")
+tree.clipkit <- ggtree(rooted_tree.clipkit) + ggtitle("Podocerus cristatus Species Tree (ClipKit)")
+tree.trimal <- ggtree(rooted_tree.trimal) + ggtitle("Podocerus cristatus Species Tree (TrimAl)")
+
+# Join metadata
+metat <- tree$data %>% inner_join(metadata, by = c("label" = "id"))
+metat.clipkit <- tree.clipkit$data %>% inner_join(metadata, by = c("label" = "id"))
+metat.trimal <- tree.trimal$data %>% inner_join(metadata, by = c("label" = "id"))
+
+# Add bootstrap values to tree visualization (static plots)
+p_tree_static <- tree +
+    geom_text2(aes(subset = !isTip, label = label), hjust = -0.3, size = 3) +  # Display bootstrap values only on internal nodes
+    geom_point(data = metat, aes(x = x, y = y, color = group_location), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+p_tree_static.clipkit <- tree.clipkit +
+    geom_text2(aes(subset = !isTip, label = label), hjust = -0.3, size = 3) +  # Display bootstrap values only on internal nodes
+    geom_point(data = metat.clipkit, aes(x = x, y = y, color = group_location), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+p_tree_static.trimal <- tree.trimal +
+    geom_text2(aes(subset = !isTip, label = label), hjust = -0.3, size = 3) +  # Display bootstrap values only on internal nodes
+    geom_point(data = metat.trimal, aes(x = x, y = y, color = group_location), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+# Save static plots
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.png", plot = p_tree_static, width = 10, height = 8, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.clipkit.png", plot = p_tree_static.clipkit, width = 10, height = 8, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.trimal.png", plot = p_tree_static.trimal, width = 10, height = 8, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+# Convert images to base64
+p_tree_static <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.png")
+
+p_tree_static.clipkit <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.clipkit.png")
+
+p_tree_static.trimal <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/p_tree_static.trimal.png")
+
+# Create the HTML (vertical display)
+html_pod_trees_static <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", p_tree_static, "' alt='static pod trees'>
+<img src='", p_tree_static.clipkit, "' alt='static pod trees (clipkit)'>
+<img src='", p_tree_static.trimal, "' alt='static pod trees (trimal)'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_pod_trees_static)
+```
+
+
+```{r}
+
+
+# Create interactive plots without geom_text2
+p_tree <- tree +
+    geom_point(data = metat, aes(x = x, y = y, color = group_location, text = label), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+p_tree.clipkit <- tree.clipkit +
+    geom_point(data = metat.clipkit, aes(x = x, y = y, color = group_location, text = label), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+p_tree.trimal <- tree.trimal +
+    geom_point(data = metat.trimal, aes(x = x, y = y, color = group_location, text = label), size = 2) +
+    geom_treescale(x = 0, y = -2, width = 0.03, fontsize = 3, linesize = 1, offset = 1) +
+    theme(legend.position = "right")
+
+# Convert to interactive plots
+interactive_plot <- ggplotly(p_tree, tooltip = "text")
+interactive_plot.clipkit <- ggplotly(p_tree.clipkit, tooltip = "text")
+interactive_plot.trimal <- ggplotly(p_tree.trimal, tooltip = "text")
+
+# Display interactive plots
+interactive_plot
+interactive_plot.clipkit
+interactive_plot.trimal
+```
+
+
+
+Tree topology is the same regardless of gap filtering method, so we will use the unfiltered dataset for our final tree to minimize data loss.
+
+
+### 9. Species Delimitation
+We will determine species delimitation of P. cristatus using ASAP and PTP. We will compare species delimitation results based on CO1 barcode data and overlay results onto the species tree generated from the concatenated data set (CO1 + CYTB + H3). We will exclude the known outgroups in these analyses (A_gigantea, BCBC-0012_FL_nomorph, BCQ-022_NZ_nomorph). Including distantly related groups risks extreme pairwise distances in ASAP and long branches attraction in mPTP which will obscure species delimitation in the focal group.
+
+
+#### ASAP
+
+We will first use the Assemble Species by Automatic Partitioning (ASAP) method for species delimitation. We will use the ASAP web version (Puillandre et al. 2021; https://bioinfo.mnhn.fr/abi/public/asap/)) to discover the existence of DNA barcode gaps and estimate the number of molecular OTUs. We will run this program with the K2P model and default settings which assess distance thresholds from 0.005 to 0.05.
+
+Note that we use gene datasets as input and must manually exclude outgroup sequences as needed. **This is why we generated CO1 datasets without outgroups in the steps above.** This is unlike mPTP in which we can specify which sequences to exclude (see below).
+
+First, download the input files.
+
+
+```bash
+
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_no_outgroups/CO1_no_outgroups.fa "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIES_DELIMITATION/asap/CO1_no_outgroups"
+
+```
+
+
+Then, run the ASAP program here: https://bioinfo.mnhn.fr/abi/public/asap/.
+
+Save the output to your project folder.
+
+
+
+#### PTP & mPTP
+We will perform a PTP and mPTP analysis (Zhang et al 2013) for species delimitation P. cristatus, following the default settings. PTP and mPTP assume a single evolutionary rate and variable evolutionary rate, respectively.
+
+Because PTP is a likelihood-based method that uses a rooted phylogenetic tree to infer species boundaries, rather than just genetic distances, we need a tree for input. We can specify which branches are outgroups to exclude.
+
+We will run PTP through the webserver <https://species.h-its.org/ptp/>.
+
+We will run mPTP through commandline.  We also find the minimum branch length before running the program.
+
+
+```bash
+
+ssh bcummings@10.251.34.23
+
+conda activate /bwdata3/bcummings/conda/ptp
+
+# mPTP
+# Find mininum branch length first
+/bwdata3/bcummings/conda/ptp/mptp/bin/mptp --minbr_auto /bwdata3/bcummings/PODOCERUS/04-PARTITION/output/none_CO1/CO1.fa --tree_file /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1/nogapfiltering_CO1.contree --output_file CO1_minbr
+
+mkdir -p /bwdata3/bcummings/PODOCERUS/06-SPECIESDELIMITATION/mptp/CO1_no_outgroup
+cd /bwdata3/bcummings/PODOCERUS/06-SPECIESDELIMITATION/mptp/CO1_no_outgroup
+/bwdata3/bcummings/conda/ptp/mptp/bin/mptp --ml --multi --minbr 0.0031956788 --tree_file /bwdata3/bcummings/PODOCERUS/05-SPECIESTREE/none_CO1/nogapfiltering_CO1.contree --output_file CO1_no_outgroup --outgroup A_gigantea,BCBC-0012_FL_nomorph,BCQ-022_NZ_nomorph --outgroup_crop
+
+
+```
+
+
+Download the results to your local project folder.
+
+
+
+```bash
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/06-SPECIESDELIMITATION/mptp/CO1_no_outgroup/* "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIES_DELIMITATION/ptp/CO1"
+
+scp bcummings@10.251.34.216:/bwdata3/bcummings/PODOCERUS/06-SPECIESDELIMITATION/mptp/CO1_no_outgroup/* "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIES_DELIMITATION/mptp/CO1"
+
+```
+
+#### Plot tree 
+
+Now, plot the original tree with species delimitation groups.
+
+
+```{r}
+
+# Load required packages
+library(ape)
+library(ggtree)
+library(ggtreeExtra)
+library(tidyverse)
+
+# Read in the tree and metadata
+tree_file <- "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/nogapfiltering.contree"       # Replace with your tree file path
+metadata_file <- "C:/Users/bmc82/Documents/UF/PhD_Projects/2-PODOCERUS/Data/Data_DNA/PCRIS/Analysis_PCRIS/SPECIESTREE/CO1_CYTB_H3/heatmap.csv"  # Replace with your metadata file path
+
+
+tree <- read.tree(tree_file)
+metadata <- read.csv(metadata_file)
+
+# Filter and reorder metadata to match tree tip labels
+metadata <- metadata %>%
+  filter(id %in% tree$tip.label) %>%
+  arrange(match(id, tree$tip.label)) %>%
+  mutate(
+    ASAP_group = as.factor(ASAP_group),
+    PTP_group = as.factor(PTP_group),
+    mPTP_group = as.factor(mPTP_group),
+    group_location = as.factor(group_location)
+  )
+
+# Set row names for ggtree alignment
+row.names(metadata) <- metadata$id
+
+# ==============================
+# Step 1: Base tree plot
+# ==============================
+p <- ggtree(tree, layout = "rectangular", size = 0.75) +
+  theme_tree2() +
+  theme(
+    plot.margin = margin(t = 50, r = 100, b = 10, l = 10),  # Top margin for titles
+    legend.position = "right"
+  )
+
+# ==============================
+# Step 2: Add dotted lines from tips to columns
+# ==============================
+p_with_dots <- p +
+  geom_tiplab(
+    align = TRUE,
+    linetype = "dotted",
+    size = 0,  # no text labels
+    offset = 0.01
+  )
+
+# ==============================
+# Step 3: Add annotation columns (geom_fruit) WITHOUT axis.params
+# ==============================
+# Manually set factor levels to ensure consistency
+levels <- c("Species_1A", "Species_1B", "Species_2", "Species_3", "Species_4")
+
+metadata <- metadata %>%
+  mutate(
+    ASAP_group = factor(ASAP_group, levels = levels),
+    PTP_group  = factor(PTP_group, levels = levels),
+    mPTP_group = factor(mPTP_group, levels = levels)
+  )
+
+shared_species_colors <- c(
+  "Species_1A" = "gray80",
+  "Species_1B" = "gray80",
+  "Species_2"  = "darkolivegreen",
+  "Species_3"  = "lightblue4",
+  "Species_4"  = "black"
+)
+
+plot_with_fruit <- p_with_dots +
+
+  # Location column (keep separate)
+  geom_fruit(
+    data = metadata,
+    geom = geom_tile,
+    mapping = aes(y = id, fill = group_location),
+    offset = 0.05,
+    width = 0.03,
+    color = "black",
+    show.legend = TRUE
+  ) +
+scale_fill_manual(
+  name = "Location",
+  values = c(
+    "British Columbia" = "#E41A1C",
+    "California" = "#FF7F00",
+    "Florida" = "#984EA3",
+    "New Zealand" = "#4DAF4A",
+    "Oregon" = "dodgerblue1",
+    "Washington" = "#FFC0CB",
+    "Outgroup" = "black"
+  ),
+  breaks = c("British Columbia", "Washington", "Oregon", "California", "Florida", "New Zealand")
+  ) +
+  ggnewscale::new_scale_fill() +
+
+  # ASAP column
+  geom_fruit(
+    data = metadata,
+    geom = geom_tile,
+    mapping = aes(y = id, fill = ASAP_group),
+    offset = 0.05,
+    width = 0.03,
+    color = "black",
+    show.legend = FALSE  # Or FALSE if you want no extra legends
+  ) +
+  scale_fill_manual(
+    name = "Species Groups",
+    values = shared_species_colors,
+    guide = "none"
+  ) +
+  ggnewscale::new_scale_fill() +
+
+  # PTP column
+  geom_fruit(
+    data = metadata,
+    geom = geom_tile,
+    mapping = aes(y = id, fill = PTP_group),
+    offset = 0.05,
+    width = 0.03,
+    color = "black",
+    show.legend = FALSE  # Hide legend because it's redundant
+  ) +
+  scale_fill_manual(
+    values = shared_species_colors,
+    guide = "none"
+  ) +
+  ggnewscale::new_scale_fill() +
+
+  # mPTP column
+  geom_fruit(
+    data = metadata,
+    geom = geom_tile,
+    mapping = aes(y = id, fill = mPTP_group),
+    offset = 0.05,
+    width = 0.03,
+    color = "black",
+    show.legend = FALSE  # Hide legend because it's redundant
+  ) +
+  scale_fill_manual(
+    values = shared_species_colors,
+    guide = "none"
+  )
+
+# Define constants for offsets/widths
+offset_value <- 0.025
+column_width <- 0.015
+half_column_width <- column_width / 2
+
+# Where the tree + dotted lines end (estimate from plot!)
+tree_end_x <- 0.65  # Adjust until you hit center!
+
+# X positions of column centers
+location_x <- tree_end_x + offset_value + half_column_width
+asap_x     <- location_x + offset_value + column_width
+ptp_x      <- asap_x     + offset_value + column_width
+mptp_x     <- ptp_x      + offset_value + column_width
+
+# Y position for all column titles
+y_title <- length(tree$tip.label) + 2
+
+# Plot and annotate
+final_plot <- plot_with_fruit +
+
+  annotate("text", x = location_x, y = y_title, label = "Loc", angle = 0, hjust = 0.3, size = 2.6, fontface = "bold") +
+  annotate("text", x = asap_x, y = y_title, label = "ASAP", angle = 0, hjust = 0.6, size = 2.6, fontface = "bold") +
+  annotate("text", x = ptp_x, y = y_title, label = "PTP", angle = 0, hjust = 1.0, size = 2.6, fontface = "bold") +
+  annotate("text", x = mptp_x, y = y_title, label = "mPTP", angle = 0, hjust = 1.1, size = 2.6, fontface = "bold")
+
+# Example y positions (replace with the actual ones)
+label_positions <- data.frame(
+  y = c(50, 5, 4, 3, 2, 1),  # use real y-values from `tip_positions`
+  label = c("Podocerus cristatus       ", "***                                   ", "***                                   ", "Podocerus brasiliensis   ", "Podocerus cristatus       ", "Alicella gigantea            ")
+)
+
+final_plot <- final_plot +
+  geom_text2(data = label_positions,
+             aes(x = mptp_x + 0.09, y = y, label = label, fontface = "italic"),
+             hjust = 1.0,
+             size = 2)
+
+# Plot it!
+pod_tree <- final_plot +
+  theme(
+    legend.position = c(0.05, 0.95),  # (x, y) from bottom-left; adjust x/y as needed!
+    legend.justification = c(0, 1),   # aligns the legend box (left-top corner)
+    legend.direction = "vertical",    # or "horizontal" if you prefer
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 8)
+  ) +
+  scale_x_continuous(
+    limits = c(0, NA),   # Start from 0, no hard upper limit (allows plot to extend)
+    breaks = seq(0, 0.6, by = 0.1),  # Tick marks go up to 0.6
+    expand = c(0, 0)
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pod_tree.png", plot = pod_tree, width = 10, height = 8, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+# Convert images to base64
+pod_tree <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pod_tree.png")
+
+# Create the HTML (vertical display)
+html_pod_tree <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", pod_tree, "' alt='final pod tree'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_pod_tree)
+```

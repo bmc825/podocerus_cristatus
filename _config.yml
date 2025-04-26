@@ -1,0 +1,54 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Chapter 3 Data Analysis
+author: Brittany Cummings
+logo: images_html/Podocerus_bw.png
+
+# Exclude files not in the toc
+exclude_patterns:
+  - .venv/*
+
+# Only re-execute notebooks on each build if cache is not up to date (i.e., changes have not been made since last run)
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: cache
+  timeout: 5760112
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: Chapter_3_analysis.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - bibliography/references.bib
+
+sphinx:
+  config:
+    bibtex_reference_style: author_year
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
+  path_to_book: docs  # Optional path to your book, relative to the repository root
+  branch: master  # Which branch of the repository should be used when creating links (optional)
+
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_navigation: true
+  home_page_in_navbar: true
+  navbar_number_sections: true
+  sidebar: true
+  toc_title: "Table of Contents"
+  toc_depth: 4
+  extra_footer: ""
+
+launch_buttons:
+  notebook_interface: "jupyterlab"
+
+
+# Add Plotly support
+nb_render_priority:
+  html: ["application/vnd.plotly.v1+json", "text/html", "application/javascript", "text/markdown", "image/svg+xml", "image/png", "image/jpeg", "text/plain"]

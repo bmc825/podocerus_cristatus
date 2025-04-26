@@ -1,0 +1,8 @@
+"Parameter","Estimate","Est.Error","l-85% CI","u-85% CI","l-95% CI","u-95% CI"
+"1","Intercept",-1.22,0.365,-1.72,-0.693,-1.91,-0.459
+"2","MicrohabitatHydrallmania",-0.0712,0.306,-0.518,0.365,-0.672,0.521
+"3","MicrohabitatLafoea",0.402,0.299,-0.0279,0.837,-0.193,0.988
+"4","MicrohabitatOther_Hydroids",-0.222,0.334,-0.703,0.252,-0.883,0.422
+"5","MicrohabitatSertulariidae",-0.204,0.303,-0.647,0.227,-0.809,0.381
+"6","MicrohabitatSertulariidae_Bryozoa",0.716,0.307,0.273,1.15,0.117,1.31
+"7","Nudibranch1",0.882,0.26,0.51,1.25,0.371,1.39

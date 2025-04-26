@@ -1,0 +1,1873 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R");
+```
+
+
+# Cluster Analysis
+
+---
+
+## Question
+
+Do camouflage males and females exhibit discrete groupings in dorsal body color pattern variables that suggest distinct morph types?
+
+---
+
+## Objective
+
+Test for clustering of dorsal body color pattern metrics (**e_max**, **Filter_max**, **e_prop**, **R**, **G**, **B**).
+
+---
+
+## Method
+
+### 1. Load cleaned data.
+
+We start by loading the cleaned data from the "01_data_cleaning" pipeline. This data has already undergone transformations and contains relevant metrics for our models.
+
+
+
+```{r}
+data_c1_clean <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_c1_clean.csv")
+
+data_c1_clean <- data_c1_clean %>%
+  mutate(BCPD = paste0("BCPD_", sprintf("%04d", as.numeric(BCPD))))
+```
+
+
+---
+
+### 2. Prepare data for clustering.
+
+Individuals with distinct color patterns are visually classified and removed prior to cluster analyses. Also, male and female data are separated to eliminate Sex as a confounding variable.
+
+
+```{r}
+# First, subset male and female data
+data_c1_F = data_c1_clean[data_c1_clean$Sex == 'F',]
+data_c1_M = data_c1_clean[data_c1_clean$Sex == 'M',]
+
+
+# Subset color types to cluster
+# First, make dataframe out of known morphs so we can append these back later. 
+data_c1_F_morphs <- subset(data_c1_F, Morph_original %in% c("fluor","beige_flour","mimic_purple","mimic_orange_type1",
+      "mimic_orange_type2","green","xmas","brown_beige_border"))
+
+data_c1_M_morphs <- subset(data_c1_M, Morph_original %in% c("fluor","beige_flour","mimic_purple","mimic_orange_type1",
+      "mimic_orange_type2","green","xmas","brown_beige_border"))
+
+
+# Then, remove these morphs from the dataset that will be clustered
+data_c1_F <- data_c1_F %>%
+    filter(!(Morph_original %in% c(
+      "fluor","beige_flour","mimic_purple","mimic_orange_type1",
+      "mimic_orange_type2","green","xmas","brown_beige_border")))
+
+data_c1_M <- data_c1_M %>%
+    filter(!(Morph_original %in% c(
+      "fluor","beige_flour","mimic_purple","mimic_orange_type1",
+      "mimic_orange_type2","green","xmas","brown_beige_border")))
+```
+
+
+#### **Categorical variables**
+
+For categorical and binary predictors, R automatically dummy-codes the variables when they are stipulated as factors. Thus, we don't need to worry about scaling them. Also, for our purposes, we are not using any categorical variables for clustering. We will just convert the categorical variables in the dataframe to factors to be consistent.
+
+#### **Continuous variables**
+
+We standardize continuous predictors by centering and scaling them (dividing by two standard deviations). Standardizing variables before clustering helps ensure that all features contribute equally to the clustering process, leading to more meaningful and unbiased clusters. It is a fundamental preprocessing step, especially when variables have different scales or units.
+
+
+```{r}
+
+# Convert categorical variables to factors
+columns_to_convert_c1 <- c("Sex", "Morph_original")
+
+data_c1_F <- data_c1_F %>%
+    mutate(across(all_of(columns_to_convert_c1), as.factor))
+
+data_c1_M <- data_c1_M %>%
+    mutate(across(all_of(columns_to_convert_c1), as.factor))
+
+
+# Convert continuous variables to numeric
+columns_to_convert_c1 <- c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")
+
+data_c1_F <- data_c1_F %>%
+    mutate(across(all_of(columns_to_convert_c1), as.numeric))
+
+data_c1_M <- data_c1_M %>%
+    mutate(across(all_of(columns_to_convert_c1), as.numeric))
+
+# Standardize continuous variables
+columns_to_scale <- c("e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")
+
+# Scale the specified columns
+scaled_columns_F <- as.data.frame(scale(data_c1_F[, columns_to_scale]), scale = 2 * sd(data_c1_F))
+
+scaled_columns_M <- as.data.frame(scale(data_c1_M[, columns_to_scale]), scale = 2 * sd(data_c1_M))
+
+# Combine scaled columns with unscaled columns
+data_c1_F_scaled <- cbind(
+  data_c1_F[, !(colnames(data_c1_F) %in% columns_to_scale)], #selects all columns from data_c1_clean except the ones specified in columns_to_scale.
+  scaled_columns_F
+)
+
+data_c1_M_scaled <- cbind(
+  data_c1_M[, !(colnames(data_c1_M) %in% columns_to_scale)], #selects all columns from data_c1_clean except the ones specified in columns_to_scale.
+  scaled_columns_M
+)
+```
+
+
+---
+
+### 3. Principal Components Analysis (PCA)
+
+PCA is conducted on scaled data to reduce dimensionality and identify key components.
+
+
+
+```{r}
+data_c1_F_scaled.pca <- prcomp(data_c1_F_scaled[, 5:10], scale. = TRUE)
+data_c1_M_scaled.pca <- prcomp(data_c1_M_scaled[, 5:10], scale. = TRUE)
+```
+
+
+```{r}
+# Adjust scree plot for females with custom y-axis label
+PCA_screeplot_Female <- fviz_screeplot(data_c1_F_scaled.pca, addlabels = TRUE, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Scree Plot") +
+  labs(y = "Explained Variance (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 100, by = 10), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10)
+  )
+
+PCA_screeplot_Male <- fviz_screeplot(data_c1_M_scaled.pca, addlabels = TRUE, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Scree Plot") +
+  labs(y = "Explained Variance (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 100, by = 10), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10)
+  )
+
+# Adjust variable contribution plot for PC1 with custom y-axis label
+fviz_cos2_F_PC1 <- fviz_cos2(data_c1_F_scaled.pca, choice = "var", axes = 1, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Variable Contributions to PC1") +
+  labs(y = "Contribution (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10),
+    plot.margin = margin(t=10, b=100, l = 10, r = 10)
+  )
+
+fviz_cos2_M_PC1 <- fviz_cos2(data_c1_M_scaled.pca, choice = "var", axes = 1, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Variable Contributions to PC1") +
+  labs(y = "Contribution (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10),
+    plot.margin = margin(t=10, b=100, l = 10, r = 10)
+  )
+
+# Adjust variable contribution plot for PC2 with custom y-axis label
+fviz_cos2_F_PC2 <- fviz_cos2(data_c1_F_scaled.pca, choice = "var", axes = 2, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Variable Contributions to PC2") +
+  labs(y = "Contribution (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10),
+    plot.margin = margin(t=10, b=100, l = 10, r = 10)
+  )
+
+fviz_cos2_M_PC2 <- fviz_cos2(data_c1_M_scaled.pca, choice = "var", axes = 2, ggtheme = theme_bw(base_size = 10)) +
+  ggtitle("Variable Contributions to PC2") +
+  labs(y = "Contribution (%)") +  # Custom y-axis label
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1), labels = paste0(seq(0, 100, by = 10), "%")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(size = 12, margin = margin(r = 10)),
+    axis.text.y = element_text(size = 10),
+    plot.margin = margin(t=10, b=100, l = 10, r = 10)
+  )
+
+
+
+
+# Combine contribution plots for females
+PCA_contribution_Female <- (fviz_cos2_F_PC1 | fviz_cos2_F_PC2) +
+  plot_layout(heights = c(1, 1))
+
+# Combine contribution plots for males
+PCA_contribution_Male <- (fviz_cos2_M_PC1 | fviz_cos2_M_PC2) +
+  plot_layout(heights = c(1, 1))
+
+
+# Save plots
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_screeplot_Female.png", plot = PCA_screeplot_Female, width = 8, height = 6, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_contribution_Female.png", plot = PCA_contribution_Female, width = 8, height = 4, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_screeplot_Male.png", plot = PCA_screeplot_Male, width = 8, height = 6, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_contribution_Male.png", plot = PCA_contribution_Male, width = 8, height = 4, units = "in", dpi = 300)
+
+
+#add PCs to the original data
+val_c1_F_bin <- as.data.frame(data_c1_F_scaled.pca$x[,1:5])
+data_c1_F_pca <- cbind(data_c1_F, val_c1_F_bin[1:5])
+
+val_c1_M_bin <- as.data.frame(data_c1_M_scaled.pca$x[,1:5])
+data_c1_M_pca <- cbind(data_c1_M, val_c1_M_bin[1:5])
+```
+
+
+```{r}
+# Convert images to base64
+PCA_screeplot_Female <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_screeplot_Female.png")
+
+PCA_contribution_Female <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_contribution_Female.png")
+
+PCA_screeplot_Male <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_screeplot_Male.png")
+
+PCA_contribution_Male <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_contribution_Male.png")
+
+# Create the HTML
+html_PCA_contribution_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", PCA_screeplot_Female, "' alt='Screeplot Female'>
+<img src='", PCA_contribution_Female, "' alt='Contribution Plots Female'>
+<img src='", PCA_screeplot_Male, "' alt='Screeplot Male'>
+<img src='", PCA_contribution_Male, "' alt='Contribution Plots Male'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_PCA_contribution_plots)
+
+```
+
+
+```{r}
+#visualize another way
+PCA_Female <- fviz_pca_var(
+  data_c1_F_scaled.pca, 
+  col.var = "cos2",
+  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+  repel = TRUE
+  ) +
+  theme_bw(base_size = 10) +
+  ggtitle("Females") +
+  theme(
+    axis.text.x = element_text(size = 12),
+    axis.text.y = element_text(size = 12),
+    axis.title.x = element_text(size = 14),
+    axis.title.y = element_text(size = 14)
+  )
+
+
+PCA_Male <- fviz_pca_var(
+  data_c1_M_scaled.pca, 
+  col.var = "cos2",
+  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+  repel = TRUE
+  ) +
+  theme_bw(base_size = 10) +
+  ggtitle("Males") +
+  theme(
+    axis.text.x = element_text(size = 12),
+    axis.text.y = element_text(size = 12),
+    axis.title.x = element_text(size = 14),
+    axis.title.y = element_text(size = 14)
+  )
+
+
+# Save plots
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_Female.png", plot = PCA_Female, width = 8, height = 8, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_Male.png", plot = PCA_Male, width = 8, height = 8, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+PCA_Female <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_Female.png")
+
+PCA_Male <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/PCA_Male.png")
+
+
+# Create the HTML
+html_PCA_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    overflow-x: hidden; 
+  }
+  .image-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .image-row img {
+    width: 49%; /* roughly 1/2 of the width; adjust if needed */
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+<div class='image-row'>
+  <img src='", PCA_Female, "' alt='PCA Female'>
+  <img src='", PCA_Male,   "' alt='PCA Male'>
+</div>
+")
+
+# IRdisplay::display_html(html_PCA_plots)
+```
+
+
+
+The first two principal components explain >85% of the data. These are the components that we will use for clustering.
+
+---
+
+### 4. K-means cluster analysis
+
+K-means clustering is a machine learning method that groups data into a set number of clusters (k). It works by finding clusters where the points within each group are more similar to each other than to points in other groups.
+
+The process begins by randomly placing cluster centers (centroids). Each data point is assigned to the closest centroid (usually based on Euclidean distance). Then, the centroids are updated to be the average position of all the points in their cluster. This process of assigning points and updating centroids repeats until the centroids stop moving significantly or a set number of steps is reached.
+
+#### **Cluster optimization**
+
+Finding the right number of clusters (k) is crucial in k-means clustering because it:
+
+1. **Improves model accuracy**
+
+    -   Choosing an inappropriate k can lead to poorly defined clusters. Too few clusters may combine distinct groups, while too many can overfit the data.
+    
+2. **Prevents Arbitrary Selection**
+
+    -   Using systematic methods avoids guessing and ensures the chosen k is supported by the data.
+    
+3. **Balances Complexity and Interpretability**
+
+    -   A good k provides meaningful clusters without making the model overly complex or hard to interpret. 
+    
+We use graphical methods to find the optimal k value in a k-means clustering algorithm. These methods ensure that k is chosen based on the structure of the data, leading to better and more reliable clustering outcomes. In this study, we will use the elbow method and silhouette method. The x-value at the inflection points indicate the optimal number of clusters.
+
+
+```{r}
+# Determine optimal k value for clustering first two principal components
+
+# Elbow method
+elbow_Female <- fviz_nbclust(
+  data_c1_F_pca[,11:12], kmeans, method = "wss") +
+  geom_vline(xintercept = 2, linetype = 2) +
+  theme_bw(base_size = 8) +
+  ggtitle("A") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8)
+  )
+elbow_Male <- fviz_nbclust(
+  data_c1_M_pca[,11:12], kmeans, method = "wss") +
+  geom_vline(xintercept = 2, linetype = 2) +
+  theme_bw(base_size = 8) +
+  ggtitle("B") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8)
+  )
+
+# Silhouette method
+silhouette_Female <- fviz_nbclust(
+  data_c1_F_pca[,11:12], kmeans, method = "silhouette") +
+  geom_vline(xintercept = 2, linetype = 2) +
+  theme_bw(base_size = 8) +
+  ggtitle("C") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8)
+  )
+silhouette_Male <- fviz_nbclust(
+  data_c1_M_pca[,11:12], kmeans, method = "silhouette") +
+  geom_vline(xintercept = 2, linetype = 2) +
+  theme_bw(base_size = 8) +
+  ggtitle("D") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8)
+  )
+
+
+# Combine plots for females and males with equal sizing
+elbow_plots <- (elbow_Female | elbow_Male) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+silhouette_plots <- (silhouette_Female | silhouette_Male) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+
+# Save plots
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/elbow_plots.png", plot = elbow_plots, width = 6, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/silhouette_plots.png", plot = silhouette_plots, width = 6, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+elbow_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/elbow_plots.png")
+
+silhouette_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/silhouette_plots.png")
+
+
+
+# Create the HTML
+html_elbow_silhouette_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", elbow_plots, "' alt='elbow plots'>
+<img src='", silhouette_plots, "' alt='silhouette plots'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_elbow_silhouette_plots)
+```
+
+The graphs indicate that 2 to 4 clusters looks okay to try for females and males
+We can always change the number of clusters if it doesn't make sense with our data later. Remember, clustering is a heuristic method (i.e., trial and error)!
+
+#### **Cluster analysis**
+
+#### **k=2**
+
+
+```{r}
+
+#cluster data and add to dataset
+km2_c1_F = kmeans(data_c1_F_pca[,11:12], centers = 2, iter.max = 100, nstart = 25)
+km2_c1_F_bin <- cbind(data_c1_F_pca, Cluster=km2_c1_F$cluster)
+
+km2_c1_M = kmeans(data_c1_M_pca[,11:12], centers = 2, iter.max = 100, nstart = 25)
+km2_c1_M_bin <- cbind(data_c1_M_pca, Cluster=km2_c1_M$cluster)
+```
+
+
+```{r}
+
+# Plot clusters and PCA results
+cb_palette_F <- c("indianred", "lightblue4")
+
+labels <- c("bold(e[max])", "bold(Filter[max])", "bold(e[prop])", "bold(R[c])", "bold(G[c])", "bold(B[c])")
+
+Female_km2 <- fviz_pca_biplot(
+  data_c1_F_scaled.pca,
+  habillage = as.factor(km2_c1_F_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_F,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("A") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Female_km2$layers <- Female_km2$layers[-2]
+
+  # Add custom labels without lines
+Female_km2_final <- Female_km2 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_F_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA,
+                  fontface = "bold")
+
+
+cb_palette_M <- c("lightblue4", "indianred")
+
+Male_km2 <- fviz_pca_biplot(
+  data_c1_M_scaled.pca,
+  habillage = as.factor(km2_c1_M_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_M,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("B") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Male_km2$layers <- Male_km2$layers[-2]
+
+Male_km2_final <- Male_km2 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_M_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA)
+
+
+# Combine plots for females and males with equal sizing
+km2_plots <- (Female_km2_final | Male_km2_final) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km2_plots.png", plot = km2_plots, width = 6, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+km2_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km2_plots.png")
+
+
+
+# Create the HTML
+html_kmeans2_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", km2_plots, "' alt='kmeans2 Plot'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_kmeans2_plots)
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+#FEMALES 
+
+# Define custom colors for clusters
+custom_colors <- c("1" = "indianred", "2" = "lightblue4")
+
+# Plot for females
+pf_km2 <- plot_ly(km2_c1_F_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Females (k=2)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+
+pf_km2
+
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+# MALES
+
+# Define custom colors for clusters
+custom_colors <- c("2" = "indianred", "1" = "lightblue4")
+
+# Plot for males
+pm_km2 <- plot_ly(km2_c1_M_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Males (k=2)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+
+pm_km2
+
+```
+
+#### **k=3**
+
+
+```{r}
+
+#cluster data and add to dataset
+km3_c1_F = kmeans(data_c1_F_pca[,11:12], centers = 3, iter.max = 100, nstart = 25)
+km3_c1_F_bin <- cbind(data_c1_F_pca, Cluster=km3_c1_F$cluster)
+
+km3_c1_M = kmeans(data_c1_M_pca[,11:12], centers = 3, iter.max = 100, nstart = 25)
+km3_c1_M_bin <- cbind(data_c1_M_pca, Cluster=km3_c1_M$cluster)
+```
+
+
+```{r}
+
+# Plot clusters and PCA results
+cb_palette_F <- c("lightblue4", "indianred", "#117733")
+
+labels <- c("bold(e[max])", "bold(Filter[max])", "bold(e[prop])", "bold(R[c])", "bold(G[c])", "bold(B[c])")
+
+Female_km3 <- fviz_pca_biplot(
+  data_c1_F_scaled.pca,
+  habillage = as.factor(km3_c1_F_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_F,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("A") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Female_km3$layers <- Female_km3$layers[-2]
+
+  # Add custom labels without lines
+Female_km3_final <- Female_km3 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_F_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA,
+                  fontface = "bold")
+
+
+
+cb_palette_M <- c("#117733", "indianred", "lightblue4")
+
+Male_km3 <- fviz_pca_biplot(
+  data_c1_M_scaled.pca,
+  habillage = as.factor(km3_c1_M_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_M,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("B") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Male_km3$layers <- Male_km3$layers[-2]
+
+  # Add custom labels without lines
+Male_km3_final <- Male_km3 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_M_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA,
+                  fontface = "bold")
+
+
+# Combine plots for females and males with equal sizing
+km3_plots <- (Female_km3_final | Male_km3_final) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km3_plots.png", plot = km3_plots, width = 6, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+
+# Convert images to base64
+km3_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km3_plots.png")
+
+
+
+# Create the HTML
+html_kmeans3_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", km3_plots, "' alt='kmeans2 Plot'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_kmeans3_plots)
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+# FEMALES
+
+# Define custom colors for clusters
+custom_colors <- c("1" = "lightblue4", "3" = "#117733", "2" = "indianred")
+
+# Plot for females
+pf_km3 <- plot_ly(km3_c1_F_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Females (k=3)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+pf_km3
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+# MALES
+
+# Define custom colors for clusters
+custom_colors <- c("1" = "#117733", "3" = "lightblue4", "2" = "indianred")
+
+# Plot for males
+pm_km3 <- plot_ly(km3_c1_M_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Males (k=3)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+
+pm_km3
+
+```
+
+#### **k=4**
+
+
+```{r}
+#cluster data and add to dataset
+km4_c1_F = kmeans(data_c1_F_pca[,11:12], centers = 4, iter.max = 100, nstart = 25)
+km4_c1_F_bin <- cbind(data_c1_F_pca, Cluster=km4_c1_F$cluster)
+
+km4_c1_M = kmeans(data_c1_M_pca[,11:12], centers = 4, iter.max = 100, nstart = 25)
+km4_c1_M_bin <- cbind(data_c1_M_pca, Cluster=km4_c1_M$cluster)
+```
+
+
+```{r}
+
+# Plot clusters and PCA results
+cb_palette_F <- c("darkorange", "#117733", "lightblue4", "indianred")
+
+labels <- c("bold(e[max])", "bold(Filter[max])", "bold(e[prop])", "bold(R[c])", "bold(G[c])", "bold(B[c])")
+
+Female_km4 <- fviz_pca_biplot(
+  data_c1_F_scaled.pca,
+  habillage = as.factor(km4_c1_F_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_F,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("A") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Female_km4$layers <- Female_km4$layers[-2]
+
+  # Add custom labels without lines
+Female_km4_final <- Female_km4 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_F_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA,
+                  fontface = "bold")
+
+cb_palette_M <- c("indianred", "lightblue4", "#117733", "darkorange")
+
+Male_km4 <- fviz_pca_biplot(
+  data_c1_M_scaled.pca,
+  habillage = as.factor(km4_c1_M_bin$Cluster),
+  addEllipses = FALSE,
+  mean.point = FALSE,
+  palette = cb_palette_M,
+  label = "none",
+  pointshape = 16,
+  pointsize = 2,
+  repel = TRUE,
+  col.var = "black"
+) +
+  labs(color = "Cluster") +
+  theme_bw(base_size = 8) +
+  ggtitle("B") +
+  theme(
+    plot.title = element_text(hjust = 0, size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(size = 8),
+    axis.title.y = element_text(size = 8),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+# Remove the default text layer if needed
+Male_km4$layers <- Male_km4$layers[-2]
+
+Male_km4_final <- Male_km4 + geom_text_repel(data = as.data.frame(get_pca_var(data_c1_M_scaled.pca)$coord),
+                  aes(x = Dim.1, y = Dim.2, label = labels),
+                  parse = TRUE,
+                  size = 3,
+                  segment.color = NA,
+                  fontface = "bold")
+
+
+# Combine plots for females and males with equal sizing
+km4_plots <- (Female_km4_final | Male_km4_final) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km4_plots.png", plot = km4_plots, width = 6, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+
+# Convert images to base64
+km4_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/km4_plots.png")
+
+
+
+# Create the HTML
+html_kmeans4_plots <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", km4_plots, "' alt='kmeans2 Plot'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_kmeans4_plots)
+
+
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+# FEMALES
+
+# Define custom colors for clusters
+custom_colors <- c("4" = "indianred", "3" = "lightblue4", "2" = "#117733", "1" = "darkorange")
+
+
+# Plot for females
+pf_km4 <- plot_ly(km4_c1_F_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Females (k=4)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+pf_km4
+
+```
+
+
+```{r}
+
+#Fancier way of viewing clusters
+
+# MALES
+
+# Define custom colors for clusters
+custom_colors <- c("4" = "darkorange", "3" = "#117733", "2" = "lightblue4", "1" = "indianred")
+
+# Plot for males
+pm_km4 <- plot_ly(km4_c1_M_bin, x = ~PC1, y = ~PC2, mode = "markers") %>%
+  add_markers(
+    size = 3.5,
+    text = ~paste("BCPD:", BCPD, "<br>Morph_original:", Morph_original),
+    color = ~as.character(Cluster),
+    colors = custom_colors
+  ) %>%
+  layout(
+    title = list(text = "Males (k=4)", font = list(size = 18)),
+    xaxis = list(
+      title = "PC1",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    yaxis = list(
+      title = "PC2",
+      showgrid = FALSE,
+      zeroline = FALSE,
+      showline = TRUE,
+      linecolor = "black"
+    ),
+    plot_bgcolor = "white",  # White plot background like theme_bw()
+    paper_bgcolor = "white", # White overall background
+    font = list(family = "Arial", size = 10, color = "black")
+  )
+
+
+pm_km4
+```
+
+
+The boundaries between clusters are not well-defined, and our initial classification of color types does not consistently align with clear, distinct groups. As a result, evaluating the accuracy of our K-means clustering results is challenging without visual validation. To address this, we will export the clustering results and overlay them onto the outcomes of an additional analysis using additional R packages (see next section).
+
+---
+
+### 5. Export cluster analysis results
+
+#### **Add clusters to original dataset**
+
+
+```{r}
+
+# We need to add the clusters from clustering to the unstandardized dataset.
+data_km2_c1_F_bin <- cbind(data_c1_F,Cluster=km2_c1_F_bin$Cluster)
+data_km2_c1_M_bin <- cbind(data_c1_M,Cluster=km2_c1_M_bin$Cluster)
+
+data_km3_c1_F_bin <- cbind(data_c1_F,Cluster=km3_c1_F_bin$Cluster)
+data_km3_c1_M_bin <- cbind(data_c1_M,Cluster=km3_c1_M_bin$Cluster)
+
+data_km4_c1_F_bin <- cbind(data_c1_F,Cluster=km4_c1_F_bin$Cluster)
+data_km4_c1_M_bin <- cbind(data_c1_M,Cluster=km4_c1_M_bin$Cluster)
+
+
+# To keep the dataset complete, we will add the morphs removed at the beginning (labelling them as "M")
+#Label Morph_originals as cluster "M"
+Cluster = c("M","M","M","M","M")
+data_km2_c1_F_bin_morphs <- cbind(data_c1_F_morphs, Cluster)
+Cluster = c("M","M","M","M","M","M","M","M","M","M","M","M","M","M","M")
+data_km2_c1_M_bin_morphs <- cbind(data_c1_M_morphs, Cluster)
+
+Cluster = c("M","M","M","M","M")
+data_km3_c1_F_bin_morphs <- cbind(data_c1_F_morphs, Cluster)
+Cluster = c("M","M","M","M","M","M","M","M","M","M","M","M","M","M","M")
+data_km3_c1_M_bin_morphs <- cbind(data_c1_M_morphs, Cluster)
+
+Cluster = c("M","M","M","M","M")
+data_km4_c1_F_bin_morphs <- cbind(data_c1_F_morphs, Cluster)
+Cluster = c("M","M","M","M","M","M","M","M","M","M","M","M","M","M","M")
+data_km4_c1_M_bin_morphs <- cbind(data_c1_M_morphs, Cluster)
+
+
+#Add Morphs to the dataset
+data_km2_c1_F_final <- rbind(data_km2_c1_F_bin, data_km2_c1_F_bin_morphs)
+data_km2_c1_M_final <- rbind(data_km2_c1_M_bin, data_km2_c1_M_bin_morphs)
+
+data_km3_c1_F_final <- rbind(data_km3_c1_F_bin, data_km2_c1_F_bin_morphs)
+data_km3_c1_M_final <- rbind(data_km3_c1_M_bin, data_km2_c1_M_bin_morphs)
+
+data_km4_c1_F_final <- rbind(data_km4_c1_F_bin, data_km2_c1_F_bin_morphs)
+data_km4_c1_M_final <- rbind(data_km4_c1_M_bin, data_km2_c1_M_bin_morphs)
+```
+
+
+#### **Export data**
+
+
+```{r}
+# Export data and compare clusters to pictures to see if there are any obvious visual color patterns that fall out
+
+write.csv(data_km2_c1_F_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km2_c1_F_final.csv',row.names = TRUE)
+write.csv(data_km2_c1_M_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km2_c1_M_final.csv',row.names = TRUE)
+
+write.csv(data_km3_c1_F_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km3_c1_F_final.csv',row.names = TRUE)
+write.csv(data_km3_c1_M_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km3_c1_M_final.csv',row.names = TRUE)
+
+write.csv(data_km4_c1_F_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km4_c1_F_final.csv',row.names = TRUE)
+write.csv(data_km4_c1_M_final,'C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km4_c1_M_final.csv',row.names = TRUE)
+```
+
+
+---
+
+### 6. Cluster evaluation
+
+The R packages “recolorize” (Weller et al., 2024) and “patternize” (Belleghem et al., 2017) are tools that classify pixels into distinct color groups, which are then compared through PCA. We will use the results to (1) verify the optimal number of k-means clusters, and (2) assign individuals at the boundary between clusters to appropriate clusters.
+
+#### **Image alignment in patternize**
+We start with a folder of unaltered images of dorsal bodies. These images are exported PNGs of the measured dorsal body ROIs in ImageJ micatoolbox. Note that the images have slight variations in the size, shape, and angle, making it difficult to differentiate variation due to color pattern differences from that due to other factors. To address this, we set landmarks on the images to mark consistent reference points across all images, and perform alignment to standardize their orientation and scale. This ensures that subsequent analyses focus on meaningful color pattern differences rather than extraneous variability.
+
+To perform image alignment in patternize, one set of XY coordinates of landmarks is required for each image. We do this in ImageJ using the multi-point tool and the custom "SetLandmarks.ijm" macro. Our landmarking scheme for the dorsal bodies has 9 points: 4 on the antipodal points of the body outline, and 1 on each midpoint of pereonites 2-6. The landmarks for each image should be exported as a two-column, tab-delimited text file with X coordinates on the left and Y coordinates on the right, and no header.
+
+Once we have the landmark files, we can proceed with image alignment using the alignLan() function.
+
+
+
+#### **Females**
+
+
+```{r}
+
+
+# Set of specimen IDs
+IDlist_c1_F <- tools::file_path_sans_ext(dir("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/nobin/original_images/", ".png"))
+
+# Make list with images
+imageList_c1_F <- makeList(IDlist_c1_F, type = "image",
+                      prepath = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/nobin/original_images/",
+                      extension = ".png")
+
+# Make list with landmarks
+landmarkList_c1_F <- makeList(IDlist_c1_F,
+                         type = "landmark",
+                         prepath = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/nobin/landmarks/",
+                         extension = "_landmarks.txt")
+
+# Set target as BCPD_0102 (or whatever image you want)
+target_c1_F <- landmarkList_c1_F[['BCPD_0102']]
+
+# Set up mask
+mask1_c1_F <- read.table("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/nobin/masks/BCPD_0102_mask.txt", header = FALSE)
+
+### Alignment ###
+# This takes ~1 minute on a 16Gb RAM laptop running Ubuntu
+imageList_aligned_c1_F <- alignLan(imageList_c1_F, landmarkList_c1_F, transformRef = target_c1_F,
+                              adjustCoords = TRUE,
+                              plotTransformed = FALSE,  # Suppress intermediate plots
+                              resampleFactor = 5,
+                              cartoonID = 'BCPD_0102',
+                              maskOutline = mask1_c1_F)
+
+# Save the aligned image list to an .rds file
+saveRDS(imageList_aligned_c1_F, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/imageList_aligned_c1_F.rds")
+
+
+```
+
+
+```{r}
+# Render combined plot
+rasterstack_Female <- layout(matrix(1:50, nrow = 5)); par(mar = rep(1, 4))
+
+# Set up the layout and margins
+layout(matrix(1:50, nrow = 5))
+par(mar = rep(1, 4))
+
+# Plot each aligned image
+lapply(imageList_aligned_c1_F, plotRasterstackAsImage)
+
+```
+
+#### **Males**
+
+
+```{r}
+
+
+# Set of specimen IDs
+IDlist_c1_M <- tools::file_path_sans_ext(dir("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/nobin/original_images/", ".png"))
+
+# Make list with images
+imageList_c1_M <- makeList(IDlist_c1_M, type = "image",
+                      prepath = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/nobin/original_images/",
+                      extension = ".png")
+
+# Make list with landmarks
+landmarkList_c1_M <- makeList(IDlist_c1_M,
+                         type = "landmark",
+                         prepath = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/nobin/landmarks/",
+                         extension = "_landmarks.txt")
+
+# Set target as BCPD_0392 (or whatever image you want)
+target_c1_M <- landmarkList_c1_M[['BCPD_0392']]
+
+# Set up mask
+mask1_c1_M <- read.table("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/nobin/masks/BCPD_0392_mask.txt", header = FALSE)
+
+### Alignment ###
+# This takes ~1 minute on a 16Gb RAM laptop running Ubuntu
+imageList_aligned_c1_M <- alignLan(imageList_c1_M, landmarkList_c1_M, transformRef = target_c1_M,
+                              adjustCoords = TRUE,
+                              plotTransformed = FALSE,  # Suppress intermediate plots
+                              resampleFactor = 5,
+                              cartoonID = 'BCPD_0392',
+                              maskOutline = mask1_c1_M)
+
+# Save the aligned image list to an .rds file
+saveRDS(imageList_aligned_c1_M, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/imageList_aligned_c1_M.rds")
+
+```
+
+
+```{r}
+# Render combined plot
+rasterstack_Male <- layout(matrix(1:50, nrow = 5)); par(mar = rep(1, 4))
+
+
+# Set up the layout and margins
+layout(matrix(1:50, nrow = 5))
+par(mar = rep(1, 4))
+
+# Plot each aligned image
+lapply(imageList_aligned_c1_M, plotRasterstackAsImage)
+
+
+```
+
+
+#### **Image segmentation in recolorize**
+
+To simplify the analysis, we reduce thousands of colors in the images to a manageable number for further refinement. This is achieved using the color histogram binning method in the recolorize package.
+
+The color histogram binning method works by dividing each channel of a color space (e.g., RGB) into a predetermined number of bins. It then calculates the number of pixels falling into each bin and computes the average color for that bin. For instance, dividing each of the three RGB channels into two bins results in $2^3 = 8$ total bins, with 8 representative colors.
+
+Since patternize works with raster images and recolorize works with arrays, we first need to convert the raster objects into arrays to proceed with clustering.
+
+After reducing the number of colors, we refine them by combining similar colors. This ensures the images are granular enough to capture important details while remaining simplified for analysis.
+
+We use the recluster() function for this step, which:
+
+1.  Calculates the Euclidean distances between all color centers in a recolorize object.
+
+2.  Clusters them hierarchically using hclust.
+
+3.  Combines the most similar colors based on a user-defined cutoff.
+
+**To streamline the above steps, we use recolorize2(), a wrapper function that performs color histogram binning and refinement in one step. This function produces a list (rc_list) of simplified recolorize objects ready for further analysis.**
+
+By the end of this workflow, the images are reduced to a manageable set of representative colors while maintaining the necessary detail for meaningful comparisons.
+
+
+```{r}
+# load the imageList_aligned object:
+imageList_aligned_c1_F <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/imageList_aligned_c1_F.rds")
+
+# convert from RasterBricks to image arrays:
+imgs_F <- lapply(imageList_aligned_c1_F, brick_to_array)
+names(imgs_F) <- names(imageList_aligned_c1_F)
+
+# save raster extents:
+extent_list_F <- lapply(imageList_aligned_c1_F, extent)
+
+
+#remove former list, if needed. If we don't do this, you might get an error.
+rm(c)
+
+
+# fit initial recolorize fits (default color space is RGB). Note that recolorize2 is a wrapper function which runs recolorize and recluster sequentially in a single step.
+
+rc_list_F <- lapply(imgs_F, 
+                  function(i) recolorize2(i, bins = 3,
+                                          cutoff = 45,
+                                          plotting = FALSE,
+                                          color_space = "Lab"))
+
+# get all palettes and sizes
+all_palettes_F <- do.call(rbind, lapply(rc_list_F, function(i) i$centers))
+all_sizes_F <- do.call(c, lapply(rc_list_F, function(i) i$sizes / sum(i$sizes)))
+
+
+# Next you can combine the color palettes from all of the recolorize objects in rc_list and use hclust_color to plot them and return a list of which colors to group together. 
+
+# Note that as the number of clusters increases, the percent variation explained in the PCA decreases because your images are more complex (see chunk below for PCA).
+cluster_list_F <- hclust_color(all_palettes_F, cutoff = 50, color_space="Lab")
+
+# Save dendrogram to file
+png(filename = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/dendrogram_Female.png", width = 800, height = 600, res = 150)
+
+cluster_list_F <- hclust_color(all_palettes_F, cutoff = 50)
+
+dev.off()
+
+# make an empty matrix for storing the new palette
+pod_palette_F <- matrix(NA, ncol = 3, nrow = length(cluster_list_F))
+
+# for every color in cluster_list...
+for (i in 1:length(cluster_list_F)) {
+  
+  # get the center indices
+  idx <- cluster_list_F[[i]]
+  
+  # get the average value for each channel, using cluster size to get a weighted average
+  ctr <- apply(all_palettes_F, 2, 
+               function(j) weighted.mean(j[idx], 
+                                         w = all_sizes_F[idx]))
+  
+  # store in the palette matrix
+  pod_palette_F[i, ] <- ctr
+}
+
+
+# and apply
+# set plotting = TRUE to view individual recolorize objects:
+impose_list_F <- lapply(imgs_F, function(i) imposeColors(i, pod_palette_F, 
+                                                     adjust_centers = FALSE, 
+                                                     plotting = FALSE))
+
+
+# save:
+saveRDS(impose_list_F, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/recolorize_fits_c1_F.rds")
+
+
+# convert back to patternize (including extent)
+patternize_list_F <- lapply(impose_list_F, recolorize_to_patternize)
+for (i in 1:length(patternize_list_F)) {
+  for (j in 1:length(patternize_list_F[[1]])) {
+    raster::extent(patternize_list_F[[i]][[j]]) <- extent_list_F[[i]]
+  }
+}
+
+# and save
+saveRDS(patternize_list_F, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/patternize_list_c1_F.rds")
+
+```
+
+
+```{r}
+# load the imageList_aligned object:
+imageList_aligned_c1_M <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/imageList_aligned_c1_M.rds")
+
+# convert from RasterBricks to image arrays:
+imgs_M <- lapply(imageList_aligned_c1_M, brick_to_array)
+names(imgs_M) <- names(imageList_aligned_c1_M)
+
+# save raster extents:
+extent_list_M <- lapply(imageList_aligned_c1_M, extent)
+
+
+
+#remove former list, if needed. If we don't do this, you might get an error.
+rm(c)
+
+
+# fit initial recolorize fits (default color space is RGB). Note that recolorize2 is a wrapper function which runs recolorize and recluster sequentially in a single step.
+
+rc_list_M <- lapply(imgs_M, 
+                  function(i) recolorize2(i, bins = 3,
+                                          cutoff = 45,
+                                          plotting = FALSE,
+                                          color_space = "Lab"))
+
+# get all palettes and sizes
+all_palettes_M <- do.call(rbind, lapply(rc_list_M, function(i) i$centers))
+all_sizes_M <- do.call(c, lapply(rc_list_M, function(i) i$sizes / sum(i$sizes)))
+
+
+# Next you can combine the color palettes from all of the recolorize objects in rc_list and use hclust_color to plot them and return a list of which colors to group together. 
+
+# Note that as the number of clusters increases, the percent variation explained in the PCA decreases because your images are more complex (see chunk below for PCA).
+cluster_list_M <- hclust_color(all_palettes_M, cutoff = 42)
+
+# Save dendrogram to file
+png(filename = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/dendrogram_Male.png", width = 800, height = 600, res = 150)
+
+cluster_list_M <- hclust_color(all_palettes_M, cutoff = 42)
+
+dev.off()
+
+# make an empty matrix for storing the new palette
+pod_palette_M <- matrix(NA, ncol = 3, nrow = length(cluster_list_M))
+
+# for every color in cluster_list...
+for (i in 1:length(cluster_list_M)) {
+  
+  # get the center indices
+  idx <- cluster_list_M[[i]]
+  
+  # get the average value for each channel, using cluster size to get a weighted average
+  ctr <- apply(all_palettes_M, 2, 
+               function(j) weighted.mean(j[idx], 
+                                         w = all_sizes_M[idx]))
+  
+  # store in the palette matrix
+  pod_palette_M[i, ] <- ctr
+}
+
+# and apply
+# set plotting = TRUE to view individual recolorize objects:
+impose_list_M <- lapply(imgs_M, function(i) imposeColors(i, pod_palette_M, 
+                                                     adjust_centers = FALSE, 
+                                                     plotting = FALSE))
+
+# save:
+saveRDS(impose_list_M, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/recolorize_fits_c1_M.rds")
+
+
+# convert back to patternize (including extent)
+patternize_list_M <- lapply(impose_list_M, recolorize_to_patternize)
+for (i in 1:length(patternize_list_M)) {
+  for (j in 1:length(patternize_list_M[[1]])) {
+    raster::extent(patternize_list_M[[i]][[j]]) <- extent_list_M[[i]]
+  }
+}
+
+# and save
+saveRDS(patternize_list_M, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/patternize_list_c1_M.rds")
+```
+
+
+#### **Color pattern analyses in patternize**
+Since we now have the images segmented in the way that patternize needs, we can run any of the regular patternize functions on it (see the methods paper and examples repository). Here, we’ll use a custom function (https://hiweller.rbind.io/post/recolorize-patternize-workflow/) for running a PCA on the entire color pattern (all three colors simultaneously, rather than one color class at a time). This approach is similar to our initial PCA conducted before k-means clustering, but it uses binned colors rather than color pattern metrics derived from micaToolbox.
+
+
+```{r}
+
+library(grid)
+
+# load recolorize results
+patternize_list_F <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/patternize_list_c1_F.rds")
+patternize_list_M <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/patternize_list_c1_M.rds")
+
+
+# load kmeans results
+metadata_km2_F_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km2_c1_F_final.csv")
+metadata_km2_F_c1 <- metadata_km2_F_c1 %>%
+  filter(Cluster != "M")
+metadata_km2_M_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km2_c1_M_final.csv")
+metadata_km2_M_c1 <- metadata_km2_M_c1 %>%
+  filter(Cluster != "M")
+
+metadata_km3_F_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km3_c1_F_final.csv")
+metadata_km3_F_c1 <- metadata_km3_F_c1 %>%
+  filter(Cluster != "M")
+metadata_km3_M_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km3_c1_M_final.csv")
+metadata_km3_M_c1 <- metadata_km3_M_c1 %>%
+  filter(Cluster != "M")
+
+metadata_km4_F_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/data_km4_c1_F_final.csv")
+metadata_km4_F_c1 <- metadata_km4_F_c1 %>%
+  filter(Cluster != "M")
+metadata_km4_M_c1 <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/data_km4_c1_M_final.csv")
+metadata_km4_M_c1 <- metadata_km4_M_c1 %>%
+  filter(Cluster != "M")
+
+
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/FEMALES/nomorphs_woutliers/rds_files/patPCA_total.R")
+
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/photos/PATTERNIZE/MALES/nomorphs_woutliers/rds_files/patPCA_total.R")
+
+
+# run the PCA
+pod_pca_F <- patPCA_total(patternize_list_F, quietly = FALSE)
+
+pod_pca_M <- patPCA_total(patternize_list_M, quietly = FALSE)
+
+# Reorder the rows of metadata files to match the order of the row names from pca files
+metadata_km2_F_c1 <- metadata_km2_F_c1[match(rownames(pod_pca_F$x), metadata_km2_F_c1$BCPD), ]
+metadata_km2_M_c1 <- metadata_km2_M_c1[match(rownames(pod_pca_M$x), metadata_km2_M_c1$BCPD), ]
+
+metadata_km3_F_c1 <- metadata_km3_F_c1[match(rownames(pod_pca_F$x), metadata_km3_F_c1$BCPD), ]
+metadata_km3_M_c1 <- metadata_km3_M_c1[match(rownames(pod_pca_M$x), metadata_km3_M_c1$BCPD), ]
+
+metadata_km4_F_c1 <- metadata_km4_F_c1[match(rownames(pod_pca_F$x), metadata_km4_F_c1$BCPD), ]
+metadata_km4_M_c1 <- metadata_km4_M_c1[match(rownames(pod_pca_M$x), metadata_km4_M_c1$BCPD), ]
+
+# Calculate combined PCA limits for F and M
+PCx <- 1; PCy <- 2
+pca_limits <- list(
+  x = range(c(pod_pca_F$x[, PCx], pod_pca_M$x[, PCx])),
+  y = range(c(pod_pca_F$x[, PCy], pod_pca_M$x[, PCy]))
+)
+
+create_pca_plot <- function(pod_pca, rc_list, metadata, outline_colors, pca_limits, title) {
+  # Set aspect ratio for slightly wider plots
+  aspect_ratio <- 0.8  # Adjust to make the plot slightly wider
+
+  pca_data <- as.data.frame(pod_pca$x[, c(PCx, PCy)])
+  colnames(pca_data) <- c("PC1", "PC2")
+  pca_data$image <- names(rc_list)
+  pca_data$Cluster <- factor(metadata$Cluster)
+
+  # Create base PCA plot
+  plot <- ggplot(pca_data, aes(x = PC1, y = PC2)) +
+    geom_point(size = 1, alpha = 0.8, aes(color = Cluster)) +
+    scale_color_manual(values = outline_colors) +
+    xlab(paste0("PC1 (", round(summary(pod_pca)$importance[2, PCx] * 100, 2), "% var.)")) +
+    ylab(paste0("PC2 (", round(summary(pod_pca)$importance[2, PCy] * 100, 2), "% var.)")) +
+    ggtitle(title) +
+    theme_bw(base_size = 8) +
+    theme(
+      legend.position = "none",
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.title.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
+      axis.title.y = element_text(size = 8),
+      plot.title = element_text(size = 10)
+    ) +
+    coord_fixed(ratio = aspect_ratio, xlim = pca_limits$x, ylim = pca_limits$y)  # Adjust aspect ratio
+
+  # Adjust image size relative to PCA range
+  image_size_x <- diff(pca_limits$x) * 0.05
+  image_size_y <- image_size_x / aspect_ratio  # Adjust for aspect ratio
+
+  for (i in 1:nrow(pca_data)) {
+    img <- grid::rasterGrob(
+      as.raster(recoloredImage(rc_list[[i]])),
+      interpolate = TRUE
+    )
+    plot <- plot +
+      annotation_custom(
+        img,
+        xmin = pca_data$PC1[i] - image_size_x / 2,
+        xmax = pca_data$PC1[i] + image_size_x / 2,
+        ymin = pca_data$PC2[i] - image_size_y / 2,
+        ymax = pca_data$PC2[i] + image_size_y / 2
+      )
+  }
+
+  # Adjust ellipse sizes to match image placement
+  circle_radius_x <- image_size_x / 2
+  circle_radius_y <- image_size_y / 2
+  plot <- plot +
+    ggforce::geom_ellipse(
+      data = pca_data,
+      aes(
+        x0 = PC1, y0 = PC2,
+        a = circle_radius_x, b = circle_radius_y, angle = 0, color = Cluster
+      ),
+      inherit.aes = FALSE,
+      linewidth = 0.5  # Outline thickness
+    )
+
+  return(plot)
+}
+```
+
+
+It can be hard to tell whether the PCA is capturing relevant axes of color pattern variation from a scatterplot, so we will instead use the actual images. We will also overlay the k-means clusters and see which cluster value (k=2, 3, or 4) shows the most reasonable clustering of morph types based on visual appearance.
+
+
+```{r}
+# Define separate outline colors for each plot
+outline_colors_F <- c("indianred4", "lightblue4", "#117733", "darkorange")  # Colors for females
+names(outline_colors_F) <- c("1", "2", "3", "4")  # Adjust for your Cluster levels
+
+outline_colors_M <- c("lightblue4", "indianred4", "#117733", "darkorange")  # Colors for males
+names(outline_colors_M) <- c("1", "2", "3", "4")  # Adjust for your Cluster levels
+
+# Create the PCA plots
+recolorize_pca_Female_km2 <- create_pca_plot(pod_pca_F, rc_list_F, metadata_km2_F_c1, outline_colors_F, pca_limits, "C")
+recolorize_pca_Female_km2 <- recolorize_pca_Female_km2
+
+recolorize_pca_Male_km2 <- create_pca_plot(pod_pca_M, rc_list_M, metadata_km2_M_c1, outline_colors_M, pca_limits, "D")
+recolorize_pca_Male_km2 <- recolorize_pca_Male_km2
+
+recolorize_pca_Female_km3 <- create_pca_plot(pod_pca_F, rc_list_F, metadata_km3_F_c1, outline_colors_F, pca_limits, "C")
+recolorize_pca_Female_km3 <- recolorize_pca_Female_km3
+
+recolorize_pca_Male_km3 <- create_pca_plot(pod_pca_M, rc_list_M, metadata_km3_M_c1, outline_colors_M, pca_limits, "D")
+recolorize_pca_Male_km3 <- recolorize_pca_Male_km3
+
+recolorize_pca_Female_km4 <- create_pca_plot(pod_pca_F, rc_list_F, metadata_km4_F_c1, outline_colors_F, pca_limits, "C")
+recolorize_pca_Female_km4 <- recolorize_pca_Female_km4
+
+recolorize_pca_Male_km4 <- create_pca_plot(pod_pca_M, rc_list_M, metadata_km4_M_c1, outline_colors_M, pca_limits, "D")
+recolorize_pca_Male_km4 <- recolorize_pca_Male_km4
+
+
+# Combine plots for females and males with equal sizing
+recolorize_pca_km2_plots <- (recolorize_pca_Female_km2 | recolorize_pca_Male_km2) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+recolorize_pca_km3_plots <- (recolorize_pca_Female_km3 | recolorize_pca_Male_km3) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+recolorize_pca_km4_plots <- (recolorize_pca_Female_km4 | recolorize_pca_Male_km4) +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  )
+
+
+# Save the plots with equal width and slightly adjusted height
+ggsave(
+  filename = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km2_plots.png",
+  plot = recolorize_pca_km2_plots,
+  width = 6, height = 3, units = "in", dpi = 300
+)
+
+ggsave(
+  filename = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km3_plots.png",
+  plot = recolorize_pca_km3_plots,
+  width = 6, height = 3, units = "in", dpi = 300
+)
+
+ggsave(
+  filename = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km4_plots.png",
+  plot = recolorize_pca_km4_plots,
+  width = 6, height = 3, units = "in", dpi = 300
+)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+recolorize_pca_km2_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km2_plots.png")
+
+# Create the HTML
+html_recolorize_pca_km2 <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", recolorize_pca_km2_plots, "' alt='recolorize kmeans2 Plot'>
+")
+
+# IRdisplay::display_html(html_recolorize_pca_km2)
+
+
+# Convert images to base64
+recolorize_pca_km3_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km3_plots.png")
+
+# Create the HTML
+html_recolorize_pca_km3 <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", recolorize_pca_km3_plots, "' alt='recolorize kmeans3 Plot'>
+")
+
+# IRdisplay::display_html(html_recolorize_pca_km3)
+
+
+# Convert images to base64
+recolorize_pca_km4_plots <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/recolorize_pca_km4_plots.png")
+
+# Create the HTML
+html_recolorize_pca_km4 <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 800px;   /* ~8 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", recolorize_pca_km4_plots, "' alt='recolorize kmeans4 Plot'>
+")
+
+# IRdisplay::display_html(html_recolorize_pca_km4)
+```
+
+
+---
+
+### 7. Summarize results
+
+Camouflage types vary along a continuous spectrum of red, beige, and white. Cluster results plotted along the original principal components and the recolorize/patternize principal components show a discrete boundary between two continuous color types in males and females. Thus, Kmeans clustering with two clusters is the optimal clustering method for camouflage types. We will designate as red/beige (RB) and white/white-mottled (W).

@@ -1,0 +1,7 @@
+"Parameter","Rhat","Model"
+"b_Intercept",1,"B_c_diff"
+"b_SexF",1,"B_c_diff"
+"b_MicrohabitatHydroid_Bryozoa",1,"B_c_diff"
+"b_MicrohabitatRed_Algae",1,"B_c_diff"
+"b_Viewpoint10",1,"B_c_diff"
+"b_Viewpoint20",1,"B_c_diff"

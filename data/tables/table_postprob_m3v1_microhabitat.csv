@@ -1,0 +1,13 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Red-Beige Morph Hydroids with Bryozoa effect > 0)",0.37565
+"2","P(Red-Beige Morph Red Algae effect > 0)",0.4887
+"3","P(Red-Beige Morph Hydroids with Bryozoa effect < 0)",0.62435
+"4","P(Red-Beige Morph Red Algae effect < 0)",0.5113
+"5","P(White Morph Hydroids with Bryozoa effect > 0)",0.73145
+"6","P(White Morph Red Algae effect > 0)",0.62535
+"7","P(White Morph Hydroids with Bryozoa effect < 0)",0.26855
+"8","P(White Morph Red Algae effect < 0)",0.37465
+"9","P(Bright Morph Hydroids with Bryozoa effect > 0)",0.5156
+"10","P(Bright Morph Red Algae effect > 0)",0.31995
+"11","P(Bright Morph Hydroids with Bryozoa effect < 0)",0.4844
+"12","P(Bright Morph Red Algae effect < 0)",0.68005

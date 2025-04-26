@@ -1,0 +1,95 @@
+name: podocristatus-analysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # Core
+  - python=3.11
+  - r-base=4.4
+  - pandoc
+  
+  # Jupyter and Jupyter Book
+  - jupyter
+  - jupyter-book
+  - jupyterlab
+  - jupyter-cache
+  - jupyter-client
+  - jupyter-console
+  - jupyter-core
+  - jupyter-events
+  - jupyter-lsp
+  - jupyter-server
+  - jupyter-server-terminals
+  - jupyter-sphinx
+  - jupyterlab-pygments
+  - jupyterlab-server
+  - jupyterlab-widgets
+  - sphinx-jupyterbook-latex
+
+  # R Jupyter Kernel
+  - r-irkernel
+  
+  # R packages for data cleaning
+  - r-dplyr
+  - r-ggplot2
+  - r-ggpubr
+  - r-tidyr
+  - r-quarto
+  - r-rmarkdown
+  - r-devtools
+  - r-readxl
+  - r-ssh
+  - r-knitr
+  - r-kableextra
+  - r-httpgd
+  - r-fsa
+  - r-glue
+
+  # R packages for clustering and pattern analysis
+  - r-plotly
+  - r-factoextra
+  - r-ggcorrplot
+  - r-cluster
+  - r-openxlsx
+  - r-clvalid
+  - r-kmedians
+  - r-nbclust
+  - r-glmulti
+  - r-factominer
+  - r-patternize
+  - r-raster
+  - r-recolorize
+  - r-tools
+  - r-grid
+  - r-plotrix
+  - r-ggforce
+  - r-htmlwidgets
+  - r-webshot2
+  - r-ggrepel
+
+  # R packages for Bayesian modeling
+  - r-bayesplot
+  - r-posterior
+  - r-gridextra
+  - r-brms
+  - r-tibble
+  - r-scales
+  - r-tidyverse
+  - r-patchwork
+  - r-cowplot
+  - r-loo
+  - r-extradistr
+  - r-irdisplay
+  - r-leaflet
+  - r-dt
+  - r-rstan
+  - r-stanheaders
+  - r-ggdist
+
+  # R packages for phylogenetic analysis
+  - r-ape
+  - bioconductor-biocmanager
+  - bioconductor-treeio
+  - r-treedist
+  - r-treetools
+  - bioconductor-ggtree

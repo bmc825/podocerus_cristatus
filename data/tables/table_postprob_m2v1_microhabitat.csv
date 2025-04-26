@@ -1,0 +1,9 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Male Hydroids with Bryozoa effect > 0)",0.6407
+"2","P(Male Red Algae effect > 0)",0.7314
+"3","P(Male Hydroids with Bryozoa effect < 0)",0.3593
+"4","P(Male Red Algae effect < 0)",0.2686
+"5","P(Female Hydroids with Bryozoa effect > 0)",0.3603
+"6","P(Female Red Algae effect > 0)",0.2633
+"7","P(Female Hydroids with Bryozoa effect < 0)",0.6397
+"8","P(Female Red Algae effect < 0)",0.7367

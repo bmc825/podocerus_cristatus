@@ -1,0 +1,25 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Sex effect e_max diff > 0)",1
+"2","P(Sex effect Filter_max diff > 0)",1
+"3","P(Sex effect e_prop diff > 0)",0
+"4","P(Sex effect R_c diff > 0)",1
+"5","P(Sex effect G_c diff > 0)",1
+"6","P(Sex effect B_c diff > 0)",1
+"7","P(Sex effect e_max diff < 0)",0
+"8","P(Sex effect Filter_max diff < 0)",0
+"9","P(Sex effect e_prop diff < 0)",1
+"10","P(Sex effect R_c diff < 0)",0
+"11","P(Sex effect G_c diff < 0)",0
+"12","P(Sex effect B_c diff < 0)",0
+"13","P(Sex effect e_max diff > 0)",1
+"14","P(Sex effect Filter_max diff > 0)",1
+"15","P(Sex effect e_prop diff > 0)",0
+"16","P(Sex effect R_c diff > 0)",1
+"17","P(Sex effect G_c diff > 0)",1
+"18","P(Sex effect B_c diff > 0)",1
+"19","P(Sex effect e_max diff < 0)",0
+"20","P(Sex effect Filter_max diff < 0)",0
+"21","P(Sex effect e_prop diff < 0)",1
+"22","P(Sex effect R_c diff < 0)",0
+"23","P(Sex effect G_c diff < 0)",0
+"24","P(Sex effect B_c diff < 0)",0

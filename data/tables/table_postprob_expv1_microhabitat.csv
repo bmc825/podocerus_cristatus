@@ -1,0 +1,7 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Hydrallmania effect > 0)",1
+"2","P(Sand effect > 0)",0
+"3","P(Sertulariidae effect > 0)",0.00055
+"4","P(Hydrallmania effect < 0)",0
+"5","P(Sand effect < 0)",1
+"6","P(Sertulariidae effect < 0)",0.99945

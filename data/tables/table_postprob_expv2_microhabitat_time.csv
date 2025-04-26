@@ -1,0 +1,7 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Hydrallmania:Time effect > 0)",0.4165
+"2","P(Sand:Time effect > 0)",7e-04
+"3","P(Sertulariidae:Time effect > 0)",0.32105
+"4","P(Hydrallmania:Time effect < 0)",0.5835
+"5","P(Sand:Time effect < 0)",0.9993
+"6","P(Sertulariidae:Time effect < 0)",0.67895

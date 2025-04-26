@@ -1,0 +1,397 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R");
+```
+
+# Data Cleaning for Models 4, 5 and 6
+
+## Overview
+
+This pipeline focuses on preparing a dataset for Models 4, 5 and 6. The main goal is to clean and format the data, ensuring it meets the requirements of the analyses. These steps make the dataset consistent, interpretable, and suitable for statistical modeling.
+
+---
+
+### 1. Load data
+
+We start by loading the raw data from the RESULTS_COLOR_ALL.xlsx and RESULTS_SUB_ALL.xlsx file. These datasets contain information about the dorsal body patterns and camouflage strategies of Podocerus cristatus on different backgrounds.
+
+
+```{r}
+data_color <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/RESULTS_COLOR_ALL.xlsx", sheet = "Data")
+
+data_m5 <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/RESULTS_SUB_ALL.xlsx", sheet = "Data_m5")
+
+data_m6 <- read_excel("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/raw/RESULTS_SUB_ALL.xlsx", sheet = "Data_m6")
+
+```
+
+---
+
+### 2. Correct reflectance values
+
+Since some of the maxFreq values are zero, and our models use log transformations which cannot deal with zero values, we need to correct these values to be \>0.
+
+
+```{r}
+# Add 3 to the values in columns R_0, G_0, and B_0 for dorsal body color data
+data_color <- data_color %>%
+    mutate(
+        R_0_corrected = R_0 + 3,
+        G_0_corrected = G_0 + 3,
+        B_0_corrected = B_0 + 3
+    )
+
+# Add 1 to the values in column maxFreq for background matching data
+data_m5 <- data_m5 %>%
+    mutate(
+        maxFreq_DIFF_corrected = maxFreq_DIFF + 1
+    )
+
+
+html_table_1 <- data_color %>%
+  dplyr::select(R_0, R_0_corrected, G_0, G_0_corrected, B_0, B_0_corrected) %>%
+  drop_na() %>%
+  slice(1:10) %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  knitr::kable(format = "html", caption = "Corrected Reflectance Data (first 10 rows)") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  as.character()  # Explicitly convert to an HTML string
+
+# Render the table in JupyterLab
+# IRdisplay::display_html(html_table_1)
+
+
+
+# Inspect some data to make sure changes are ok
+html_table_2 <- data_m5 %>%
+  dplyr::select(maxFreq_DIFF, maxFreq_DIFF_corrected) %>%
+  drop_na() %>%
+  slice(1:10) %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  knitr::kable(format = "html", caption = "Corrected Reflectance Data (first 10 rows)") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  as.character()  # Explicitly convert to an HTML string
+
+# Render the table in JupyterLab
+# IRdisplay::display_html(html_table_2)
+
+
+```
+
+---
+
+### 3. Clean data
+
+1. **Remove Poor-Quality Data**: Exclude bad photos and irrelevant rows.
+2. **Select Variables**: Keep only the columns relevant to Models.
+3. **Rename Columns**: Simplify and clarify variable names.
+4. **Format Variables**: Convert continuous variables to numeric and categorical ones to factors.
+5. **Rename Categories**: Simplify and clarify microhabitat category names.
+6. **Remove Missing Values**: Ensure no NAs remain in critical columns.
+
+
+```{r}
+
+# Step 1: delete bad photos
+data_color <- subset(data_color, !(Good_photo_quality %in% c("N")))
+
+# Step 2: Select variables of interest
+data_m4_subset <- data_color %>%
+    dplyr::select(BCPD, Lifestage, Sex, Body_Length, maxPower_lum_0, maxFreq_lum_0, propPower_lum_0, R_0_corrected, G_0_corrected, B_0_corrected)
+
+data_m5_subset <- data_m5 %>%
+    dplyr::select(BCPD, Background_BCPD, Morph2, Sex, Microhabitat_Association, Viewpoint, Microhabitat_cat, Background_cat, maxPower_DIFF, maxFreq_DIFF_corrected, propPower_DIFF, R_DIFF, G_DIFF, B_DIFF)
+
+data_m6_subset <- data_m6 %>%
+    dplyr::select(BCPD, Photo_ID, Morph2, Sex, Microhabitat_Association, Viewpoint, Microhabitat_cat, Background_cat, X_RG)
+
+
+
+# Step 3: Rename variables for clarity
+data_m4_subset_renamed <- data_m4_subset %>%
+    rename(
+        Size = Body_Length,
+        e_max = maxPower_lum_0,
+        Filter_max = maxFreq_lum_0,
+        e_prop = propPower_lum_0,
+        R_c = R_0_corrected,
+        G_c = G_0_corrected,
+        B_c = B_0_corrected
+    )
+
+data_m5_subset_renamed <- data_m5_subset %>%
+    rename(
+        Image = Background_BCPD,
+        Microhabitat = Microhabitat_cat,
+        Background = Background_cat,
+        Morph = Morph2,
+        e_max_diff = maxPower_DIFF,
+        Filter_max_diff = maxFreq_DIFF_corrected,
+        e_prop_diff = propPower_DIFF,
+        R_c_diff = R_DIFF,
+        G_c_diff = G_DIFF,
+        B_c_diff = B_DIFF
+    )
+
+data_m6_subset_renamed <- data_m6_subset %>%
+    rename(
+        Image = Photo_ID,
+        Microhabitat = Microhabitat_cat,
+        Background = Background_cat,
+        Morph = Morph2,
+        GabRat = X_RG
+    )
+
+
+
+# Step 4: Convert continuous variables to numeric, if not already done so
+# Define the columns to convert to numeric
+columns_to_convert_m4 <- c("Size", "e_max", "Filter_max", "e_prop", "R_c", "G_c", "B_c")
+columns_to_convert_m5 <- c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")
+columns_to_convert_m6 <- c("GabRat")
+
+# Convert columns
+data_m4_subset_renamed <- data_m4_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m4), as.numeric))
+
+data_m5_subset_renamed <- data_m5_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m5), as.numeric))
+
+data_m6_subset_renamed <- data_m6_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m6), as.numeric))
+
+
+
+# Step 5: Convert binary/categorical variables to factors, if not already done so
+# Define the columns to convert to factor
+columns_to_convert_m4 <- c("Sex")
+columns_to_convert_m5 <- c("Image", "Morph", "Sex", "Microhabitat_Association","Viewpoint", "Microhabitat", "Background")
+columns_to_convert_m6 <- c("Image", "Morph", "Sex", "Microhabitat_Association","Viewpoint", "Microhabitat", "Background")
+
+
+# Convert columns
+data_m4_subset_renamed <- data_m4_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m4), as.factor))
+    
+data_m5_subset_renamed <- data_m5_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m5), as.factor))
+
+data_m6_subset_renamed <- data_m6_subset_renamed %>%
+    mutate(across(all_of(columns_to_convert_m6), as.factor))
+
+
+
+# Step 6: Rename Microhabitat categories for clarity
+data_m5_subset_renamed <- data_m5_subset_renamed %>%
+    mutate(Microhabitat = fct_recode(Microhabitat,
+        Hydroid_Bryozoa = "Hydroid_bryozoan",
+        Red_Algae = "Algae"
+    ))  %>%
+    mutate(Background = fct_recode(Background,
+        Hydroid_Bryozoa = "Hydroid_bryozoan",
+        Red_Algae = "Algae"
+    ))
+
+data_m6_subset_renamed <- data_m6_subset_renamed %>%
+    mutate(Microhabitat = fct_recode(Microhabitat,
+        Hydroid_Bryozoa = "Hydroid_bryozoan",
+        Red_Algae = "Algae"
+    ))  %>%
+    mutate(Background = fct_recode(Background,
+        Hydroid_Bryozoa = "Hydroid_bryozoan",
+        Red_Algae = "Algae"
+    ))
+
+
+
+# Step 7: delete NA rows, if any
+data_m4_clean <- data_m4_subset_renamed %>%
+    filter(!is.na(e_max)) %>%
+    filter(Lifestage %in% c("A")) %>%
+    filter(!is.na(Sex))
+    
+data_m5_clean <- data_m5_subset_renamed %>%
+    filter(!is.na(e_max_diff))
+
+data_m6_clean <- data_m6_subset_renamed %>%
+    filter(!is.na(GabRat))
+
+
+
+# NOTE: "NAs introduced by coercion" isn't an error. It's just a warning to let you know that some strings don't represent numbers. Those are correctly changed to NA.
+```
+
+
+```{r}
+
+table_1 <- data_m4_clean %>%
+  kbl(caption = "Raw Data for Model 1") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_1 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_1, "</div>
+")
+
+
+
+table_2 <- data_m5_clean %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  kbl(caption = "Raw Data for Model 5") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_2 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_2, "</div>
+")
+
+
+
+table_3 <- data_m6_clean %>%
+  mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+  kbl(caption = "Raw Data for Model 6") %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  as.character()  # Convert to raw HTML
+
+# Add a scrollable div
+table_3 <- paste0("
+<style>
+  .scrollable-table {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+</style>
+
+<div class='scrollable-table'>", table_3, "</div>
+")
+
+
+```
+
+
+```{r}
+
+my_tabs <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1:checked + label[for="tab1"],
+#tab2:checked + label[for="tab2"],
+#tab3:checked + label[for="tab3"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab1" checked>
+  <label class="tab-label" for="tab1">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab2">
+  <label class="tab-label" for="tab2">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs" id="tab3">
+  <label class="tab-label" for="tab3">Table 3</label>
+
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1">REPLACE_WITH_table_1</div>
+  <div class="tab-content" id="content2">REPLACE_WITH_table_2</div>
+  <div class="tab-content" id="content3">REPLACE_WITH_table_3</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs <- gsub("REPLACE_WITH_table_1", table_1, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_2", table_2, my_tabs)
+my_tabs <- gsub("REPLACE_WITH_table_3", table_3, my_tabs)
+
+
+# IRdisplay::display_html(my_tabs)
+```
+
+
+---
+
+### 4. Export cleaned data
+
+The cleaned datasets are saved as .csv files for downstream analyses.
+
+
+```{r}
+write.csv(data_m4_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_m4_clean.csv", row.names = FALSE)
+
+
+write.csv(data_m5_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_m5_clean.csv", row.names = FALSE)
+
+
+write.csv(data_m6_clean, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_m6_clean.csv", row.names = FALSE)
+
+
+```

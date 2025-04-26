@@ -1,0 +1,3899 @@
+```{r}
+# Source the package setup script
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/00_setup_packages.R")
+
+# Source the custom graphing functions
+source("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/scripts/01_graphing_functions.R")
+
+```
+
+# Model 5
+
+## Question
+
+Does camouflage strength (**background matching**) vary between males and females across microhabitats?
+
+## Objective
+
+Test for the effect of **sex** and **microhabitat** on **background matching**. 
+
+## Method
+
+### 1. Load cleaned data.
+
+We start by loading the cleaned data from the "03_data_cleaning" pipeline. This data has already undergone transformations and contains relevant metrics for our models.
+
+
+
+```{r}
+data_m5_clean <- read.csv("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/cleaned/data_m5_clean.csv")
+```
+
+---
+
+### 2. Prepare data for modeling.
+
+#### **Categorical predictors**
+
+For categorical and binary predictors, R automatically dummy-codes the variables. For binary variables, such as Sex (0 = Female, 1 = Male), R sets the baseline to 0 unless specified otherwise. This ensures comparisons are made relative to the baseline group.
+
+#### **Continuous predictors**
+
+We standardize continuous predictors, such as Fecundity, by centering and scaling them (dividing by two standard deviations). This improves interpretability, aligning their coefficients with those of binary predictors, as suggested by Gelman (2008).
+
+
+
+```{r}
+# Convert categorical variables to factors
+columns_to_convert_m5 <- c("Image", "Morph", "Sex", "Microhabitat_Association", "Viewpoint", "Microhabitat", "Background")
+
+data_m5_clean <- data_m5_clean %>%
+    mutate(across(all_of(columns_to_convert_m5), as.factor))
+
+# Set reference category for categorical predictors
+data_m5_clean$Sex <- relevel(data_m5_clean$Sex, ref = "M")
+data_m5_clean$Microhabitat <- relevel(data_m5_clean$Microhabitat, ref = "Hydroid")
+data_m5_clean$Viewpoint <- relevel(data_m5_clean$Viewpoint, ref = "0")
+
+
+# Convert continuous variables to numeric
+columns_to_convert_m5 <- c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")
+
+data_m5_clean <- data_m5_clean %>%
+    mutate(across(all_of(columns_to_convert_m5), as.numeric))
+
+```
+
+---
+
+### 3. Visualize response variable distributions
+
+To understand the distributions of our response variables, we plot density curves. This helps confirm whether a Gamma distribution is appropriate for modeling, as Gamma is suited for positively skewed, continuous data.
+
+
+
+```{r}
+p_response_m5_e_max_diff <- data_m5_clean %>%
+    ggplot(aes(x = e_max_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "e_max_diff") +
+    theme(axis.title.x = element_blank())
+
+
+p_response_m5_Filter_max_diff <- data_m5_clean %>%
+    ggplot(aes(x = Filter_max_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "Filter_max_diff") +
+    theme(
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank()
+    )
+
+p_response_m5_e_prop_diff <- data_m5_clean %>%
+    ggplot(aes(x = e_prop_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "e_prop_diff") +
+    theme(
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank()
+    )
+
+p_response_m5_R_c_diff <- data_m5_clean %>%
+    ggplot(aes(x = R_c_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "R Reflectance diff") +
+    theme(axis.title.x = element_blank())
+
+p_response_m5_G_c_diff <- data_m5_clean %>%
+    ggplot(aes(x = G_c_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "G Reflectance diff") +
+    theme(
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank()
+    )
+
+p_response_m5_B_c_diff <- data_m5_clean %>%
+    ggplot(aes(x = B_c_diff)) +
+    geom_density(fill = "#69b3a2", color = "#e9ecef", alpha = 0.8) +
+    theme_bw() +
+    labs(title = "B Reflectance diff") +
+    theme(
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank()
+    )
+
+# Combine plots for easy visualization
+plot_responses_m5 <- ggarrange(
+    p_response_m5_e_max_diff,
+    p_response_m5_Filter_max_diff,
+    p_response_m5_e_prop_diff,
+    p_response_m5_R_c_diff,
+    p_response_m5_G_c_diff,
+    p_response_m5_B_c_diff,
+    ncol = 3,
+    nrow = 2
+)
+
+annotate_figure(
+    plot_responses_m5,
+    top = text_grob("Ranges of response variables")
+)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_responses_m5.png", plot = plot_responses_m5, width = 6, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_responses_m5 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_responses_m5.png")
+
+# Create the HTML 
+html_background_matching <- paste0("
+<style>
+  body, html {
+    margin: 0; 
+    padding: 0;
+    /* If you want no horizontal scrollbar: */
+    overflow-x: hidden; 
+  }
+  img {
+    max-width: 600px;   /* ~6 inches at 100 dpi screen rendering */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<img src='", plot_responses_m5, "' alt='Background Matching Metrics'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_background_matching)
+```
+
+
+---
+
+### 4. Justification for GLMs and Bayesian methods
+
+#### **Why GLMs?**
+
+Generalized Linear Models (GLMs) are used because our response variables are continuous, non-negative, and right-skewed, which violates the assumptions of linear regression. The Gamma distribution with a log link function allows us to model these variables appropriately.
+
+---
+
+#### **Why Bayesian methods?**
+
+Bayesian GLMs were chosen over frequentist approaches because:
+
+-   **Sparse data**: Bayesian methods handle sparse datasets more robustly.
+
+-   **Priors**: They allow us to incorporate prior knowledge, improving model performance.
+
+-   **Posterior distributions**: Bayesian models provide posterior distributions, offering a full view of parameter uncertainty.
+
+---
+
+### 5. Define priors
+
+#### **What are priors?**
+
+In Bayesian statistics, priors represent our beliefs about parameter values before analyzing the data. These beliefs are mathematically expressed as probability distributions. Priors guide the model, especially when data are sparse or when the signal-to-noise ratio is low.
+
+---
+
+#### **Why priors matter:**
+
+-   **Prevent overfitting**: Priors discourage extreme parameter estimates unless strongly supported by the data.
+
+-   **Balance restrictiveness and flexibility**: Weakly informative priors let the data dominate while providing reasonable bounds.
+
+-   **Leverage existing knowledge**: Informative priors incorporate previous research or domain expertise, improving accuracy in well-studied systems.
+
+---
+
+#### **How priors work in this analysis:**
+We combine the priors (representing initial beliefs) with the likelihood of the observed data to compute posterior distributions, which reflect updated beliefs after observing the data.
+
+The general formula is:
+
+$$
+\begin{aligned}
+\text{Posterior } \alpha \text{ Likelihood} * \text{Prior}
+\end{aligned}
+$$
+
+---
+
+#### **Model family and formula**
+
+The response variables represent differences in color or pattern metrics between amphipod dorsal body traits and their microhabitats. These are continuous and positively skewed, making the Gamma distribution with a log link function suitable for modeling.
+
+The Gamma distribution is parameterized as:
+
+$$
+\begin{aligned}
+y_{i} &\sim \text{Gamma}(\mu_{i}, \phi)
+\end{aligned}
+$$
+
+The mean $\mu_i$ (on the log scale) is modeled as:
+
+$$
+\begin{aligned}
+& \log(\mu_{i}) = \alpha + \beta x_{i} \\
+\end{aligned}
+$$
+
+Where:
+
+-   **$y_{i}$**: Response variable for observation $i$
+
+-   **$\mu_{i}$**: Mean of the Gamma distribution for $i$ (on the log scale)
+
+-   **$\phi$**: Shape parameter (controls variability)
+
+-   **$\alpha$**: Intercept, mean value of $\log(\mu)$ when predictors are at baseline
+
+-   **$beta$**: Coefficient/slope for predictor $x_{i}$, representing the effect of $x_{i}$ on $\log(\mu)$
+
+---
+
+#### **Chosen priors and rationale**
+
+**Intercept ($\alpha$)**: The intercept represents the mean of the response variable when all predictors are at their baseline values. Since our response variables are continuous and positively skewed, we use weakly informative priors for the intercept based on the log-transformed range of each variable. This ensures that the intercept (1) reflects realistic values for the response variable, and (2) allows for moderate variation around the mean without encouraging extreme values. For each response variable, we use the following priors:
+
+-   **e_max**: $N(0, 0.5)$
+    
+    -   $N(0, 0.5)$ is a normal distribution with a mean of 0 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{0}=1$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between -1.414 and 1.414, on the log scale. On the original scale, the values lie roughly between $e^{-1.414} \approx 0.243$ to $e^{1.414} \approx 4.11$.
+        
+-   **Filter_max**: $N(2.30, 0.5)$
+    
+    -   $N(2.30, 0.5)$ is a normal distribution with a mean of 2.30 and a standard deviation of $\sqrt(0.5) = 0.707$ On the original scale, this translates to a mean of $e^{2.30}=10$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between 0.886 and 3.714, on the log scale. On the original scale, the values lie roughly between $e^{0.886} \approx 2.43$ to $e^{3.714} \approx 41$.
+        
+-   **e_prop**: $N(-3.91, 0.5)$
+    
+    -   $N(-3.91, 0.5)$ is a normal distribution with a mean of -3.91 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{-3.91}=0.02$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between -5.324 and -2.496, on the log scale. On the original scale, the values lie roughly between $e^{-5.324} \approx 0.005$ to $e^{-2.496} \approx 0.082$.
+
+-   **R, G, B**: $N(1.61, 0.5)$
+    
+    -   $N(1.61, 0.5)$ is a normal distribution with a mean of 1.61 and a standard deviation of $\sqrt(0.5) = 0.707$. On the original scale, this translates to a mean of $e^{1.61}=5$, and a standard deviation of $e^{0.707}=2.03$. In a normal distribution, 95% of values fall within 2 standard deviations of the mean. Thus, most values will lie roughly between 0.196 and 3.024, on the log scale. On the original scale, the values lie roughly between $e^{0.196} \approx 1.22$ to $e^{3.024} \approx 20.6$.
+
+    These priors ensure the intercept reflects realistic values for the response variables while allowing for moderate variability.
+
+---
+
+**Slope ($\beta$)**: The slope reflects the rate of change in $\log(\mu)$ for a one-unit change in the predictor. On the original scale, this translates to:
+
+$$
+\begin{aligned}
+\frac{y_{x+1}}{y_x} &= \frac{e^{(\alpha + \beta(x+1))}}{e^{(\alpha + \beta x)}} \\
+&= \frac{e^{(\alpha + \beta x + \beta)}}{e^{(\alpha + \beta x)}} \\
+&= e^{(\alpha + \beta x)} \times \frac{e^{\beta}}{e^{(\alpha + \beta x)}} \\
+&= e^{\beta} \\
+& \quad \quad \quad \text{OR} \\
+& \text{Scaling factor} = e^{\beta}
+\end{aligned}
+$$
+
+
+For example:
+
+-   If $\beta = 0.1$, a one-unit increase in the predictor scales $\mu$ by $e^{0.1} \approx 1.10$ (a 10% increase).
+
+-   If $\beta = -0.1$, a one-unit increase scales $\mu$ by $e^{-0.1} \approx 0.91$ (a 9% decrease).
+
+We don't know how our predictors will affect the response, so we use a weakly informative prior:
+
+$$
+\begin{aligned}
+\beta \approx N(0,0.5)
+\end{aligned}
+$$
+
+This prior assumes no effect of the predictor on average ($e^{0} = 1$, and allows moderate positive or negative effects, spanning approximately $[-1, 1]$ on the log scale ($e^{-1} \approx 0.37$ to $e^{1} \approx 2.72$ on the original scale). So $\mu$ of each response variable will not exceed a minimum of $\mu * 0.37$ and maximum of $\mu * 2.72$.
+
+---
+
+**Random effects ($\sigma$)**: Random effects account for variability between groups that we are not explicitly testing. In this model, we do not have random effects.
+
+---
+
+**Shape parameter ($\phi$)**: In a Gamma distribution, variability is tied to the shape parameter ($\phi$) that governs how the spread relates to the mean. Smaller $\phi$ values indicate greater variability. We will set the shape parameter to a weakly informative $\gamma(2, 0.1)$ which makes most probability mass concentrated near zero with a long tail so that the data will drive the distribution of variability values.
+
+$$
+\begin{aligned}
+\phi \approx \text{Gamma}(2,0.1)
+\end{aligned}
+$$
+
+This ensures strictly positive values but keeps a wide range of plausible variability values.
+
+![alt text](C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images_html/precision_graph.png)
+
+
+
+---
+
+#### **Visualizing priors**
+
+To validate these priors, we run models sampling only from the priors (sample_prior = "only") and inspect their outputs to ensure they align with our expectations.
+
+
+>**Note:** We will run these models in RStudio to be consistent because the rstan package sometimes does not like Jupyter. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_max_diff
+m5_priors_e_max_diff <- brm(
+    bf(e_max_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_e_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# Filter_max_diff
+m5_priors_Filter_max_diff <- brm(
+    bf(Filter_max_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(2.30, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_Filter_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_prop_diff
+m5_priors_e_prop_diff <- brm(
+    bf(e_prop_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(-3.91, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_e_prop_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# R_c_diff
+m5_priors_R_c_diff <- brm(
+    bf(R_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_R_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# G_c_diff
+m5_priors_G_c_diff <- brm(
+    bf(G_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_G_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# B_c_diff
+m5_priors_B_c_diff <- brm(
+    bf(B_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = "only",
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5_priors_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_B_c_diff.rds")
+
+```
+
+
+```{r}
+# Load models from R
+m5_priors_e_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_e_max_diff.rds")
+m5_priors_Filter_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_Filter_max_diff.rds")
+m5_priors_e_prop_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_e_prop_diff.rds")
+m5_priors_R_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_R_c_diff.rds")
+m5_priors_G_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_G_c_diff.rds")
+m5_priors_B_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5_priors_B_c_diff.rds")
+
+# Extract results
+prior_samples_m5_e_max_diff <- as_draws_df(m5_priors_e_max_diff)
+prior_samples_m5_Filter_max_diff <- as_draws_df(m5_priors_Filter_max_diff)
+prior_samples_m5_e_prop_diff <- as_draws_df(m5_priors_e_prop_diff)
+prior_samples_m5_R_c_diff <- as_draws_df(m5_priors_R_c_diff)
+prior_samples_m5_G_c_diff <- as_draws_df(m5_priors_G_c_diff)
+prior_samples_m5_B_c_diff <- as_draws_df(m5_priors_B_c_diff)
+
+```
+
+
+```{r}
+
+# List of datasets and labels
+prior_samples <- list(
+    e_max_diff = prior_samples_m5_e_max_diff,
+    Filter_max_diff = prior_samples_m5_Filter_max_diff,
+    e_prop_diff = prior_samples_m5_e_prop_diff,
+    R_c_diff = prior_samples_m5_R_c_diff,
+    G_c_diff = prior_samples_m5_G_c_diff,
+    B_c_diff = prior_samples_m5_B_c_diff
+)
+
+# Custom labels for predictors
+custom_labels_priors <- c(
+    "b_SexF" = "Females",
+    "b_MicrohabitatRed_Algae" = "Hydroids",
+    "b_MicrohabitatHydroid_Bryozoa" = "Hydroids with Bryozoans",
+    "b_Viewpoint10" = "Viewpoint 10",
+    "b_Viewpoint20" = "Viewpoint 20"
+)
+
+# Custom labels for intercept
+custom_labels_priors_intercept <- c(
+    "b_Intercept" = "Intercept"
+)
+
+# Generate predictor plots
+prior_plots <- lapply(
+    names(prior_samples),
+    function(label) {
+        generate_posterior_plot(
+            prior_samples[[label]],
+            regex_pars = c(
+              "b_SexF",
+              "b_MicrohabitatRed_Algae",
+              "b_MicrohabitatHydroid_Bryozoa",
+              "b_Viewpoint10",
+              "b_Viewpoint20"
+              ),
+            x_range = c(-5, 5),
+            custom_labels = custom_labels_priors,
+            axis_title_y = label %in% c("e_max_diff", "R_c_diff")
+        )
+    }
+)
+names(prior_plots) <- names(prior_samples)
+
+# Generate intercept plots
+prior_plots_intercept <- lapply(
+    names(prior_samples),
+    function(label) {
+        generate_posterior_plot(
+            prior_samples[[label]],
+            regex_pars = c("b_Intercept"),
+            x_range = c(-5, 5),
+            custom_labels = custom_labels_priors_intercept,
+            axis_title_y = label %in% c("e_max_diff", "R_c_diff")
+        )
+    }
+)
+names(prior_plots_intercept) <- names(prior_samples)
+
+
+
+
+# Add grey bars with labels for each plot
+prior_plots_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    prior_plots,
+    names(prior_plots),
+    SIMPLIFY = FALSE
+)
+
+prior_plots_intercept_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    prior_plots_intercept,
+    names(prior_plots_intercept),
+    SIMPLIFY = FALSE
+)
+
+
+
+# Combine predictor plots into a 2x3 grid
+plot_priors_m5 <- patchwork::wrap_plots(
+    prior_plots_with_bars[c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+# Combine intercept plots into a 2x3 grid
+plot_priors_intercept_m5 <- patchwork::wrap_plots(
+    prior_plots_intercept_with_bars[c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+
+
+
+# Add a unified x-axis label for predictor plots
+plot_priors_m5 <- plot_priors_m5 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.65, size = 10))
+    )
+
+# Add a unified x-axis label for intercept plots
+plot_priors_intercept_m5 <- plot_priors_intercept_m5 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.5, size = 10))
+    )
+
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_m5.png", plot = plot_priors_m5, width = 6, height = 4.5, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_intercept_m5.png", plot = plot_priors_intercept_m5, width = 6, height = 4.5, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+# Convert images to base64 (assuming these return base64 data URIs)
+plot_priors_m5 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_m5.png")
+plot_priors_intercept_m5 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_priors_intercept_m5.png")
+
+# Create the HTML 
+html_priors <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+<div class='image-row'>
+  <img src='", plot_priors_m5, "' alt='Prior Plot'>
+</div>
+<div class='image-row'>
+  <img src='", plot_priors_intercept_m5, "' alt='Intercept Prior Plot'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_priors)
+
+    
+```
+
+
+---
+
+### 6. Run final models
+
+Now that we have finalized the model parameters, we fit models using the actual data and compare them to null models to assess the significance of predictors.
+
+
+>**Note:** We will run these models in RStudio to be consistent because the rstan package sometimes does not like Jupyter. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_e_max_diff <- brm(
+    bf(e_max_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_max_diff (Microhabitat)
+m5v1_e_max_diff <- brm(
+    bf(e_max_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_max_diff (Microhabitat Association)
+m5v2_e_max_diff <- brm(
+    bf(e_max_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_max_diff.rds")
+
+```
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_Filter_max_diff <- brm(
+    bf(Filter_max_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(2.30, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical = FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_Filter_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# Filter_max_diff (Microhabitat)
+m5v1_Filter_max_diff <- brm(
+    bf(Filter_max_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_Filter_max_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# Filter_max_diff (Microhabitat Association)
+m5v2_Filter_max_diff <- brm(
+    bf(Filter_max_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(2.30, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical = FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_Filter_max_diff.rds")
+
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_e_prop_diff <- brm(
+    bf(e_prop_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(-3.91, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_prop_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_prop_diff (Microhabitat)
+m5v1_e_prop_diff <- brm(
+    bf(e_prop_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_prop_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# e_prop_diff (Microhabitat Association)
+m5v2_e_prop_diff <- brm(
+    bf(e_prop_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(-3.91, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_prop_diff.rds")
+
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_R_c_diff <- brm(
+    bf(R_c_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_R_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# R_c_diff (Microhabitat)
+m5v1_R_c_diff <- brm(
+    bf(R_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_R_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# R_c_diff (Microhabitat Association)
+m5v2_R_c_diff <- brm(
+    bf(R_c_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_R_c_diff.rds")
+
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_G_c_diff <- brm(
+    bf(G_c_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_G_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# G_c_diff (Microhabitat)
+m5v1_G_c_diff <- brm(
+    bf(G_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_G_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# G_c_diff (Microhabitat Association)
+m5v2_G_c_diff <- brm(
+    bf(G_c_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_G_c_diff.rds")
+```
+
+
+```{r}
+
+# Set seed for reproducibility
+set.seed(5678)
+# null model (for comparison)
+m5v0_B_c_diff <- brm(
+    bf(B_c_diff ~ 1 + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v0_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_B_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# B_c_diff (Microhabitat)
+m5v1_B_c_diff <- brm(
+    bf(B_c_diff ~ 1 + Sex + Microhabitat + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(0, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v1_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_B_c_diff.rds")
+
+
+# Set seed for reproducibility
+set.seed(5678)
+# B_c_diff (Microhabitat Association)
+m5v2_B_c_diff <- brm(
+    bf(B_c_diff ~ 1 + Sex + Microhabitat_Association + Viewpoint + (1|Image)),
+    data = data_m5_clean,
+    family = Gamma(link = "log"),
+    prior = c(
+        prior(normal(1.61, 0.5), class = "Intercept"),
+        prior(normal(0, 0.5), class = "b"),
+        prior(gamma(2, 0.1), class = "shape")
+    ),
+    sample_prior = TRUE,
+    save_pars = save_pars(all = TRUE),
+    control = list(adapt_delta = 0.99, max_treedepth = 12),
+    iter = 15000,
+    warmup = 5000,
+    chains = 2,
+    cores = parallel::detectCores(logical=FALSE),
+    backend = "rstan"
+)
+saveRDS(m5v2_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_B_c_diff.rds")
+
+```
+
+###**Model comparison**
+
+Make sure final models outperform the null model, and check to see which model performs best. Use LOO to compare models.
+
+>**Note:** We will added loo to these models in RStudio. The models were saved in RStudio and loaded below. We left the code chunks as comments for reference.
+
+
+```{r}
+# Add loo to models
+m5v0_e_max_diff <- add_criterion(m5v0_e_max_diff, "loo", moment_match = TRUE)
+m5v1_e_max_diff <- add_criterion(m5v1_e_max_diff, "loo", moment_match = TRUE)
+m5v2_e_max_diff <- add_criterion(m5v2_e_max_diff, "loo", moment_match = TRUE)
+
+m5v0_Filter_max_diff <- add_criterion(m5v0_Filter_max_diff, "loo", moment_match = TRUE)
+m5v1_Filter_max_diff <- add_criterion(m5v1_Filter_max_diff, "loo", moment_match = TRUE)
+m5v2_Filter_max_diff <- add_criterion(m5v2_Filter_max_diff, "loo", moment_match = TRUE)
+
+m5v0_e_prop_diff <- add_criterion(m5v0_e_prop_diff, "loo", moment_match = TRUE)
+m5v1_e_prop_diff <- add_criterion(m5v1_e_prop_diff, "loo", moment_match = TRUE)
+m5v2_e_prop_diff <- add_criterion(m5v2_e_prop_diff, "loo", moment_match = TRUE)
+
+m5v0_R_c_diff <- add_criterion(m5v0_R_c_diff, "loo", moment_match = TRUE)
+m5v1_R_c_diff <- add_criterion(m5v1_R_c_diff, "loo", moment_match = TRUE)
+m5v2_R_c_diff <- add_criterion(m5v2_R_c_diff, "loo", moment_match = TRUE)
+
+m5v0_G_c_diff <- add_criterion(m5v0_G_c_diff, "loo", moment_match = TRUE)
+m5v1_G_c_diff <- add_criterion(m5v1_G_c_diff, "loo", moment_match = TRUE)
+m5v2_G_c_diff <- add_criterion(m5v2_G_c_diff, "loo", moment_match = TRUE)
+
+m5v0_B_c_diff <- add_criterion(m5v0_B_c_diff, "loo", moment_match = TRUE)
+m5v1_B_c_diff <- add_criterion(m5v1_B_c_diff, "loo", moment_match = TRUE)
+m5v2_B_c_diff <- add_criterion(m5v2_B_c_diff, "loo", moment_match = TRUE)
+
+
+# Save models with loo so you don't have to do this again
+saveRDS(m5v0_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_max_diff.rds")
+saveRDS(m5v1_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_max_diff.rds")
+saveRDS(m5v2_e_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_max_diff.rds")
+
+saveRDS(m5v0_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_Filter_max_diff.rds")
+saveRDS(m5v1_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_Filter_max_diff.rds")
+saveRDS(m5v2_Filter_max_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_Filter_max_diff.rds")
+
+saveRDS(m5v0_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_prop_diff.rds")
+saveRDS(m5v1_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_prop_diff.rds")
+saveRDS(m5v2_e_prop_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_prop_diff.rds")
+
+saveRDS(m5v0_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_R_c_diff.rds")
+saveRDS(m5v1_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_R_c_diff.rds")
+saveRDS(m5v2_R_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_R_c_diff.rds")
+
+saveRDS(m5v0_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_G_c_diff.rds")
+saveRDS(m5v1_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_G_c_diff.rds")
+saveRDS(m5v2_G_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_G_c_diff.rds")
+
+saveRDS(m5v0_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_B_c_diff.rds")
+saveRDS(m5v1_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_B_c_diff.rds")
+saveRDS(m5v2_B_c_diff, file = "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_B_c_diff.rds")
+```
+
+
+```{r}
+
+# Load models from R
+m5v0_e_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_max_diff.rds")
+m5v0_Filter_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_Filter_max_diff.rds")
+m5v0_e_prop_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_e_prop_diff.rds")
+m5v0_R_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_R_c_diff.rds")
+m5v0_G_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_G_c_diff.rds")
+m5v0_B_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v0_B_c_diff.rds")
+
+m5v1_e_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_max_diff.rds")
+m5v1_Filter_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_Filter_max_diff.rds")
+m5v1_e_prop_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_e_prop_diff.rds")
+m5v1_R_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_R_c_diff.rds")
+m5v1_G_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_G_c_diff.rds")
+m5v1_B_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v1_B_c_diff.rds")
+
+m5v2_e_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_max_diff.rds")
+m5v2_Filter_max_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_Filter_max_diff.rds")
+m5v2_e_prop_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_e_prop_diff.rds")
+m5v2_R_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_R_c_diff.rds")
+m5v2_G_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_G_c_diff.rds")
+m5v2_B_c_diff <- readRDS("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/models/m5v2_B_c_diff.rds")
+
+
+```
+
+
+```{r}
+
+# Compare all models
+loo1_m5v1 <- loo_compare(m5v0_e_max_diff, m5v1_e_max_diff)
+loo2_m5v1 <- loo_compare(m5v0_Filter_max_diff, m5v1_Filter_max_diff)
+loo3_m5v1 <- loo_compare(m5v0_e_prop_diff, m5v1_e_prop_diff)
+loo4_m5v1 <- loo_compare(m5v0_R_c_diff, m5v1_R_c_diff)
+loo5_m5v1 <- loo_compare(m5v0_G_c_diff, m5v1_G_c_diff)
+loo6_m5v1 <- loo_compare(m5v0_B_c_diff, m5v1_B_c_diff)
+
+```
+
+
+```{r}
+# Convert to dataframe
+df_loo1_m5v1 <- as.data.frame(loo1_m5v1) %>%
+  rownames_to_column(var = "Model")
+df_loo2_m5v1 <- as.data.frame(loo2_m5v1) %>%
+  rownames_to_column(var = "Model")
+df_loo3_m5v1 <- as.data.frame(loo3_m5v1) %>%
+  rownames_to_column(var = "Model")
+df_loo4_m5v1 <- as.data.frame(loo4_m5v1) %>%
+  rownames_to_column(var = "Model")
+df_loo5_m5v1 <- as.data.frame(loo5_m5v1) %>%
+  rownames_to_column(var = "Model")
+df_loo6_m5v1 <- as.data.frame(loo6_m5v1) %>%
+  rownames_to_column(var = "Model")
+
+# Save loo as tables
+write.table(df_loo1_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_e_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo2_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_Filter_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo3_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_e_prop_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo4_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_R_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo5_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_G_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo6_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v1_B_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+```
+
+
+```{r}
+# Convert each data frame to a plain HTML table string
+table_1_loo_m5v1 <- minimal_html_table(df_loo1_m5v1, caption = "LOO values m5v1 - Background Matching e_max")
+table_2_loo_m5v1 <- minimal_html_table(df_loo2_m5v1, caption = "LOO values m5v1 - Background Matching Filter_max")
+table_3_loo_m5v1 <- minimal_html_table(df_loo3_m5v1, caption = "LOO values m5v1 - Background Matching e_prop")
+table_4_loo_m5v1 <- minimal_html_table(df_loo4_m5v1, caption = "LOO values m5v1 - Background Matching R Reflectance")
+table_5_loo_m5v1 <- minimal_html_table(df_loo5_m5v1, caption = "LOO values m5v1 - Background Matching G Reflectance")
+table_6_loo_m5v1 <- minimal_html_table(df_loo6_m5v1, caption = "LOO values m5v1 - Background Matching B Reflectance")
+
+my_tabs_loo_m5v1 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_loo_m5v1:checked ~ #content1_loo_m5v1,
+#tab2_loo_m5v1:checked ~ #content2_loo_m5v1,
+#tab3_loo_m5v1:checked ~ #content3_loo_m5v1,
+#tab4_loo_m5v1:checked ~ #content4_loo_m5v1,
+#tab5_loo_m5v1:checked ~ #content5_loo_m5v1,
+#tab6_loo_m5v1:checked ~ #content6_loo_m5v1 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_loo_m5v1:checked + label[for="tab1_loo_m5v1"],
+#tab2_loo_m5v1:checked + label[for="tab2_loo_m5v1"],
+#tab3_loo_m5v1:checked + label[for="tab3_loo_m5v1"],
+#tab4_loo_m5v1:checked + label[for="tab4_loo_m5v1"],
+#tab5_loo_m5v1:checked + label[for="tab5_loo_m5v1"],
+#tab6_loo_m5v1:checked + label[for="tab6_loo_m5v1"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab1_loo_m5v1" checked>
+  <label class="tab-label" for="tab1_loo_m5v1">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab2_loo_m5v1">
+  <label class="tab-label" for="tab2_loo_m5v1">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab3_loo_m5v1">
+  <label class="tab-label" for="tab3_loo_m5v1">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab4_loo_m5v1">
+  <label class="tab-label" for="tab4_loo_m5v1">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab5_loo_m5v1">
+  <label class="tab-label" for="tab5_loo_m5v1">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v1" id="tab6_loo_m5v1">
+  <label class="tab-label" for="tab6_loo_m5v1">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_loo_m5v1">REPLACE_WITH_table_1_m5v1</div>
+  <div class="tab-content" id="content2_loo_m5v1">REPLACE_WITH_table_2_m5v1</div>
+  <div class="tab-content" id="content3_loo_m5v1">REPLACE_WITH_table_3_m5v1</div>
+  <div class="tab-content" id="content4_loo_m5v1">REPLACE_WITH_table_4_m5v1</div>
+  <div class="tab-content" id="content5_loo_m5v1">REPLACE_WITH_table_5_m5v1</div>
+  <div class="tab-content" id="content6_loo_m5v1">REPLACE_WITH_table_6_m5v1</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_1_m5v1", table_1_loo_m5v1, my_tabs_loo_m5v1)
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_2_m5v1", table_2_loo_m5v1, my_tabs_loo_m5v1)
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_3_m5v1", table_3_loo_m5v1, my_tabs_loo_m5v1)
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_4_m5v1", table_4_loo_m5v1, my_tabs_loo_m5v1)
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_5_m5v1", table_5_loo_m5v1, my_tabs_loo_m5v1)
+my_tabs_loo_m5v1 <- gsub("REPLACE_WITH_table_6_m5v1", table_6_loo_m5v1, my_tabs_loo_m5v1)
+
+# IRdisplay::display_html(my_tabs_loo_m5v1)
+```
+
+
+```{r}
+
+# Compare all models
+loo1_m5v2 <- loo_compare(m5v0_e_max_diff, m5v2_e_max_diff)
+loo2_m5v2 <- loo_compare(m5v0_Filter_max_diff, m5v2_Filter_max_diff)
+loo3_m5v2 <- loo_compare(m5v0_e_prop_diff, m5v2_e_prop_diff)
+loo4_m5v2 <- loo_compare(m5v0_R_c_diff, m5v2_R_c_diff)
+loo5_m5v2 <- loo_compare(m5v0_G_c_diff, m5v2_G_c_diff)
+loo6_m5v2 <- loo_compare(m5v0_B_c_diff, m5v2_B_c_diff)
+
+```
+
+
+```{r}
+
+# Convert to dataframe
+df_loo1_m5v2 <- as.data.frame(loo1_m5v2) %>%
+  rownames_to_column(var = "Model")
+df_loo2_m5v2 <- as.data.frame(loo2_m5v2) %>%
+  rownames_to_column(var = "Model")
+df_loo3_m5v2 <- as.data.frame(loo3_m5v2) %>%
+  rownames_to_column(var = "Model")
+df_loo4_m5v2 <- as.data.frame(loo4_m5v2) %>%
+  rownames_to_column(var = "Model")
+df_loo5_m5v2 <- as.data.frame(loo5_m5v2) %>%
+  rownames_to_column(var = "Model")
+df_loo6_m5v2 <- as.data.frame(loo6_m5v2) %>%
+  rownames_to_column(var = "Model")
+
+# Save loo as tables
+write.table(df_loo1_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_e_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo2_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_Filter_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo3_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_e_prop_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo4_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_R_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo5_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_G_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(df_loo6_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_loo_m5v2_B_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_loo_m5v2 <- minimal_html_table(df_loo1_m5v2, caption = "LOO values m5v2 - Background Matching e_max")
+table_2_loo_m5v2 <- minimal_html_table(df_loo2_m5v2, caption = "LOO values m5v2 - Background Matching Filter_max")
+table_3_loo_m5v2 <- minimal_html_table(df_loo3_m5v2, caption = "LOO values m5v2 - Background Matching e_prop")
+table_4_loo_m5v2 <- minimal_html_table(df_loo4_m5v2, caption = "LOO values m5v2 - Background Matching R Reflectance")
+table_5_loo_m5v2 <- minimal_html_table(df_loo5_m5v2, caption = "LOO values m5v2 - Background Matching G Reflectance")
+table_6_loo_m5v2 <- minimal_html_table(df_loo6_m5v2, caption = "LOO values m5v2 - Background Matching B Reflectance")
+
+my_tabs_loo_m5v2 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_loo_m5v2:checked ~ #content1_loo_m5v2,
+#tab2_loo_m5v2:checked ~ #content2_loo_m5v2,
+#tab3_loo_m5v2:checked ~ #content3_loo_m5v2,
+#tab4_loo_m5v2:checked ~ #content4_loo_m5v2,
+#tab5_loo_m5v2:checked ~ #content5_loo_m5v2,
+#tab6_loo_m5v2:checked ~ #content6_loo_m5v2 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_loo_m5v2:checked + label[for="tab1_loo_m5v2"],
+#tab2_loo_m5v2:checked + label[for="tab2_loo_m5v2"],
+#tab3_loo_m5v2:checked + label[for="tab3_loo_m5v2"],
+#tab4_loo_m5v2:checked + label[for="tab4_loo_m5v2"],
+#tab5_loo_m5v2:checked + label[for="tab5_loo_m5v2"],
+#tab6_loo_m5v2:checked + label[for="tab6_loo_m5v2"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab1_loo_m5v2" checked>
+  <label class="tab-label" for="tab1_loo_m5v2">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab2_loo_m5v2">
+  <label class="tab-label" for="tab2_loo_m5v2">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab3_loo_m5v2">
+  <label class="tab-label" for="tab3_loo_m5v2">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab4_loo_m5v2">
+  <label class="tab-label" for="tab4_loo_m5v2">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab5_loo_m5v2">
+  <label class="tab-label" for="tab5_loo_m5v2">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_loo_m5v2" id="tab6_loo_m5v2">
+  <label class="tab-label" for="tab6_loo_m5v2">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_loo_m5v2">REPLACE_WITH_table_1_m5v2</div>
+  <div class="tab-content" id="content2_loo_m5v2">REPLACE_WITH_table_2_m5v2</div>
+  <div class="tab-content" id="content3_loo_m5v2">REPLACE_WITH_table_3_m5v2</div>
+  <div class="tab-content" id="content4_loo_m5v2">REPLACE_WITH_table_4_m5v2</div>
+  <div class="tab-content" id="content5_loo_m5v2">REPLACE_WITH_table_5_m5v2</div>
+  <div class="tab-content" id="content6_loo_m5v2">REPLACE_WITH_table_6_m5v2</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_1_m5v2", table_1_loo_m5v2, my_tabs_loo_m5v2)
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_2_m5v2", table_2_loo_m5v2, my_tabs_loo_m5v2)
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_3_m5v2", table_3_loo_m5v2, my_tabs_loo_m5v2)
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_4_m5v2", table_4_loo_m5v2, my_tabs_loo_m5v2)
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_5_m5v2", table_5_loo_m5v2, my_tabs_loo_m5v2)
+my_tabs_loo_m5v2 <- gsub("REPLACE_WITH_table_6_m5v2", table_6_loo_m5v2, my_tabs_loo_m5v2)
+
+# IRdisplay::display_html(my_tabs_loo_m5v2)
+```
+
+
+#### **Visualize posteriors**
+
+We extract the final model results and visualize the posteriors of our model parameters to get an idea of the significance of the results. This is what we did above when we were evaluating our priors.
+
+
+```{r}
+
+# Extract results
+posterior_samples_m5v1_e_max_diff <- as_draws_df(m5v1_e_max_diff)
+posterior_samples_m5v1_Filter_max_diff <- as_draws_df(m5v1_Filter_max_diff)
+posterior_samples_m5v1_e_prop_diff <- as_draws_df(m5v1_e_prop_diff)
+posterior_samples_m5v1_R_c_diff <- as_draws_df(m5v1_R_c_diff)
+posterior_samples_m5v1_G_c_diff <- as_draws_df(m5v1_G_c_diff)
+posterior_samples_m5v1_B_c_diff <- as_draws_df(m5v1_B_c_diff)
+
+posterior_samples_m5v2_e_max_diff <- as_draws_df(m5v2_e_max_diff)
+posterior_samples_m5v2_Filter_max_diff <- as_draws_df(m5v2_Filter_max_diff)
+posterior_samples_m5v2_e_prop_diff <- as_draws_df(m5v2_e_prop_diff)
+posterior_samples_m5v2_R_c_diff <- as_draws_df(m5v2_R_c_diff)
+posterior_samples_m5v2_G_c_diff <- as_draws_df(m5v2_G_c_diff)
+posterior_samples_m5v2_B_c_diff <- as_draws_df(m5v2_B_c_diff)
+```
+
+
+```{r}
+
+# List of datasets and labels
+posterior_samples <- list(
+    e_max_diff = posterior_samples_m5v1_e_max_diff,
+    Filter_max_diff = posterior_samples_m5v1_Filter_max_diff,
+    e_prop_diff = posterior_samples_m5v1_e_prop_diff,
+    R_c_diff = posterior_samples_m5v1_R_c_diff,
+    G_c_diff = posterior_samples_m5v1_G_c_diff,
+    B_c_diff = posterior_samples_m5v1_B_c_diff
+)
+
+
+# Baseline category data
+baseline_data <- tibble(
+  parameter = c("Males", "Hydroids", "No correction"),
+  mean = 0,  # Centered at 0
+  ci_low = -0.2,  # Example CI range
+  ci_high = 0.2
+)
+
+# Order categories
+parameter_order <- c(
+  "Males",
+  "b_SexF",
+  "Hydroids",
+  "b_MicrohabitatRed_Algae",
+  "b_MicrohabitatHydroid_Bryozoa",
+  "No correction",
+  "b_Viewpoint10",
+  "b_Viewpoint20"
+)
+
+#Custom labels
+custom_labels_posteriors <- c(
+  "Males" = "Males",
+  "b_SexF" = "Females",
+  "Hydroids" = "Hydroids",
+  "b_MicrohabitatRed_Algae" = "Red Algae",
+  "b_MicrohabitatHydroid_Bryozoa" = "Hydroids with Bryozoa",
+  "No correction" = "No correction",
+  "b_Viewpoint10" = "Viewpoint 10",
+  "b_Viewpoint20" = "Viewpoint 20"
+)
+
+
+# Convert the y-axis parameters to factors for consistent alignment
+baseline_data$parameter <- factor(baseline_data$parameter, levels = parameter_order)
+
+
+
+# Generate plots for predictors
+posterior_plots <- lapply(
+    names(posterior_samples),
+    function(label) {
+        generate_posterior_plot(
+            posterior_samples[[label]],
+            regex_pars = c(
+                "b_SexF",
+                "b_MicrohabitatRed_Algae",
+                "b_MicrohabitatHydroid_Bryozoa",
+                "b_Viewpoint10",
+                "b_Viewpoint20"
+            ),
+            x_range = c(-0.35, 0.35),
+            custom_labels = custom_labels_posteriors,
+            axis_title_y = label %in% c("e_max_diff", "R_c_diff"),
+            axis_text_x = label %in% c("R_c_diff", "G_c_diff", "B_c_diff") # Show x-axis text only for second-row labels
+        ) +
+        geom_point(
+            data = baseline_data,
+            aes(x = mean, y = parameter),
+            inherit.aes = FALSE,
+            color = "dodgerblue4",
+            size = 2
+        )
+    }
+)
+names(posterior_plots) <- names(posterior_samples)
+
+
+
+# Add grey bars with labels for each plot
+posterior_plots_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    posterior_plots,
+    names(posterior_plots),
+    SIMPLIFY = FALSE
+)
+
+
+
+# Combine predictor plots into a 2x3 grid
+plot_posteriors_m5v1 <- patchwork::wrap_plots(
+    posterior_plots_with_bars[c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+
+
+# Add a unified x-axis label for predictor plots
+plot_posteriors_m5v1 <- plot_posteriors_m5v1 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.55, size = 10))
+    )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m5v1.png", plot = plot_posteriors_m5v1, width = 6, height = 4.5, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+# Convert images to base64
+plot_posteriors_m5v1 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m5v1.png")
+
+
+# Create the HTML 
+html_posteriors_m5v1 <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+
+  <img src='", plot_posteriors_m5v1, "' alt='Posterior Plot (Model 2)'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_posteriors_m5v1)
+```
+
+
+```{r}
+
+# List of datasets and labels
+posterior_samples <- list(
+    e_max_diff = posterior_samples_m5v2_e_max_diff,
+    Filter_max_diff = posterior_samples_m5v2_Filter_max_diff,
+    e_prop_diff = posterior_samples_m5v2_e_prop_diff,
+    R_c_diff = posterior_samples_m5v2_R_c_diff,
+    G_c_diff = posterior_samples_m5v2_G_c_diff,
+    B_c_diff = posterior_samples_m5v2_B_c_diff
+)
+
+
+# Baseline category data
+baseline_data <- tibble(
+  parameter = c("Males", "Microhabitat_Association Not Present", "No correction"),
+  mean = 0,  # Centered at 0
+  ci_low = -0.2,  # Example CI range
+  ci_high = 0.2
+)
+
+# Order categories
+parameter_order <- c(
+  "Males",
+  "b_SexF",
+  "Hydroids",
+  "Microhabitat_Association Not Present",
+  "b_Microhabitat_AssociationPresent",
+  "No correction",
+  "b_Viewpoint10",
+  "b_Viewpoint20"
+)
+
+#Custom labels
+custom_labels_posteriors <- c(
+  "Males" = "Males",
+  "b_SexF" = "Females",
+  "Hydroids" = "Hydroids",
+  "Microhabitat_Association Not Present" = "Unassociated",
+  "b_Microhabitat_AssociationPresent" = "Associated",
+  "No correction" = "No correction",
+  "b_Viewpoint10" = "Viewpoint 10",
+  "b_Viewpoint20" = "Viewpoint 20"
+)
+
+
+# Convert the y-axis parameters to factors for consistent alignment
+baseline_data$parameter <- factor(baseline_data$parameter, levels = parameter_order)
+
+
+
+# Generate plots for predictors
+posterior_plots <- lapply(
+    names(posterior_samples),
+    function(label) {
+        generate_posterior_plot(
+            posterior_samples[[label]],
+            regex_pars = c(
+                "b_SexF",
+                "b_Microhabitat_AssociationPresent",
+                "b_Viewpoint10",
+                "b_Viewpoint20"
+            ),
+            x_range = c(-0.35, 0.35),
+            custom_labels = custom_labels_posteriors,
+            axis_title_y = label %in% c("e_max_diff", "R_c_diff"),
+            axis_text_x = label %in% c("R_c_diff", "G_c_diff", "B_c_diff") # Show x-axis text only for second-row labels
+        ) +
+        geom_point(
+            data = baseline_data,
+            aes(x = mean, y = parameter),
+            inherit.aes = FALSE,
+            color = "dodgerblue4",
+            size = 2
+        )
+    }
+)
+names(posterior_plots) <- names(posterior_samples)
+
+
+
+# Add grey bars with labels for each plot
+posterior_plots_with_bars <- mapply(
+    function(plot, label) {
+        patchwork::wrap_elements(create_top_bar(label)) / plot +
+            patchwork::plot_layout(heights = c(0.2, 1))
+    },
+    posterior_plots,
+    names(posterior_plots),
+    SIMPLIFY = FALSE
+)
+
+
+
+# Combine predictor plots into a 2x3 grid
+plot_posteriors_m5v2 <- patchwork::wrap_plots(
+    posterior_plots_with_bars[c("e_max_diff", "Filter_max_diff", "e_prop_diff", "R_c_diff", "G_c_diff", "B_c_diff")],
+    ncol = 3
+) +
+    patchwork::plot_layout(guides = "collect")
+
+
+
+# Add a unified x-axis label for predictor plots
+plot_posteriors_m5v2 <- plot_posteriors_m5v2 +
+    patchwork::plot_annotation(
+        caption = "Expected value of the response (log scale)",
+        theme = theme(plot.caption = element_text(hjust = 0.55, size = 10))
+    )
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m5v2.png", plot = plot_posteriors_m5v2, width = 6, height = 4.5, units = "in", dpi = 300)
+
+
+```
+
+
+```{r}
+
+# Convert images to base64
+plot_posteriors_m5v2 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/plot_posteriors_m5v2.png")
+
+
+# Create the HTML 
+html_posteriors_m5v2 <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+
+  <img src='", plot_posteriors_m5v2, "' alt='Posterior Plot (Model 2)'>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_posteriors_m5v2)
+```
+
+
+
+The graph of the posteriors gives us an idea of the significance of each predictor. We need to follow up with an evaluation of the model performance before we can trust these results.
+
+---
+
+### 7. Evaluate model performance
+
+##### **Trace plots**
+
+Visualize parameter sampling across iterations to confirm convergence. Each chain should wander around the same mean value without any strong upward or downward trends. "fuzzy caterpillar" or "horizontal band." 
+
+
+
+```{r}
+
+# Generate trace plots for all models
+trace_plots_m5v1_e_max_diff <- generate_trace_plot(
+  model = m5v1_e_max_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "e_max Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v1_Filter_max_diff <- generate_trace_plot(
+  model = m5v1_Filter_max_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "Filter_max Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v1_e_prop_diff <- generate_trace_plot(
+  model = m5v1_e_prop_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "e_prop Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v1_R_c_diff <- generate_trace_plot(
+  model = m5v1_R_c_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "R Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v1_G_c_diff <- generate_trace_plot(
+  model = m5v1_G_c_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "G Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v1_B_c_diff <- generate_trace_plot(
+  model = m5v1_B_c_diff,
+  regex_pars = c("b_SexF", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "B Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_e_max_diff.png", plot = trace_plots_m5v1_e_max_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_Filter_max_diff.png", plot = trace_plots_m5v1_Filter_max_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_e_prop_diff.png", plot = trace_plots_m5v1_e_prop_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_R_c_diff.png", plot = trace_plots_m5v1_R_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_G_c_diff.png", plot = trace_plots_m5v1_G_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_B_c_diff.png", plot = trace_plots_m5v1_B_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64 (if not already done)
+trace_plots_m5v1_e_max_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_e_max_diff.png")
+trace_plots_m5v1_Filter_max_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_Filter_max_diff.png")
+trace_plots_m5v1_e_prop_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_e_prop_diff.png")
+trace_plots_m5v1_R_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_R_c_diff.png")
+trace_plots_m5v1_G_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_G_c_diff.png")
+trace_plots_m5v1_B_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v1_B_c_diff.png")
+
+
+# Create the HTML 
+html_trace_plots_m5v1 <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns per row */
+    gap: 3px;
+    padding: 3px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", trace_plots_m5v1_e_max_diff, "' alt='e_max Plot (Model 1)'>
+  <img src='", trace_plots_m5v1_Filter_max_diff, "' alt='Filter_max Plot (Model 1)'>
+  <img src='", trace_plots_m5v1_e_prop_diff, "' alt='e_prop Plot (Model 1)'>
+  <img src='", trace_plots_m5v1_R_c_diff, "' alt='R Reflectance Plot (Model 1)'>
+  <img src='", trace_plots_m5v1_G_c_diff, "' alt='G Reflectance Plot (Model 1)'>
+  <img src='", trace_plots_m5v1_B_c_diff, "' alt='B Reflectance Plot (Model 1)'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_trace_plots_m5v1)
+```
+
+
+```{r}
+
+# Generate trace plots for all models
+trace_plots_m5v2_e_max_diff <- generate_trace_plot(
+  model = m5v2_e_max_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "e_max Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v2_Filter_max_diff <- generate_trace_plot(
+  model = m5v2_Filter_max_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "Filter_max Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v2_e_prop_diff <- generate_trace_plot(
+  model = m5v2_e_prop_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "e_prop Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v2_R_c_diff <- generate_trace_plot(
+  model = m5v2_R_c_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "R Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v2_G_c_diff <- generate_trace_plot(
+  model = m5v2_G_c_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "G Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+trace_plots_m5v2_B_c_diff <- generate_trace_plot(
+  model = m5v2_B_c_diff,
+  regex_pars = c("b_SexF", "b_Microhabitat_AssociationPresent", "b_Viewpoint10", "b_Viewpoint20"),
+  plot_title = "B Reflectance Model",
+  axis_title_y = TRUE,
+  axis_text_x = TRUE,
+  axis_title_size = 10,
+  axis_text_size = 8
+)
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_e_max_diff.png", plot = trace_plots_m5v2_e_max_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_Filter_max_diff.png", plot = trace_plots_m5v2_Filter_max_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_e_prop_diff.png", plot = trace_plots_m5v2_e_prop_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_R_c_diff.png", plot = trace_plots_m5v2_R_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_G_c_diff.png", plot = trace_plots_m5v2_G_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_B_c_diff.png", plot = trace_plots_m5v2_B_c_diff, width = 6, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+# Convert images to base64 (if not already done)
+trace_plots_m5v2_e_max_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_e_max_diff.png")
+trace_plots_m5v2_Filter_max_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_Filter_max_diff.png")
+trace_plots_m5v2_e_prop_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_e_prop_diff.png")
+trace_plots_m5v2_R_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_R_c_diff.png")
+trace_plots_m5v2_G_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_G_c_diff.png")
+trace_plots_m5v2_B_c_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/trace_plots_m5v2_B_c_diff.png")
+
+
+# Create the HTML 
+html_trace_plots_m5v2 <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns per row */
+    gap: 3px;
+    padding: 3px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", trace_plots_m5v2_e_max_diff, "' alt='e_max Plot (Model 2)'>
+  <img src='", trace_plots_m5v2_Filter_max_diff, "' alt='Filter_max Plot (Model 2)'>
+  <img src='", trace_plots_m5v2_e_prop_diff, "' alt='e_prop Plot (Model 2)'>
+  <img src='", trace_plots_m5v2_R_c_diff, "' alt='R Reflectance Plot (Model 2)'>
+  <img src='", trace_plots_m5v2_G_c_diff, "' alt='G Reflectance Plot (Model 2)'>
+  <img src='", trace_plots_m5v2_B_c_diff, "' alt='B Reflectance Plot (Model 2)'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_trace_plots_m5v2)
+```
+
+
+#### **Posterior predictive checks**
+
+Simulate data based on the models and compare to observed data to verify goodness-of-fit. We do this using "pp_check". The observed data (black line/dots) should sit comfortably within the distribution of simulated data (colored areas or lines)
+
+
+
+```{r}
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v1_e_max_diff <-  generate_pp_check(
+  model = m5v1_e_max_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_max Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v1_Filter_max_diff <-  generate_pp_check(
+  model = m5v1_Filter_max_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "Filter_max Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v1_e_prop_diff <-  generate_pp_check(
+  model = m5v1_e_prop_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_prop Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v1_R_c_diff <-  generate_pp_check(
+  model = m5v1_R_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "R Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v1_G_c_diff <-  generate_pp_check(
+  model = m5v1_G_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "G Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v1_B_c_diff <-  generate_pp_check(
+  model = m5v1_B_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "B Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_e_max_diff.png", plot = pp_check_plots_m5v1_e_max_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_Filter_max_diff.png", plot = pp_check_plots_m5v1_Filter_max_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_e_prop_diff.png", plot = pp_check_plots_m5v1_e_prop_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_R_c_diff.png", plot = pp_check_plots_m5v1_R_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_G_c_diff.png", plot = pp_check_plots_m5v1_G_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_B_c_diff.png", plot = pp_check_plots_m5v1_B_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+```
+
+
+```{r}
+
+# Convert images to base64
+pp_check_plots_m5v1_e_max_diff  <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_e_max_diff.png")
+pp_check_plots_m5v1_Filter_max_diff   <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_Filter_max_diff.png")
+pp_check_plots_m5v1_e_prop_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_e_prop_diff.png")
+pp_check_plots_m5v1_R_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_R_c_diff.png")
+pp_check_plots_m5v1_G_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_G_c_diff.png")
+pp_check_plots_m5v1_B_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v1_B_c_diff.png")
+
+
+# Create the HTML (horizontal display)
+html_pp_check_plots_m5v1 <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 15px;
+    padding: 10px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", pp_check_plots_m5v1_e_max_diff, "' alt='e_max Plot (Model 1)'>
+  <img src='", pp_check_plots_m5v1_Filter_max_diff, "' alt='Filter_max Plot (Model 1)'>
+  <img src='", pp_check_plots_m5v1_e_prop_diff, "' alt='e_prop Plot (Model 1)'>
+  <img src='", pp_check_plots_m5v1_R_c_diff, "' alt='R Reflectance Plot (Model 1)'>
+  <img src='", pp_check_plots_m5v1_G_c_diff, "' alt='G Reflectance Plot (Model 1)'>
+  <img src='", pp_check_plots_m5v1_B_c_diff, "' alt='B Reflectance Plot (Model 1)'>
+</div>
+")
+
+# IRdisplay::display_html(html_pp_check_plots_m5v1)
+```
+
+
+```{r}
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v2_e_max_diff <-  generate_pp_check(
+  model = m5v2_e_max_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_max Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v2_Filter_max_diff <-  generate_pp_check(
+  model = m5v2_Filter_max_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "Filter_max Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v2_e_prop_diff <-  generate_pp_check(
+  model = m5v2_e_prop_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "e_prop Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v2_R_c_diff <-  generate_pp_check(
+  model = m5v2_R_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "R Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+# Generate posterior predictive check plots for all models
+pp_check_plots_m5v2_G_c_diff <-  generate_pp_check(
+  model = m5v2_G_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "G Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+pp_check_plots_m5v2_B_c_diff <-  generate_pp_check(
+  model = m5v2_B_c_diff,
+  nreps = 100,
+  axis_title_y = TRUE,
+  y_label = "Density",
+  plot_title = "B Reflectance Background Matching Model",
+  axis_title_size = 10,  # custom title size
+  axis_text_size = 8    # custom tick label size
+)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_e_max_diff.png", plot = pp_check_plots_m5v2_e_max_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_Filter_max_diff.png", plot = pp_check_plots_m5v2_Filter_max_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_e_prop_diff.png", plot = pp_check_plots_m5v2_e_prop_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_R_c_diff.png", plot = pp_check_plots_m5v2_R_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_G_c_diff.png", plot = pp_check_plots_m5v2_G_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_B_c_diff.png", plot = pp_check_plots_m5v2_B_c_diff, width = 3, height = 3, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+pp_check_plots_m5v2_e_max_diff  <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_e_max_diff.png")
+pp_check_plots_m5v2_Filter_max_diff   <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_Filter_max_diff.png")
+pp_check_plots_m5v2_e_prop_diff <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_e_prop_diff.png")
+pp_check_plots_m5v2_R_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_R_c_diff.png")
+pp_check_plots_m5v2_G_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_G_c_diff.png")
+pp_check_plots_m5v2_B_c_diff         <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/pp_check_plots_m5v2_B_c_diff.png")
+
+
+# Create the HTML (horizontal display)
+html_pp_check_plots_m5v2 <- paste0("
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 15px;
+    padding: 10px;
+    justify-items: center;
+  }
+
+  .grid-container img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<div class='grid-container'>
+  <img src='", pp_check_plots_m5v2_e_max_diff, "' alt='e_max Plot (Model 2)'>
+  <img src='", pp_check_plots_m5v2_Filter_max_diff, "' alt='Filter_max Plot (Model 2)'>
+  <img src='", pp_check_plots_m5v2_e_prop_diff, "' alt='e_prop Plot (Model 2)'>
+  <img src='", pp_check_plots_m5v2_R_c_diff, "' alt='R Reflectance Plot (Model 2)'>
+  <img src='", pp_check_plots_m5v2_G_c_diff, "' alt='G Reflectance Plot (Model 2)'>
+  <img src='", pp_check_plots_m5v2_B_c_diff, "' alt='B Reflectance Plot (Model 2)'>
+</div>
+")
+
+# IRdisplay::display_html(html_pp_check_plots_m5v2)
+```
+
+
+
+#### **Check convergence**
+
+Check that all $\hat{R}$ values are close to 1, indicating good convergence.
+
+
+
+```{r}
+# Create a helper function
+extract_rhat <- function(model, model_name) {
+  rhat(model) %>%
+    as.data.frame() %>%
+    rownames_to_column(var = "Parameter") %>%
+    dplyr::filter(startsWith(Parameter, "b_")) %>%   # <-- keep only b_ terms
+    dplyr::rename(Rhat = 2) %>%
+    dplyr::mutate(Model = model_name) %>%
+    dplyr::mutate(across(where(is.numeric), ~ signif(.x, digits = 3)))
+}
+
+# Extract for each model group
+rhat1_m5v1 <- extract_rhat(m5v1_e_max_diff,   "e_max_diff")
+rhat2_m5v1 <- extract_rhat(m5v1_Filter_max_diff,    "Filter_max_diff")
+rhat3_m5v1 <- extract_rhat(m5v1_e_prop_diff,  "e_prop_diff")
+rhat4_m5v1 <- extract_rhat(m5v1_R_c_diff,          "R_c_diff")
+rhat5_m5v1 <- extract_rhat(m5v1_G_c_diff,          "G_c_diff")
+rhat6_m5v1 <- extract_rhat(m5v1_B_c_diff,          "B_c_diff")
+```
+
+
+```{r}
+# Save tables
+write.table(rhat1_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_e_max_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat2_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_Filter_max_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat3_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_e_prop_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat4_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_R_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat5_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_G_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat6_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v1_B_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_rhat_m5v1 <- minimal_html_table(rhat1_m5v1, caption = "Rhat values - e_max Background Matching")
+table_2_rhat_m5v1 <- minimal_html_table(rhat2_m5v1, caption = "Rhat values - Filter_max Background Matching")
+table_3_rhat_m5v1 <- minimal_html_table(rhat3_m5v1, caption = "Rhat values - e_prop Background Matching")
+table_4_rhat_m5v1 <- minimal_html_table(rhat4_m5v1, caption = "Rhat values - R Background Matching")
+table_5_rhat_m5v1 <- minimal_html_table(rhat5_m5v1, caption = "Rhat values - G Background Matching")
+table_6_rhat_m5v1 <- minimal_html_table(rhat6_m5v1, caption = "Rhat values - B Background Matching")
+
+
+my_tabs_rhat_m5v1 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_rhat_m5v1:checked ~ #content1_rhat_m5v1,
+#tab2_rhat_m5v1:checked ~ #content2_rhat_m5v1,
+#tab3_rhat_m5v1:checked ~ #content3_rhat_m5v1,
+#tab4_rhat_m5v1:checked ~ #content4_rhat_m5v1,
+#tab5_rhat_m5v1:checked ~ #content5_rhat_m5v1,
+#tab6_rhat_m5v1:checked ~ #content6_rhat_m5v1 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_rhat_m5v1:checked + label[for="tab1_rhat_m5v1"],
+#tab2_rhat_m5v1:checked + label[for="tab2_rhat_m5v1"],
+#tab3_rhat_m5v1:checked + label[for="tab3_rhat_m5v1"],
+#tab4_rhat_m5v1:checked + label[for="tab4_rhat_m5v1"],
+#tab5_rhat_m5v1:checked + label[for="tab5_rhat_m5v1"],
+#tab6_rhat_m5v1:checked + label[for="tab6_rhat_m5v1"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab1_rhat_m5v1" checked>
+  <label class="tab-label" for="tab1_rhat_m5v1">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab2_rhat_m5v1">
+  <label class="tab-label" for="tab2_rhat_m5v1">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab3_rhat_m5v1">
+  <label class="tab-label" for="tab3_rhat_m5v1">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab4_rhat_m5v1">
+  <label class="tab-label" for="tab4_rhat_m5v1">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab5_rhat_m5v1">
+  <label class="tab-label" for="tab5_rhat_m5v1">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v1" id="tab6_rhat_m5v1">
+  <label class="tab-label" for="tab6_rhat_m5v1">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_rhat_m5v1">REPLACE_WITH_table_1_m5v1</div>
+  <div class="tab-content" id="content2_rhat_m5v1">REPLACE_WITH_table_2_m5v1</div>
+  <div class="tab-content" id="content3_rhat_m5v1">REPLACE_WITH_table_3_m5v1</div>
+  <div class="tab-content" id="content4_rhat_m5v1">REPLACE_WITH_table_4_m5v1</div>
+  <div class="tab-content" id="content5_rhat_m5v1">REPLACE_WITH_table_5_m5v1</div>
+  <div class="tab-content" id="content6_rhat_m5v1">REPLACE_WITH_table_6_m5v1</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_1_m5v1", table_1_rhat_m5v1, my_tabs_rhat_m5v1)
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_2_m5v1", table_2_rhat_m5v1, my_tabs_rhat_m5v1)
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_3_m5v1", table_3_rhat_m5v1, my_tabs_rhat_m5v1)
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_4_m5v1", table_4_rhat_m5v1, my_tabs_rhat_m5v1)
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_5_m5v1", table_5_rhat_m5v1, my_tabs_rhat_m5v1)
+my_tabs_rhat_m5v1 <- gsub("REPLACE_WITH_table_6_m5v1", table_6_rhat_m5v1, my_tabs_rhat_m5v1)
+
+# IRdisplay::display_html(my_tabs_rhat_m5v1)
+
+```
+
+
+```{r}
+# Create a helper function
+extract_rhat <- function(model, model_name) {
+  rhat(model) %>%
+    as.data.frame() %>%
+    rownames_to_column(var = "Parameter") %>%
+    dplyr::filter(startsWith(Parameter, "b_")) %>%   # <-- keep only b_ terms
+    dplyr::rename(Rhat = 2) %>%
+    dplyr::mutate(Model = model_name) %>%
+    dplyr::mutate(across(where(is.numeric), ~ signif(.x, digits = 3)))
+}
+
+# Extract for each model group
+rhat1_m5v2 <- extract_rhat(m5v2_e_max_diff,   "e_max_diff")
+rhat2_m5v2 <- extract_rhat(m5v2_Filter_max_diff,    "Filter_max_diff")
+rhat3_m5v2 <- extract_rhat(m5v2_e_prop_diff,  "e_prop_diff")
+rhat4_m5v2 <- extract_rhat(m5v2_R_c_diff,          "R_c_diff")
+rhat5_m5v2 <- extract_rhat(m5v2_G_c_diff,          "G_c_diff")
+rhat6_m5v2 <- extract_rhat(m5v2_B_c_diff,          "B_c_diff")
+
+```
+
+
+```{r}
+# Save tables
+write.table(rhat1_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_e_max_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat2_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_Filter_max_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat3_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_e_prop_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat4_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_R_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat5_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_G_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+write.table(rhat6_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_rhat_m5v2_B_c_diff.csv", sep = ",", row.names = FALSE, col.names = TRUE)
+```
+
+
+```{r}
+# Convert each data frame to a plain HTML table string
+table_1_rhat_m5v2 <- minimal_html_table(rhat1_m5v2, caption = "Rhat values - e_max Background Matching")
+table_2_rhat_m5v2 <- minimal_html_table(rhat2_m5v2, caption = "Rhat values - Filter_max Background Matching")
+table_3_rhat_m5v2 <- minimal_html_table(rhat3_m5v2, caption = "Rhat values - e_prop Background Matching")
+table_4_rhat_m5v2 <- minimal_html_table(rhat4_m5v2, caption = "Rhat values - R Background Matching")
+table_5_rhat_m5v2 <- minimal_html_table(rhat5_m5v2, caption = "Rhat values - G Background Matching")
+table_6_rhat_m5v2 <- minimal_html_table(rhat6_m5v2, caption = "Rhat values - B Background Matching")
+
+
+my_tabs_rhat_m5v2 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_rhat_m5v2:checked ~ #content1_rhat_m5v2,
+#tab2_rhat_m5v2:checked ~ #content2_rhat_m5v2,
+#tab3_rhat_m5v2:checked ~ #content3_rhat_m5v2,
+#tab4_rhat_m5v2:checked ~ #content4_rhat_m5v2,
+#tab5_rhat_m5v2:checked ~ #content5_rhat_m5v2,
+#tab6_rhat_m5v2:checked ~ #content6_rhat_m5v2 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_rhat_m5v2:checked + label[for="tab1_rhat_m5v2"],
+#tab2_rhat_m5v2:checked + label[for="tab2_rhat_m5v2"],
+#tab3_rhat_m5v2:checked + label[for="tab3_rhat_m5v2"],
+#tab4_rhat_m5v2:checked + label[for="tab4_rhat_m5v2"],
+#tab5_rhat_m5v2:checked + label[for="tab5_rhat_m5v2"],
+#tab6_rhat_m5v2:checked + label[for="tab6_rhat_m5v2"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab1_rhat_m5v2" checked>
+  <label class="tab-label" for="tab1_rhat_m5v2">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab2_rhat_m5v2">
+  <label class="tab-label" for="tab2_rhat_m5v2">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab3_rhat_m5v2">
+  <label class="tab-label" for="tab3_rhat_m5v2">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab4_rhat_m5v2">
+  <label class="tab-label" for="tab4_rhat_m5v2">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab5_rhat_m5v2">
+  <label class="tab-label" for="tab5_rhat_m5v2">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_rhat_m5v2" id="tab6_rhat_m5v2">
+  <label class="tab-label" for="tab6_rhat_m5v2">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_rhat_m5v2">REPLACE_WITH_table_1_m5v2</div>
+  <div class="tab-content" id="content2_rhat_m5v2">REPLACE_WITH_table_2_m5v2</div>
+  <div class="tab-content" id="content3_rhat_m5v2">REPLACE_WITH_table_3_m5v2</div>
+  <div class="tab-content" id="content4_rhat_m5v2">REPLACE_WITH_table_4_m5v2</div>
+  <div class="tab-content" id="content5_rhat_m5v2">REPLACE_WITH_table_5_m5v2</div>
+  <div class="tab-content" id="content6_rhat_m5v2">REPLACE_WITH_table_6_m5v2</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_1_m5v2", table_1_rhat_m5v2, my_tabs_rhat_m5v2)
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_2_m5v2", table_2_rhat_m5v2, my_tabs_rhat_m5v2)
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_3_m5v2", table_3_rhat_m5v2, my_tabs_rhat_m5v2)
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_4_m5v2", table_4_rhat_m5v2, my_tabs_rhat_m5v2)
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_5_m5v2", table_5_rhat_m5v2, my_tabs_rhat_m5v2)
+my_tabs_rhat_m5v2 <- gsub("REPLACE_WITH_table_6_m5v2", table_6_rhat_m5v2, my_tabs_rhat_m5v2)
+
+# IRdisplay::display_html(my_tabs_rhat_m5v2)
+
+```
+
+
+
+#### **Check uncertainty**
+
+Extract parameter estimates and their confidence intervals to assess the significance of the predictors on color pattern metrics. We check 85% and 95% confidence intervals. Summaries are displayed in tables for all models. 
+
+
+
+
+```{r}
+
+# Extract summaries for each variable
+extract_summary <- function(model, prob_85, prob_95) {
+    summary_85 <- summary(model, prob = prob_85)
+    summary_95 <- summary(model, prob = prob_95)
+
+    as.data.frame(summary_85$fixed) %>%
+        dplyr::select("Estimate", "Est.Error", "l-85% CI", "u-85% CI") %>%
+        mutate(
+            "l-95% CI" = summary_95$fixed$`l-95% CI`,
+            "u-95% CI" = summary_95$fixed$`u-95% CI`
+        ) %>%
+        mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+        rownames_to_column(var = "Parameter") # Add rownames as Parameter column
+}
+
+uncertainty1_m5v1 <- extract_summary(m5v1_e_max_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty2_m5v1 <- extract_summary(m5v1_Filter_max_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty3_m5v1 <- extract_summary(m5v1_e_prop_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty4_m5v1 <- extract_summary(m5v1_R_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty5_m5v1 <- extract_summary(m5v1_G_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty6_m5v1 <- extract_summary(m5v1_B_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+
+```
+
+
+```{r}
+
+# Save tables
+write.table(uncertainty1_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_e_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty2_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_Filter_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty3_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_e_prop_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty4_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_R_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty5_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_G_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty6_m5v1, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v1_B_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_uncertainty_m5v1 <- minimal_html_table(uncertainty1_m5v1, caption = "Uncertainty values - e_max Background Matching")
+table_2_uncertainty_m5v1 <- minimal_html_table(uncertainty2_m5v1, caption = "Uncertainty values - Filter_max Background Matching")
+table_3_uncertainty_m5v1 <- minimal_html_table(uncertainty3_m5v1, caption = "Uncertainty values - e_prop Background Matching")
+table_4_uncertainty_m5v1 <- minimal_html_table(uncertainty4_m5v1, caption = "Uncertainty values - R Background Matching")
+table_5_uncertainty_m5v1 <- minimal_html_table(uncertainty5_m5v1, caption = "Uncertainty values - G Background Matching")
+table_6_uncertainty_m5v1 <- minimal_html_table(uncertainty6_m5v1, caption = "Uncertainty values - B Background Matching")
+
+
+my_tabs_uncertainty_m5v1 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_uncertainty_m5v1:checked ~ #content1_uncertainty_m5v1,
+#tab2_uncertainty_m5v1:checked ~ #content2_uncertainty_m5v1,
+#tab3_uncertainty_m5v1:checked ~ #content3_uncertainty_m5v1,
+#tab4_uncertainty_m5v1:checked ~ #content4_uncertainty_m5v1,
+#tab5_uncertainty_m5v1:checked ~ #content5_uncertainty_m5v1,
+#tab6_uncertainty_m5v1:checked ~ #content6_uncertainty_m5v1 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_uncertainty_m5v1:checked + label[for="tab1_uncertainty_m5v1"],
+#tab2_uncertainty_m5v1:checked + label[for="tab2_uncertainty_m5v1"],
+#tab3_uncertainty_m5v1:checked + label[for="tab3_uncertainty_m5v1"],
+#tab4_uncertainty_m5v1:checked + label[for="tab4_uncertainty_m5v1"],
+#tab5_uncertainty_m5v1:checked + label[for="tab5_uncertainty_m5v1"],
+#tab6_uncertainty_m5v1:checked + label[for="tab6_uncertainty_m5v1"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab1_uncertainty_m5v1" checked>
+  <label class="tab-label" for="tab1_uncertainty_m5v1">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab2_uncertainty_m5v1">
+  <label class="tab-label" for="tab2_uncertainty_m5v1">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab3_uncertainty_m5v1">
+  <label class="tab-label" for="tab3_uncertainty_m5v1">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab4_uncertainty_m5v1">
+  <label class="tab-label" for="tab4_uncertainty_m5v1">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab5_uncertainty_m5v1">
+  <label class="tab-label" for="tab5_uncertainty_m5v1">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v1" id="tab6_uncertainty_m5v1">
+  <label class="tab-label" for="tab6_uncertainty_m5v1">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_uncertainty_m5v1">REPLACE_WITH_table_1_m5v1</div>
+  <div class="tab-content" id="content2_uncertainty_m5v1">REPLACE_WITH_table_2_m5v1</div>
+  <div class="tab-content" id="content3_uncertainty_m5v1">REPLACE_WITH_table_3_m5v1</div>
+  <div class="tab-content" id="content4_uncertainty_m5v1">REPLACE_WITH_table_4_m5v1</div>
+  <div class="tab-content" id="content5_uncertainty_m5v1">REPLACE_WITH_table_5_m5v1</div>
+  <div class="tab-content" id="content6_uncertainty_m5v1">REPLACE_WITH_table_6_m5v1</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_1_m5v1", table_1_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_2_m5v1", table_2_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_3_m5v1", table_3_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_4_m5v1", table_4_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_5_m5v1", table_5_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+my_tabs_uncertainty_m5v1 <- gsub("REPLACE_WITH_table_6_m5v1", table_6_uncertainty_m5v1, my_tabs_uncertainty_m5v1)
+
+# IRdisplay::display_html(my_tabs_uncertainty_m5v1)
+
+```
+
+
+```{r}
+
+# Extract summaries for each variable
+extract_summary <- function(model, prob_85, prob_95) {
+    summary_85 <- summary(model, prob = prob_85)
+    summary_95 <- summary(model, prob = prob_95)
+
+    as.data.frame(summary_85$fixed) %>%
+        dplyr::select("Estimate", "Est.Error", "l-85% CI", "u-85% CI") %>%
+        mutate(
+            "l-95% CI" = summary_95$fixed$`l-95% CI`,
+            "u-95% CI" = summary_95$fixed$`u-95% CI`
+        ) %>%
+        mutate(across(where(is.numeric), ~ signif(.x, digits = 3))) %>%
+        rownames_to_column(var = "Parameter") # Add rownames as Parameter column
+}
+
+uncertainty1_m5v2 <- extract_summary(m5v2_e_max_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty2_m5v2 <- extract_summary(m5v2_Filter_max_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty3_m5v2 <- extract_summary(m5v2_e_prop_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty4_m5v2 <- extract_summary(m5v2_R_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty5_m5v2 <- extract_summary(m5v2_G_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+uncertainty6_m5v2 <- extract_summary(m5v2_B_c_diff, prob_85 = 0.85, prob_95 = 0.95)
+
+
+
+```
+
+
+```{r}
+# Save tables
+write.table(uncertainty1_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_e_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty2_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_Filter_max_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty3_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_e_prop_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty4_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_R_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty5_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_G_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+write.table(uncertainty6_m5v2, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_uncertainty_m5v2_B_c_diff.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+```
+
+
+```{r}
+
+# Convert each data frame to a plain HTML table string
+table_1_uncertainty_m5v2 <- minimal_html_table(uncertainty1_m5v2, caption = "Uncertainty values - e_max Background Matching")
+table_2_uncertainty_m5v2 <- minimal_html_table(uncertainty2_m5v2, caption = "Uncertainty values - Filter_max Background Matching")
+table_3_uncertainty_m5v2 <- minimal_html_table(uncertainty3_m5v2, caption = "Uncertainty values - e_prop Background Matching")
+table_4_uncertainty_m5v2 <- minimal_html_table(uncertainty4_m5v2, caption = "Uncertainty values - R Background Matching")
+table_5_uncertainty_m5v2 <- minimal_html_table(uncertainty5_m5v2, caption = "Uncertainty values - G Background Matching")
+table_6_uncertainty_m5v2 <- minimal_html_table(uncertainty6_m5v2, caption = "Uncertainty values - B Background Matching")
+
+
+my_tabs_uncertainty_m5v2 <- '
+<style>
+/* Basic container styling */
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+
+/* Hide the radio inputs (we only show their labels as tabs) */
+.tabs-container input[type="radio"] {
+  display: none;
+}
+
+/* The “tab-label” styling: looks like a tab */
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/* The active tab label */
+.tab-label-active {
+  background: #fff;
+}
+
+/* The panel that holds table content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+
+/* For each radio input, show its corresponding content when checked */
+#tab1_uncertainty_m5v2:checked ~ #content1_uncertainty_m5v2,
+#tab2_uncertainty_m5v2:checked ~ #content2_uncertainty_m5v2,
+#tab3_uncertainty_m5v2:checked ~ #content3_uncertainty_m5v2,
+#tab4_uncertainty_m5v2:checked ~ #content4_uncertainty_m5v2,
+#tab5_uncertainty_m5v2:checked ~ #content5_uncertainty_m5v2,
+#tab6_uncertainty_m5v2:checked ~ #content6_uncertainty_m5v2 {
+  display: block;
+}
+
+/* Also style the label of the checked radio as “active” using the :checked + label technique */
+#tab1_uncertainty_m5v2:checked + label[for="tab1_uncertainty_m5v2"],
+#tab2_uncertainty_m5v2:checked + label[for="tab2_uncertainty_m5v2"],
+#tab3_uncertainty_m5v2:checked + label[for="tab3_uncertainty_m5v2"],
+#tab4_uncertainty_m5v2:checked + label[for="tab4_uncertainty_m5v2"],
+#tab5_uncertainty_m5v2:checked + label[for="tab5_uncertainty_m5v2"],
+#tab6_uncertainty_m5v2:checked + label[for="tab6_uncertainty_m5v2"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+
+  <!-- 1) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab1_uncertainty_m5v2" checked>
+  <label class="tab-label" for="tab1_uncertainty_m5v2">Table 1</label>
+
+  <!-- 2) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab2_uncertainty_m5v2">
+  <label class="tab-label" for="tab2_uncertainty_m5v2">Table 2</label>
+
+  <!-- 3) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab3_uncertainty_m5v2">
+  <label class="tab-label" for="tab3_uncertainty_m5v2">Table 3</label>
+
+  <!-- 4) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab4_uncertainty_m5v2">
+  <label class="tab-label" for="tab4_uncertainty_m5v2">Table 4</label>
+
+  <!-- 5) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab5_uncertainty_m5v2">
+  <label class="tab-label" for="tab5_uncertainty_m5v2">Table 5</label>
+
+  <!-- 6) Tab radio + label -->
+  <input type="radio" name="tabs_uncertainty_m5v2" id="tab6_uncertainty_m5v2">
+  <label class="tab-label" for="tab6_uncertainty_m5v2">Table 6</label>
+
+  <!-- Content for each tab -->
+  <div class="tab-content" id="content1_uncertainty_m5v2">REPLACE_WITH_table_1_m5v2</div>
+  <div class="tab-content" id="content2_uncertainty_m5v2">REPLACE_WITH_table_2_m5v2</div>
+  <div class="tab-content" id="content3_uncertainty_m5v2">REPLACE_WITH_table_3_m5v2</div>
+  <div class="tab-content" id="content4_uncertainty_m5v2">REPLACE_WITH_table_4_m5v2</div>
+  <div class="tab-content" id="content5_uncertainty_m5v2">REPLACE_WITH_table_5_m5v2</div>
+  <div class="tab-content" id="content6_uncertainty_m5v2">REPLACE_WITH_table_6_m5v2</div>
+</div>
+'
+
+# Now do the replacements for each table
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_1_m5v2", table_1_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_2_m5v2", table_2_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_3_m5v2", table_3_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_4_m5v2", table_4_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_5_m5v2", table_5_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+my_tabs_uncertainty_m5v2 <- gsub("REPLACE_WITH_table_6_m5v2", table_6_uncertainty_m5v2, my_tabs_uncertainty_m5v2)
+
+# IRdisplay::display_html(my_tabs_uncertainty_m5v2)
+
+```
+
+---
+
+#### **Check posterior probabilities**
+
+Now we can evaluate our hypotheses using the posterior distributions of the model parameters. Remember, we are concerned with two things:
+1. Is there a difference in background matching between females and males? (Sex effect)
+2. Is there a difference in background matching between microhabitats? (Microhabitat effect)
+
+We will calculate the posterior probability of these effects.
+
+
+```{r}
+##### **Posterior Probability of Sex Effect**
+
+draws_m5v1_e_max <- as_draws_df(m5v1_e_max_diff)
+draws_m5v1_Filter_max <- as_draws_df(m5v1_Filter_max_diff)
+draws_m5v1_e_prop <- as_draws_df(m5v1_e_prop_diff)
+draws_m5v1_R_c <- as_draws_df(m5v1_R_c_diff)
+draws_m5v1_G_c <- as_draws_df(m5v1_G_c_diff)
+draws_m5v1_B_c <- as_draws_df(m5v1_B_c_diff)
+
+draws_m5v2_e_max <- as_draws_df(m5v2_e_max_diff)
+draws_m5v2_Filter_max <- as_draws_df(m5v2_Filter_max_diff)
+draws_m5v2_e_prop <- as_draws_df(m5v2_e_prop_diff)
+draws_m5v2_R_c <- as_draws_df(m5v2_R_c_diff)
+draws_m5v2_G_c <- as_draws_df(m5v2_G_c_diff)
+draws_m5v2_B_c <- as_draws_df(m5v2_B_c_diff)
+
+# Posterior probability that difference between pod and background is a **higher** for females than males (reference sex)
+pp_m5v1_e_max_positive <- mean(draws_m5v1_e_max$b_SexF > 0)
+pp_m5v1_Filter_max_positive <- mean(draws_m5v1_Filter_max$b_SexF > 0)
+pp_m5v1_e_prop_positive <- mean(draws_m5v1_e_prop$b_SexF > 0)
+pp_m5v1_R_c_positive <- mean(draws_m5v1_R_c$b_SexF > 0)
+pp_m5v1_G_c_positive <- mean(draws_m5v1_G_c$b_SexF > 0)
+pp_m5v1_B_c_positive <- mean(draws_m5v1_B_c$b_SexF > 0)
+
+pp_m5v2_e_max_positive <- mean(draws_m5v2_e_max$b_SexF > 0)
+pp_m5v2_Filter_max_positive <- mean(draws_m5v2_Filter_max$b_SexF > 0)
+pp_m5v2_e_prop_positive <- mean(draws_m5v2_e_prop$b_SexF > 0)
+pp_m5v2_R_c_positive <- mean(draws_m5v2_R_c$b_SexF > 0)
+pp_m5v2_G_c_positive <- mean(draws_m5v2_G_c$b_SexF > 0)
+pp_m5v2_B_c_positive <- mean(draws_m5v2_B_c$b_SexF > 0)
+
+# Posterior probability that difference between pod and background is a **lower** for females than males (reference sex)
+pp_m5v1_e_max_negative <- mean(draws_m5v1_e_max$b_SexF < 0)
+pp_m5v1_Filter_max_negative <- mean(draws_m5v1_Filter_max$b_SexF < 0)
+pp_m5v1_e_prop_negative <- mean(draws_m5v1_e_prop$b_SexF < 0)
+pp_m5v1_R_c_negative <- mean(draws_m5v1_R_c$b_SexF < 0)
+pp_m5v1_G_c_negative <- mean(draws_m5v1_G_c$b_SexF < 0)
+pp_m5v1_B_c_negative <- mean(draws_m5v1_B_c$b_SexF < 0)
+
+pp_m5v2_e_max_negative <- mean(draws_m5v2_e_max$b_SexF < 0)
+pp_m5v2_Filter_max_negative <- mean(draws_m5v2_Filter_max$b_SexF < 0)
+pp_m5v2_e_prop_negative <- mean(draws_m5v2_e_prop$b_SexF < 0)
+pp_m5v2_R_c_negative <- mean(draws_m5v2_R_c$b_SexF < 0)
+pp_m5v2_G_c_negative <- mean(draws_m5v2_G_c$b_SexF < 0)
+pp_m5v2_B_c_negative <- mean(draws_m5v2_B_c$b_SexF < 0)
+
+
+# Create a summary table
+pp_summary_m5v1_sex <- data.frame(
+  Hypothesis = c(
+    "P(Sex effect e_max diff > 0)",
+    "P(Sex effect Filter_max diff > 0)",
+    "P(Sex effect e_prop diff > 0)",
+    "P(Sex effect R_c diff > 0)",
+    "P(Sex effect G_c diff > 0)",
+    "P(Sex effect B_c diff > 0)",
+    "P(Sex effect e_max diff < 0)",
+    "P(Sex effect Filter_max diff < 0)",
+    "P(Sex effect e_prop diff < 0)",
+    "P(Sex effect R_c diff < 0)",
+    "P(Sex effect G_c diff < 0)",
+    "P(Sex effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_m5v1_e_max_positive,
+    pp_m5v1_Filter_max_positive,
+    pp_m5v1_e_prop_positive,
+    pp_m5v1_R_c_positive,
+    pp_m5v1_G_c_positive,
+    pp_m5v1_B_c_positive,
+    pp_m5v1_e_max_negative,
+    pp_m5v1_Filter_max_negative,
+    pp_m5v1_e_prop_negative,
+    pp_m5v1_R_c_negative,
+    pp_m5v1_G_c_negative,
+    pp_m5v1_B_c_negative
+  )
+)
+
+pp_summary_m5v2_sex <- data.frame(
+  Hypothesis = c(
+    "P(Sex effect e_max diff > 0)",
+    "P(Sex effect Filter_max diff > 0)",
+    "P(Sex effect e_prop diff > 0)",
+    "P(Sex effect R_c diff > 0)",
+    "P(Sex effect G_c diff > 0)",
+    "P(Sex effect B_c diff > 0)",
+    "P(Sex effect e_max diff < 0)",
+    "P(Sex effect Filter_max diff < 0)",
+    "P(Sex effect e_prop diff < 0)",
+    "P(Sex effect R_c diff < 0)",
+    "P(Sex effect G_c diff < 0)",
+    "P(Sex effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_m5v2_e_max_positive,
+    pp_m5v2_Filter_max_positive,
+    pp_m5v2_e_prop_positive,
+    pp_m5v2_R_c_positive,
+    pp_m5v2_G_c_positive,
+    pp_m5v2_B_c_positive,
+    pp_m5v2_e_max_negative,
+    pp_m5v2_Filter_max_negative,
+    pp_m5v2_e_prop_negative,
+    pp_m5v2_R_c_negative,
+    pp_m5v2_G_c_negative,
+    pp_m5v2_B_c_negative
+  )
+)
+
+# Save combined table
+pp_summary_sex_combined <- rbind(pp_summary_m5v1_sex, pp_summary_m5v2_sex)
+write.table(pp_summary_sex_combined, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_postprob_m5_sex.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+```
+
+
+```{r}
+# Convert each to HTML
+html_m5v1_sex <- minimal_html_table(pp_summary_m5v1_sex, caption = "Posterior probabilities (Sex)")
+html_m5v2_sex <- minimal_html_table(pp_summary_m5v2_sex, caption = "Posterior probabilities (Sex)")
+
+# Tabs layout
+my_tabs_pp_sex <- '
+<style>
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+.tabs-container input[type="radio"] {
+  display: none;
+}
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+#tab_m5v1_sex:checked ~ #content_m5v1_sex,
+#tab_m5v2_sex:checked ~ #content_m5v2_sex {
+  display: block;
+}
+#tab_m5v1_sex:checked + label[for="tab_m5v1_sex"],
+#tab_m5v2_sex:checked + label[for="tab_m5v2_sex"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+  <input type="radio" name="tabs_pp_sex" id="tab_m5v1_sex" checked>
+  <label class="tab-label" for="tab_m5v1_sex">Microhabitat Model</label>
+
+  <input type="radio" name="tabs_pp_sex" id="tab_m5v2_sex">
+  <label class="tab-label" for="tab_m5v2_sex">Microhabitat_Association Model</label>
+
+  <div class="tab-content" id="content_m5v1_sex">REPLACE_WITH_m5v1_sex</div>
+  <div class="tab-content" id="content_m5v2_sex">REPLACE_WITH_m5v2_sex</div>
+</div>
+'
+
+# Inject tables
+my_tabs_pp_sex <- gsub("REPLACE_WITH_m5v1_sex", html_m5v1_sex, my_tabs_pp_sex)
+my_tabs_pp_sex <- gsub("REPLACE_WITH_m5v2_sex", html_m5v2_sex, my_tabs_pp_sex)
+
+# Display
+# IRdisplay::display_html(my_tabs_pp_sex)
+```
+
+
+```{r}
+##### **Posterior Probability of Microhabitat Effect**
+
+draws_m5v1_e_max <- as_draws_df(m5v1_e_max_diff)
+draws_m5v1_Filter_max <- as_draws_df(m5v1_Filter_max_diff)
+draws_m5v1_e_prop <- as_draws_df(m5v1_e_prop_diff)
+draws_m5v1_R_c <- as_draws_df(m5v1_R_c_diff)
+draws_m5v1_G_c <- as_draws_df(m5v1_G_c_diff)
+draws_m5v1_B_c <- as_draws_df(m5v1_B_c_diff)
+
+draws_m5v2_e_max <- as_draws_df(m5v2_e_max_diff)
+draws_m5v2_Filter_max <- as_draws_df(m5v2_Filter_max_diff)
+draws_m5v2_e_prop <- as_draws_df(m5v2_e_prop_diff)
+draws_m5v2_R_c <- as_draws_df(m5v2_R_c_diff)
+draws_m5v2_G_c <- as_draws_df(m5v2_G_c_diff)
+draws_m5v2_B_c <- as_draws_df(m5v2_B_c_diff)
+
+# Posterior probability that difference between pod and background is a **higher** for females than males (reference sex)
+pp_RedAlgae_m5v1_e_max_positive <- mean(draws_m5v1_e_max$b_MicrohabitatRed_Algae > 0)
+pp_RedAlgae_m5v1_Filter_max_positive <- mean(draws_m5v1_Filter_max$b_MicrohabitatRed_Algae > 0)
+pp_RedAlgae_m5v1_e_prop_positive <- mean(draws_m5v1_e_prop$b_MicrohabitatRed_Algae > 0)
+pp_RedAlgae_m5v1_R_c_positive <- mean(draws_m5v1_R_c$b_MicrohabitatRed_Algae > 0)
+pp_RedAlgae_m5v1_G_c_positive <- mean(draws_m5v1_G_c$b_MicrohabitatRed_Algae > 0)
+pp_RedAlgae_m5v1_B_c_positive <- mean(draws_m5v1_B_c$b_MicrohabitatRed_Algae > 0)
+pp_HydroidBryozoa_m5v1_e_max_positive <- mean(draws_m5v1_e_max$b_MicrohabitatHydroid_Bryozoa > 0)
+pp_HydroidBryozoa_m5v1_Filter_max_positive <- mean(draws_m5v1_Filter_max$b_MicrohabitatHydroid_Bryozoa > 0)
+pp_HydroidBryozoa_m5v1_e_prop_positive <- mean(draws_m5v1_e_prop$b_MicrohabitatHydroid_Bryozoa > 0)
+pp_HydroidBryozoa_m5v1_R_c_positive <- mean(draws_m5v1_R_c$b_MicrohabitatHydroid_Bryozoa > 0)
+pp_HydroidBryozoa_m5v1_G_c_positive <- mean(draws_m5v1_G_c$b_MicrohabitatHydroid_Bryozoa > 0)
+pp_HydroidBryozoa_m5v1_B_c_positive <- mean(draws_m5v1_B_c$b_MicrohabitatHydroid_Bryozoa > 0)
+
+pp_Microhabitat_AssociationPresent_m5v2_e_max_positive <- mean(draws_m5v2_e_max$b_Microhabitat_AssociationPresent > 0)
+pp_Microhabitat_AssociationPresent_m5v2_Filter_max_positive <- mean(draws_m5v2_Filter_max$b_Microhabitat_AssociationPresent > 0)
+pp_Microhabitat_AssociationPresent_m5v2_e_prop_positive <- mean(draws_m5v2_e_prop$b_Microhabitat_AssociationPresent > 0)
+pp_Microhabitat_AssociationPresent_m5v2_R_c_positive <- mean(draws_m5v2_R_c$b_Microhabitat_AssociationPresent > 0)
+pp_Microhabitat_AssociationPresent_m5v2_G_c_positive <- mean(draws_m5v2_G_c$b_Microhabitat_AssociationPresent > 0)
+pp_Microhabitat_AssociationPresent_m5v2_B_c_positive <- mean(draws_m5v2_B_c$b_Microhabitat_AssociationPresent > 0)
+
+# Posterior probability that difference between pod and background is a **lower** for females than males (reference sex)
+pp_RedAlgae_m5v1_e_max_negative <- mean(draws_m5v1_e_max$b_MicrohabitatRed_Algae < 0)
+pp_RedAlgae_m5v1_Filter_max_negative <- mean(draws_m5v1_Filter_max$b_MicrohabitatRed_Algae < 0)
+pp_RedAlgae_m5v1_e_prop_negative <- mean(draws_m5v1_e_prop$b_MicrohabitatRed_Algae < 0)
+pp_RedAlgae_m5v1_R_c_negative <- mean(draws_m5v1_R_c$b_MicrohabitatRed_Algae < 0)
+pp_RedAlgae_m5v1_G_c_negative <- mean(draws_m5v1_G_c$b_MicrohabitatRed_Algae < 0)
+pp_RedAlgae_m5v1_B_c_negative <- mean(draws_m5v1_B_c$b_MicrohabitatRed_Algae < 0)
+pp_HydroidBryozoa_m5v1_e_max_negative <- mean(draws_m5v1_e_max$b_MicrohabitatHydroid_Bryozoa < 0)
+pp_HydroidBryozoa_m5v1_Filter_max_negative <- mean(draws_m5v1_Filter_max$b_MicrohabitatHydroid_Bryozoa < 0)
+pp_HydroidBryozoa_m5v1_e_prop_negative <- mean(draws_m5v1_e_prop$b_MicrohabitatHydroid_Bryozoa < 0)
+pp_HydroidBryozoa_m5v1_R_c_negative <- mean(draws_m5v1_R_c$b_MicrohabitatHydroid_Bryozoa < 0)
+pp_HydroidBryozoa_m5v1_G_c_negative <- mean(draws_m5v1_G_c$b_MicrohabitatHydroid_Bryozoa < 0)
+pp_HydroidBryozoa_m5v1_B_c_negative <- mean(draws_m5v1_B_c$b_MicrohabitatHydroid_Bryozoa < 0)
+
+pp_Microhabitat_AssociationPresent_m5v2_e_max_negative <- mean(draws_m5v2_e_max$b_Microhabitat_AssociationPresent < 0)
+pp_Microhabitat_AssociationPresent_m5v2_Filter_max_negative <- mean(draws_m5v2_Filter_max$b_Microhabitat_AssociationPresent < 0)
+pp_Microhabitat_AssociationPresent_m5v2_e_prop_negative <- mean(draws_m5v2_e_prop$b_Microhabitat_AssociationPresent < 0)
+pp_Microhabitat_AssociationPresent_m5v2_R_c_negative <- mean(draws_m5v2_R_c$b_Microhabitat_AssociationPresent < 0)
+pp_Microhabitat_AssociationPresent_m5v2_G_c_negative <- mean(draws_m5v2_G_c$b_Microhabitat_AssociationPresent < 0)
+pp_Microhabitat_AssociationPresent_m5v2_B_c_negative <- mean(draws_m5v2_B_c$b_Microhabitat_AssociationPresent < 0)
+
+
+# Create a summary table
+pp_summary_m5v1_microhabitat <- data.frame(
+  Hypothesis = c(
+    "P(Microhabitat Red Algae effect e_max diff > 0)",
+    "P(Microhabitat Red Algae effect Filter_max diff > 0)",
+    "P(Microhabitat Red Algae effect e_prop diff > 0)",
+    "P(Microhabitat Red Algae effect R_c diff > 0)",
+    "P(Microhabitat Red Algae effect G_c diff > 0)",
+    "P(Microhabitat Red Algae effect B_c diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect e_max diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect Filter_max diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect e_prop diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect R_c diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect G_c diff > 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect B_c diff > 0)",
+    "P(Microhabitat Red Algae effect e_max diff < 0)",
+    "P(Microhabitat Red Algae effect Filter_max diff < 0)",
+    "P(Microhabitat Red Algae effect e_prop diff < 0)",
+    "P(Microhabitat Red Algae effect R_c diff < 0)",
+    "P(Microhabitat Red Algae effect G_c diff < 0)",
+    "P(Microhabitat Red Algae effect B_c diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect e_max diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect Filter_max diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect e_prop diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect R_c diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect G_c diff < 0)",
+    "P(Microhabitat Hydroid with Bryozoan effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_RedAlgae_m5v1_e_max_positive,
+    pp_RedAlgae_m5v1_Filter_max_positive,
+    pp_RedAlgae_m5v1_e_prop_positive,
+    pp_RedAlgae_m5v1_R_c_positive,
+    pp_RedAlgae_m5v1_G_c_positive,
+    pp_RedAlgae_m5v1_B_c_positive,
+    pp_HydroidBryozoa_m5v1_e_max_positive,
+    pp_HydroidBryozoa_m5v1_Filter_max_positive,
+    pp_HydroidBryozoa_m5v1_e_prop_positive,
+    pp_HydroidBryozoa_m5v1_R_c_positive,
+    pp_HydroidBryozoa_m5v1_G_c_positive,
+    pp_HydroidBryozoa_m5v1_B_c_positive,
+    pp_RedAlgae_m5v1_e_max_negative,
+    pp_RedAlgae_m5v1_Filter_max_negative,
+    pp_RedAlgae_m5v1_e_prop_negative,
+    pp_RedAlgae_m5v1_R_c_negative,
+    pp_RedAlgae_m5v1_G_c_negative,
+    pp_RedAlgae_m5v1_B_c_negative,
+    pp_HydroidBryozoa_m5v1_e_max_negative,
+    pp_HydroidBryozoa_m5v1_Filter_max_negative,
+    pp_HydroidBryozoa_m5v1_e_prop_negative,
+    pp_HydroidBryozoa_m5v1_R_c_negative,
+    pp_HydroidBryozoa_m5v1_G_c_negative,
+    pp_HydroidBryozoa_m5v1_B_c_negative
+  )
+)
+
+pp_summary_m5v2_microhabitat <- data.frame(
+  Hypothesis = c(
+    "P(Microhabitat Association Present effect e_max diff > 0)",
+    "P(Microhabitat Association Present effect Filter_max diff > 0)",
+    "P(Microhabitat Association Present effect e_prop diff > 0)",
+    "P(Microhabitat Association Present effect R_c diff > 0)",
+    "P(Microhabitat Association Present effect G_c diff > 0)",
+    "P(Microhabitat Association Present effect B_c diff > 0)",
+    "P(Microhabitat Association Present effect e_max diff < 0)",
+    "P(Microhabitat Association Present effect Filter_max diff < 0)",
+    "P(Microhabitat Association Present effect e_prop diff < 0)",
+    "P(Microhabitat Association Present effect R_c diff < 0)",
+    "P(Microhabitat Association Present effect G_c diff < 0)",
+    "P(Microhabitat Association Present effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_Microhabitat_AssociationPresent_m5v2_e_max_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_Filter_max_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_e_prop_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_R_c_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_G_c_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_B_c_positive,
+    pp_Microhabitat_AssociationPresent_m5v2_e_max_negative,
+    pp_Microhabitat_AssociationPresent_m5v2_Filter_max_negative,
+    pp_Microhabitat_AssociationPresent_m5v2_e_prop_negative,
+    pp_Microhabitat_AssociationPresent_m5v2_R_c_negative,
+    pp_Microhabitat_AssociationPresent_m5v2_G_c_negative,
+    pp_Microhabitat_AssociationPresent_m5v2_B_c_negative
+  )
+)
+
+# Save combined table
+pp_summary_sex_combined <- rbind(pp_summary_m5v1_microhabitat, pp_summary_m5v2_microhabitat)
+write.table(pp_summary_sex_combined, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_postprob_m5_microhabitat.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+```
+
+
+```{r}
+# Convert each to HTML
+html_m5v1_microhabitat <- minimal_html_table(pp_summary_m5v1_microhabitat, caption = "Posterior probabilities (Microhabitat)")
+html_m5v2_microhabitat <- minimal_html_table(pp_summary_m5v2_microhabitat, caption = "Posterior probabilities (Microhabitat Association)")
+
+# Tabs layout
+my_tabs_pp_microhabitat <- '
+<style>
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+.tabs-container input[type="radio"] {
+  display: none;
+}
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+#tab_m5v1_microhabitat:checked ~ #content_m5v1_microhabitat,
+#tab_m5v2_microhabitat:checked ~ #content_m5v2_microhabitat {
+  display: block;
+}
+#tab_m5v1_microhabitat:checked + label[for="tab_m5v1_microhabitat"],
+#tab_m5v2_microhabitat:checked + label[for="tab_m5v2_microhabitat"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+  <input type="radio" name="tabs_pp_microhabitat" id="tab_m5v1_microhabitat" checked>
+  <label class="tab-label" for="tab_m5v1_microhabitat">Microhabitat Model</label>
+
+  <input type="radio" name="tabs_pp_microhabitat" id="tab_m5v2_microhabitat">
+  <label class="tab-label" for="tab_m5v2_microhabitat">Microhabitat_Association Model</label>
+
+  <div class="tab-content" id="content_m5v1_microhabitat">REPLACE_WITH_m5v1_microhabitat</div>
+  <div class="tab-content" id="content_m5v2_microhabitat">REPLACE_WITH_m5v2_microhabitat</div>
+</div>
+'
+
+# Inject tables
+my_tabs_pp_microhabitat <- gsub("REPLACE_WITH_m5v1_microhabitat", html_m5v1_microhabitat, my_tabs_pp_microhabitat)
+my_tabs_pp_microhabitat <- gsub("REPLACE_WITH_m5v2_microhabitat", html_m5v2_microhabitat, my_tabs_pp_microhabitat)
+
+# Display
+# IRdisplay::display_html(my_tabs_pp_microhabitat)
+```
+
+
+```{r}
+##### **Posterior Probability of Viewpoint Effect**
+
+draws_m5v1_e_max <- as_draws_df(m5v1_e_max_diff)
+draws_m5v1_Filter_max <- as_draws_df(m5v1_Filter_max_diff)
+draws_m5v1_e_prop <- as_draws_df(m5v1_e_prop_diff)
+draws_m5v1_R_c <- as_draws_df(m5v1_R_c_diff)
+draws_m5v1_G_c <- as_draws_df(m5v1_G_c_diff)
+draws_m5v1_B_c <- as_draws_df(m5v1_B_c_diff)
+
+draws_m5v2_e_max <- as_draws_df(m5v2_e_max_diff)
+draws_m5v2_Filter_max <- as_draws_df(m5v2_Filter_max_diff)
+draws_m5v2_e_prop <- as_draws_df(m5v2_e_prop_diff)
+draws_m5v2_R_c <- as_draws_df(m5v2_R_c_diff)
+draws_m5v2_G_c <- as_draws_df(m5v2_G_c_diff)
+draws_m5v2_B_c <- as_draws_df(m5v2_B_c_diff)
+
+# Posterior probability that difference between pod and background is a **higher** for females than males (reference sex)
+pp_Viewpoint10_m5v1_e_max_positive <- mean(draws_m5v1_e_max$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v1_Filter_max_positive <- mean(draws_m5v1_Filter_max$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v1_e_prop_positive <- mean(draws_m5v1_e_prop$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v1_R_c_positive <- mean(draws_m5v1_R_c$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v1_G_c_positive <- mean(draws_m5v1_G_c$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v1_B_c_positive <- mean(draws_m5v1_B_c$b_Viewpoint10 > 0)
+pp_Viewpoint20_m5v1_e_max_positive <- mean(draws_m5v1_e_max$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v1_Filter_max_positive <- mean(draws_m5v1_Filter_max$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v1_e_prop_positive <- mean(draws_m5v1_e_prop$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v1_R_c_positive <- mean(draws_m5v1_R_c$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v1_G_c_positive <- mean(draws_m5v1_G_c$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v1_B_c_positive <- mean(draws_m5v1_B_c$b_Viewpoint20 > 0)
+
+pp_Viewpoint10_m5v2_e_max_positive <- mean(draws_m5v2_e_max$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v2_Filter_max_positive <- mean(draws_m5v2_Filter_max$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v2_e_prop_positive <- mean(draws_m5v2_e_prop$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v2_R_c_positive <- mean(draws_m5v2_R_c$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v2_G_c_positive <- mean(draws_m5v2_G_c$b_Viewpoint10 > 0)
+pp_Viewpoint10_m5v2_B_c_positive <- mean(draws_m5v2_B_c$b_Viewpoint10 > 0)
+pp_Viewpoint20_m5v2_e_max_positive <- mean(draws_m5v2_e_max$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v2_Filter_max_positive <- mean(draws_m5v2_Filter_max$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v2_e_prop_positive <- mean(draws_m5v2_e_prop$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v2_R_c_positive <- mean(draws_m5v2_R_c$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v2_G_c_positive <- mean(draws_m5v2_G_c$b_Viewpoint20 > 0)
+pp_Viewpoint20_m5v2_B_c_positive <- mean(draws_m5v2_B_c$b_Viewpoint20 > 0)
+
+# Posterior probability that difference between pod and background is a **lower** for females than males (reference sex)
+pp_Viewpoint10_m5v1_e_max_negative <- mean(draws_m5v1_e_max$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v1_Filter_max_negative <- mean(draws_m5v1_Filter_max$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v1_e_prop_negative <- mean(draws_m5v1_e_prop$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v1_R_c_negative <- mean(draws_m5v1_R_c$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v1_G_c_negative <- mean(draws_m5v1_G_c$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v1_B_c_negative <- mean(draws_m5v1_B_c$b_Viewpoint10 < 0)
+pp_Viewpoint20_m5v1_e_max_negative <- mean(draws_m5v1_e_max$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v1_Filter_max_negative <- mean(draws_m5v1_Filter_max$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v1_e_prop_negative <- mean(draws_m5v1_e_prop$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v1_R_c_negative <- mean(draws_m5v1_R_c$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v1_G_c_negative <- mean(draws_m5v1_G_c$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v1_B_c_negative <- mean(draws_m5v1_B_c$b_Viewpoint20 < 0)
+
+pp_Viewpoint10_m5v2_e_max_negative <- mean(draws_m5v2_e_max$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v2_Filter_max_negative <- mean(draws_m5v2_Filter_max$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v2_e_prop_negative <- mean(draws_m5v2_e_prop$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v2_R_c_negative <- mean(draws_m5v2_R_c$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v2_G_c_negative <- mean(draws_m5v2_G_c$b_Viewpoint10 < 0)
+pp_Viewpoint10_m5v2_B_c_negative <- mean(draws_m5v2_B_c$b_Viewpoint10 < 0)
+pp_Viewpoint20_m5v2_e_max_negative <- mean(draws_m5v2_e_max$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v2_Filter_max_negative <- mean(draws_m5v2_Filter_max$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v2_e_prop_negative <- mean(draws_m5v2_e_prop$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v2_R_c_negative <- mean(draws_m5v2_R_c$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v2_G_c_negative <- mean(draws_m5v2_G_c$b_Viewpoint20 < 0)
+pp_Viewpoint20_m5v2_B_c_negative <- mean(draws_m5v2_B_c$b_Viewpoint20 < 0)
+
+
+# Create a summary table
+pp_summary_m5v1_viewpoint <- data.frame(
+  Hypothesis = c(
+    "P(Viewpoint 10 effect e_max diff > 0)",
+    "P(Viewpoint 10 effect Filter_max diff > 0)",
+    "P(Viewpoint 10 effect e_prop diff > 0)",
+    "P(Viewpoint 10 effect R_c diff > 0)",
+    "P(Viewpoint 10 effect G_c diff > 0)",
+    "P(Viewpoint 10 effect B_c diff > 0)",
+    "P(Viewpoint 20 effect e_max diff > 0)",
+    "P(Viewpoint 20 effect Filter_max diff > 0)",
+    "P(Viewpoint 20 effect e_prop diff > 0)",
+    "P(Viewpoint 20 effect R_c diff > 0)",
+    "P(Viewpoint 20 effect G_c diff > 0)",
+    "P(Viewpoint 20 effect B_c diff > 0)",
+    "P(Viewpoint 10 effect e_max diff < 0)",
+    "P(Viewpoint 10 effect Filter_max diff < 0)",
+    "P(Viewpoint 10 effect e_prop diff < 0)",
+    "P(Viewpoint 10 effect R_c diff < 0)",
+    "P(Viewpoint 10 effect G_c diff < 0)",
+    "P(Viewpoint 10 effect B_c diff < 0)",
+    "P(Viewpoint 20 effect e_max diff < 0)",
+    "P(Viewpoint 20 effect Filter_max diff < 0)",
+    "P(Viewpoint 20 effect e_prop diff < 0)",
+    "P(Viewpoint 20 effect R_c diff < 0)",
+    "P(Viewpoint 20 effect G_c diff < 0)",
+    "P(Viewpoint 20 effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_Viewpoint10_m5v1_e_max_positive,
+    pp_Viewpoint10_m5v1_Filter_max_positive,
+    pp_Viewpoint10_m5v1_e_prop_positive,
+    pp_Viewpoint10_m5v1_R_c_positive,
+    pp_Viewpoint10_m5v1_G_c_positive,
+    pp_Viewpoint10_m5v1_B_c_positive,
+    pp_Viewpoint20_m5v1_e_max_positive,
+    pp_Viewpoint20_m5v1_Filter_max_positive,
+    pp_Viewpoint20_m5v1_e_prop_positive,
+    pp_Viewpoint20_m5v1_R_c_positive,
+    pp_Viewpoint20_m5v1_G_c_positive,
+    pp_Viewpoint20_m5v1_B_c_positive,
+    pp_Viewpoint10_m5v1_e_max_negative,
+    pp_Viewpoint10_m5v1_Filter_max_negative,
+    pp_Viewpoint10_m5v1_e_prop_negative,
+    pp_Viewpoint10_m5v1_R_c_negative,
+    pp_Viewpoint10_m5v1_G_c_negative,
+    pp_Viewpoint10_m5v1_B_c_negative,
+    pp_Viewpoint20_m5v1_e_max_negative,
+    pp_Viewpoint20_m5v1_Filter_max_negative,
+    pp_Viewpoint20_m5v1_e_prop_negative,
+    pp_Viewpoint20_m5v1_R_c_negative,
+    pp_Viewpoint20_m5v1_G_c_negative,
+    pp_Viewpoint20_m5v1_B_c_negative
+  )
+)
+
+pp_summary_m5v2_viewpoint <- data.frame(
+  Hypothesis = c(
+    "P(Viewpoint 10 effect e_max diff > 0)",
+    "P(Viewpoint 10 effect Filter_max diff > 0)",
+    "P(Viewpoint 10 effect e_prop diff > 0)",
+    "P(Viewpoint 10 effect R_c diff > 0)",
+    "P(Viewpoint 10 effect G_c diff > 0)",
+    "P(Viewpoint 10 effect B_c diff > 0)",
+    "P(Viewpoint 20 effect e_max diff > 0)",
+    "P(Viewpoint 20 effect Filter_max diff > 0)",
+    "P(Viewpoint 20 effect e_prop diff > 0)",
+    "P(Viewpoint 20 effect R_c diff > 0)",
+    "P(Viewpoint 20 effect G_c diff > 0)",
+    "P(Viewpoint 20 effect B_c diff > 0)",
+    "P(Viewpoint 10 effect e_max diff < 0)",
+    "P(Viewpoint 10 effect Filter_max diff < 0)",
+    "P(Viewpoint 10 effect e_prop diff < 0)",
+    "P(Viewpoint 10 effect R_c diff < 0)",
+    "P(Viewpoint 10 effect G_c diff < 0)",
+    "P(Viewpoint 10 effect B_c diff < 0)",
+    "P(Viewpoint 20 effect e_max diff < 0)",
+    "P(Viewpoint 20 effect Filter_max diff < 0)",
+    "P(Viewpoint 20 effect e_prop diff < 0)",
+    "P(Viewpoint 20 effect R_c diff < 0)",
+    "P(Viewpoint 20 effect G_c diff < 0)",
+    "P(Viewpoint 20 effect B_c diff < 0)"
+  ),
+  PosteriorProbability = c(
+    pp_Viewpoint10_m5v2_e_max_positive,
+    pp_Viewpoint10_m5v2_Filter_max_positive,
+    pp_Viewpoint10_m5v2_e_prop_positive,
+    pp_Viewpoint10_m5v2_R_c_positive,
+    pp_Viewpoint10_m5v2_G_c_positive,
+    pp_Viewpoint10_m5v2_B_c_positive,
+    pp_Viewpoint20_m5v2_e_max_positive,
+    pp_Viewpoint20_m5v2_Filter_max_positive,
+    pp_Viewpoint20_m5v2_e_prop_positive,
+    pp_Viewpoint20_m5v2_R_c_positive,
+    pp_Viewpoint20_m5v2_G_c_positive,
+    pp_Viewpoint20_m5v2_B_c_positive,
+    pp_Viewpoint10_m5v2_e_max_negative,
+    pp_Viewpoint10_m5v2_Filter_max_negative,
+    pp_Viewpoint10_m5v2_e_prop_negative,
+    pp_Viewpoint10_m5v2_R_c_negative,
+    pp_Viewpoint10_m5v2_G_c_negative,
+    pp_Viewpoint10_m5v2_B_c_negative,
+    pp_Viewpoint20_m5v2_e_max_negative,
+    pp_Viewpoint20_m5v2_Filter_max_negative,
+    pp_Viewpoint20_m5v2_e_prop_negative,
+    pp_Viewpoint20_m5v2_R_c_negative,
+    pp_Viewpoint20_m5v2_G_c_negative,
+    pp_Viewpoint20_m5v2_B_c_negative
+  )
+)
+
+# Save combined table
+pp_summary_viewpoint_combined <- rbind(pp_summary_m5v1_viewpoint, pp_summary_m5v2_viewpoint)
+write.table(pp_summary_viewpoint_combined, "C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/data/tables/table_postprob_m5_viewpoint.csv", sep = ",", row.names = TRUE, col.names = TRUE)
+
+
+```
+
+
+```{r}
+
+# Convert each to HTML
+html_m5v1_viewpoint <- minimal_html_table(pp_summary_m5v1_viewpoint, caption = "Posterior probabilities (Viewpoint)")
+html_m5v2_viewpoint <- minimal_html_table(pp_summary_m5v2_viewpoint, caption = "Posterior probabilities (Viewpoint)")
+
+# Tabs layout
+my_tabs_pp_viewpoint <- '
+<style>
+.tabs-container {
+  width: 100%;
+  margin: 1em 0;
+}
+.tabs-container input[type="radio"] {
+  display: none;
+}
+.tab-label {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 2px;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-bottom: none;
+}
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: none;
+}
+#tab_m5v1_viewpoint:checked ~ #content_m5v1_viewpoint,
+#tab_m5v2_viewpoint:checked ~ #content_m5v2_viewpoint {
+  display: block;
+}
+#tab_m5v1_viewpoint:checked + label[for="tab_m5v1_viewpoint"],
+#tab_m5v2_viewpoint:checked + label[for="tab_m5v2_viewpoint"] {
+  background: #fff;
+  border-bottom: none;
+}
+</style>
+
+<div class="tabs-container">
+  <input type="radio" name="tabs_pp_viewpoint" id="tab_m5v1_viewpoint" checked>
+  <label class="tab-label" for="tab_m5v1_viewpoint">Microhabitat Model</label>
+
+  <input type="radio" name="tabs_pp_viewpoint" id="tab_m5v2_viewpoint">
+  <label class="tab-label" for="tab_m5v2_viewpoint">Microhabitat_Association Model</label>
+
+  <div class="tab-content" id="content_m5v1_viewpoint">REPLACE_WITH_m5v1_viewpoint</div>
+  <div class="tab-content" id="content_m5v2_viewpoint">REPLACE_WITH_m5v2_viewpoint</div>
+</div>
+'
+
+# Inject tables
+my_tabs_pp_viewpoint <- gsub("REPLACE_WITH_m5v1_viewpoint", html_m5v1_viewpoint, my_tabs_pp_viewpoint)
+my_tabs_pp_viewpoint <- gsub("REPLACE_WITH_m5v2_viewpoint", html_m5v2_viewpoint, my_tabs_pp_viewpoint)
+
+# Display
+# IRdisplay::display_html(my_tabs_pp_viewpoint)
+```
+
+
+
+---
+
+### 8. Summarize results
+
+The predictor Sex mostly does not have a significant effect on background matching (i.e., the difference between dorsal body and microhabitat color metrics) at 85% and 95% confidence intervals. Sex MIGHT have a significant effect on pattern diversity (i.e. e_prop) and R reflectance matching between dorsal bodies and microhabitats, with females showing lower pattern diversity and R reflectance matching (i.e., higheR_c differences between dorsal body and microhabitat pattern diversity and R reflectance) at an 85% confidence interval. 
+
+
+#### **Make final figures**
+
+Generate tidy figures for the Results section of our report/paper.
+
+
+
+```{r}
+##### FINAL PLOT FOR WNAN PAPER
+
+# Updated predictors list with source model per group
+predictors_list <- list(
+  list(
+    name = "Sex",
+    model = "m1",
+    baseline = tibble(parameter = "Male", mean = 0),
+    order = c("Male", "b_SexF"),
+    labels = c("Male" = "Male", "b_SexF" = "Female"),
+    regex = "b_SexF"
+  ),
+  list(
+    name = "Microhabitat",
+    model = "m1",
+    baseline = tibble(parameter = "Hydroids", mean = 0),
+    order = c("Hydroids", "b_MicrohabitatRed_Algae", "b_MicrohabitatHydroid_Bryozoa"),
+    labels = c(
+      "Hydroids" = "Hydroids",
+      "b_MicrohabitatRed_Algae" = "Red Algae",
+      "b_MicrohabitatHydroid_Bryozoa" = "Bryozoa"
+    ),
+    regex = "b_Microhabitat"
+  ),
+  list(
+    name = "Microhabitat_Association",
+    model = "m2",  # ← uses different model
+    baseline = tibble(parameter = "Microhabitat_Association Not Present", mean = 0),
+    order = c("Microhabitat_Association Not Present", "b_Microhabitat_AssociationPresent"),
+    labels = c(
+      "Microhabitat_Association Not Present" = "Unassociated",
+      "b_Microhabitat_AssociationPresent" = "Associated"
+    ),
+    regex = "b_Microhabitat_AssociationPresent"
+  ),
+  list(
+    name = "Viewpoint",
+    model = "m1",
+    baseline = tibble(parameter = "No correction", mean = 0),
+    order = c("No correction", "b_Viewpoint10", "b_Viewpoint20"),
+    labels = c(
+      "No correction" = "No correction",
+      "b_Viewpoint10" = "10 mm acuity",
+      "b_Viewpoint20" = "20 mm acuity"
+    ),
+    regex = "b_Viewpoint"
+  )
+)
+
+# Posterior samples by model and variable
+posterior_samples_all <- list(
+  m1 = list(
+    `e[max]` = posterior_samples_m5v1_e_max_diff,
+    `Filter[max]` = posterior_samples_m5v1_Filter_max_diff,
+    `e[prop]` = posterior_samples_m5v1_e_prop_diff,
+    `R[c]` = posterior_samples_m5v1_R_c_diff,
+    `G[c]` = posterior_samples_m5v1_G_c_diff,
+    `B[c]` = posterior_samples_m5v1_B_c_diff
+  ),
+  m2 = list(
+    `e[max]` = posterior_samples_m5v2_e_max_diff,
+    `Filter[max]` = posterior_samples_m5v2_Filter_max_diff,
+    `e[prop]` = posterior_samples_m5v2_e_prop_diff,
+    `R[c]` = posterior_samples_m5v2_R_c_diff,
+    `G[c]` = posterior_samples_m5v2_G_c_diff,
+    `B[c]` = posterior_samples_m5v2_B_c_diff
+  )
+)
+
+# Helper: extract posterior + baseline
+extract_effects <- function(posterior_df, predictor_cfg, predictor_name) {
+  matched_cols <- posterior_df %>%
+    dplyr::select(matches(predictor_cfg$regex)) %>%
+    colnames()
+
+  if (length(matched_cols) == 0) {
+    stop(paste("No columns matched regex:", predictor_cfg$regex, "for predictor:", predictor_cfg$name))
+  }
+
+  draws <- posterior_df %>%
+    dplyr::select(all_of(matched_cols)) %>%
+    pivot_longer(cols = everything(), names_to = "parameter", values_to = "value") %>%
+    mutate(
+      label = predictor_cfg$labels[parameter],
+      predictor = predictor_name,
+      group = predictor_cfg$name
+    )
+
+  baseline <- predictor_cfg$baseline %>%
+    mutate(
+      label = predictor_cfg$labels[parameter],
+      predictor = predictor_name,
+      group = predictor_cfg$name,
+      value = mean
+    )
+
+  bind_rows(draws, baseline)
+}
+
+# Build combined plot data
+plot_data <- map_dfr(
+  names(posterior_samples_all$m1),
+  function(pred_name) {
+    map_dfr(
+      predictors_list,
+      function(predictor_cfg) {
+        model_id <- predictor_cfg$model
+        extract_effects(
+          posterior_df = posterior_samples_all[[model_id]][[pred_name]],
+          predictor_cfg = predictor_cfg,
+          predictor_name = pred_name
+        )
+      }
+    )
+  }
+)
+
+plot_data$label <- factor(plot_data$label, levels = c(
+  "Male", "Female",
+  "Hydroids", "Red Algae", "Bryozoa",
+  "Unassociated", "Associated",
+  "No correction", "10 mm acuity", "20 mm acuity"
+))
+
+plot_data$predictor <- factor(
+  plot_data$predictor,
+  levels = c("e[max]", "Filter[max]", "e[prop]", "R[c]", "G[c]", "B[c]"),
+  labels = c(
+    expression(Delta*e[max]),
+    expression(Delta*Filter[max]),
+    expression(Delta*e[prop]),
+    expression(Delta*R[c]),
+    expression(Delta*G[c]),
+    expression(Delta*B[c])
+  )
+)
+
+# Plot
+final_plot_posteriors_m5 <- ggplot(plot_data, aes(x = value, y = label, fill = group, color = group)) +
+  stat_halfeye(
+    .width = c(0.85, 0.95),
+    slab_alpha = 0.4,
+    interval_size_range = c(1, 0),  # Inner (85%) shaded, outer (95%) invisible
+    normalize = "groups",
+    slab_linewidth = 0.6
+  ) +
+  geom_point(
+    data = filter(plot_data, !is.na(mean)),
+    aes(x = mean),  # ✅ Match color to group
+    inherit.aes = TRUE,
+    size = 0.75,
+    shape = 21
+  ) +
+  geom_vline(xintercept = 0, size = 0.6, linetype = 3, color = "red") +
+  facet_wrap(~ predictor, ncol = 6, scales = "free_x", labeller = label_parsed) +
+  scale_fill_manual(
+    values = c(
+      "Sex" = "purple",
+      "Microhabitat" = "forestgreen",
+      "Microhabitat_Association" = "#ff9500",
+      "Viewpoint" = "steelblue"
+    )
+  ) +
+  scale_color_manual(  # ✅ Add matching colors for the points
+    values = c(
+      "Sex" = "purple",
+      "Microhabitat" = "forestgreen",
+      "Microhabitat_Association" = "#ff9500",
+      "Viewpoint" = "steelblue"
+    )
+  ) +
+  labs(
+    x = "Effect size (log scale)",
+    y = NULL
+  ) +
+  theme_bw(base_size = 8) +
+  theme(
+    strip.text = element_text(face = "bold", size = 10),
+    axis.text.y = element_text(size = 8),
+    panel.spacing = unit(0.5, "lines"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    legend.position = "none"
+  )
+
+
+ggsave("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/final_plot_posteriors_m5.png", plot = final_plot_posteriors_m5, width = 9, height = 4.5, units = "in", dpi = 300)
+```
+
+
+```{r}
+# Convert images to base64
+final_plot_posteriors_m5 <- knitr::image_uri("C:/Users/bmc82/Documents/UF/PhD_Projects/DISSERTATION_MANUSCRIPT/Chapter_3/chapter3_data_analysis/images/final_plot_posteriors_m5.png")
+
+# Create the HTML 
+html_m5_posteriors_final <- paste0("
+  <style>
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .image-row img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+<div class='image-row'>
+  <img src='", final_plot_posteriors_m5, "' alt='Final Microhabitat Posterior Plot'>
+</div>
+")
+
+# Display the HTML
+# IRdisplay::display_html(html_m5_posteriors_final)
+```

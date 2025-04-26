@@ -1,0 +1,5 @@
+"Parameter","Estimate","Est.Error","l-85% CI","u-85% CI","l-95% CI","u-95% CI"
+"1","Intercept",0.839,0.472,0.205,1.53,-0.025,1.88
+"2","MicrohabitatHydroid_Bryozoa",-0.161,0.518,-0.897,0.587,-1.17,0.864
+"3","MicrohabitatRed_Algae",-0.0141,0.606,-0.876,0.858,-1.22,1.18
+"4","Nudibranch1",0.0739,0.457,-0.58,0.733,-0.813,0.972

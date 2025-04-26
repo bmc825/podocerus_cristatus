@@ -1,0 +1,32 @@
+# Temporary folders
+_build/
+jb-env/
+renv/
+.Rhistory
+
+# R temporary files
+.RData
+.Rproj.user/
+.Rhistory
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.venv/
+
+# Others
+*.log
+*.aux
+*.out
+*.toc
+.DS_Store
+
+# Ignore big files
+*.rds
+images/

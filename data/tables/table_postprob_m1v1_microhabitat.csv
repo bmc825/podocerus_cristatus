@@ -1,0 +1,11 @@
+"Hypothesis","PosteriorProbability"
+"1","P(Other Hydroids effect > 0)",0.25585
+"2","P(Sertulariidae effect > 0)",0.25325
+"3","P(Hydrallmania effect > 0)",0.41455
+"4","P(Lafoea effect > 0)",0.9116
+"5","P(Sertulariidae with Bryozoa effect > 0)",0.99015
+"6","P(Other Hydroids effect < 0)",0.74415
+"7","P(Sertulariidae effect < 0)",0.74675
+"8","P(Hydrallmania effect < 0)",0.58545
+"9","P(Lafoea effect < 0)",0.0884
+"10","P(Sertulariidae with Bryozoa effect < 0)",0.00985
