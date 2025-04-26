@@ -61,18 +61,16 @@ CHAPTER3_DATA_ANALYSIS/
     - Install [Jupyter Book](https://jupyterbook.org/en/stable/start/overview.html).
     - Ensure you have an R environment with required packages (e.g., `tidyverse`, `brms`, `renv`).
 
-3. **Build the book locally:**
-    - By default, model code in the `.ipynb` notebooks is commented out, and the book will instead access previously generated models saved as `.rds` files (see #4). This is done to save time and retain consistency of results.
-    - If you prefer, you can remove these comment marks to rerun all models during book building. Note that generating models in this way will take a LONG time, and the results will vary slightly with each iteration.
 
+3. **Run models manually:**
+    - Open `.Rmd` files in RStudio if you prefer R workflows. This saves considerable time during troubleshooting, since you can run one code chunk at a time.
+    - Alternatively, you can run models through `.ipynb` notebooks using an R kernel in Jupyter (see #4), but note that you must execute all code chunks in a notebook at once. Also, note that you must uncomment the model code in `.ipynb` notebooks before running.
+
+
+4. **Build the book locally:**
     ```bash
     jupyter-book build .
     ```
-
-4. **Run models manually (optional):**
-    - Open `.Rmd` files in RStudio if you prefer R workflows. This saves considerable time during troubleshooting, since you can run one code chunk at a time.
-    - Alternatively, you can run models through `.ipynb` notebooks using an R kernel in Jupyter, but note that you must execute all code chunks in a notebook sequentially.
-
 
 ---
 
