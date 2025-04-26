@@ -76,9 +76,7 @@ CHAPTER3_DATA_ANALYSIS/
 
 ## Citation
 
-If you use this pipeline or its components, please cite the following works relevant to *Podocerus cristatus* ecology and visual camouflage:
-
-> Bond (2007), Chapman (2007), Boyd et al. (2002), Goddard (2016), Cronin et al. (2014), Hobson (1968), Johnsen (2012), Thomson (1879).
+If you use this pipeline or its components, please cite the appropriate R packages:
 
 (See full references inside the repository.)
 
